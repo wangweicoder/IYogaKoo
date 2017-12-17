@@ -1,0 +1,1428 @@
+﻿@*@model IYogaKoo.ViewModel.ViewYogisModels*@
+@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtMessageGroup>
+@{
+    Layout = null;
+    var listGroup = ViewBag.listGroup;
+    //var Gender = ViewBag.Gender==1 ? "他" :"她";
+    var Gender = "";
+    if (ViewBag.Gender == 0)
+    {
+        Gender = "她";
+    }
+    else if (ViewBag.Gender == 1)
+    {
+        Gender = "他";
+    }
+    else if (ViewBag.Gender == 2)
+    {
+        Gender = "我";
+    }
+    var bl = "";
+    if(ViewBag.isfollow == false && ViewBag.user.Uid != ViewBag.strUid)
+    {
+        bl="0";
+    }
+    else  if(ViewBag.isfollow == true){
+        bl = "1";
+    }
+    List<IYogaKoo.ViewModel.ViewCenters> listCenters = ViewBag.listCenters;
+    List<IYogaKoo.ViewModel.ViewYogisModels> listModels = ViewBag.listModels;
+    Commons.Helper.method method=new Commons.Helper.method (); 
+}
+@using IYogaKoo.ViewModel.Commons.Enums;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽酷， 世界瑜伽人之家。</title>
+     <link rel="shortcut icon" href="/Content/Front/images/2.ico.png">
+    <link type="text/css" href="/Content/Front/css/indexnew.css" rel="stylesheet" />      
+    <script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/indexnew.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+    <script type="text/javascript" src="~/Content/Front/js/jquery.qqFace.js"></script>
+    <script type="text/javascript" src="~/Content/jquery/ExistisUpdate.js"></script>
+    <script src="~/Content/Front/js/QQPhoto/QQPhoto.min.js"></script>
+    <script src="~/Content/jquery/base64.js"></script>
+    <script src="~/Content/jquery/ReturnUrl.js"></script>
+    <script src="~/Scripts/layer/layer.js"></script>
+    <style>
+        .lb_index_top_right_ul li a {
+            line-height: 80px;
+            color: #336765;
+            font-size: 15px;
+            padding: 0px 5px;
+        }
+        .lb_li_idnex_hide li a {
+        line-height:30px;
+        }
+
+        .lb_index_top_right {
+            width: auto;
+            height: 40px;
+            float: right;
+        }
+        .lb_myindex_wz_hd_left_ul {
+        height:100px;position:relative;
+        }
+        .lb_myindex_wz_hd_left_ul a {
+            position:absolute; z-index:1111; bottom:5px; right:0px;cursor:pointer
+         }
+            #picrightdiv {
+     width:100px; height:100px; display:table; float:right; vertical-align:bottom; background-color:#65c3a5;
+     cursor:pointer; 
+     }
+     #picrightdiv:hover {
+         background-color:#f77d25; 
+     }
+     #picrightdiv p{
+     text-align:center;  vertical-align:middle; font-style:italic; display:table-cell; color:white; font-family:微软雅黑, 'Microsoft YaHei'; font-size:15px; 
+     }
+      #picrightdiv p:hover
+      {
+          font-size:16px; 
+ text-decoration:underline;
+      } 
+      /*晒图*/
+        .imgsdiv { 
+         position:relative;
+        border:1px solid #ccc;
+           width:40px;
+         height:40px; 
+         float:left;
+         margin-right:8px;
+         margin-left:8px;
+        }
+        #divImgDiploma a{
+
+        position:static;
+        }
+        .imgsdiv .a_delete {
+             position:absolute;
+         top:0px;
+         left:0px;       
+         display:none;
+         width:40px;
+         height:40px;  
+         filter:alpha(Opacity=80) ;
+-moz-opacity:0.5; 
+opacity: 0.5; 
+z-index:100;
+background-color:#000; 
+        }
+
+        .a_delete a {
+            text-align:center;
+        text-decoration:none;        
+           width:40px;
+         height:40px;  
+         line-height:40px;
+         display:block;
+          color:white;
+            font-size:12px;
+        }
+
+        .imgsdiv:hover .a_delete {
+            display: block;
+        }
+        #imgspan        
+        {color:#808080;
+         width:40px;
+         height:20px;
+         display:block;
+         margin:0 auto;
+         float:left;
+         margin-top:30px;
+         line-height:20px; 
+         font-size:12px;
+        }   
+        .lb_li_idnex_hide2 li a{
+             padding:0px!important
+        }
+    </style>
+   <script type="text/javascript">
+       window.location.href = "#lb_mao";
+       $(document).ready(function () {
+           var lengths;
+           var lengthss;
+           //$('.lb_myindex_wz_hd_left_ul p').each(function () {
+           //    lengths = $(this).length();
+           //    console.log(lengths);
+           //    lengthss = lengthss + lengths;
+           //});
+           var t = $('.lb_myindex_wz_hd_left_ul p').text().length;
+           if (t < 150) {
+               $('.lb_myindex_wz_hd_left_ul a').hide();
+           }
+           $('.lb_myindex_wz_hd_left_ul a').click(function(){
+               var h = $('.lb_myindex_wz_hd_left_ul').height();
+               if(h==104){
+                   $('.lb_myindex_wz_hd_left_ul').css('height', 'auto')
+                   $(this).html(" ");
+                   $(this).html("<img src='/Content/Front/images/iconfont-icon2.png' />");
+               }
+               if(h!=104){
+                   $('.lb_myindex_wz_hd_left_ul').css('height','104px')
+                   $(this).html("<img src='/Content/Front/images/iconfont-icon.png' />");
+               }  
+           })
+       })
+   </script> 
+    <link href="~/Content/Front/css/QQPhoto/style.css" rel="stylesheet" />
+     <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" /> 
+ <style type="text/css">
+        #preview {
+            position: absolute;
+            border: 0px;
+            background: #333;
+            padding: 5px;
+            display: none;
+            color: #fff;
+  } 
+    </style>
+
+ <link href="@Url.Content("~/Content/uploadify/uploadify.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.min.js")"></script> 
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+    <script type="text/javascript">      
+        $(function () {
+            //start 关注
+            var flag = $("#hidbl").val();
+            if (flag == "1") {
+              
+                $("#flowuid").html("已关注").css('background', '#FF9933');
+            }
+            if (flag == "0") {
+               
+                $("#flowuid").html("+关注").css('background', '#65C3A5');
+            }
+            //end
+
+            //上传图片
+            $('#fileDiploma').uploadify({
+                'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+        'uploader': '@Url.Content("~/Areas/Manage/Controllers/backashxFile/PirtureThumbnail.ashx")',
+        'buttonText': '我要晒图',
+        'height': '25',
+        'width': '74',
+        'buttonImage': '/Content/Front/images/btnmessage.png',
+        'fileTypeDesc': '.jpg,.png',
+        'fileTypeExts': '*.jpg;*.png;',
+        'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+        'sizeLimit': 1024 * 1024 * 4, //4M
+        'multi': true,//设置为true时可以同时上传多个文件。
+        'uploadLimit': 5,
+        'onUploadSuccess': function (file, data, response) {
+            if (data == "0") {
+                
+                layer.msg('上传失败，请重试！', { time: 1600 });
+                return false;
+            }
+            else {
+
+                var strdata = "/" + data + ";"
+                if ($("#iNums").val() == "") {
+                    $("#iNums").val(0);
+                }
+                $("#iNums").val(parseInt($("#iNums").val()) + 1);
+                $("#iNums2").val($("#iNums2").val() + 1);
+                var strNums = $("#iNums").val();
+                var strNums2 = $("#iNums2").val();
+                //路径
+                document.getElementById('Diploma').value += strdata;
+                var strA = "a" + strNums;
+
+                var strValue = "<div class='imgsdiv' id='aa" + strNums2 + "' ><img id='bb" + strNums2 + "' src='/" + data + "' style='width:40px;height:40px;margin:0px' />";
+
+                //根据ID 删除img
+                var strDelImg = '<div class="a_delete"><a href="javascript:void(0);" id="' + strA + '"  onclick="delImg(\'' + strNums2 + '\');">删除</a></div>';
+
+                //图片描述
+                var strPictureContent = " <span id='b" + strNums + "' style='display:none;'>描述：" + '<input name="picContent" type="text" /></span></div>';
+                $("#imgspan").show();
+                $("#imgspan").html(Number(strNums) + "/5");
+                document.getElementById('divImgDiploma').innerHTML += strValue + "&nbsp;&nbsp;" + strDelImg + "&nbsp;&nbsp;" + strPictureContent;
+            }
+        },
+        'onUploadError': function (file, errorCode, errorMsg, errorString) {
+         
+            layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString, { time: 1600 });
+        }
+    });
+            //点击查看相册   
+            //判断是否登录
+            var l = "false";
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                l = "true";
+            }
+
+            $("#divmyphoto a").QQPhoto({
+                url: "/Controllers/ashxFile/GetMyselfImg.ashx?id=" + @ViewBag.id + "&imgid=",                 //获取相册列表数据的URL地址 需要返回 JSON 格式，请参考文件 data.json 格式来输出
+                commentURL: '@Url.Content("~/Controllers/ashxFile/ImgComment.ashx")',            //提交评论 Ajax 发送到 服务器端的地址   返回 JSON 格式，请参考文件 comment.json 格式来输出
+                fix: 5,                           //表示相册列表左右间距的距离                 默认 5
+                minTextLen: 3,                    //发送评论时 表单验证，最少不能少于的字符    默认三个字符
+                maxTextLen: 140,                  //发送评论时 表单验证，最多不能少于的字符    默认140个字符
+                fadeIn: false,                     //图片默认是否开启淡入效果，默认为 false
+                lazyload: '@Url.Content("~/Content/Front/css/QQPhoto/images/lazyload.gif")',   //默认lazyload的图片，默认为1px.gif 透明图片
+                loadding: '@Url.Content("~/Content/Front/css/QQPhoto/images/loading.gif")',    //loading.gif 的文件路径
+                islogin: l
+            });
+            //更多图片
+            $("#picrightdiv").click(function () {
+                location.href = '/YogaGuru/PicList/@ViewBag.id';
+            });
+           
+            //显示上传图片控件
+            $("#upordowndiv a").click(function () {
+                $("#tab1").toggle();
+            });
+            $('#emotion').qqFace({
+                id: 'facebox', //表情盒子的ID
+                assign: 'sContent2', //给那个控件赋值
+                path: 'face/'	//表情存放的路径
+            });
+
+            $('#idrec').qqFace({
+                id: 'facebox', //表情盒子的ID
+                assign: 'sContent', //给那个控件赋值
+                path: 'face/'	//表情存放的路径
+            });
+            //留言和推荐切换
+            $(".lb_School_pinglun_tab li").click(function () {
+                
+                var typeid = $(this).attr("tid");
+                $("#levelid").val(typeid);
+                //$("Form").submit();
+                $.ajax({
+                    url: "/YogisModels/Details",
+                    type: "post",
+                    dataType: "text",
+                    data: {
+                        levelid: $("#levelid").val(),
+                        id: $("#hidid").val()
+                    },
+                    success: function (data) {
+ 
+                        $("#mydiv").html(data);
+                        //location.href='/YogisModels/Details/'+$("#hidid").val();
+
+
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+                 
+            });
+            //添加留言
+            $("#btnMsg").click(function () {                
+                var totype = $(this).attr("totype");
+                var hhid = $("#hhid").val();
+                var hidType = $("#hidType").val();
+                if (hhid != '' && hhid != 0) {
+                    // this.disabled="disabled";
+                    //var str = $("#sContent2").val();
+                    //if (str.indexOf('em') != -1) {
+                    //    $("#sContent2").val(replace_em(str));
+                    //}                    
+                    var content = replace_em($("#sContent2").val());//$("#sContent2").val();
+                    if (content.length > 10 && content.length < 2000) {
+
+                        $.ajax({
+                            url: "/YogaUserDetail/AddMessageInfo",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                sContent: content,
+                                hidid: $("#hidid").val(),
+                                totype: totype,
+                                hidType: hidType
+                            },
+                            success: function (data) {
+                                
+                                if (data.code == 0) {
+                                    //location.href = '/YogisModels/Details/' + $("#hidid").val();
+                                    $("#sContent2").val("");
+                                    window.location.reload();
+                                } if (parseInt(data.code) == 2) {
+                                 
+                                    layer.msg('该信息已经存在', { time: 1600 });
+                                }
+                                else {
+                                   
+                                }
+                            },
+                            async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                        });
+                    } else {
+                            
+                        layer.msg('请正确评论', { time: 1600 });
+                        $("#sContent2").focus();
+
+                    }
+                }
+                else {
+                    
+                    layer.confirm('登录后才可以发表留言？', {
+                        btn: ['登录', '不登录'] //按钮
+                    }, function () {
+                        window.location = "/Login/Login?ReturnUrl=" + '/YogisModels/Details/' + $("#hidid").val();
+                    });
+
+                }
+            });
+            //end留言
+            //添加推荐
+            $("#btnrec").click(function () {
+                var totype = $(this).attr("totype");
+                var hhid = $("#hhid").val();
+                if (hhid != '' && hhid != 0) {
+                    // this.disabled="disabled";
+                    //var str = $("#sContent").val();
+                    //if (str.indexOf('em') != -1) {
+                    //    $("#sContent").val(replace_em(str));
+                    //}
+                    var content = replace_em($("#sContent").val());//$("#sContent").val();
+                    if (content.length > 10 && content.length < 2000) {
+
+                        $.ajax({
+                            url: "/YogaUserDetail/AddMessageInfo",
+                            type: "post",
+                            dataType: "json",
+                            data: {
+                                sContent: content,
+                                hidid: $("#hidid").val(),
+                                totype: totype,
+                                Diploma: $("#Diploma").val()
+                            },
+                            success: function (data) {                                
+                                if (data.code == 0) { 
+                                    Uprec($("#hidid").val());
+                                    $("#sContent").val("");
+                                    //window.location.reload();      
+                                   
+                                } if (parseInt(data.code) == 2) {
+                                    
+                                    layer.msg('该信息已经存在', { time: 1600 });
+                                }
+                                else {
+                                   
+                                }
+                            },
+                            async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                        });
+                    } else {
+                   
+                        layer.msg('请正确评论', { time: 1600 });
+                        $("#sContent").focus();
+
+                    }
+                }
+                else {
+                   
+                    layer.confirm('登录后才可以发表推荐？', {
+                        btn: ['登录', '不登录'] //按钮
+                    }, function () {
+                        window.location = "/Login/Login?ReturnUrl=" + '/YogisModels/Details/' + $("#hidid").val();
+                    });
+
+                }
+            });
+                //end推荐
+        });
+        //更新推荐部分列表
+        function Uprec(uid) {            
+            $.ajax({
+                url: "/YogaGuru/GetRec",
+                type: "get",
+                dataType: "text",
+                data: { id: uid },
+                success: function (data, status) {
+                    if (status == "success") {
+                        //刷新
+                        $("#mydiv").html(data);
+                        var onum = $("#tuijianNUms").html();
+                        var nnum = (parseInt(onum) + 1);
+                        $("#tuijianNUms").html(nnum);
+                    }
+                    else {
+                      
+                        layer.msg('推荐失败', { time: 1600 });
+                    }
+
+                },
+                async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+            });
+
+        }
+        //end更新推荐部分列表
+        //查看结果
+        function replace_em(str) {
+            str = str.replace(/\</g, '&lt;');
+            str = str.replace(/\>/g, '&gt;');
+            str = str.replace(/\n/g, '<br/>');
+            str = str.replace(/\[em_([0-9]*)\]/g, ' <img src="../../Content/Front/js/face/$1.gif" border="0" />');
+            return str;
+        }
+        $(function () {
+            //字符长度判断
+            var counter = $("#sContent2").val().length; //获取文本域的字符串长度
+            $(".lb_School_textarea_div_right #amsg").text(counter);
+
+            $("#sContent2").keyup(function () {
+                var text = $(this).val();
+                var counter = text.length;
+                if (counter > 500) {
+                    $(this).val($(this).val().substr(0, 500));
+                }
+                counter = $(this).val().length;
+                $(".lb_School_textarea_div_right #amsg").text(counter);    //每次减去字符长度
+            });
+            //推荐 //的字符长度判断
+            var counter = $("#sContent").val().length; //获取文本域的字符串长度
+            $(".lb_School_textarea_div_right #arec").text(counter);
+
+            $("#sContent").keyup(function () {
+                var text = $(this).val();
+                var counter = text.length;
+                if (counter > 500) {
+                    $(this).val($(this).val().substr(0, 500));
+                }
+                counter = $(this).val().length;
+                $(".lb_School_textarea_div_right #arec").text(counter);    //每次减去字符长度
+            });
+            //晒图放大效果
+            imagePreview();
+        });
+</script>
+<script type="text/javascript">  
+    //赞
+    function iZan(uid,UserType) {
+        var hhid = $("#hhid").val();
+        if (hhid != '' && hhid != 0) {
+            $.ajax({
+                url: "/YogaUserDetail/iZan",
+                type: "post",
+                dataType: "json",
+                data: { uid: uid, UserType: UserType },
+                success: function (data) {
+
+                    if (data.code === 0) {
+                        //刷新
+                        // window.location.reload();
+                        zanplus({ id: uid, style: 'font-weight:bold;', endSize: "60px", interval: 800 });
+                        var count = $("#zancount" + uid).text();
+                        
+                        if (count != "")
+                            $("#zancount" + uid).text((parseInt(count) + 1));
+                        else
+                            $("#zancount" + uid).text(1);
+
+                    } else if (data.code === 2) {
+                        layer.msg("您已经赞过！", { time: 1600 });
+                    }
+                    else {
+
+                        layer.msg("赞同失败！", { time: 1600 });
+                    }
+
+                },
+                async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+            });
+        }
+        else {
+            
+            layer.confirm('登录后才可以点赞？', {
+                btn: ['登录', '不登录'] //按钮
+            }, function () {
+                window.location = "/Login/Login?ReturnUrl=" + '/YogisModels/Details/' + $("#hidid").val();// 新窗口
+            });
+        }
+    }
+    
+    //加关注
+    function flowuid(obj) {
+        var hhid = $("#hhid").val();
+        if (hhid != '' && hhid != 0) {
+
+            if (obj == '' || obj == undefined || obj == null) {
+                
+                layer.confirm('你还没有添加详细信息，是否添加？', {
+                    btn: ['登录', '不登录'] //按钮
+                }, function () {
+                    window.location = "/Login/UserDetailEdit";// 新窗口
+                });
+            } else {
+                
+                $.ajax({
+                    url: "/Follow/SetFollow",
+                    type: "get",
+                    dataType: "text",
+                    data: {
+                        quertid: obj,
+                        isf: $("#flowuid").html().trim(),
+                        UserType: '@ViewBag.UserType'
+                    },
+                    success: function (relust, status) {
+                        if (status == "success") {
+                            if (relust == "1") {
+                               
+                                layer.msg("关注成功！", { time: 2000 });
+                                $("#flowuid").html("已关注").css('background', '#FF9933');
+                                var ofnum = $(".lb_name_div ul li").eq(1).children("p").text();
+                                $(".lb_name_div ul li").eq(1).children("p").text(parseInt(ofnum) + 1);
+                            }
+                            else if (relust == "0") {
+                               
+                                layer.msg("取消成功！", { time: 2000 });
+                                $("#flowuid").html("+关注").css('background', '#65C3A5');
+                                var ofnum = $(".lb_name_div ul li").eq(1).children("p").text();
+                                $(".lb_name_div ul li").eq(1).children("p").text(parseInt(ofnum) - 1);
+                            }
+                            else if (relust == "3") {
+                               
+                                layer.msg("亲自己不需要关注自己的！", { time: 1600 });
+                            }
+
+                        } else {
+                        
+                            layer.msg("关注失败！", { time: 1600 });
+                        }
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+        } else {
+             
+            layer.confirm('登录后才可以加关注？', {
+                btn: ['登录', '不登录'] //按钮
+            }, function () {
+                window.location = "/Login/Login?ReturnUrl=" + '/YogisModels/Details/' + $("#hidid").val();// 新窗口
+            });
+
+        }
+
+    };
+</script>
+     <script type="text/javascript">        
+         //赞
+         function Zan() {
+             var hidid = $("#hidid").val();//导师id
+             var hhid = $("#hhid").val();//登录id
+             if (hhid != '' && hhid != 0) {
+                 $.ajax({
+                     url: "/tZanModels/Create",
+                     type: "post",
+                     dataType: "json",
+                     data: { uid: hidid },
+                     success: function (data) {
+                         if (data.code == 0) {
+                             //zanplus({id:eid,style: 'font-weight:bold;', endSize: "60px",  interval:800 });
+                             //刷新
+                             //window.location.reload();
+                             var onum = $("#tuijianNUms").html();
+                             var nnum = (parseInt(onum) + 1);
+                             var ofnum = $(".lb_name_div ul li").eq(2).children("p").text();
+                             $(".lb_name_div ul li").eq(2).children("p").text(parseInt(ofnum) + 1);
+                             $("#tuijianNUms").html(nnum);
+                             $("#teachzan").html("已推荐").removeAttr("href");
+                         }
+                         else if (data.code == 2) {
+                           
+                             layer.msg("您已经推荐过此导师了！", { time: 1600 });
+                         }
+                         else {
+                           
+                             layer.msg("推荐失败！", { time: 1600 });
+                         }
+
+                     },
+                     error: function () {
+                     
+                         layer.msg('服务器错误！' + data.code, { time: 1600 });
+                     },
+                     async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                 });
+             }
+             else {
+                 
+                 layer.confirm('登录后才可以点赞？', {
+                     btn: ['登录', '不登录'] //按钮
+                 }, function () {
+                     window.location = "/Login/Login?ReturnUrl=" + '/YogisModels/Details/' + $("#hidid").val();// 新窗口
+                 });
+             }
+
+         }
+         //回复发表
+         function btnFaBiaor(FromUid, id) {
+             var hhid = $("#hhid").val();
+             if (hhid != '' && hhid != 0) {
+                 var itemid = "#FabiaoContent" + id;
+                 $.ajax({
+                     url: "/YogaUserDetail/AddFaBiaoInfo",
+                     type: "post",
+                     // dataType: "json",
+                     data: {
+                         Uid: FromUid,
+                         sContent: $(itemid).val(),
+                         parentID: id
+                     },
+                     success: function (data) {
+                        
+                         if (parseInt(data.code) == 0) {
+                             //location.href = '/YogisModels/Details/' + $("#hidid").val();
+                             $(itemid).val("");
+                             window.location.reload();
+                         } if (parseInt(data.code) === 2) {
+                            
+                             layer.msg('该信息已经存在', { time: 1600 });
+                         }
+                         else {
+                             
+                         }
+                     },
+                     async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                 });
+             } else {
+                 
+                 layer.confirm('登录后才可以回复？', {
+                     btn: ['登录', '不登录'] //按钮
+                 }, function () {
+                     window.location = "/Login/Login?ReturnUrl=" + '/YogisModels/Details/' + $("#hidid").val();// 新窗口
+                 });
+             }
+         }
+         //赞特效
+         function zanplus(options) {
+             options = $.extend({
+                 str: "+1",
+                 startSize: "14px",
+                 endSize: "40px",
+                 interval: 500,
+                 color: "red",
+                 style: "",
+                 callback: function () { }
+             }, options);
+             $("body").append("<span class='tips_box' style='" + options.style + "'>" + options.str + "</span>");
+             var box = $(".tips_box");
+             var self = $("#zan" + options.id);
+             var top = self.offset().top;
+             var left = self.offset().left + self.width() / 2 - box.width() / 2;
+             box.css({
+                 "position": "absolute",
+                 "top": top,
+                 "left": left,
+                 "font-size": options.startSize,
+                 //"font-weight": "bold",
+                 "color": options.color
+             });
+             box.animate({
+                 "top": top - self.height() / 2,
+                 "opacity": 0,
+                 "font-size": options.endSize
+             }, options.interval, function () {
+                 box.remove();
+                 options.callback();
+             });
+         }
+
+         this.imagePreview = function () {
+             /* CONFIG */
+
+             xOffset = 10;
+             yOffset = 30;
+
+             // these 2 variable determine popup's distance from the cursor
+             // you might want to adjust to get the right result
+
+             /* END CONFIG */
+             $("a.preview").hover(function (e) {
+                 var middleimg = $(this).attr("middlesrc");
+                 this.t = this.title;
+                 this.title = "";
+                 var c = (this.t != "") ? "<br/>" + this.t : "";
+                 $("body").append("<p id='preview'><img src='" + middleimg + "' alt='' />" + c + "</p>");
+                 $("#preview")
+                     .css("top", (e.pageY - xOffset) + "px")
+                     .css("left", (e.pageX + yOffset) + "px")
+                     .fadeIn("fast");
+             },
+             function () {
+                 this.title = this.t;
+                 $("#preview").remove();
+             });
+             $("a.preview").mousemove(function (e) {
+                 $("#preview")
+                     .css("top", (e.pageY - xOffset) + "px")
+                     .css("left", (e.pageX + yOffset) + "px");
+             });
+         };
+    </script>
+    <script type="text/javascript">
+
+        function over(obj) {
+            obj.style.background = "#ffaa00";
+        }
+
+        function out(obj) {
+            obj.style.background = "#FFFFFF";
+        }
+        function selface(obj) {
+            parent.InsertFace2(obj); //插入推荐表情
+            parent.InsertFace(obj); //插入留言表情
+            parent.HideFaceSheet(); //隐藏表情框
+
+        }
+        // 函数： InsertFace
+        // 参数： obj
+        // 功能： 表情
+        function InsertFace(obj) {
+            var imgpath = obj.src;
+            var imgalt = obj.alt;
+            var txtEdit = $('#sContent2');
+            //var strHtml = "<img src='" + imgpath + "' alt='" + imgalt + "'/>";
+            var msg = $('#sContent2').html();
+            //txtEdit.html(msg + strHtml);
+            txtEdit.html(msg);
+            txtEdit.focus();
+        }
+        function InsertFace2(obj) {
+            var imgpath = obj.src;
+            var imgalt = obj.alt;
+            var txtEdit = $('#sContent');
+            //var strHtml = "<img src='" + imgpath + "' alt='" + imgalt + "'/>";
+            var msg = $('#sContent').html();
+            //txtEdit.html(msg + strHtml);
+            txtEdit.html(msg);
+            txtEdit.focus();
+        }  
+      
+
+        //发表删除
+        function delFaBiao(id) {
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                if (confirm("确认删除吗？")) {
+                    $.ajax({
+                        url: "/YogaUserDetail/delFaBiao",
+                        type: "post",
+                        dataType: "json",
+                        data: { id: id },
+                        success: function (data) {
+                            if (data.code === 0) {
+                                //刷新
+                                window.location.reload();
+
+                            }
+                            else {
+                            
+                                layer.msg('删除失败', { time: 1600 });
+                            }
+
+                        },
+                        async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                    });
+                }
+            }
+            else {
+                
+                layer.confirm('登录后才可以删除？', {
+                    btn: ['登录', '不登录'] //按钮
+                }, function () {
+                    window.location = "/Login/Login?ReturnUrl=" + '/YogisModels/Details/' + $("#hidid").val();// 原来窗口
+                });
+            }
+        }
+        //删除图片
+        function delImg(divid) {
+            $("#aa" + divid).hide();
+            var strsrc = $("#bb" + divid).attr("src") + ";";
+            $("#iNums").val(parseInt($("#iNums").val()) - 1);
+            $("#imgspan").html(Number(parseInt($("#iNums").val())) + "/5");
+            var strRep = $("#Diploma").val().replace(strsrc, '');
+            document.getElementById('Diploma').value = strRep;
+            if ($("#iNums").val() == 0) {
+                $("#imgspan").hide();
+            }
+
+            //更新uploadLimit
+            var uploadLimit = $('#fileDiploma').uploadify('settings', 'uploadLimit');
+            $('#fileDiploma').uploadify('settings', 'uploadLimit', ++uploadLimit);
+        }
+    </script>
+    <script src="~/Content/baiduAdd.js"></script>
+</head>
+<body> 
+    <input type="hidden"id="hidbl" value="@bl" />
+    <div class="lb_index">
+        @Html.Partial("_OtherTopInfo") 
+
+        <div class="lb_School_index" style="background: #fff">
+            <div class="lb_School_index_top">
+                <div class="lb_School_index_top_index">
+                    <b>您所在位置：<a href="/">首页</a> >  <a href="/YogisModels">瑜伽导师</a>  >&nbsp;&nbsp;</b><span>瑜伽导师个人主页</span>
+                                </div>
+            </div>
+            @{
+                var strImg = "/Content/Front/images/my.png";
+                if (!string.IsNullOrEmpty(listGroup.CoverImg))
+                {
+                    strImg = listGroup.CoverImg.Split(',')[0];
+                }
+
+            }
+            <div class="lb_myindex" style="background: url(@strImg) no-repeat;">
+                <div class="lb_myindex_div">
+                    <div class="lb_myindex_div_left">
+                        <div class="lb_myindex_div_left_top">
+                            @{
+                                string drscr = method.DisplayImg(listGroup.DisplayImg); 
+                            }
+                           <a href="/YogisModels/Details/@ViewBag.id"><img src="@drscr" /></a>
+                            <ul>
+                                <li>@ViewBag.NickName
+                                    @{
+                                        string rscr = null;
+                                        if (listGroup.Gender == 0)
+                                        {
+                                            rscr = "/Content/Front/images/women.png";
+                                        }
+                                        else
+                                        {
+                                            rscr = "/Content/Front/images/men.png";
+                                        }
+                                }
+                                <img src="@rscr" />
+                                </li>
+                                <li id="lb_mao">
+                                    @if (ViewBag.isfollow == false && ViewBag.user.Uid != ViewBag.strUid)
+                                    {
+                                        <a id="flowuid" onclick="flowuid('@ViewBag.strUid')">
+                                            +关注
+                                        </a>
+                                    }
+                                    else if (ViewBag.isfollow == true)
+                                    {
+                                        <a id="flowuid" onclick="flowuid('@ViewBag.strUid')">
+                                            @*<input type="button" value="已关注" class="input2" />*@
+                                            已关注
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a id="flowuid" onclick="flowuid('@ViewBag.strUid')">
+                                            +关注
+                                        </a>
+                                    }
+                                    <input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+                                </li>
+
+                            </ul>
+                        </div>                      
+                         
+                </div>
+                 
+               
+            </div>
+        </div>
+
+            <div class="lb_index_gulu" style="width:1200px; margin:0px auto">
+                <div class="lb_add_div_new">
+                    <div class="lb_myindex_div_left_center lb_myindex_div_left_center_gu">
+                        <ul>
+                            <li>
+                                @{
+                                    if (listGroup.YogisLevel == 1)
+                                    {
+                                        //  @:初级
+                                        <img src="~/Content/Front/images/cjds.png" />
+                                    }
+                                    if (listGroup.YogisLevel == 2)
+                                    {
+                                        //@:中级
+                                        <img src="~/Content/Front/images/zjds.png" />
+                                    }
+                                    if (listGroup.YogisLevel == 3)
+                                    {
+                                        //  @:高级
+                                        <img src="~/Content/Front/images/gjds.png" />
+                                    }
+                                    if (listGroup.YogisLevel == 4)
+                                    {
+                                        // @:大师
+                                        <img src="~/Content/Front/images/ds.png" />
+                                    }
+                                    if (listGroup.YogisLevel == 5)
+                                    {
+                                        // @:资深
+                                        <img src="~/Content/Front/images/zishengdaoshi.jpg" />
+                                    }
+                                    if (listGroup.YogisLevel == 6)
+                                    {
+                                        // @:知名
+                                        <img src="~/Content/Front/images/zhimindaoshi.jpg" />
+                                    }
+                                }
+                            </li>
+                            <li>
+                                <span>     @ViewBag.YogaTypeid      </span>
+                            </li>
+                            <li class="lb_address">
+                                <span>    @ViewBag.AddRessName</span>
+                            </li>
+                        </ul><br /> <br />
+                        <p>@listGroup.GudWords  &nbsp;</p>
+                    </div>
+                    <div class="lb_myindex_div_left_center_lu">
+                        <div class="lb_name_div" style="width:auto">
+                            <ul>
+                                <li>
+                                    <p>@ViewBag.iCount</p>
+                                    @if (ViewBag.user.Uid == ViewBag.id)
+                                    {
+                                        <a href="/YogaUser/FollowList">关注</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="/YogaUser/otherFollowList/@ViewBag.id">关注</a>
+                                    }
+                                </li>
+                                <li>
+                                    <p>
+                                        @{
+                                        string fcount = null;
+                                        if (ViewBag.FCount == null)
+                                        {
+                                            fcount = "0";
+                                        }
+                                        else
+                                        {
+                                            fcount = @ViewBag.FCount.ToString();
+                                        }
+                                    }
+                                    @fcount
+                                </p>
+                                @if (ViewBag.user.Uid == ViewBag.id)
+                                {
+                                    <a href="/YogaUser/FollowList">粉丝</a>
+                                }
+                                else
+                                {
+                                    <a href="/YogaUser/otherFollowList/@ViewBag.id?typeid=4">粉丝</a>
+                                }
+                            </li>
+                            <li style="border:0px">
+                                <p>@ViewBag.rcount</p>
+                                <a>人气</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+</div>
+
+
+
+
+        <div class="lb_myindex_mjianjie">
+            <div class="lb_myindex_mjianjie_left" style="margin-top:0px">
+                 <div class="lb_myindex_wz_hd_left_ul" style="height:104px"> 
+                    <p>@Html.Raw(listGroup.YogisDepict)</p>
+                     <a>
+                         <img src="~/Content/Front/images/iconfont-icon.png" />
+                     </a>
+                </div>
+                <div class="lb_myindex_mjianjie_left_img">
+                    @if (ViewBag.user.Uid == ViewBag.id)
+                    {
+                        <h2>瑜伽圈<a href="/YogaUser/FollowList">更多..</a></h2>
+                    }
+                    else
+                    {
+                        <h2>瑜伽圈<a href="/YogaUser/otherFollowList/@ViewBag.id">更多..</a></h2>
+                    } 
+                    <div class="div">
+                        @foreach (var item in ViewBag.list2Group)
+                        {
+                            var scr = "/Content/Front/images/defaultImg.png";
+                            
+                            <a href="@item.userurl@item.uid">
+                            <img src="@(!string.IsNullOrEmpty(item.spic) ? item.spic : scr)" width="90"  />
+                            </a>
+                        }
+                    </div>
+                </div>
+                <div class="lb_myindex_mjianjie_left_img" style="">
+                    @if(ViewBag.user.Uid == ViewBag.id)
+                    {
+                    <h2>@(Gender)的相册<a href="/YogaPic/MyPics" style="">更多..</a></h2>
+                    }
+                    else
+                    {
+                    <h2>@(Gender)的相册<a href="/tWriteLog/OtherPics?id=@ViewBag.id" style="">更多..</a></h2>
+                    } 
+                    <div class="div" id="divmyphoto" style="height:200px;">
+                        @if (ViewBag.listPic != null)
+                        {
+                            foreach (var item in ViewBag.listPic)
+                            {
+                            <a href="#" id="@item.Pid">
+                                <img src="@(item.PictureOriginal == null ? "" : Url.Action("GetImg", new { url = item.PictureOriginal }))" />
+                            </a>
+                            }
+                            if ((ViewBag.listPic).Count == 7)
+                            {
+                                <div id="picrightdiv">
+                                    <p>更多伽图</p>
+                                </div>
+
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="lb_myindex_mjianjie_left_img">
+                 
+                    <div class="leftLoops">
+                        <div class="lb_index_yujia_idnex_l_bot11">
+                            <div class="hd">
+                                <h2>所在会馆</h2>
+                                <a class="next top"></a>
+                                <a class="prev bottom"></a>
+                            </div>
+                        </div>
+                        <div class="bd">
+                            <div class="tempWrap" style="overflow:hidden; position:relative; width:610px">
+                                <ul style="width: 1830px; position: relative; overflow: hidden; padding: 0px; margin: 0px; left: -610px;">
+                                    @{
+                                        int iCenters = listCenters.Count / 2;
+                                        for (int j = 0; j < iCenters; j++)
+                                        {
+                                            <li style="float: left; width: 405px;">
+                                                @for (int i = j * 2; i < (j + 1) * 2; i++)
+                                                {
+                                                    <div class="lb_add_img_img_div">
+                                                        <a href="/Mechanism/Details/@listCenters[i].CenterId"><img src="@listCenters[i].CenterPortraint" /></a>
+                                                        <div class="lb_add_new_img_hide">
+                                                            <p><a href="/Mechanism/Details/@listCenters[i].CenterId">@listCenters[i].CenterName</a></p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </li>
+                                        }
+                                        if (listCenters.Count % 2 < 2 && listCenters.Count % 2 > 0)
+                                        {
+                                            <li style="float: left; width: 405px;">
+                                                @{
+                                                    int beinum = listCenters.Count / 2;
+                                                    for (int i = 0; i < listCenters.Count % 2; i++)
+                                                    {
+                                                        var lmindex = beinum * 2 + i;
+
+                                                        <div class="lb_add_img_img_div">
+                                                            <a href="/Mechanism/Details/@listCenters[lmindex].CenterId"><img src="@listCenters[lmindex].CenterPortraint" /></a>
+                                                            <div class="lb_add_new_img_hide">
+                                                                <p>@listCenters[lmindex].CenterName</p>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                }
+                                            </li>
+                                        }
+                                         
+                                    }
+                          
+                                </ul>
+                            </div>
+                        </div>
+                        <script type="text/javascript">jQuery(".leftLoops").slide({ mainCell: ".bd ul", effect: "leftLoop", prevCell: ".prev,.prev1", nextCell: ".next,.next1", vis: 1, scroll: 1, autoPlay: false });</script>
+
+                    </div>
+
+                </div>
+            </div>
+            <div class="lb_myindex_mjianjie_right" style="margin-top:10px!important">
+                <div class="lb_myindex_wz_hd_left_top">
+                    <p>@(Gender)的日志</p>
+                            @if(ViewBag.user.Uid == ViewBag.id)
+                            {
+                                <span>
+                                    <a href=""></a>
+                                </span>
+                                <a href="/tWriteLog/logIndex?page=1">更多...</a>
+                            }
+                            else
+                            {
+                                <a href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">更多...</a>
+                            }
+                </div>
+                <ul>
+                                @if (ViewBag.listLog != null)
+                                { 
+                                        foreach (var item in ViewBag.listLog)
+                                        {
+                                            <li><a href="/tWriteLog/OtherDetails/@item.entity.ID?uid=@ViewBag.id" >·
+                                            @{
+                                                if (item.entity.sTitle != null)
+                                                {
+                                                    if (item.entity.sTitle.Length > 30)
+                                                    { 
+                                                @item.entity.sTitle.Substring(0, 30)
+                                                    }
+                                                    else
+                                                    { 
+                                                @item.entity.sTitle
+                                                    }
+                                                }
+                                            }
+                                    </a></li>
+                                        }
+
+                                     
+                                }
+
+                            </ul>
+                 <div class="lb_myindex_wz_hd_right_top" style="margin-top:-3px; margin-bottom:7px">
+                    <p>@(Gender)的活动</p>
+                    @*<input type="button" value="" />*@
+                     <a href="/class/addactivity" class="lb_a">发起活动</a>
+                    @if (ViewBag.user.Uid == ViewBag.id)
+                    {
+                        <a href="/tWriteLog/MyOtherClass">更多...</a>
+                    }
+                    else
+                    {
+                        <a href="/tWriteLog/OtherClass?uid=@ViewBag.id">更多...</a>
+                    } 
+                </div>
+                <div class="lb_myindex_wz_hd_right_img" style="height:198px;">
+                    @foreach (var item in ViewBag.classlist)
+                    {
+                        if (item.EndTime > DateTime.Now || string.IsNullOrWhiteSpace(item.MessageDes))
+                      { 
+                        <div class="lb_myindex_wz_hd_right_img_div">
+                            <a href="/class/viewactivity?id=@item.Id">
+                                <img src="@item.Banner" width="184" height="125" />
+                            </a>
+                            <div class="lb_myindex_wz_hd_right_img_hide">
+                                <a href="/class/viewactivity?id=@item.Id">@item.Name</a>
+                            </div>
+                        </div>
+                      }
+                      else
+                      {
+
+                        <div class="lb_myindex_wz_hd_right_img_div">
+                            <a href="/class/ActivityReportDetailsPage?id=@item.Id&&classReportId=-99">
+                                <img src="@item.Banner" width="184" height="125" />
+                            </a>
+                            <div class="lb_myindex_wz_hd_right_img_hide">
+                                <a href="/class/ActivityReportDetailsPage?id=@item.Id&&classReportId=-99">@item.Name</a>
+                            </div>
+                        </div>
+                      }
+                    }
+                </div>
+
+                <div class="lb_new_add_idnex_div">
+                    <div class="leftLoopss">
+                        <div class="lb_index_yujia_idnex_l_bot111">
+                            <div class="hd">
+                                <h2>对@(Gender)有影响的导师</h2>
+                                <a class="next1 top"></a>
+                                <a class="prev1 bottom"></a>
+                            </div>
+                        </div>
+                        <div class="bd">
+                            <div class="tempWrap" style="overflow:hidden; position:relative; width:610px">
+                                <ul style="width: 1830px; position: relative; overflow: hidden; padding: 0px; margin: 0px; left: -610px;">
+                                  @{
+                                      int yingciang = listModels.Count / 5;
+                                      for (int j = 0; j < yingciang; j++)
+                                      {
+                                            <li style="float: left; width: 785px;">
+                                                @for (int i = j * 5; i < (j + 1) * 5; i++)
+                                                {
+                                                    string disimg = method.DisplayImg(listModels[i].DisplayImg);
+                                                    var realName = listModels[i].RealName;
+
+                                                    if (realName.Length > 4)
+                                                    {
+                                                        realName = realName.Substring(0, 4) + "...";
+                                                    }
+                                                    if (listModels[i].YogisLevel == 4)
+                                                    {
+                                                        <div class="lb_add_img_img_div2">
+                                                            <a title="@listModels[i].RealName" href="/YogaGuru/Details/@listModels[i].UID"><img src="@disimg" /></a>
+                                                            <div class="lb_add_new_img_hide2">
+                                                                <p><a title="@listModels[i].RealName" href="/YogaGuru/Details/@listModels[i].UID">@realName</a></p>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="lb_add_img_img_div2">
+                                                            <a title="@listModels[i].RealName" href="/YogisModels/Details/@listModels[i].UID"><img src="@disimg" /></a>
+                                                            <div class="lb_add_new_img_hide2">
+                                                                <p><a title="@listModels[i].RealName" href="/YogisModels/Details/@listModels[i].UID">@realName</a></p>
+                                                            </div>
+                                                        </div>
+                                                    }
+
+                                                }
+                                            </li>
+                                      }
+                                      if (listModels.Count % 5 < 5 && listModels.Count % 5 > 0)
+                                      {
+                                        <li style="float: left; width: 785px;">
+                                           @{
+                                          int beinum = listModels.Count / 5;
+                                          for (int i = 0; i < listModels.Count % 5; i++)
+                                          {
+                                              var lmindex = beinum * 5 + i;
+                                              string disimg = method.DisplayImg(listModels[lmindex].DisplayImg);
+                                              var realName = listModels[lmindex].RealName;
+
+                                              if (realName.Length > 4)
+                                              {
+                                                  realName = realName.Substring(0, 4) + "...";
+                                              }
+                                              if (listModels[i].YogisLevel == 4)
+                                              {
+                                                <div class="lb_add_img_img_div2">
+                                                    <a title="@listModels[i].RealName" href="/YogaGuru/Details/@listModels[i].UID"><img src="@disimg" /></a>
+                                                    <div class="lb_add_new_img_hide2">
+                                                        <p><a title="@listModels[i].RealName" href="/YogaGuru/Details/@listModels[i].UID">@realName</a></p>
+                                                    </div>
+                                                </div>
+                                              }
+                                              else { 
+                                                <div class="lb_add_img_img_div2">
+                                                    <a title="@listModels[lmindex].RealName" href="/YogisModels/Details/@listModels[lmindex].UID"><img src="@disimg" /></a>
+                                                    <div class="lb_add_new_img_hide2">
+                                                        <p><a title="@listModels[lmindex].RealName" href="/YogisModels/Details/@listModels[lmindex].UID">@realName</a></p>
+                                                    </div>
+                                                </div>
+                                           }
+                                            }
+
+                                        }
+                                        </li>
+                                      }
+}
+                                           
+ @*<li style="float: left; width: 785px;">
+
+     </li>
+
+    <li style="float: left; width: 785px;">
+
+     </li>
+
+     <li style="float: left; width: 785px;">
+
+     </li>*@
+                                </ul>
+                            </div>
+                        </div>
+                        <script type="text/javascript">jQuery(".leftLoopss").slide({ mainCell: ".bd ul", effect: "leftLoop", prevCell: ".prev,.prev1", nextCell: ".next,.next1", vis: 1, scroll: 1, autoPlay: false });</script>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        @*<div class="lb_myindex_wz_hd">
+            <div class="lb_myindex_wz_hd_left">
+               
+            </div>
+            <div class="lb_myindex_wz_hd_right">              
+            </div>
+        </div>*@
+            @*相似老师*@
+            <div class="lb_addnew_xsls">
+                @Html.Partial("SimilarTeacher") 
+            </div>
+
+            <div class="lb_School_dzdp">
+                <p>伽人留言</p>
+            </div>
+            <div class="lb_School_pinglun">
+                <div class="lb_School_pinglun_tab">
+                    <ul>
+                        <li tid="0" class="li">留言(@ViewBag.mcount)</li>
+                       <li tid="1"><span>推荐</span><span>(</span><span id="tuijianNUms" >@ViewBag.rcount</span><span>)</span></li>
+                    </ul>
+                     <input type="hidden" id="levelid" name="levelid" />
+                </div>
+                <div class="lb_School_textarea" >
+                    <textarea rows="6" cols="130" id="sContent2" name="sContent2"></textarea>
+                   
+                    <div class="lb_School_textarea_div">
+                        <a href="javascript:" class="emotion" id="emotion">添加表情</a>
+                        <div class="lb_School_textarea_div_right">
+                            <p><a id="amsg">0</a>/500</p>
+                            <input type="button" id="btnMsg" totype="0" value="留言" />
+                            <input type="hidden" id="hidid" name="hidid" value="@ViewBag.id" />
+                            @*hidType=1 表示习练者/导师 ToUid=Toid ;否则不同*@　
+                            <input type="hidden" id="hidType" name="hidType" value="1" />
+                        </div>
+                    </div>
+                     <!--原来位置-->
+             @*  @if (ViewBag.Msg != null)
+               {赞(<b id="tuijianNUms">@ViewBag.tzancount</b>)
+                <div class="lb_School_qbpl">
+                    <p>全部留言(@ViewBag.mcount)</p>
+                </div>
+                    <div id="mydiv"style="float:right">               
+                @Html.Partial("PartialRec", Model)
+                </div>                  
+                  
+               }*@
+                </div>
+                <div class="lb_School_textarea" style="display:none">
+                    <textarea rows="6" cols="130" id="sContent" name="sContent"></textarea>
+                    <div class="lb_School_textarea_div">
+                        <a href="javascript:;" id="idrec" class="emotion">添加表情</a> 
+                 <div style="float:left;margin-left:20px; width:600px; margin-left:0 auto;">
+                      <input id="fileDiploma" name="fileDiploma" type="file" style="" value="" />
+                        <div id="divImgDiploma" style=" height:40px; min-height:40px;  margin-top:10px; float:left;  "></div>
+                        <div id="imgspan"></div>
+                        <input id="Diploma" name="Diploma" type="hidden" value="" />
+                        <input id="PictureContent" name="PictureContent" type="hidden" value="" />
+                        <input id="iNums" name="iNums" type="hidden" value="" />
+                        <input id="iNums2" name="iNums2" type="hidden" value="" />
+                </div>
+                        <div class="lb_School_textarea_div_right">
+                          @*  <a id="teachzan" href="javascript:Zan();" title="点赞">
+                                <img src="~/Content/Front/images/dazan.png" /></a>*@
+                            <p><a id="arec">0</a>/500</p>
+                            <input type="button" id="btnrec" totype="1" value="推荐" />                            
+                        </div>
+                    </div>                    
+             
+                <div id="upordowndiv" style=" display:none;"><a href="javascript:void()">我要晒图</a></div>
+              <!--原来位置-->
+                </div>                 
+                @*<div class="lb_School_qbpl"> 
+                   
+                </div>*@
+                 <div id="mydiv"style="float:right">               
+                @Html.Partial("PartialRec", Model)
+                </div>
+                            
+
+            </div>
+
+    </div>
+</div>   
+</body>
+     
+     @{Html.RegisterMvcPagerScriptResource();}
+</html>

@@ -1,0 +1,30 @@
+﻿@model IEnumerable<IYogaKoo.ViewModel.ViewYogaUser>
+
+<div style="width:660px;">
+    <div class="content-box" style="padding-bottom:10px;">
+        <div class="content-box-content">
+            <div class="search-teacher">
+                <label style="display:initial;">导师的姓名：</label><input type="text" class="text-input small-input" />                    <input type="button" class="button" onclick="return GetTeachers();" value="查询" style="height:auto;"/>
+            </div>
+            <div class="teacher-wall">
+                <table class="data-table" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <td>编号</td>
+                            <td style="width:60px;">头像</td>
+                            <td style="width:60px;">姓名</td>
+                            <td>性别</td>
+                            <td>国籍</td>
+                            <td style="width:180px;">流派</td>
+                            <td style="min-width:60px;"></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+                <div id="pageBox"></div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,67 @@
+﻿@model IYogaKoo.ViewModel.ViewEvaluatesGroup
+
+@{
+    ViewBag.Title = "评价详细";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">评价信息</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+
+            <p>
+               编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：@Html.DisplayFor(model => model.entity.Evaluateid)
+            </p>
+            <p>
+               评&nbsp;&nbsp;论&nbsp;&nbsp;人：@Html.DisplayFor(model => model.FromUser)
+            </p> 
+
+            <p>
+               会馆名称：@Html.DisplayFor(model => model.CetnerName)
+            </p> 
+            <p>
+                评论内容：@Html.DisplayFor(model => model.entity.EContent)
+            </p>
+            <p>
+                状&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;态：@Html.ActionLink((Model.entity.iShow == 0 ? "显示" : "隐藏"), "UpdateEvalComm2", new { id = Model.entity.Evaluateid })
+            </p>
+            <p>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;赞：@Html.DisplayFor(model => model.entity.iZan)
+            </p>
+            <p>
+               创建日期：@Html.DisplayFor(model => model.entity.CreateDate)
+            </p> 
+            <p>
+                @{ 
+                    if (Model.entity.Pic != null)
+                    {
+                        string[]  tempimg = Model.entity.Pic.Split(';');
+                        for (int i = 0; i < tempimg.Length; i++)
+                        {
+                            if (!string.IsNullOrEmpty(tempimg[i]))
+                            {
+                                <img src="@tempimg[i].Replace("/2/","/2/Middle/")" />
+                            }
+                        }
+
+                    }
+                    }
+                
+                </p> 
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("删除", "DeleteEval", new { id = Model.entity.Evaluateid }, new { onclick = "return confirm('确认删除吗？')" }) |
+    @Html.ActionLink("返回", "IndexEval")
+</p>
+ 

@@ -1,0 +1,282 @@
+﻿@model List<IYogaKoo.ViewModel.ViewClass>
+
+@{
+    ViewBag.Title = "我的相册";
+    Layout = "~/Views/Shared/ModelsDetails.cshtml";
+}
+@section styles
+{
+    <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+    <style type="text/css">
+        /*瀑布流*/
+        .wrapper2 img {
+            border: none;
+        }
+
+        .wrapper2 {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+            .wrapper2 h3 {
+                color: #3366cc;
+                font-size: 16px;
+                height: 35px;
+                line-height: 1.9;
+                text-align: center;
+                border-bottom: 1px solid #E5E5E5;
+                margin: 0 0 10px 0;
+            }
+
+        #con1_12 {
+            position: relative;
+        }
+
+            #con1_12 .product_list2 {
+                position: relative;
+                left: 0px;
+                top: 0px;
+                padding: 10px;
+                background: #eee;
+                margin: 5px;
+            }
+
+        .product_list2 img {
+            width: 200px;
+        }
+
+        .product_list2 p {
+            padding: 2px 0px;
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+            white-space: normal;
+            width: 200px;
+            word-break: break-all;
+            text-align: left;
+        }
+        /*.lb_gr_xc_left
+        {width:250px;}*/
+        .lb_gr_xc_left ul {
+            width: 260px;
+        }
+
+            .lb_gr_xc_left ul li {
+                line-height: 35px;
+                width: 260px;
+            }
+
+                .lb_gr_xc_left ul li a {
+                    font-size: 14px;
+                    color: #333;
+                    width: 200px;
+                    height: 40px;
+                    line-height: 40px;
+                    display: block;
+                }
+
+                    .lb_gr_xc_left ul li a span {
+                        float: right;
+                        margin-right: 58px;
+                    }
+
+                    .lb_gr_xc_left ul li a.a1, .lb_gr_xc_left ul li a.a2, .lb_gr_xc_left ul li a.a3 {
+                        background-position-y: 5px;
+                    }
+
+        #wrap .box .info .title {
+            width: 273px;
+            height: 40px;
+            margin: 0 auto;
+            line-height: 40px;
+            text-align: left;
+            color: #666;
+            font-size: 18px;
+            /*font-weight: bold;*/
+            overflow: hidden;
+        }
+
+            #wrap .box .info .title a, p {
+                margin-left: 15px;
+            }
+    </style>
+}
+<input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+<div class="lb_gr_idnex_center_rizhi" style=" height: auto;">
+    <div class="lb_gr_xc_left">
+        <ul>
+            <li class="on" val="1"><a class="a4"><b style="float:left; font-weight:100">我发起的活动</b><span>@ViewBag.count1</span></a></li>
+            <li val="2"><a class="a5"><b style="float:left; font-weight:100">我参加的活动</b><span>@ViewBag.count2</span></a></li>
+            <li val="3"><a class="a6"><b style="float:left; font-weight:100">感兴趣的活动</b><span>@ViewBag.count3</span></a></li>
+            <li val="4"><a class="a7"><b style="float:left; font-weight:100">我的订单</b><span>@ViewBag.count4</span></a></li>
+        </ul>
+    </div>
+    <div id="Content" style="float:left; " class="lb_myhuodong">
+        @Html.Partial("MyOtherClassList", Model)
+    </div>
+</div>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+
+        $('.lb_gr_index_top li:eq(2)').children('a').addClass('on').parent().siblings().children('a').removeClass('on');
+
+
+        var  value =GetQueryString("type");
+        $(".lb_gr_xc_left ul li[val="+value+"]").addClass("on").siblings().removeClass("on");
+
+        //左侧导航
+        $(".lb_gr_xc_left ul li").click(function () {
+            var lival = $(this).attr("val");
+            GetClass(lival)
+            $(this).addClass("on").siblings().removeClass("on");
+        });
+    });
+    //获取地址栏参数
+    function GetQueryString(name)
+    {
+        var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+        var r = window.location.search.substr(1).match(reg);
+        if(r!=null)return  unescape(r[2]); return null;
+    }
+    //获取活动内容
+    function GetClass(type)
+    {
+        var url = "/tWriteLog/MyOtherClass?type=" + type + "&r=" + Math.random();
+        if(type==4)
+        {
+            var url = "/tWriteLog/Order?r=" + Math.random();}
+        $.ajax({
+            url: url,
+            beforeSend:function(){
+                $("#Content").html("");
+                layer.msg('加载中', {icon: 16});
+            },
+            success: function (result) {
+                $("#Content").html(result);
+            }
+        });
+    }
+    //删除 0/编辑 1
+    function classDelEdit(iNum, id) {
+        //获取当前活动的类型(创建，参与，兴趣)
+        var classtype = $(".lb_gr_xc_left .on").attr("val");
+
+        if (iNum == 1)//编辑
+        {
+            var index=layer.open({
+                type:2,
+                title:'编辑活动',
+                area:['920px','700px'],
+                content:'/tWriteLog/MyEditClass/'+id,
+                end :function(index){
+                    GetClass(classtype);
+                }
+
+            });
+        }else if(iNum==2)//撤销
+        {
+            layer.confirm("确认要撤销此活动吗？",{icon:3},function(index){
+                layer.close(index);
+                layer.msg('加载中', { icon: 16, time: 10000 });
+                $.ajax({
+                    url: '/tWriteLog/CancleDoClass',
+                    type: 'GET',
+                    data: {
+                        classid: id,
+                        t:Math.random()
+                    },
+                    success: function (data) {
+                        if (data > 0) {
+                            layer.msg("撤销成功", {icon:6,time:1500});
+                            GetClass(classtype);
+                        } else {
+                            layer.alert("该信息不存在或已删除！", { icon: 5 });
+                        }
+
+                    }, error: function () {
+                        layer.alert("撤销失败！", { icon: 5 });
+                    }
+                });
+            })
+
+        }
+        else if (iNum == 0)//删除
+        {
+            layer.confirm("确认要删除吗？", { icon: 3 }, function (index) {
+                layer.close(index);
+
+                if (classtype == 1) {
+                    $.ajax({
+                        url: '/tWriteLog/DelDoClass',
+                        type: 'GET',
+                        data: {
+                            classid: id,
+                            t:Math.random()
+                        },
+                        success: function (data) {
+                            if (data > 0) {
+                                layer.msg("删除成功", {icon:6,time:1500});
+                                GetClass(classtype);
+                            } else {
+                                layer.alert("该信息不存在或已删除！", { icon: 5 });
+                            }
+
+                        }, error: function () {
+                            layer.alert("删除失败！", { icon: 5 });
+                        }
+                    });
+                }
+                else if (classtype == 2) {
+                    //取消参加活动
+                    $.ajax({
+                        url: '/tWriteLog/DelJoinClass',
+                        type: 'Get',
+                        data: {
+                            userid:@ViewBag.id,
+                            classid:id,
+                            t:Math.random()
+                        },
+                        success: function (data) {
+                            if (data != 0) {
+                                layer.msg("撤销成功", {icon:6,time:1500});
+                                GetClass(classtype);
+                            } else {
+                                layer.alert("该信息不存在或已删除！", { icon: 5 });
+                            }
+                        }, error: function () {
+                            layer.alert("撤销失败！", { icon: 5 });
+                        }
+                    });
+                }
+                else if (classtype == 3) {
+                    //取消感兴趣活动
+                    $.ajax({
+                        url: '/tWriteLog/DelInterestClass',
+                        type: 'Get',
+                        data: {
+                            userid:@ViewBag.id,
+                            classid:id,
+                            t:Math.random()
+                        },
+                        success: function (data) {
+                            if (data != 0) {
+                                layer.msg("删除成功", {icon:6,time:1500});
+                                GetClass(classtype);
+                            } else {
+                                layer.alert("该信息不存在或已删除！", { icon: 5 });
+                            }
+                        }, error: function () {
+                            layer.alert("删除失败！", { icon: 5 });
+                        }
+                    });
+                }
+                else {
+                    layer.alert("请正确操作", { icon: 8 });
+                }
+            });
+        }
+
+    }
+</script>

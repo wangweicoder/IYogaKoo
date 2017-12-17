@@ -1,0 +1,150 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtInstationInfo>
+
+@{
+    ViewBag.Title = "站内信";
+    Layout = "~/Views/Shared/_LayoutInstationInfo.cshtml";
+    Commons.Helper.method method = new Commons.Helper.method();
+    IYogaKoo.Client.YogaDicItemServiceClient dicclient = new IYogaKoo.Client.YogaDicItemServiceClient();
+}
+ 
+    <div class="lb_znx_index_top">
+        <b>站内信</b>
+        <ul>
+            <li class="on">站内公告</li>
+            @*<li>收到的评论</li>
+            <li>发出的评论</li>*@
+        </ul>
+        @*<div class="lb_add_znx_select">
+            <select>
+                <option>全部</option>
+            </select>
+            <input type="button" value="搜索" />
+        </div>*@
+    </div>
+    <div class="lb_znx_index_bottom">
+        <div class="lb_znx_index_bottom_left">
+             <a href="/tInstationInfo/Index?iType=0" class="on">系统信息</a>
+                <a href="/tInstationInfo/FollowIndex?iType=1">·&nbsp;关注</a>
+                <a href="/tInstationInfo/ZanIndex?iType=2">·&nbsp;赞</a>
+                <a href="/tInstationInfo/MessageIndex?iType=3">·&nbsp;评论</a>
+        </div>
+        <div class="lb_znx_index_bottom_right">
+            <!--系统消息-->
+            
+            <div class="lb_znx_index_bottom_right_div" style="display:block">
+                @{
+                    foreach (var item in Model)
+                    { 
+                        <div class="lb_add_xtxx">
+                            <div class="lb_add_xtxx_left">
+                                @if (item.loginType == 1 || item.loginType == 0)
+                                {
+                                    <a class="a"></a>
+                                } 
+                            </div>
+                            <div class="lb_add_xtxx_right">
+                                <b>@dicclient.GetById(item.iType.Value).ItemName <span>@item.CreateTime</span></b>
+                                <p>@item.sContent</p>
+                            </div>
+                        </div>
+                    }
+                }
+                    
+                </div>
+
+
+            <!--关注-->
+            @*<div class="lb_znx_index_bottom_right_div" style="display:none">
+                    <ul>
+                        <li>
+                            <div class="lb_xtxx_a">
+                                <a></a>
+                            </div>
+                            <div class="lb_xtxx_img">
+                                <img src="images/yj_ds.png" />
+                            </div>
+                            <div class="lb_xtxx_font">
+                                <p><b>你是谁？</b>关注我</p>
+                                <p>9月28日 11:58</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>*@
+
+            <!--赞-->
+            @*<div class="lb_znx_index_bottom_right_div" style="display:none">
+                    <ul>
+                        <li>
+                            <div class="lb_xtxx_a">
+                                <a class="a"></a>
+                            </div>
+                            <div class="lb_xtxx_img">
+                                <img src="images/yj_ds.png" />
+                            </div>
+                            <div class="lb_xtxx_font">
+                                <p><b>你是谁？</b>攒了我的日志</p>
+                                <p><a class="ss">sss</a>关注我关注我关注我关注我关注我关注我关注我关注我</p>
+                                <p>9月28日 11:58</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>*@
+            <!--评论-->
+            @*<div class="lb_znx_index_bottom_right_div" style="display:none">
+                    <div class="lb_add_znx_index">
+                        <ul>
+                            <li>
+                                <div class="lb_xtxx_a">
+                                    <a class="a"></a>
+                                </div>
+                                <div class="lb_xtxx_img">
+                                    <img src="images/yj_ds.png" />
+                                </div>
+                                <div class="lb_xtxx_font">
+                                    <p><b>你是谁？</b>评论了我的日志</p>
+                                    <p><a class="ss">sss</a>关注我关注我关注我关注我关注我关注我关注我关注我</p>
+                                    <p>9月28日 11：58</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="lb_add_znx_index" style="display:none">
+                        <ul>
+                            <li>
+                                <div class="lb_xtxx_a">
+                                    <a class="a"></a>
+                                </div>
+                                <div class="lb_xtxx_img">
+                                    <img src="images/yj_ds.png" />
+                                </div>
+                                <div class="lb_xtxx_font">
+                                    <p>我评论了<b>你是谁？</b>的日志</p>
+                                    <p><a class="ss">sss</a>关注我关注我关注我关注我关注我关注我关注我关注我</p>
+                                    <p>9月28日 11：58</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>*@
+        </div>
+    </div>
+ @section styles{
+    <link href="~/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+}
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    PrevPageText = "上一页",
+    NextPageText = "下一页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a  >{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+}, new MvcAjaxOptions { UpdateTargetId = "Content", HttpMethod = "Post", })
+</div>
+@{Html.RegisterMvcPagerScriptResource();}

@@ -1,0 +1,82 @@
+﻿@model IYogaKoo.ViewModel.ViewClass
+@{
+    ViewBag.Title = "上传活动海报";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link href="~/Content/front/css/activity.css" rel="stylesheet" />
+}
+@section scripts{
+
+<link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+<script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+<script src="~/Content/Front/js/activity.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#select-file').uploadify(uploadifySetting);
+        });
+</script>
+    }
+
+<input type="hidden" id="classId" value="@Model.Id"/>
+<div class="lb_School_index">
+    <div class="lb_School_index_top">
+        <div class="lb_School_index_top_index">
+            <!-- <b>您所在位置：</b><span>机构</span> -->
+            <ul>
+                <li><a href="" class="on">达人</a></li>
+                <li><a href="">活动</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="lb_hd_index">
+        <div class="lb_hb_faqi">
+            <div class="lb_hd_faqi_left">
+                <div class="lb_hd_faqi_left_top">
+                    <h1>发起活动</h1>
+                    <p>
+                        三步走&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a>1. 填写活动信息</a>&nbsp;>
+                        <a class="on">2. 上传活动海报 </a>&nbsp;>
+                        <a>3. 提交活动</a>
+                    </p>
+                </div>
+                <div class="lb_hd_faqi_left_bottom">
+                    <div class="lb_hd_faqi_left_bottom_left" id="uploaded-image">
+                        <img src="@Model.Banner"/>
+                    </div>
+                    <div class="lb_hd_faqi_left_bottom_right">
+                        <p>从电脑中选择你喜欢的照片:</p>
+                        <p class="p">你可以上传JPG、JPEG、GIF、PNG或BMP文件。</p>
+                        <p>
+                            <input type="button" id="select-file" value="选择文件" style="float:left;width:180px;"/>@*<span id="progress"></span>*@
+                        </p>
+                        <p class="p1">
+                            <input type="button" value="以后再说" class="p2" onclick="window.location.href = '/Class/AddActivityView?id=@Model.Id'"/>
+                        </p>
+                    </div>
+                </div>
+                <div class="lb_hd_faqi_left_bottom_button">
+                    <input type="button" value="下一步" id="save-banner"/>
+                </div>
+            </div>
+
+            <div class="lb_hd_faqi_right">
+                <div class="lb_hd_faqi_right_top">
+                    <b>请确保您的活动符合法律规定：</b>
+                    <p>按照相关法律规定，营业性演出活动需取得国家行政部门审批，请确保你的活动已经获得相关资质及许可。未获上述批准的活动将被依法删除，且由此造成的后果须由活动举办方自行承担。</p>
+                    <b>注意事项：</b>
+                    <a href="">什么是合适的同城活动？</a>
+                    <a href="">何才能让你的活动更吸引人？</a>
+                    <a href="">什么是合适的同城活动？</a>
+                    <a href="">何才能让你的活动更吸引人？</a>
+                    <a href="">什么是合适的同城活动？</a>
+                    <a href="">何才能让你的活动更吸引人？</a>
+                    <a href="">什么是合适的同城活动？</a>
+                    <a href="">何才能让你的活动更吸引人？</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

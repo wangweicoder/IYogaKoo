@@ -1,0 +1,119 @@
+﻿@{
+    ViewBag.Title = "机构";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewEvaluatesGroup>
+<p>点评</p>
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">审核点评</h3>
+
+        <div class="clear"></div>
+
+    </div>
+    <table>
+        <tr>
+            <th width="30px">
+                编号
+            </th>
+            <th>
+                留言内容
+            </th>
+            <th width="100px">
+                机构
+            </th>
+            <th width="50px">
+                创建人
+            </th>           
+            <th width="50px">
+                状态
+            </th>
+            <th width="50px">
+                赞
+            </th>
+            <th width="100px">
+                创建时间
+            </th>
+            <th width="100px">操作</th>
+
+        </tr>
+
+        @{
+            var index = 1;
+            if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+            {
+                var p = int.Parse(Request.QueryString["page"]) - 1;
+                if (p > 0)
+                {
+                    index = p * 10 + 1;
+                }
+            }
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.entity.Evaluateid
+                </td>
+                <td>
+                    @item.entity.EContent
+                </td>
+                <td>
+                    @item.CetnerName
+                </td>
+                <td>
+                   @item.FromUser
+                </td>
+                <td> 
+                    @Html.ActionLink((item.entity.iShow == 0 ? "显示" : "隐藏"), "UpdateEval", new { id = item.entity.Evaluateid })
+                </td>
+                <td>
+                    @item.entity.iZan
+                </td>
+                <td>
+                    @Convert.ToDateTime(item.entity.CreateDate).ToString("yyyy-MM-dd HH:mm")
+                </td>
+                <td> 
+                    @Html.ActionLink("详情", "DetailEval", new { id = item.entity.Evaluateid }) |
+                    @Html.ActionLink("删除", "DeleteEval", new { id=item.entity.Evaluateid }, new { @class = "adelete" })                 
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>
+
+@section Scripts
+{
+    <script language="javascript">
+            $(function () {
+                $(".adelete").click(function () {
+                    var loc = $(this).attr("href");
+                    if (confirm("确认删除吗？")) {
+                        window.location = loc;
+                    }
+                    return false;
+                });
+            });
+    </script>
+}

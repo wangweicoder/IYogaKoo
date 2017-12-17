@@ -1,0 +1,256 @@
+﻿@*@model IYogaKoo.ViewModel.ViewtLearing*@
+@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtMessageGroup>
+@{
+    ViewBag.Title = "社区";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var learn = ViewBag.learn;
+    var id = ViewBag.id;
+}
+
+<div class="lb_wzinfo_index">
+    <div class="lb_wzinfo_index_left">
+        <div class="lb_wzinfo_index_left_top">
+            <p>精彩文章</p>
+        </div>
+        <div class="lb_wzinfo_index_title">
+            <b>@learn.sTitle</b>
+            <p>[ 作者 ] &nbsp;&nbsp;@(ViewBag.NickName == "" ? "爱瑜珈库" : ViewBag.NickName) [ 时间 ] @learn.CreateDate</p>
+        </div>
+        <div class="lb_wzinfo_index_con">
+            @*<p>[ 关键词 ]</p>
+            <p style=" text-indent:2em">不知道写啥不知道写啥不知道写啥不知道写啥不知道写啥</p>*@
+            <b>[ 内容 ]</b>
+            <p style=" text-indent:2em">@Html.Raw(learn.sContent)</p>
+            <p>
+                <img src="@learn.sPic" />
+            </p>
+        </div>
+        <div class="lb_wzinfo_index_shangxia">
+            <p>@Html.ActionLink("上一篇：" + (string)ViewBag.preTitle, "Details", new { id = ViewBag.pre })</p>
+            <p>@Html.ActionLink("下一篇：" + (string)ViewBag.nextTitle, "Details", new { id = ViewBag.next })</p> 
+        </div>
+        <div class="lb_wzinfo_index_tuijian">
+            <a href="Javascript:iZanNums('@learn.ID')"><span id="iZanNums">@learn.iZanNums</span></a>
+        </div>
+        <div class="lb_wzinfo_index_fx">
+            <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone"></a><a href="#" class="bds_tsina" data-cmd="tsina"></a><a href="#" class="bds_tqq" data-cmd="tqq"></a><a href="#" class="bds_renren" data-cmd="renren"></a><a href="#" class="bds_weixin" data-cmd="weixin"></a></div>
+            <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {}, "image": { "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"], "viewText": "分享到：", "viewSize": "16" }, "selectShare": { "bdContainerClass": null, "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"] } }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+        </div>
+    </div>
+
+    <div class="lb_wzinfo_index_right">
+        <div class="lb_wzinfo_index_right_top">
+            <a href="javascript:AddLearn()"></a>
+        </div>
+        <div class="lb_wzinfo_index_right_font">
+            <p>推荐文章</p>
+        </div>
+        <div class="lb_wzinfo_index_right_ul">
+            <ul>
+                @{
+                    List<IYogaKoo.ViewModel.ViewtLearing> listLearn = ViewBag.listEnity;
+                  
+                    foreach (var item in listLearn)
+                    {
+                        var strTitle = item.sTitle;
+                        if (strTitle.Length > 12)
+                        {
+                            strTitle = strTitle.Substring(0, 12) + "...";
+                        }
+                        <li><a href="/learn/Details/@item.ID" title="@item.sTitle"> · @strTitle</a></li>
+                    }
+                } 
+            </ul>
+        </div>
+        <div class="lb_wzinfo_index_right_ewm">
+            <img src="~/Content/Front/images/weixin.png" />
+        </div>
+    </div>
+</div>
+ <div class="lb_School_dzdp">
+                <p>伽人留言</p>
+            </div>
+            <div class="lb_School_pinglun">
+                <div class="lb_School_pinglun_tab">
+                    <ul>
+                        <li class="li">留言(@ViewBag.rcount)</li>
+                        @*<li>推荐（225）</li>*@
+                    </ul>
+                </div>
+                    
+                <div class="lb_School_textarea">
+                    <textarea rows="6" cols="130" id="sContent" name="sContent"></textarea>
+                    <div class="lb_School_textarea_div">
+                        
+                        <a href="javascript:tabFace();" class="emotion">添加表情</a>
+                        
+                        <div class="lb_School_textarea_div_right">
+                            <p><a>0</a>/500</p>
+                            <input type="button" id="btnMsg" totype="2" value="评论" />
+                            <input type="hidden" id="hidid" name="hidid" value="@ViewBag.id" />
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.MsgInfo != null)
+                {
+                    <div class="lb_School_qbpl">
+                        <p>全部留言(@ViewBag.rcount)</p>
+                    </div>
+                     <div id="mydiv"style="float:right">               
+                @*@Html.Partial("PartialMsg", Model)*@
+                     @Html.Partial("PartialMessage", Model)    
+                </div>
+                }
+            </div>
+<input hidden="hidden" value="@ViewBag.user.Uid" id="hiduid" />
+  
+@section scripts {
+     @{Html.RegisterMvcPagerScriptResource();}
+<script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+    <script src="~/Content/Front/js/jquery.qqFace.js"></script>
+        <script src="~/Content/MsgInfo/msginfo.js"></script>   
+    <script>
+        $(function () {
+            //不可以重复赞
+            $.ajax({
+                url: "/Learn/ifZan",
+                data: { id: '@id' },
+                success: function (data) {
+                    if (data == 0) {
+                        //添加赞
+                       
+                    } else {
+                       // $(".lb_rizhi_zz1 .a1").attr("title", "已赞");
+                        $(".lb_wzinfo_index_tuijian a").addClass("zan");
+                    }
+                }
+            });
+        })
+        //发布文章
+        function AddLearn()
+        {
+            if ($("#hiduid").val() != "" && $("#hiduid").val() != "0") {
+                window.location = '/learn/Create';
+            } else {
+                if (confirm("登录后才可以发布文章!")) { 
+                    window.location = "/Login/Login?ReturnUrl=" + '/learn/Create';// 新窗口
+                }
+            }
+        }
+        //赞（手)
+        function iZanNums(id) {
+            var hiduid = $("#hiduid").val();
+            if (hiduid != '' && hiduid != 0) {
+                $.ajax({
+                    url: "/Learn/iZanHand",
+                    type: "post",
+                    dataType: "json",
+                    data: { id: id },
+                    success: function (data) {
+
+                        if (data.code === 0) {
+
+                            if (data.iCount != 0) {
+                                $("#iZanNums").html(data.iCount);
+                                $(".lb_wzinfo_index_tuijian a").addClass("zan");
+                            }
+                             
+                        } else if (data.code == 2) {
+                            layer.msg("您已经赞过！");
+                        }
+                        else {
+                            layer.msg("赞同失败！");
+                        }
+
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+            else {
+                if (confirm("登录后才可以点赞!")) {
+                    //window.open("/Login/Login");// 来打开新窗口
+                    window.location = "/Login/Login?ReturnUrl=" + '/learn/Details/' + id;// 新窗口
+                }
+            }
+        }
+
+        //评论赞
+        function iZan(id,UserType) {
+            var hiduid = $("#hiduid").val(); 
+            if (hiduid != '' && hiduid != 0) {
+                $.ajax({
+                    url: "/Learn/iZan",
+                    type: "post",
+                    dataType: "json",
+                    data: { uid: id, UserType: UserType },
+                    success: function (data) {
+
+                        if (data.code === 0) {
+
+                            //if (data.iCount != 0) {
+                            //    $("#iZanNums").html(data.iCount);
+                            //}
+                            zanplus({ id: id, style: 'font-weight:bold;', endSize: "60px", interval: 800 });
+                            var count = $("#zancount" + id).text();
+                            if (count != "")
+                                $("#zancount" + id).text((parseInt(count) + 1));
+                            else
+                                $("#zancount" + id).text(1);
+
+                        } else if (data.code ==2) {
+                            layer.msg("您已经赞过！");
+                        }
+                        else {
+                            layer.msg("赞同失败！");
+                        }
+
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+            else {
+                if (confirm("登录后才可以点赞!")) {
+                    //window.open("/Login/Login");// 来打开新窗口
+                    window.location = "/Login/Login?ReturnUrl=" + '/learn/Details/' + id;// 新窗口
+                }
+            }
+        }
+    
+    //赞特效
+    function zanplus(options) {
+        options = $.extend({
+            str: "+1",
+            startSize: "14px",
+            endSize: "40px",
+            interval: 500,
+            color: "red",
+            style: "",
+            callback: function () { }
+        }, options);
+        $("body").append("<span class='tips_box' style='" + options.style + "'>" + options.str + "</span>");
+        var box = $(".tips_box");
+        var self = $("#zan" + options.id);
+        var top = self.offset().top;
+        var left = self.offset().left + self.width() / 2 - box.width() / 2;
+        box.css({
+            "position": "absolute",
+            "top": top,
+            "left": left,
+            "font-size": options.startSize,
+            //"font-weight": "bold",
+            "color": options.color
+        });
+        box.animate({
+            "top": top - self.height() / 2,
+            "opacity": 0,
+            "font-size": options.endSize
+        }, options.interval, function () {
+            box.remove();
+            options.callback();
+        });
+    }
+
+</script>
+
+}

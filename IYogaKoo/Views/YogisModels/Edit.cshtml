@@ -1,0 +1,542 @@
+﻿@model IYogaKoo.ViewModel.ViewYogisModels
+
+@{
+    ViewBag.Title = "编辑导师";
+    Layout = "~/Views/Shared/ModelsDetails.cshtml";
+    //用户ID
+    var id = ViewBag.id;
+    var CentValue = ViewBag.CentValue;
+    var YogaTypeidValue = ViewBag.YogaTypeidValue;
+    var TeachYogisValue = ViewBag.TeachYogisValue;
+}
+<script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+
+<script src="~/Content/ueditor/ueditor.config.js"></script>
+<script src="~/Content/ueditor/ueditor.all.js"></script>
+<link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+<script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+
+<link href="@Url.Content("~/Content/artDialog4.1.1/_doc/demo.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Content/artDialog4.1.1/jquery.artDialog.js?skin=blue")" type="text/javascript"></script>
+<script src="@Url.Content("~/Content/artDialog4.1.1/artDialog.iframeTools.js")" type="text/javascript"></script>
+<form id="form1" method="post" action="javascript:void(0);">
+    <div class="form-horizontal" style="text-align: center;">
+
+        @Html.HiddenFor(model => model.YID)
+        @Html.HiddenFor(model => model.UID)
+        @Html.HiddenFor(model => model.DisplayImg)
+        @* @Html.HiddenFor(model => model.CoverImg)*@
+
+        <input type="hidden" id="hNationality" value="@Model.Nationality" />
+        <input type="hidden" id="hCountryID" value="@Model.CountryID" />
+        <input type="hidden" id="hProvinceID" value="@Model.ProvinceID" />
+        <input type="hidden" id="hCityID" value="@Model.CityID" />
+        <input type="hidden" id="hDistrictID" value="@Model.DistrictID" />
+        <input type="hidden" id="hidCenterID" value="@Model.CenterID" />
+        <input type="hidden" id="hidYogaTypeid" value="@Model.YogaTypeid" />
+        <input type="hidden" id="hidTeachYogis" value="@Model.TeachYogis" />
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @*  *@
+
+        <div class="lb_login_idnex" style="width: 900px;">
+
+            <div class="lb_teacher_index lbb" style="width: 1200px; margin: 20px auto; background: #fff; margin-bottom: 15px">
+
+                <div class="lb_index_rightt">
+                    <div class="lb_index_rightt_div">
+                        <!-- 修改基本信息的页面   开始 -->
+                        <div class="lb_index_rightt_div_jibenxx">
+                            <dl>
+                                <dt>@Html.LabelFor(model => model.RealName)：</dt>
+                                <dd>
+                                    @Html.EditorFor(model => model.RealName)
+                                    @Html.ValidationMessageFor(model => model.RealName)
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>
+                                    <label>昵称</label>
+                                </dt>
+                                <dd>
+                                    <input type="text" id="nickName" name="nickName" value="@ViewBag.NiceName" />
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>@Html.LabelFor(model => model.Gender)：</dt>
+                                <dd>
+                                    @Html.RadioButtonFor(model => model.Gender, 1)<span class="span">男</span>
+                                    @Html.RadioButtonFor(model => model.Gender, 0)<span class="span">女</span>
+                                    @Html.ValidationMessageFor(model => model.Gender)
+                                </dd>
+
+                            </dl>
+                            <dl>
+                                <dt>@Html.LabelFor(model => model.Nationality)：</dt>
+                                <dd>
+                                    <select id="ddlNationality" name="ddlNationality">
+                                        <option value="0">请选择国籍</option>
+                                    </select>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>目前居住地：</dt>
+                                <dd>
+                                    <select id="ddlCountryID" name="ddlCountryID">
+                                        <option value="-1">请选择国家</option>
+                                    </select><br />
+                                    <br />
+                                    <select id="ddlProvinceID" name="ddlProvinceID">
+                                        <option value="0">请选择省份</option>
+                                    </select>
+                                    <select id="ddlCityID" name="ddlCityID" style="width: 100px;">
+                                        <option value="0">请选择城市</option>
+                                    </select>
+                                    <select id="ddlDistrictID" name="ddlDistrictID" style="width: 100px;">
+                                        <option value="0">请选择城区</option>
+                                    </select><br />
+                                    <br />
+
+
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>@Html.LabelFor(model => model.Street)：</dt>
+                                <dd>
+                                    @Html.EditorFor(model => model.Street)
+                                    @Html.ValidationMessageFor(model => model.Street)
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>@Html.LabelFor(model => model.YogisDepict)：</dt>
+                                <dd>
+                                    @Html.TextAreaFor(model => model.YogisDepict, new { id = "editor", style = " width:650px;margin-left:15px" })
+                                    @Html.ValidationMessageFor(model => model.YogisDepict)
+                                    <input type="hidden" id="hYogisDepict" name="hYogisDepict" value="" />
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>@Html.LabelFor(model => model.StartTeachYear)：</dt>
+                                <dd>
+                                    @Html.TextBox("StartTeachYear", string.Format("{0:yyyy-MM-dd}", Model.StartTeachYear))
+                                    @Html.ValidationMessageFor(model => model.StartTeachYear)
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>习练瑜伽场馆：</dt>
+                                <dd>
+
+                                    @Html.EditorFor(model => model.CenterID)
+                                    <input type="button" id="btnCenterID" value="请选择" class="lb_sc" />
+                                    <input type="hidden" id="hCenterID" name="hCenterID" value="" />
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>习练瑜伽的流派：</dt>
+                                <dd>
+
+                                    @Html.EditorFor(model => model.YogaTypeid)
+                                    <input type="button" id="btnYogaTypeid" value="请选择" class="lb_sc" />
+                                    <input type="hidden" id="hYogaTypeid" name="hYogaTypeid" value="" />
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>师从导师：</dt>
+                                <dd>
+                                    @Html.EditorFor(model => model.TeachYogis)
+                                    <input type="button" id="btnTeachYogis" value="请选择" class="lb_sc" />
+                                    <input type="hidden" id="hTeachYogis" name="hTeachYogis" value="" />
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>@Html.LabelFor(model => model.EachClassCost)：</dt>
+                                <dd>
+                                    @Html.EditorFor(model => model.EachClassCost)
+                                    @Html.ValidationMessageFor(model => model.EachClassCost)
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>每周习练瑜伽的频率：</dt>
+                                <dd>
+                                    <select id="ddliRate" name="ddliRate">
+
+                                        <option value="1">1次</option>
+
+                                        <option value="2">2次</option>
+
+                                        <option value="3">3次</option>
+
+                                        <option value="4">4次</option>
+
+                                        <option value="5">5次</option>
+
+                                        <option value="6">6次</option>
+
+                                        <option value="7">7次</option>
+                                    </select>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>封面图：</dt>
+                                <dd>
+                                    @{
+                                        var strImg = "/Content/Front/images/my.png";
+                                        if (!string.IsNullOrEmpty(Model.CoverImg))
+                                        {
+                                            strImg = Model.CoverImg.Split(',')[0];
+                                        }
+
+                                    }
+                                    <img id="idpCoverImg" src="@strImg" width="200" height="100" />
+                                    <input id="CoverImg" name="CoverImg" type="hidden" value="@strImg" />
+                                    <div class="lb_liulan">
+                                        <input id="btnCover" type="file" value="上传图片" />
+                                    </div>
+                                    <a style="position:relative; z-index:111;top:20px;left:-148px">建议图片尺寸为1920*400</a>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>&nbsp;</dt>
+                                <dd>
+                                    <input type="button" id="btnSave" value="确定修改" class="lb_xg" />
+                                    @*<input type="button" value="习练者等级自评" class="lb_xg" />*@
+                                </dd>
+                            </dl>
+                        </div>
+                        <!-- 修改基本信息的页面   结束-->
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(function () {
+
+        //封面图片
+        $('#btnCover').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+            'uploader': '@Url.Content("~/Controllers/ashxFile/CoverImg.ashx")',
+            'buttonText': '浏览',
+            'height': '30',
+            'width': '120',
+            'fileTypeDesc': '.jpg,.gif,.png',
+            'fileTypeExts': '*.jpg;*.gif;*.png;',
+            'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+            'sizeLimit': 1024 * 1024 * 4, //4M
+            'multi': false,//设置为true时可以同时上传多个文件。
+            'onUploadSuccess': function (file, data, response) {
+                if (data.indexOf('文件太大！请上传小于4M的图片！') != -1) {
+                    layer.msg(data);
+                }
+                else {
+                    $("#CoverImg").val("/" + data);
+                    $("#idpCoverImg").attr("src", "/" + data);
+                }
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+            }
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    ///弹出头像设置
+    $(function () {
+
+        $("#ddliRate").val(@Model.iRate);
+        UE.getEditor('editor'); //内容编辑器
+
+        $(".page").hide();
+
+        $("#StartTeachYear").bind("focus click", function () {
+            WdatePicker();
+        });
+
+    });
+    $(".setAvatar").click(function () {
+
+        $(".page").toggle();
+    });
+    $("#btnCenterID").click(function () {
+
+        art.dialog.open('/Login/LoadCenterList', {
+            title: '选择会馆',
+            lock: true,
+            width: 600,
+            hight: 400,
+            close: function () {
+                var CenterId = art.dialog.data('CenterId', CenterId);
+                var CenterName = art.dialog.data('CenterName', CenterName);
+
+                if (CenterId !== undefined) {
+                    document.getElementById('hCenterID').value = CenterId;
+                }
+                if (CenterName !== undefined) {
+                    document.getElementById('CenterID').value = CenterName;//显示名称
+                }
+            }
+        });
+    });
+
+    $("#btnYogaTypeid").click(function () {
+
+        art.dialog.open('/Login/LoadYogaTypeidList', {
+            title: '选择流派',
+            lock: true,
+            width: 600,
+            hight: 400,
+            close: function () {
+                var ID = art.dialog.data('ID', ID);
+                var ItemName = art.dialog.data('ItemName', ItemName);
+
+                if (ID !== undefined) {
+                    document.getElementById('hYogaTypeid').value = ID;
+                }
+                if (ItemName !== undefined) {
+                    document.getElementById('YogaTypeid').value = ItemName;//显示名称
+                }
+            }
+        });
+    });
+
+    $("#btnTeachYogis").click(function () {
+
+        art.dialog.open('/Login/GetTeachYogisList', {
+            title: '选择导师',
+            lock: true,
+            width: 600,
+            hight: 400,
+            close: function () {
+                var ID = art.dialog.data('YID', ID);
+                var TeacherName = art.dialog.data('RealName', TeacherName);
+
+                if (ID !== undefined) {
+                    document.getElementById('hTeachYogis').value = ID;
+                }
+                if (TeacherName !== undefined) {
+                    document.getElementById('TeachYogis').value = TeacherName;//显示名称
+                }
+            }
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    // 国家事件
+    $('#ddlCountryID').click(function () {
+
+        var strGuoJia = $(this).val();
+        if (strGuoJia != "0") {
+            document.getElementById("ddlProvinceID").innerHTML = "";
+            //加载省
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strGuoJia,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlProvinceID").html("<option value='0'>请选择</option>");
+                    $("#ddlCityID").html("<option value='0'>请选择</option>");
+                    $("#ddlDistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //省事件
+    $("#ddlProvinceID").click(function () {
+
+        var strSheng = $(this).val();
+        if (strSheng != "0") {
+            document.getElementById("ddlCityID").innerHTML = "";
+            //加载市
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strSheng,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlCityID").html("<option value='0'>请选择</option>");
+                    $("#ddlDistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //城市事件
+    $("#ddlCityID").click(function () {
+
+        var strShi = $(this).val();
+        if (strShi != "0") {
+            document.getElementById("ddlDistrictID").innerHTML = "";
+            //加载城区
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strShi,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlDistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //-------------------------------------------------------------------
+
+    $(function () {
+        $("#CenterID").val('@CentValue');
+        $("#hCenterID").val('@Model.CenterID');
+
+        $("#YogaTypeid").val('@YogaTypeidValue');
+        $("#hYogaTypeid").val($("#hidYogaTypeid").val());
+
+        $("#TeachYogis").val('@TeachYogisValue');
+        $("#hTeachYogis").val($("#hidTeachYogis").val());
+
+        //国籍
+        var strNationality = $("#hNationality").val();
+        
+        $("#Nationality").val(strNationality);
+
+        $.ajax({
+            url: '/Login/GetNationalityInfo?t=' + Math.random(),
+            type: 'post',
+            datatype: 'json',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+
+                    if (data[i].ID == $("#hNationality").val()) {
+                        $("#ddlNationality").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                    } else {
+                        $("#ddlNationality").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                    }
+                };
+            }
+        });
+        //国家
+        var strCountryID = $("#hCountryID").val();
+        $("#CountryID").val(strCountryID);
+
+        //if (strCountryID != "0") {
+        $.ajax({
+            url: '/Login/GetCountryInfo?t=' + Math.random(),
+            type: 'post',
+            datatype: 'json',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].ID == $("#hCountryID").val()) {
+                        $("#ddlCountryID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                    } else {
+                        $("#ddlCountryID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                    }
+                };
+            }
+        });
+        // }
+        //省
+
+        if ($("#hProvinceID").val() != "0") {
+
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strCountryID,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ID == $("#hProvinceID").val()) {
+                            $("#ddlProvinceID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+        }
+        var strProvinceID = $("#hProvinceID").val();
+        if (strProvinceID != "0") {
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strProvinceID,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ID == $("#hCityID").val()) {
+                            $("#ddlCityID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+        }
+        var strCityID = $("#hCityID").val();
+        if (strCityID != "0") {
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strCityID,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ID == $("#hDistrictID").val()) {
+                            $("#ddlDistrictID").append("<option value='" + data[i].ID + "' selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+        }
+
+    });
+</script>
+
+<script type="text/javascript">
+    $('#btnSave').click(function () {
+
+        $("#hYogisDepict").val(UE.getEditor('editor').getContent());
+        var data = $("form").serialize();
+
+        $.ajax({
+            url: '/Login/Method?t=' + Math.random(),
+            type: 'POST',
+            data: data,
+            success: function (data) {
+
+                if (data.code == 0) {
+                    layer.msg("修改成功！");
+                    location.href = "/YogisModels/Edit/@id"
+                } else {
+                    layer.msg("修改失败！");
+                }
+
+            }, error: function () {
+                layer.msg("修改失败！");
+            }
+        });
+        return false;
+    });
+
+
+</script>
+
+
+

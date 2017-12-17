@@ -1,0 +1,84 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaArticle
+@{
+    ViewBag.Title = "底部导航";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="lb_index_sq_xy">
+    <div class="lb_index_sq_xy_left">
+        <div class="lb_index_sq">
+            @* <h1><span>@Model.ArticleTitle /</span>&nbsp;使用条款</h1>
+            style="padding: 10px 60px 10px 60px; height: 540px; overflow-y: scroll; border: 1px solid #c0c0c0;" *@
+            <h1></h1>
+        </div>
+         
+        <div id="agreement" >
+            <div id="women" style="width:725px; margin:0px auto">
+                <h2>关于我们>></h2>
+                 
+                    @Html.Raw(ViewBag.AboutUs.ArticleCon)
+                  
+                <br />
+            </div>
+            <div id="emailInfo" style="width:725px; margin:0px auto">
+                <h2>加入我们 >></h2>
+                 
+                    @Html.Raw(ViewBag.JoinUs.ArticleCon)
+                
+                <br />
+            </div>
+            <div id="telInfo" style="width:725px; margin:0px auto">
+                <h2>联系我们 >></h2>
+                @Html.Raw(ViewBag.ContactUs.ArticleCon)
+                 
+                <br />
+            </div>
+        </div>
+       
+    </div>
+    <div class="lb_index_sq_xy_right">
+        <ul>
+            <li><a href="/Home/BottomNavigation?id=1" class="on">关于我们</a></li> 
+            <li><a href="/Home/BottomNavigation?id=2">加入我们</a></li>
+            <li><a href="/Home/BottomNavigation?id=3">联系我们</a></li> 
+            @*<li><a href="/Home/BottomNavigation?id=4">获取帮助</a></li>
+            <li><a href="/Home/BottomNavigation?id=5">更多操作</a></li>
+            <li><a href="/Home/BottomNavigation?id=6">关注我们</a></li>*@ 
+             
+        </ul>
+
+    </div>
+    <style>
+        #agreement p{
+            line-height:30px;
+        }
+    </style>
+    <script>
+       
+        $(function(){
+            var divIndex,listIndex;
+            var id=@ViewBag.BottomID;
+
+            if(id==1)
+            {
+                divIndex=$('#women').index();
+                $('.lb_index_sq_xy_right li').eq(divIndex).children().addClass('on').parent().siblings().children().removeClass('on');
+                $("#emailInfo").hide();
+                $("#telInfo").hide();
+            }
+            if(id==2)
+            {
+                divIndex=$('#agreement').index();
+                $('.lb_index_sq_xy_right li').eq(divIndex).children().addClass('on').parent().siblings().children().removeClass('on');
+                $("#women").hide();
+                $("#telInfo").hide();
+            }
+            if(id==3)
+            {
+                divIndex=$('#telInfo').index();
+                $('.lb_index_sq_xy_right li').eq(divIndex).children().addClass('on').parent().siblings().children().removeClass('on');
+                $("#emailInfo").hide();
+                $("#women").hide();
+            }
+        })
+    </script>
+</div>

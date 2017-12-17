@@ -1,0 +1,25 @@
+﻿#main-content ul li {
+    width:300px; height:150px; float:left; position:relative; margin-right:14px; margin-bottom:50px
+ }
+.content-box,.content-box-content {
+overflow:hidden
+}
+.lb_shjg {
+ overflow:hidden; margin-left:35px
+}
+#main-content ul li a{ display:block; width:100%; height:30px; position:absolute; z-index:1111; left:0px; top:140px; background:#000000;color:#fff;  filter:alpha(opacity=50); -moz-opacity:0.5;
+  -khtml-opacity: 0.5;
+   text-align:center; line-height:30px; font-size:14px;
+opacity: 0.5;}
+#main-content ul li span{ display:block; font-size:14px;margin:5px 0px; line-height:21px}
+
+
+
+
+
+
+
+
+
+
+

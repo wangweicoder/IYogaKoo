@@ -1,0 +1,205 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CB0D1B93-C5FC-4734-866E-B0326C80BBC9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IYogaKoo.Entity</RootNamespace>
+    <AssemblyName>IYogaKoo.Entity</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CartItem.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Centers.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CenterStare.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Class.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClassDetail.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClassFile.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClassReport.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClassTeacher.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ClassTopic.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Evaluates.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Follow.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="InterestedClass.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IUnitOfWork.cs" />
+    <Compile Include="IYogaKoo.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IYogaKoo.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IYogaKoo.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IYogaKoo.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IYogaKoo.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="LevelOrder.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Space.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tBanner.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tInstationInfo.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tKeyWord.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tLearing.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tMessage.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tQuestion.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tSign.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tUserLoginInfo.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tWriteLog.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="tZanModels.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="YogaArtClass.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="YogaArticle.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="YogaDicItem.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="YogaMenus.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="YogaPicture.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="YogaUser.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="YogaUserDetail.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="YogiProfile.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+    <Compile Include="YogisModels.cs">
+      <DependentUpon>IYogaKoo.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <EntityDeploy Include="IYogaKoo.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>IYogaKoo.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="IYogaKoo.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IYogaKoo.edmx</DependentUpon>
+      <LastGenOutput>IYogaKoo.Context.cs</LastGenOutput>
+    </None>
+    <None Include="IYogaKoo.edmx.diagram">
+      <DependentUpon>IYogaKoo.edmx</DependentUpon>
+    </None>
+    <None Include="IYogaKoo.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>IYogaKoo.edmx</DependentUpon>
+      <LastGenOutput>IYogaKoo.cs</LastGenOutput>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

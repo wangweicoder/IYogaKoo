@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "登录";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="lb_login_idnex_top">
+    <div class="lb_login_idnex_top_index">
+        <b>您所在位置：</b><span>登录</span>
+    </div>
+</div>
+<form id="form1" method="post" action="javascript:void(0);">
+    <div class="lb_login_idnex_bottom">
+        <div class="lb_login_idnex_bottom_top">
+            <p>欢迎走进<a>爱瑜伽·酷</a>这个大家庭</p>
+        </div>
+        <div class="lb_login_idnex_bottom_index">
+            <div class="lb_login_idnex_bottom_index_left">
+                <dl>
+                    <dt>用&nbsp;户：</dt>
+                    <dd>
+                        <input type="text" value="" placeholder="手机号/邮箱" name="Email" id="Email" />
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>密&nbsp;码：</dt>
+                    <dd>
+                        <input type="password" value="" placeholder="密码" name="pwd" id="pwd" />
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <input type="checkbox" id="RremeberMe" name="RremeberMe" checked="" style="width:15px; height:15px; float:left" />
+                        <p>下次自动登录</p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="/Login/LostPassword">忘记密码？</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <input type="button" value="立即登录" id="insub" class="button" />
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <p>还没有账号？ 请点击这里进行<a href="/Login/Register">注册</a></p>
+                    </dd>
+                </dl>
+            </div>
+            <div class="lb_login_idnex_bottom_index_right">
+                <p>使用第三方帐号直接登录</p>
+                <ul>
+                    @{
+                        int i = 0;
+                    }
+                    @foreach (string loginType in Commons.Helper.Login.GetOuathTypes())
+                    {
+
+                    @Html.ActionLink(" ", "/GoPartner", new { name = Commons.Helper.Login.GetLoginType(loginType) }, new { @class = "li" + Convert.ToInt32(i + 1) + "" })
+                        i++;
+                    }
+                </ul>
+            </div> 
+            <input type="hidden" id="ReturnUrl" name="ReturnUrl"></div>
+    </div>
+</form>
+@section Scripts { 
+<script src="~/Content/jquery/ExistisUpdate.js"></script>
+<script>
+    $('#insub').click(function () {
+        if (check()) {
+
+            $.ajax({
+                url: '/Login/Login',
+                type: 'post',
+                data: {
+                    Email: document.getElementById('Email').value,
+                    pwd: document.getElementById('pwd').value,
+                    RremeberMe: $("#RremeberMe").val()
+                },
+                success: function (data) {
+
+                    if (data.code === 1) {
+                        //mes = "用户名或密码不对！"
+                        layer.alert("用户名或密码不对！");
+                    } else {  
+                        var rurl = getUrlParam('ReturnUrl');
+                        if (rurl == null) {
+                            window.location = '/Home/Index';
+                        }
+                        else {
+                            //alert(window.location);
+                            //alert(rurl);
+                            window.location =rurl;
+                        }
+                    }
+                }
+            });
+        }
+
+    });
+    function getUrlParam(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+        var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+        if (r != null) return unescape(r[2]); return null; //返回参数值
+    }
+
+    function check() {
+        var name = document.getElementById('Email').value;
+        var pwd = document.getElementById('pwd').value;
+        var phone = /^(13[0-9]|14[0-9]|15[0-9]|18[0-9])\d{8}$/; //验证手机
+        //var RremeberMe = document.getElementById('RremeberMe');
+        //alert(RremeberMe);
+        //if (RremeberMe.checked == true)
+        //    //alert(RremeberMe);
+        //    if (name == '') {
+        //        alert('账号不能为空！');
+        //        return false;
+        //    }
+        //if(!phone.test(name)){
+        //     alert('您输入的手机号不合法！');
+        // }
+        if (name == '') {
+            layer.msg('账号不能为空！');
+        }
+        if (pwd == '') {
+            layer.msg('密码不能为空！');
+        }
+        else {
+            return true;
+        }
+        return false;
+    }
+</script>
+}

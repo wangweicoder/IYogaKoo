@@ -1,0 +1,42 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewClassGroup>
+@{
+    Layout = null;
+} 
+
+@foreach(var item in Model)
+{ 
+    <div class="lb_lb_hd_index_show_img_img">
+        <div class="lb_lb_hd_index_show_img2_top">
+            <a href="/class/ActivityReportDetailsPage?id=@item.Id&&classReportId=-99" target="_blank"><img src="@item.Banner" /></a>
+        </div>
+        <div class="lb_lb_hd_index_show_img2_bott">
+            <p>@item.Name</p>
+            <p>
+                <a>@item.AreaName&nbsp;@item.Start</a>
+                <span><a>@item.OrderNums</a>人参加</span>
+            </p>
+        </div>
+    </div>
+}
+  
+<div style="clear:both"></div>
+<div style="display:block; width:100%">
+    <div class="text-center" style="" id="menepager">
+        @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    PrevPageText = "上一页",
+    NextPageText = "下一页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a  >{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+}, new MvcAjaxOptions { UpdateTargetId = "Content", HttpMethod = "Post", OnComplete = "pagelocation", DataFormId = "searchForm" })
+    </div>
+</div>
+
+ 

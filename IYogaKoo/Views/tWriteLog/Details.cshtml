@@ -1,0 +1,95 @@
+﻿@model IYogaKoo.ViewModel.ViewtWriteLog
+
+@{
+    ViewBag.Title = "详情";
+    Layout = "~/Views/Shared/_LayoutSetUp.cshtml";
+}
+<div class="lb_rizi_info">
+
+<fieldset class="lb_filefset">
+    
+    <div class="lb_rz_info_title">
+       @* <div class="display-label">
+         @Html.DisplayNameFor(model => model.sTitle)
+    </div>*@
+    <div class="display-field">
+        <div class="lb_rizhi_title">
+             @Html.DisplayFor(model => model.sTitle)
+            <a>   时间：
+             @Html.DisplayFor(model => model.CreateDate)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            阅读（77）</a>
+         </div>
+        </div>
+</div>
+    <div class="lb_rz_info_time">
+     @*   <div class="display-label">
+            添加人：
+        </div>*@
+        <div class="display-field lb_rizhi_time">
+            <p>
+           @* 作者：
+            @ViewBag.Name
+            @Html.HiddenFor(model => model.Uid)*@
+         
+        </div>  
+        <div class="lb_rizhi_zz">
+            <ul>
+                <li><a class="a1">赞</a></li>
+                <li><a class="a2">评论(3)</a></li>
+                <li style="border:0px"><a class="a3">转载</a></li>
+               @* <li><a>赞</a></li>*@
+            </ul>
+            <div class="bdsharebuttonbox bdsharebuttonbox2">
+            <a href="#" class="bds_more" data-cmd="more"></a>
+            <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+            <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+            <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+            <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        </div>
+          
+        </div> 
+</div>
+    <div class="lb_rz_info_content">
+@*    <div class="display-label">
+         @Html.DisplayNameFor(model => model.sContent)
+    </div>*@
+    <div class="display-field" id="lb_div_index_din">
+       @Html.Raw(Model.sContent)
+        
+    </div>
+        
+    </div>
+      <div class="lb_rizhi_shangxia">
+               @* <a style="border-right:1px solid #999; padding-right:5px" href="javascript:;">上一篇</a>
+                <a href="javascript:;">下一篇：没有你，我有全世界有何用...</a>*@
+           @Html.ActionLink("上一篇："+(string)ViewBag.preTitle, "Details", new { id=ViewBag.pre})<br />
+         @Html.ActionLink("下一篇："+(string)ViewBag.nextTitle, "Details", new { id=ViewBag.next})
+            </div>
+
+@*    <div class="display-label">
+         @Html.DisplayNameFor(model => model.ifShow)
+    </div>
+    <div class="display-field">
+        @(Model.ifShow==true?"是":"否")
+    </div>*@
+
+@*    <div class="display-label">
+         @Html.DisplayNameFor(model => model.CreateDate)
+    </div>
+    <div class="display-field">
+       
+    </div>*@
+
+    <div class="display-field" id="lb_bl_display-field">
+            <p>
+         @*@Html.ActionLink("返回", "Index")
+        <a id="areturn" href="Javascript:window.history.go(-1)">返回</a>*@
+            </p>
+      </div>
+</fieldset>
+</div>
+ @section Scripts {  
+     <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {}, "image": { "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"], "viewText": "分享到：", "viewSize": "16" }, "selectShare": { "bdContainerClass": null, "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"] } }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+     
+      }

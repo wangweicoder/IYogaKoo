@@ -1,0 +1,177 @@
+﻿@model IEnumerable<IYogaKoo.ViewModel.ViewClass>
+
+@{
+    ViewBag.Title = "活动管理";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+<div class="content-box">
+    <div class="content-box-header">
+        <h3>活动管理</h3>
+    </div>
+    <div class="content-box-content">
+        <input id="check-class"  class="button" type="button" value="活动到期结束" onclick="SetClassMany();" />
+        @*<input id="ShoudCloseActivityCount" class="button" type="button" value="活动到期结束" onclick="SetClassMany();" />*@
+    </div>
+    <div class="content-box-content">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>
+                        编号
+                    </th>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        时间
+                    </th>
+                    <th>
+                        价格
+                    </th>
+                    <th>
+                        人数
+                    </th>
+                    <th>
+                        发起人
+                    </th>
+                    <th>
+                        创建时间
+                    </th>
+                    <th>
+                        状态
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody></tbody>
+
+
+        </table>
+        <br />
+        <div id="pageBox"></div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="~/Scripts/laypage/laypage-admin.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            LoadClasses(1);
+            if(@ViewData["ShoudCloseActivityCount"]==0)
+            {
+                $("#check-class").css("display","none");
+            }
+            var a = "结束活动[" + '@ViewData["ShoudCloseActivityCount"]' + "]";
+            $("#check-class").val(a);
+        });
+        //选择活动导师
+        function LoadClasses(page) {
+            SearchList({
+                url: '/manage/class', data: { text: $('.search-teacher input:text').val(), page: 1, size: 10 }, row: function (dataItem) {
+                    var html = '<tr id="teacher-' + dataItem.Id + '" >';
+                    html += '<td>' + dataItem.Id + '</td>';
+                    var areas = dataItem.AreaStr.split('-');
+                    html += '<td><div>' + dataItem.Name + '</div><div>' + areas[areas.length - 1] + ' ' + dataItem.Address + '</div></td>';
+                    html += '<td><div>' + dataItem.Start + '</div><div>' + dataItem.Duration + ' ' + dataItem.TimeUnitStr + '</div></td>';
+                    html += '<td>' + dataItem.Price + '</td>';
+                    html += '<td>' + dataItem.OrderCount + '/' + dataItem.Max + '</td>';
+                    html += '<td><a href="' + dataItem.Creater.UserId + '" target="_blank">' + dataItem.Creater.Name + '</a></td>';
+                    html += '<td>' + ToDate(dataItem.CreateTime) + '</td>';
+                    html += '<td>' + dataItem.StatusStr + '</td>';
+                    html += '<td><a  href="Javascript:Del(' + dataItem.Id + ',' + dataItem.Creater.UserId + ')" class="op-add">删除</a> | <a  href="/manage/class/EditActivity?id=' + dataItem.Id + '"  class="op-add">编辑</a> | <a href="/manage/class/viewclass?id=' + dataItem.Id + '" target="_blank">查看</a> | <a href="/manage/class/addreport?classid=' + dataItem.Id + '" target="_blank">添加报道</a></td>';
+                    html += '</tr>';
+                    return html;
+                }, msg: '没有活动', container: '.data-table', contentContainer: '.data-table tbody'
+            });
+        }
+
+        function Del(id, UserId) {
+
+            if (confirm("是否删除!")) {
+                $.ajax({
+                    url: "/Manage/Class/Delete",
+                    type: "post",
+                    dataType: "json",
+                    data: { id: id, UserId: UserId },
+                    success: function (data) {
+                        if (data.code === 0) {
+                            //刷新
+                            window.location.reload();
+
+                        }
+                        else if (data.code === 2) {
+                            //刷新
+                            alert("有活动报道的数据不能删除！");
+
+                        }  //
+                        else {
+                            alert("删除失败！");
+                        }
+
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+                // window.location = "/Manage/Class/Delete/" + id;// 来打开新窗口
+            }
+        }
+
+        function SetClassMany() {
+            Loading();
+            $.ajax({
+                url: '/manage/class/SetClassMany',
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    Loaded();
+                    if (data.code > 0) {
+
+                        alert("成功");
+                        var a = "结束活动[0]";
+                        $("#check-class").val(a);
+                    }
+                    else {
+                        alert("失败");
+                    }
+                }
+            });
+
+            //$.get('/manage/class/SetClassMany', { "classId": id, "status": status }, function (result) {
+            //    Loaded();
+            //    if (json > 0) {
+
+            //        alert("成功");
+            //    }
+            //    else {
+            //        alert("失败");
+            //    }
+            //}, "JSON");
+
+            //Class.PostData('/manage/class/SetClassMany', null, function (json) {
+            //    //$('.information div').text(result.Message);
+            //    //if (status == 2) {
+            //    //    Msg('审核通过');
+            //    //    $('#check-class').remove();
+            //    //}
+            //    //if (status == 4) {
+            //    //    $('#delete-class').remove();
+            //    //    Msg("已撤销");
+            //    //}
+            //    if (json > 0) {
+
+            //        alert("成功");
+            //    }
+            //    else {
+            //        alert("失败");
+            //    }
+            //    //if (json.Code == 0) {
+            //    //    if (callback != undefined)
+            //    //        callback(json);
+            //    //}
+            //    //else
+            //    //    ShowError(json.Message);
+            //})
+        };
+</script>
+}

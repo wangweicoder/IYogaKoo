@@ -1,0 +1,190 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogaPicture>
+
+@{
+    ViewBag.Title = "相册管理";
+   // Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">相册列表</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <table>
+                <tr>
+                    @*<th>
+                        编号
+                    </th>*@
+                    <th>
+                        相册
+                    </th>
+                    <th>
+                        姓名
+                    </th>
+                    @*<th>
+                        图片路径
+                    </th>
+                    <th>
+                        描述
+                    </th>*@
+
+                    <th>
+                        创建时间
+                    </th>
+                    @*<th>
+                        创建人
+                    </th>
+
+                    <th>
+                        点击率
+                    </th>*@
+                    <th>
+                        审核状态
+                    </th>
+                    <th></th>
+                </tr>
+                @{
+                    var index = 1;
+                    if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+                    {
+                        var p = int.Parse(Request.QueryString["page"]) - 1;
+                        if (p > 0)
+                        {
+                            index = p * 10 + 1;
+                        }
+                    }
+                }
+                @foreach (var item in ViewBag.listGroup)
+                {
+                <tr>
+                    @*<td>
+                        @item.entity.Pid
+                    </td>*@
+                    <td>
+                        @item.entity.PictureName
+                    </td>
+                    <td>
+                        @item.RealName
+                    </td>
+                    @*<td>
+                        <img src="@item.entity.PictureOriginal" width="50" height="50" />
+                    </td>
+                    <td>
+                        @item.entity.PictureContent
+                    </td>*@
+
+                    <td>
+                        @item.entity.CreateTime
+                    </td>
+                    @*<td>
+                        @item.entity.CreateUser
+                    </td>
+
+                    <td>
+                        @item.entity.HitNum
+                    </td>*@
+                    <td>
+                        @if (item.entity.iAudio == 0 || item.entity.iAudio == null)
+                            {
+                                @:审核中
+                            } @if (item.entity.iAudio == 1)
+                            {
+                                            @:审核通过
+                            } @if (item.entity.iAudio == 2)
+                            {
+                                            @:审核不通过
+                            }
+        </td>
+        <td>
+            @Html.ActionLink("审核", "Details", new { id = item.entity.Uid, CreateTime = item.entity.CreateTime.ToString() }) |
+            
+            <a href="Javascript:DaoShiDel('@item.entity.Uid','@item.entity.CreateTime.ToString()')">删除</a>
+        </td>
+    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>
+
+<script type="text/javascript">
+
+    function DaoShiDel(id,dtTime) {
+        if (confirm("确定删除所有图片吗!")) {
+            window.location = "/YogaPicture/Delete?id=" + id + "&CreateTime="+dtTime;// 来打开新窗口
+        }
+    }
+    function AudioState(id, iAudio) {
+       
+        if (confirm("是否审核通过?")) {
+            $.ajax({
+                url: '/YogaPicture/AudioState?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    Uid: id,
+                    iAudio: 1
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        alert("审核成功！");
+                        location.href = "/Manage/YogaPicture/IndexSearch";
+                    } else {
+                        alert("审核失败！");
+                    }
+
+                }, error: function () {
+                    alert("审核失败！");
+                }
+            });
+        } else {
+            $.ajax({
+                url: '/YogaPicture/AudioState?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    Uid: id,
+                    iAudio: 2
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        alert("审核成功！");
+                        location.href = "/Manage/YogaPicture/IndexSearch";
+                    } else {
+                        alert("审核失败！");
+                    }
+
+                }, error: function () {
+                    alert("审核失败！");
+                }
+            });
+        }
+        // return false;
+    }
+</script>

@@ -1,0 +1,109 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtBanner>
+@{
+    ViewBag.Title = "Banner图";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+ 
+<p>
+    @Html.ActionLink("添加Banner图", "Create")
+</p>
+
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">Banner图列表</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <table>
+                <tr>
+                    <th>
+                        ID编号
+                    </th>
+                    <th>
+                        所在位置
+                    </th>
+                    <th>
+                        图片
+                    </th>
+                    <th>
+                        创建时间
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @item.ID
+                    </td>
+                    <td>
+                        @{
+                    if (item.iType == 0)
+                    { 
+                        @:首页TopBanner
+                    }
+                    else if (item.iType == 1)
+                    {
+                        @:活动报道
+                    }
+                    else if (item.iType == 2)
+                    {
+                        @:首页活动预告
+                    }
+}
+                    </td>
+                    <td>
+                        <img src="@item.spic" width="40" height="40" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("修改", "Edit", new { id = item.ID }) |
+                        @Html.ActionLink("详情", "Details", new { id = item.ID }) |
+                        <a href="Javascript:DaoShiDel('@item.ID','@item.spic')">删除</a>
+                    </td>
+                </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>
+
+<script type="text/javascript">
+
+    function DaoShiDel(id, spic) {
+        if (confirm("是否删除!")) {
+            window.location = "/tBanner/Delete?id=" + id + "&spic=" + spic;// 来打开新窗口
+        }
+    }
+
+</script>

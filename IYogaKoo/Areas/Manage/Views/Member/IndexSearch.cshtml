@@ -1,0 +1,113 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogaUser>
+@{
+    ViewBag.Title = "会员列表";
+    Layout = null; // "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+
+    <table width="100%" cellpadding="3" cellspacing="1" id="searchTable" class="chaxun_table">
+        <tr>
+            
+            <td>
+                查询：
+            </td>
+            <td>
+                关键字：
+                <input type="text" placeholder="请输入邮箱/手机号/昵称..." name="UEmail" id="UEmail" />
+                  
+                瑜友类别：
+                <select id="UserType" name="UserType">
+                    <option value="">--请选择--</option>
+                    <option value="0">习练者</option>
+                    <option value="1">瑜伽导师</option>
+                    <option value="2">瑜伽机构</option>
+                </select>
+                登录类型： 
+                <select id="LoginType" name="LoginType">
+                    <option value="">--请选择--</option>
+                    <option value="0">普通登录</option>
+                    <option value="1">Sina微博</option>
+                    <option value="2">QQ</option>
+                    <option value="3">微信</option>
+                </select>
+                状态： 
+                <select id="UStatus" name="UStatus">
+                    <option value="">--请选择--</option>
+                    <option value="0">未激活</option>
+                    <option value="1">开通</option>
+                    <option value="2">冻结</option>
+                    <option value="3">注销</option>
+                </select>
+                <input type="button" value="搜索" id="searchBtn" onclick="searchBtn()" />
+                <input type="button" value="清空" id="btnClear" onclick="btnClear()" />
+            </td>
+            <td>
+
+        </tr>
+
+    </table>
+    <div id="list">
+        @Html.Partial("Index", Model)
+    </div>
+
+</div>
+
+<script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+
+     //----------清空
+     $("#btnClear").click(function () {
+         $("#UEmail").val("");
+         $("#LoginTimes").val("");
+         $("#UserType").val("");
+         $("#UStatus").val("");
+         $("#LoginType").val("");
+         if( $("#UEmail").val()!="" || $("#LoginTimes").val()!=""||
+             $("#UserType").val()!=""||  $("#UStatus").val()!=""||  $("#LoginType").val()!="")
+         {
+         $.ajax({
+             type: 'GET',
+             url: '@Url.Action("Index", "Member")',
+             data: {
+             UEmail: $("#UEmail").val(),
+             LoginTimes: $("#LoginTimes").val(),
+             UserType: $("#UserType").val(),
+             UStatus: $("#UStatus").val(),
+             LoginType: $("#LoginType").val(),
+         },
+             success: function (data) {
+                 $("#list").html(data);
+         }
+         })
+             }
+     });
+     //----------搜索
+     $("#searchBtn").click(function () {
+
+         $.ajax({
+             type: 'GET',
+             url: '@Url.Action("Index", "Member")',
+             data: {
+                 UEmail: $("#UEmail").val(),
+                 LoginTimes: $("#LoginTimes").val(),
+                 UserType: $("#UserType").val(),
+                 UStatus: $("#UStatus").val(),
+                 LoginType: $("#LoginType").val(),
+             },
+             success: function (data) {
+                 $("#list").html(data);
+             }
+         })
+     });
+</script>
+<script type="text/javascript">
+
+    function DaoShiDel(id) {
+        if (confirm("是否删除!")) {
+            window.location = "/Member/Delete/" + id;// 来打开新窗口
+        }
+    }
+
+</script>

@@ -1,0 +1,449 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model List<IYogaKoo.ViewModel.ViewYogaPicture>
+@{
+    Layout = null;
+    var listGroup = ViewBag.listGroup;
+}
+@using IYogaKoo.ViewModel.Commons.Enums;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽酷， 世界瑜伽人之家。</title>
+    <link rel="shortcut icon" href="/Content/Front/images/2.ico.png" />
+    <link type="text/css" href="/Content/Front/css/indexnew.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/indexnew.js"></script>
+    <script src="~/Content/Front/js/QQPhoto/QQPhoto.min.js"></script>
+    <link href="~/Content/Front/css/QQPhoto/style.css" rel="stylesheet" />
+    <script src="~/Content/Front/js/masonry/jquery.masonry.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //点击查看相册
+            //判断是否登录
+            var l = "false";
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                l = "true";
+            }
+
+            $("#divmyphoto a").QQPhoto({
+                url: "/Controllers/ashxFile/GetMyselfImg.ashx?id=" + @ViewBag.id + "&imgid=",                 //获取相册列表数据的URL地址 需要返回 JSON 格式，请参考文件 data.json 格式来输出
+                commentURL: '@Url.Content("~/Controllers/ashxFile/ImgComment.ashx")',            //提交评论 Ajax 发送到 服务器端的地址   返回 JSON 格式，请参考文件 comment.json 格式来输出
+                fix: 5,                           //表示相册列表左右间距的距离                 默认 5
+                minTextLen: 3,                    //发送评论时 表单验证，最少不能少于的字符    默认三个字符
+                maxTextLen: 140,                  //发送评论时 表单验证，最多不能少于的字符    默认140个字符
+                fadeIn: false,                     //图片默认是否开启淡入效果，默认为 false
+                lazyload: '@Url.Content("~/Content/Front/css/QQPhoto/images/lazyload.gif")',   //默认lazyload的图片，默认为1px.gif 透明图片
+                loadding: '@Url.Content("~/Content/Front/css/QQPhoto/images/loading.gif")',    //loading.gif 的文件路径
+                islogin: l
+            });
+            //当滚动条的位置处于距顶部700像素以下时，跳转链接出现，否则消失  
+
+            $(window).scroll(function () {
+                if ($(window).scrollTop() > 700) {
+                    $("#back-to-top").fadeIn(1000);
+                }
+                else {
+                    $("#back-to-top").fadeOut(1000);
+                }
+            });
+
+            //当点击跳转链接后，回到页面顶部位置  
+
+            $("#back-to-top").click(function () {
+                $('body,html').animate({ scrollTop: 0 }, 1000);
+                return false;
+            });
+
+        });
+    </script>
+    <style type="text/css">
+        /*瀑布流*/
+        .wrapper img {
+            border: none;
+        }
+
+        .wrapper {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+            .wrapper h3 {
+                color: #3366cc;
+                font-size: 16px;
+                height: 35px;
+                line-height: 1.9;
+                text-align: center;
+                border-bottom: 1px solid #E5E5E5;
+                margin: 0 0 10px 0;
+            }
+
+        #con1_1 {
+            position: relative;
+        }
+
+            #con1_1 .product_list {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                padding: 10px;
+                background: #eee;
+                margin: 5px;
+            }
+
+        .product_list img {
+            width: 200px;
+        }
+
+        .product_list p {
+            padding: 5px 0px;
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+            white-space: normal;
+            width: 200px;
+            word-break: break-all;
+        }
+        /*返回顶部*/
+        /*returnTop*/  
+p#back-to-top{  
+    position:fixed;  
+    display:none;  
+    bottom:300px;  
+    right:150px;  
+}  
+p#back-to-top a{  
+    text-align:center;  
+    text-decoration:none;  
+    color:#979797;  
+    display:block;  
+    width:64px;  
+    /*使用CSS3中的transition属性给跳转链接中的文字添加渐变效果 background:  url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png')  */  
+    -moz-transition:color 1s;  
+    -webkit-transition:color 1s;  
+    -o-transition:color 1s;  
+}
+        p#back-to-top a:hover {
+            color: #65c3a5;
+          
+        }  
+        p#back-to-top a span{  
+     background-image: url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png') ;
+    border-radius:6px;  
+    display:block;  
+    height:64px;  
+    width:58px;  
+    margin-bottom:5px; 
+    margin:0 auto; 
+}  
+        #back-to-top a:hover span{  
+    background-image: url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png') ;
+}  
+    </style>
+    <script src="~/Content/baiduAdd.js"></script>
+</head>
+<body>
+    <form>
+        <div class="lb_index">
+            <div class="lb_index_top">
+                <div class="lb_index_top_left">
+                    <a href="/home/Index">
+                        <img src="/Content/Front/images/logo00.png" />
+                    </a>
+                </div>
+                <div class="lb_index_scarh_scarh" style="float:left; margin-top:20px">
+                    <div class="lb_index_scarh_scarh_input">
+                        <input type="text" id="txtsearchLayOut" />
+                    </div>
+                    <div class="lb_index_scarh_scarh_div">
+                        <input type="button" id="btsearchLayOut" />
+                    </div>
+                </div>
+                <div class="lb_index_top_right">
+                    <div class="lb_index_top_right_ul">
+                        <ul>
+                            @{
+                                if (ViewBag.user.Uid != 0)
+                                {
+                                    int uid = ViewBag.user.Uid;
+                                    if (ViewBag.user.UserType == (int)UserType.瑜伽会员)
+                                    {
+                                        <li>
+                                            <a href="/YogaUserDetail/Details/@uid" style="color: #333;">@(ViewBag.user.NickName == null ? "" : ViewBag.user.NickName)</a>
+                                        </li>
+                                        <li><a id="sjds" onclick="Javascript: window.open('/Home/ApplyTeachAgreement');" href="/Home/ApplyTeachAgreement">升级导师</a></li>
+                                        <li class="lb_li_index">
+                                            <a>
+                                                <img src="~/Content/Front/images/shezhi.png" alt="s" />
+                                            </a>
+                                            <div class="lb_li_idnex_hide">
+                                                <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                                <ul>
+                                                    <li><a href="/YogaUserDetail/PersonalSetUp?iType=1">个人信息</a></li>
+                                                    <li><a href="/YogaUserDetail/PersonalSetUp?iType=2">安全设置</a></li>
+                                                    <li><a href="/YogaUserDetail/PersonalSetUp?iType=3">级别认证</a></li>
+                                                    <li><a href="/YogaUserDetail/PersonalSetUp?iType=4">隐私设置</a></li>
+                                                    <li><a href="/tQuestion/PersonalHelpCenters">帮助中心</a></li>
+                                                    <li style="border-top:1px solid #65c3a5"><a id="exit" href="/home/Exitlogin">退出</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="/YogisModels/Details/@uid" style="color: #333;">@(ViewBag.user.NickName == null ? "" : ViewBag.user.NickName)</a>
+                                        </li>
+                                        <li>
+                                            <a>
+                                                @{if (ViewBag.level != null)
+                                                {
+                                                    var YogisLevel = ViewBag.level;
+                                                    if (YogisLevel == 0)
+                                                    {
+                                                        @:未定级
+                                                                    }
+                                                    if (YogisLevel == 1)
+                                                    {
+                                                        @:初级
+                                                                      }
+                                                    if (YogisLevel == 2)
+                                                    {
+                                                        @:中级
+                                                                     }
+                                                    if (YogisLevel == 3)
+                                                    {
+                                                        @:高级
+                                                                    }
+                                                }
+                                                }
+                                            </a>
+                                        </li>
+                                        <li class="lb_li_index">
+                                            <a>
+                                                <img src="~/Content/Front/images/shezhi.png" alt="s" />
+                                            </a>
+                                            <div class="lb_li_idnex_hide">
+                                                <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                                <ul>
+                                                    <li><a href="/YogisModels/PersonalSetUp?iType=1">个人信息</a></li>
+                                                    <li><a href="/YogisModels/PersonalSetUp?iType=2">课程设置</a></li>
+                                                    <li><a href="/YogisModels/PersonalSetUp?iType=3">安全设置</a></li>
+                                                    <li><a href="/YogisModels/PersonalSetUp?iType=4">级别认证</a></li>
+                                                    <li><a href="/YogisModels/PersonalSetUp?iType=5">隐私设置</a></li>
+                                                    <li><a href="/tQuestion/PersonalHelpCenters">帮助中心</a></li>
+                                                    <li style="border-top:1px solid #ccc"><a id="exit" href="/home/Exitlogin">退出</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+
+                                    }
+
+                                    <li><input type="hidden" id="hiduid" value="@uid" /></li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="/Login/Register" class="zh" onclick="getreg();">注册</a>·
+                                        <a href="/Login/Login" class="login">登录</a>·
+                                    </li>
+                                }
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lb_School_index" style="background: #fff">
+                <div class="lb_School_index_top">
+                    <div class="lb_School_index_top_index">
+                        <b>您所在位置：</b><span>瑜伽大师个人主页</span>
+                    </div>
+                </div>
+                @{
+                    var strImg = "/Content/Front/images/1920361.jpg";
+                    if (!string.IsNullOrEmpty(listGroup.CoverImg))
+                    {
+                        strImg = listGroup.CoverImg.Split(',')[0];
+                    }
+
+                }
+                <div class="lb_myindex" style="background: url(@strImg) no-repeat; background-size:100% 100%">
+                    <div class="lb_myindex_div">
+                        <div class="lb_myindex_div_left">
+                            <div class="lb_myindex_div_left_top">
+                                @{
+
+                                    string drscr = null;
+
+                                    if (!string.IsNullOrEmpty(listGroup.DisplayImg))
+                                    {
+                                        drscr = listGroup.DisplayImg;
+
+                                        if (drscr.IndexOf(';') != -1)
+                                        {
+                                            var str = drscr.Split(';');
+                                            if (str.Length > 1)
+                                            {
+                                                if (!string.IsNullOrEmpty(str[1]))
+                                                {
+                                                    drscr = str[1];
+                                                }
+                                                else
+                                                {
+                                                    drscr = str[0];
+                                                }
+                                            }
+                                            else
+                                            {
+                                                drscr = str[0];
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        drscr = "/Content/Front/images/defaultImg.png";
+                                    }
+                                }
+                                <img src="@drscr" />
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="lb_index_gulu" style="width:1150px; margin:0px auto">
+                    <div class="lb_myindex_div_left_center lb_myindex_div_left_center_gu">
+                        <ul>
+                            <li>
+                                <img src="~/Content/Front/images/guru_r2_c2.jpg" />
+                            </li>
+                            <li>
+                                姓名：
+                                @listGroup.RealName
+                                @{
+                                    string rscr = null;
+                                    if (listGroup.Gender == 0)
+                                    {
+                                        rscr = "/Content/Front/images/women.png";
+                                    }
+                                    else
+                                    {
+                                        rscr = "/Content/Front/images/men.png";
+                                    }
+                                }
+                                <img src="@rscr" />
+                            </li>
+                            <li>
+                                @if (ViewBag.isfollow == false && ViewBag.user.Uid != ViewBag.strUid)
+                                {
+                                    <a id="flowuid" onclick="flowuid('@ViewBag.strUid')">
+                                        +关注
+                                    </a>
+                                }
+                                else if (ViewBag.isfollow == true)
+                                {
+                                    <a id="flowuid" onclick="flowuid('@ViewBag.strUid')">
+                                        @*<input type="button" value="已关注" class="input2" />*@
+                                        已关注
+                                    </a>
+                                }
+                                <input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+                            </li>
+
+                            <li>
+                                流派：@ViewBag.YogaTypeid
+                            </li>
+                            <li>
+                                位置：@ViewBag.AddRessName
+
+                            </li>
+                        </ul>   <br /><br />
+                        <p>  @listGroup.GudWords</p>
+                    </div>
+                    <div class="lb_myindex_div_left_center_lu">
+                        <div class="lb_name_div" style="width:auto">
+                            <ul>
+                                <li>
+                                    <p>@ViewBag.iCount</p>
+                                    <a>关注</a>
+                                </li>
+                                <li>
+                                    <p>
+                                        @{
+                                            string fcount = null;
+                                            if (ViewBag.FCount == null)
+                                            {
+                                                fcount = "0";
+                                            }
+                                            else
+                                            {
+                                                fcount = @ViewBag.FCount.ToString();
+                                            }
+                                        }
+                                        @fcount
+                                    </p>
+                                    <a>粉丝</a>
+                                </li>
+                                <li>
+                                    <p>@ViewBag.tzancount</p>
+                                    <a>人气</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="lb_myindex_mjianjie">
+                <div class="lb_myindex_mjianjie_left">
+
+                    <div class="lb_myindex_mjianjie_left_img">
+                        <h2>伽图</h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="lb_myindex_mjianjie wrapper" id="divmyphoto">
+                <div id="con1_1">
+                    @if (Model != null)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <div class="product_list">
+                                <a href="#" id="@item.Pid">
+                                    <img src="@(item.PictureOriginal == null ? "" :item.PictureOriginal)" />
+                                </a>
+                                <p>@(item.PictureContent)</p>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+        <p id="back-to-top"><a href="#top"><span></span>返回顶部</a></p>
+    </form>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var $container = $('#con1_1');
+            $container.imagesLoaded(function () {
+                $container.masonry({
+                    itemSelector: '.product_list',
+                    columnWidth: 5 //每两列之间的间隙为5像素
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>

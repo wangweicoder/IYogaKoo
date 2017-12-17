@@ -1,0 +1,611 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    @RenderSection("styles", false)
+    @using IYogaKoo.ViewModel.Commons.Enums;
+    <meta property="qc:admins" content="37466671526117713776375" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽酷， 世界瑜伽人之家。</title>
+    <link rel="shortcut icon" href="/Content/Front/images/2.ico.png">
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script src="~/Content/ueditor/ueditor.config.js"></script>
+    <script src="~/Content/ueditor/ueditor.all.js"></script>
+    <script src="~/Content/My97DatePicker4.7/WdatePicker.js"></script>
+    
+    <script src="~/Content/jquery/ExistisUpdate.js"></script>
+
+    <link type="text/css" href="/Content/Front/css/indexnew.css?v=1" rel="stylesheet" />
+    <script type="text/javascript" src="~/Content/Front/js/indexnew.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+    <script src="~/Content/jquery/base64.js"></script>
+    <script src="~/Content/jquery/ReturnUrl.js"></script>
+
+    <script src="~/Content/baiduAdd.js"></script>
+</head> 
+<body>
+    <div class="lb_index">
+        <div class="lb_index_top">
+            <div class="lb_index_top_left">
+                <a href="/Home/Index">
+                    <img src="/Content/Front/images/logo02.png" />
+                </a>
+            </div>
+            <div class="lb_index_scarh_class" style="width:640px;height:70px;margin:1px; margin-top:11px; float:left">
+                <ul>
+                    <li class="li1">
+                        <a href="/YogaUserDetail" style="width:100%; height:100%; display:block;"></a>
+
+                    </li>
+                    <li class="li2">
+                        <a href="/YogisModels" style="width:100%; height:100%; display:block;"></a>
+
+                    </li>
+                    <li class="li3">
+                        <a href="/Mechanism" style="width:100%; height:100%; display:block;"></a>
+
+                    </li>
+                    <li class="li4">
+                        <a href="/class/index" style="width:100%; height:100%; display:block;"></a>
+                    </li>
+                    <li class="li9">
+                        <a href="/learn/index" style="width:100%; height:100%; display:block;"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="lb_index_top_right">
+                <div class="lb_index_top_right_ul">
+                    <ul>
+                        @{
+                            if (ViewBag.user!=null && ViewBag.user.Uid != 0)
+                            {
+                                int uid = ViewBag.user.Uid;
+                                if (ViewBag.user.UserType == (int)UserType.瑜伽会员)
+                                {
+                                    <li>
+                                        <a href="/tWriteLog/logIndex?page=1" class="lb_ron">@(ViewBag.user.NickName == null ? "" : ViewBag.user.NickName)</a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            @{if (ViewBag.level != null)
+                                      {
+                                          var YogiLevel = ViewBag.level;
+                                          if (YogiLevel == 0)
+                                          {
+                                            @:基础习练者
+                                                                    }
+                                          if (YogiLevel == 1)
+                                          {
+                                            @:初级习练者
+                                                                      }
+                                          if (YogiLevel == 2)
+                                          {
+                                            @:中级习练者
+                                                                     }
+                                          if (YogiLevel == 3)
+                                          {
+                                            @:高级习练者
+                                                                    }
+                                      }
+                                            }
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a id="sjds" onclick="Javascript: window.open('/Home/ApplyTeachAgreement');" href="/Home/ApplyTeachAgreement">
+                                            <img src="~/Content/Front/images/updateteach.png" style="float:left; margin-top:30px" />
+                                        </a>
+                                    </li>
+                                    <li class="lb_li_index">
+                                        <a class="se">
+                                            设置
+                                        </a>
+                                        <div class="lb_li_idnex_hide">
+                                            <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                            <ul>
+                                                <li><a href="/YogaUserDetail/PersonalSetUp?iType=1">个人信息</a></li>
+                                                <li><a href="/YogaUserDetail/PersonalSetUp?iType=2">安全设置</a></li>
+                                                <li><a href="/YogaUserDetail/PersonalSetUp?iType=3">级别认证</a></li>
+                                                <li><a href="/YogaUserDetail/PersonalSetUp?iType=4">隐私设置</a></li>
+                                                <li><a href="/tQuestion/PersonalHelpCenters">帮助中心</a></li>
+                                                <li style="border-top:1px solid #ccc"><a id="exit" href="/home/Exitlogin">退出</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="/tWriteLog/logIndex?page=1" class="lb_ron">@(ViewBag.user.NickName == null ? "" : ViewBag.user.NickName)</a>
+                                    </li>
+                                    <li>
+                                        <a>
+                                            @{if (ViewBag.level != null)
+                                      {
+                                          var YogisLevel = ViewBag.level;
+                                          IEnumerable<SelectListItem> list = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.初级老师.ToList();
+                                          foreach (var item in list)
+                                          {
+                                             if (YogisLevel.ToString() == item.Value)
+                                          {
+                                                @item.Text
+                                               }
+                                          }
+                                      }
+                                            }
+                                        </a>
+                                    </li>
+                                    <li class="lb_li_index">
+                                        <a>
+                                            <img src="~/Content/Front/images/shezhi.png" alt="s" />
+                                        </a>
+                                        <div class="lb_li_idnex_hide">
+                                            <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                            <ul>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=1">个人信息</a></li>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=2">课程设置</a></li>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=3">安全设置</a></li>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=4">级别认证</a></li>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=5">隐私设置</a></li>
+                                                <li><a href="/tQuestion/PersonalHelpCenters">帮助中心</a></li>
+                                                <li style="border-top:1px solid #ccc"><a id="exit" href="/home/Exitlogin">退出</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                                <li><input type="hidden" id="hiduid" value="@uid" /></li>
+                            }
+                            else
+                            {
+                                <li><a href="/Login/Register" class="zh" onclick="getreg();">注册</a>· <a href="javascript:btnLogin();" class="login">登录</a></li>
+
+                            }
+                        }
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="lb_index_scarh_top">
+            @{ if(ViewBag.user.UserType == (int)UserType.瑜伽导师)
+              {
+                <div class="lb_School_index_top">
+                    <div class="lb_School_index_top_index">
+                        <b>您所在位置：<a href="/">首页</a> >  <a href="/YogisModels">瑜伽导师</a>  >&nbsp;&nbsp;</b><span>瑜伽导师个人主页</span>
+                    </div>
+                </div>
+             IYogaKoo.Controllers.YogisModelsController yo=new IYogaKoo.Controllers.YogisModelsController ();
+               var obj= yo.ModelsDetails(ViewBag.user.Uid);
+
+                var strImg="/Content/Front/images/my.png";
+                if (!string.IsNullOrEmpty(obj.Model.CoverImg))
+                {
+                    strImg = obj.Model.CoverImg.Split(',')[0];
+                }
+
+                <div class="lb_myindex" style="background: url(@strImg) no-repeat center center">
+                    <div class="lb_myindex_div">
+                        <div class="lb_myindex_div_left">
+                            <div class="lb_myindex_div_left_top">
+                                @{
+
+                                string drscr = null;
+
+                                if (!string.IsNullOrEmpty(obj.Model.DisplayImg))
+                                {
+                                    drscr = obj.Model.DisplayImg;
+
+                                    if (drscr.IndexOf(';') != -1)
+                                    {
+                                        var str = drscr.Split(';');
+                                        if (str.Length > 1)
+                                        {
+                                            if (!string.IsNullOrEmpty(str[1]))
+                                            {
+                                                drscr = str[1];
+                                            }
+                                            else
+                                            {
+                                                drscr = str[0];
+                                            }
+                                        }
+                                        else
+                                        {
+                                            drscr = str[0];
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    drscr = "/Content/Front/images/defaultImg.png";
+                                }
+                                }
+                                <img src="@drscr" />
+                                <ul>
+                                    <li>
+                                        @obj.ViewBag.NickName
+                                        @{
+                                    string rscr = null;
+                                    if (obj.Model.Gender == 0)
+                                    {
+                                        rscr = "/Content/Front/images/women.png";
+                                    }
+                                    else if (obj.Model.Gender == 1)
+                                    {
+                                        rscr = "/Content/Front/images/men.png";
+                                    }
+                                    else
+                                    {
+                                        rscr = "";
+                                    }
+                                        }
+                                        <img src="@rscr" />
+                                    </li>
+                                    <li>
+                                        @if (obj.ViewBag.isfollow == false && obj.ViewBag.user.Uid != obj.ViewBag.strUid)
+                                                             {
+                                            <a id="flowuid" onclick="flowuid('@obj.ViewBag.strUid')">
+                                                +关注
+                                            </a>
+                                                             }
+                                else if (obj.ViewBag.isfollow == true)
+                                                             {
+                                    <a id="flowuid" onclick="flowuid('@obj.ViewBag.strUid')">
+                                        @*<input type="button" value="已关注" class="input2" />*@
+                                        已关注
+                                    </a>
+                                                             }
+                                        <input type="hidden" id="hhid" value="@obj.ViewBag.user.Uid" />
+                                    </li>
+                                </ul>
+                            </div>
+
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="lb_index_gulu" style="width:1200px; margin:0px auto">
+                    <div class="lb_myindex_div_left_center lb_myindex_div_left_center_gu">
+                        <ul style="margin-left:180px;">
+                            <li>
+                                @{
+                                     if (obj.Model.YogisLevel == 1)
+                                            {
+                                                //  @:初级
+                                        <img src="~/Content/Front/images/cjds.png" />
+                                            }
+                                            if (obj.Model.YogisLevel == 2)
+                                            {
+                                                //@:中级
+                                                <img src="~/Content/Front/images/zjds.png" />
+                                            }
+                                            if (obj.Model.YogisLevel == 3)
+                                            {
+                                                //  @:高级
+                                                <img src="~/Content/Front/images/gjds.png" />
+                                            }
+                                        if (obj.Model.YogisLevel == 4)
+                                        {
+                                         <img src="~/Content/Front/images/ds.png" />
+                                        }
+                                           if (obj.Model.YogisLevel == 5)
+                                        {
+                                            // @:资深
+                                        <img src="~/Content/Front/images/zishengdaoshi.jpg" />
+                                        }
+                                         if (obj.Model.YogisLevel == 6)
+                                        {
+                                            // @:知名
+                                        <img src="~/Content/Front/images/zhimindaoshi.jpg" />
+                                        }
+                                }
+
+                            </li>
+                            <li> @obj.ViewBag.YogaTypeid</li>
+                            <li class="lb_address">
+                                @obj.ViewBag.AddRessName
+                            </li>
+                        </ul>     <br /><br />
+                        <p> &nbsp;@obj.Model.GudWords</p>
+
+                    </div>
+                    <div class="lb_myindex_div_left_center_lu">
+                        <div class="lb_name_div" style="width:auto">
+                            <ul>
+                                <li>
+                                    <p>@obj.ViewBag.iCount</p>
+                                    <a href="/YogaUser/FollowList">关注</a>
+                                </li>
+                                <li>
+                                    <p>
+                                        @{
+                                            string fcount = null;
+                                            if (obj.ViewBag.FCount == null)
+                                            {
+                                                fcount = "0";
+                                            }
+                                            else
+                                            {
+                                                fcount = obj.ViewBag.FCount.ToString();
+                                            }
+                                    }
+                                    @fcount
+                                </p>
+                                <a href="/YogaUser/FollowersList">粉丝</a>
+                            </li>
+                            <li style="border:0px none;">
+                                <p>
+                                    @{
+                                                var tzancount="";
+                                                if (obj.ViewBag.tzancount == null)
+                                                {
+                                                    tzancount = "0";
+                                                }
+                                                else
+                                                {
+                                                    tzancount = obj.ViewBag.tzancount.ToString();
+                                                }
+                                    }
+                                    @tzancount
+                                </p>
+                                <a>人气</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+             }
+             else{//习
+
+                <div class="lb_School_index_top">
+                    <div class="lb_School_index_top_index">
+                        <b>您所在位置：<a href="/">首页</a> >  <a href="/YogaUserDetail">瑜伽习练者</a>  >&nbsp;&nbsp;</b><span>瑜伽习练者个人主页</span>
+                    </div>
+                </div>
+                 IYogaKoo.Controllers.YogaUserDetailController yd = new IYogaKoo.Controllers.YogaUserDetailController();
+                 var obj = yd.UserDetails(ViewBag.user.Uid);
+                 var strImg = "/Content/Front/images/1920360.jpg";
+
+                 if (!string.IsNullOrEmpty(obj.Model.Covimg))
+                {
+                    strImg = obj.Model.Covimg.Split(',')[0];
+                }
+
+
+                <div class="lb_myindex" style="background: url(@strImg) no-repeat center center">
+                    <div class="lb_myindex_div" style="margin-top:0px">
+                        <div class="lb_myindex_div_left">
+                            <div class="lb_myindex_div_left_top">
+                                @{
+                                var drcurl = "";
+                                // var strName = "";//姓名
+                                var YogisLevel = "";//级别
+                                var gender = "";//性别
+                                var GudWords = "";//座右铭
+
+                                drcurl = obj.Model.DisplayImg;
+
+                                YogisLevel = obj.Model.Ulevel.ToString();
+                                gender = obj.Model.Gender == null ? null : obj.Model.Gender.ToString();
+                                GudWords = obj.Model.GudWords;
+
+                                string drscr = null;
+
+                                if (drcurl != null && drcurl != "")
+                                {
+                                    drscr = drcurl;
+
+                                    if (drscr.IndexOf(';') != -1)
+                                    {
+                                        var str = drscr.Split(';');
+                                        if (str.Length > 1)
+                                        {
+                                            if (!string.IsNullOrEmpty(str[1]))
+                                            {
+                                                drscr = str[1];
+                                            }
+                                            else
+                                            {
+                                                drscr = str[0];
+                                            }
+                                        }
+                                        else
+                                        {
+                                            drscr = str[0];
+                                        }
+                                    }
+
+                                }
+                                else
+                                {
+                                    drscr = "/Content/Front/images/defaultImg.png";
+                                }
+                                }
+                                <img src="@drscr" />
+                                <ul>
+                                    <li>
+                                        @obj.ViewBag.NickName
+                                    @{
+                                    string rscr = null;
+                                    if (obj.Model.Gender == 0)
+                                    {
+                                        rscr = "/Content/Front/images/women.png";
+                                    }
+                                    else if (obj.Model.Gender == 1)
+                                    {
+                                        rscr = "/Content/Front/images/men.png";
+                                    }
+                                    else
+                                    {
+                                        rscr = "/Content/Front/images/men.png";
+                                    }
+                                    }
+                                    <img src="@rscr" />
+                                </li>
+                                <li>
+                                    @if (obj.ViewBag.isfollow == false && obj.ViewBag.user.Uid != obj.ViewBag.strUid)
+                                   {
+                                        <a id="flowuid" onclick="flowuid('@obj.ViewBag.strUid')">
+                                            +关注
+                                        </a>
+                                   }
+                                   else if (obj.ViewBag.isfollow == true)
+                                   {
+                                    <a id="flowuid" onclick="flowuid('@obj.ViewBag.strUid')">
+                                        已关注
+                                        @*<input type="button" value="已关注" class="input2" />*@
+                                    </a>
+                                   }
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+                <div class="lb_index_gulu" style="width:1200px; margin:0px auto">
+                    <div class="lb_myindex_div_left_center lb_myindex_div_left_center_gu">
+                        <ul>
+                            <li>
+                                @if (YogisLevel == "0" || YogisLevel == null)
+                                    {
+                                    @:基本习练者
+                                   }
+                                    else if (YogisLevel == "1")
+                                    {
+                                        @:初级习练者
+                                   }
+                                    else if (YogisLevel == "2")
+                                    {
+                                        @:中级习练者
+                                   }
+                                    else if (YogisLevel == "3")
+                                    {
+                                        @:高级习练者
+                                   }
+                            </li>
+                            <li>
+                                @obj.ViewBag.YogaTypeid
+                                <input type="hidden" id="hhid" value="@obj.ViewBag.user.Uid" />
+                            </li>
+                            <li class="lb_address"> @obj.ViewBag.AddRessName</li>
+                            @*<li>
+                                       @GudWords
+                                </li>*@
+                        </ul>
+                        <br /><br />
+                        <p>@GudWords</p>
+                    </div>
+                    <div class="lb_myindex_div_left_center_lu">
+                        <div class="lb_name_div" style="width:auto">
+                            <ul style="margin-left:25px">
+                                <li>
+                                    <p>@obj.ViewBag.iCount</p>
+                                    <a href="/YogaUser/FollowList">关注</a>
+                                </li>
+                                <li style="border:0px none;">
+                                    <p>
+                                        @{
+                                    string fcount = null;
+                                    if (obj.ViewBag.FCount == null)
+                                    {
+                                        fcount = "0";
+                                    }
+                                    else
+                                    {
+                                        fcount = obj.ViewBag.FCount.ToString();
+                                    }
+                                        }
+                                        @fcount
+                                    </p>
+                                    <a href="/YogaUser/FollowersList">粉丝</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+               }
+            }
+            <div class="lb_qq">
+
+                <div class="lb_left_lbb_left2">
+
+                    <ul>
+                        @{
+                    if (ViewBag.user != null && ViewBag.user.Uid != 0)
+                    {
+                        int uid = ViewBag.user.Uid;
+                        if (ViewBag.user.UserType == (int)UserType.瑜伽会员)
+                        {
+                            <li>
+                                <a href="/Login/TopPicJquery">我的头像</a>
+                            </li>
+                            <li>
+                                <a href="/Login/UserDetailEdit">个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/Login/UpdatePwd">安全设置</a>
+                            </li>
+                            @*<ul style="margin:0px">
+                                    <li><a href="/Login/UpdatePwd">修改密码</a></li>
+                                </ul>
+                                <li>
+                                    <a href="/tWriteLog/Index">我的日志</a>
+                                </li>
+                                <li>
+                                    <a href="/YogaPic/Index">我的相册</a>
+                                </li>*@
+                            <li><a href="/YogaUserDetail/LevelAuthentication">级别认证</a></li>
+                            <li><a href="/YogaUserDetail/PrivacySettings">隐私设置</a></li>
+
+                        }
+                        else
+                        {
+                            <li>
+                                <a href="/Login/ModelsTopPic">我的头像</a>
+                            </li>
+                            <li>
+                                <a href="/Login/Edit">个人信息</a>
+                            </li>
+                            <li>
+                                <a href="/Login/UpdatePwd">安全设置</a>
+                            </li>
+                            @*<ul>
+                                <a href="javascript:;">安全设置</a>
+                                <ul style="margin:0px">
+                                    <li><a href="/Login/UpdatePwd">修改密码</a></li>
+                                </ul>
+                                <li><a href="/tWriteLog/Index">我的日志</a>
+                                    </li>
+                                    <li>
+                                        <a href="/YogaPic/Index">我的相册</a>
+                                 </li>  *@
+                            <li><a href="/YogisModels/LevelAuthentication">级别认证</a></li>
+                            <li><a href="#">隐私设置</a></li>
+                        }
+                    }
+                        }
+
+                        <li style="border:0px"><a href="javascript:;">帮助中心</a></li>
+                    </ul>
+                </div>
+                <div class="lb_index_rightt">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+    </div>
+    @RenderSection("scripts", false)
+</body>
+</html>

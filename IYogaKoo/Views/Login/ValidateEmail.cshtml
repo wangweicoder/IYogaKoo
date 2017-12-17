@@ -1,0 +1,66 @@
+﻿@{
+
+    ViewBag.Title = "发送验证邮件";
+    Layout = Layout = "~/Views/Shared/_Layout.cshtml";   
+}
+<div class="lb_login_idnex_bottom">
+        <div class="lb_emila_p">
+            <b>您所在位置：<a>注册确认</a></b>
+        </div>
+    <div class="lb_emila">
+        <img src="~/Content/Front/images/zc_r2_c2.jpg" />
+    </div> 
+
+    <div class="lb_email_idnex">
+        <div class="lb_email_index_le">
+    <div class="lb_red_cg">
+        <h2 style="color: #65c3a5;">邮件激活！</h2>
+        <p>要激活账户，请按照我们发送到 @ViewBag.email 的电邮说明进行操作。</p>
+        <p>需要在24小时内验证</p>
+        <a href='@ViewBag.loginEmail' target="_blank">去邮箱激活>></a>
+    </div>
+        
+    <div id="sendEmail">
+        <h4>没有收到电邮?</h4>
+        <p>
+            看看垃圾邮件夹,有时可能出现误判.<br />
+            如果仍找不到,请重发电邮:
+        </p>
+        <strong>电子邮件</strong><br />
+        <span style="margin-left:0px">@ViewBag.email</span>&nbsp;&nbsp;<input class="border_radius" style="height: 30px; background-color: #65c3a5; border: none;cursor:pointer" type="button" id="sendButton" value="重发电邮" onclick="SendEmail();" />
+    </div> 
+    </div>
+         
+    <div class="lb_email_div">
+        <div class="lb_email_div_left">
+            <p>此致，</p>
+            <p>iyogakoo团队</p>
+        </div>
+        <div class="lb_email_div_right">
+            <img src="~/Content/Front/images/logo00.png" />
+        </div>
+    </div>
+         </div>
+    <input type="hidden" id="huid" value="@ViewData["uid"].ToString()" />
+    <input type="hidden" id="hemail" value="@ViewBag.email" />
+    <input type="hidden" id="hnickname" value="@ViewData["nickname"].ToString()" />
+</div>
+@section Scripts {    
+    <script type="text/javascript">
+    function SendEmail() {
+        $("#sendButton").val("正在发送......");
+       
+        $.get("SendValidateEmail",
+            { uid: $("#huid").val(), email: $("#hemail").val(), nickname: $("#hnickname").val() },
+            function (relust,status) {                
+                if (status == "success") {
+                $("#sendButton").val("发送成功!");
+            }
+            else {
+                $("#sendButton").val("发送失败，重新发送!");
+            }
+            });
+    }
+    </script>
+}
+

@@ -1,0 +1,270 @@
+﻿@model List<IYogaKoo.ViewModel.ViewYogaPicture>
+
+@{
+    ViewBag.Title = "我的相册";
+    Layout = "~/Views/Shared/ModelsDetails.cshtml";
+    //默认显示所有图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> piclistAll = ViewBag.piclistAll;
+    //日志图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> listwlogimg = new List<IYogaKoo.ViewModel.ViewYogaPicture>();
+    //习练笔记App图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> listwlogimgApp = new List<IYogaKoo.ViewModel.ViewYogaPicture>();
+    //活动图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> wlogimgclasslist = new List<IYogaKoo.ViewModel.ViewYogaPicture>();
+    if (piclistAll.Count() > 0)
+    {
+        listwlogimg = piclistAll.Where(X => X.PictureType == 3).ToList();
+        listwlogimgApp = piclistAll.Where(X => X.PictureType == 4).ToList();
+        wlogimgclasslist = piclistAll.Where(X => X.PictureType == 6).ToList();
+    }
+    
+    List<IYogaKoo.ViewModel.ViewYogaPicture> listPic = Model;
+}
+
+@section styles
+{
+    <style type="text/css">
+        /*瀑布流*/
+        .wrapper img {
+            border: none;
+        }
+
+        .wrapper {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+            .wrapper h3 {
+                color: #3366cc;
+                font-size: 16px;
+                height: 35px;
+                line-height: 1.9;
+                text-align: center;
+                border-bottom: 1px solid #E5E5E5;
+                margin: 0 0 10px 0;
+            }
+
+        #con1_1 {
+            position: relative;
+            padding-left:60px;
+        }
+
+            #con1_1 .product_list {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                padding: 0px;
+                background: #eee;
+                margin-bottom: 5px;
+                width:201px;
+            }
+
+        .product_list img {
+            width: 200px;
+        }
+
+        .product_list p {
+            padding: 5px 0px;
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+            white-space: normal;
+            width: 195px;
+            word-break: break-all;
+           background:#eee
+
+        }
+        /*返回顶部*/
+        /*returnTop*/
+        p#back-to-top {
+            position: fixed;
+            display: none;
+            bottom: 300px;
+            right: 150px;
+        }
+
+            p#back-to-top a {
+                text-align: center;
+                text-decoration: none;
+                color: #979797;
+                display: block;
+                width: 64px;
+                /*使用CSS3中的transition属性给跳转链接中的文字添加渐变效果 background:  url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png')  */
+                -moz-transition: color 1s;
+                -webkit-transition: color 1s;
+                -o-transition: color 1s;
+            }
+
+                p#back-to-top a:hover {
+                    color: #65c3a5;
+                }
+
+                p#back-to-top a span {
+                    background-image: url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png');
+                    border-radius: 6px;
+                    display: block;
+                    height: 64px;
+                    width: 58px;
+                    margin-bottom: 5px;
+                    margin: 0 auto;
+                }
+        #indexmenu {
+        border:0px;
+        }
+        #back-to-top a:hover span {
+            background-image: url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png');
+        }
+    </style>
+} 
+<input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+
+<div class="lb_add_xiangce" style=" height:10px; position:relative">
+
+</div>
+
+<div class="lb_gr_idnex_center_rizhi" style=" height: auto;">
+     <div class="lb_gr_xc_left" style="background:#fff">
+        
+                <span style="font-weight:bold; color:#333;">@ViewBag.pictitle</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                <span style="float:right; margin-right:23px; color:#999999">共@(Model.Count())张</span>
+                <div style="background:url(../../Content/Front/images/filebackimgnew.png) no-repeat; height:255px; width:177px;">
+                    @{
+                        if (listPic != null)
+                        {
+                           
+                            if (listPic.Count() > 0)
+                            {
+                                <div class="lb_add_img_div">
+                                    <img src="@(listPic[0].PictureOriginal == null ? "../Content/Front/images/filebackimg.png" : listPic[0].PictureOriginal)" />
+                                </div>
+                                <div class="lb_add_img_bottom">
+                                    <a href="/YogaPic/Create?pictitle=@ViewBag.pictitle">上传图片</a>
+                                </div>
+                                DateTime tempdt = Convert.ToDateTime(listPic[0].CreateTime);
+                                string time = tempdt.ToString("yyyy-MM-dd");
+                                <div class="lb_add_span">
+                                    <span>创建于@(time)</span>
+                                </div>
+                                 
+                            }
+                        }
+                    }
+                    
+                </div>
+                <div class="lb_add_img_imgh">
+                    <span>我的相册</span><a href="/YogaPic/PhotoFileInfo" style=" margin-left:50px; font-size:14px;color:#0A8CD2">查看全部</a>
+                </div>
+            @foreach (var item in ViewBag.listGroup)
+            { 
+                    
+                        <div style="" class="lb_forter_index">
+                            <div class="lb_forter_index_le">
+                                <a href="/YogaPic/MyPicsDetails/@item.pictitle" id="@item.uid  ">
+                                    <img src="@(item.picsrc == null ? "" : item.picsrc)" />
+                                </a> 
+                            </div>
+                            <div class="lb_forter_index_re">
+                                <p>@(item.pictitle)</p>
+                                <span class="bbackground">(共@(item.picnum)张)</span>
+                            </div>
+                              
+                               
+                             
+                        </div>
+             }
+          
+    </div>    
+       <div class="wrapper" style="width:980px; float:right">
+                                    @{
+                                    
+                                    if (listPic != null)
+                                    {
+                                        if (listPic.Count() > 0)
+                                        {
+                                                    
+                                        <div id="con1_1">  
+                                            @foreach (var item in listPic) 
+                                            {
+                                                <div class="product_list delete">
+                                                    <a href="#" id="@item.Pid"> 
+                                                        <img id="@item.Pid" src="@(item.PictureOriginal == null ? "" : item.PictureOriginal)" />
+                                                    </a>
+                                                    <span style="cursor:pointer;" onclick="deleteimg('@item.Pid')">删除</span>
+                                                    <p>@(item.PictureContent) &nbsp;</p> 
+                                                </div>
+    
+                                            }
+                                        </div>
+                                        }
+                                    }
+                                    }
+                                </div>
+        
+     
+    </div>
+ 
+<input id="hidtitle" name="hidtitle" type="hidden" value="@ViewBag.pictitle" />
+
+<script src="~/Content/Front/js/QQPhoto/QQPhoto.min.js"></script>
+<link href="~/Content/Front/css/QQPhoto/style.css" rel="stylesheet" />
+<script type="text/javascript">
+    //瀑布流
+
+    $(document).ready(function () {
+        var $container = $('#con1_1');
+        $container.imagesLoaded(function () {
+            $container.masonry({
+                itemSelector: '.product_list',
+                columnWidth: 15 //每两列之间的间隙为5像素
+            });
+        });
+        //判断是否登录
+        var l = "false";
+        var hhid = $("#hhid").val();
+        if (hhid != '' && hhid != 0) {
+            l = "true";
+        }
+
+        $("#con1_1 img").QQPhoto({
+            url: "/Controllers/ashxFile/GetMyselfImg.ashx?part=0&PictureName=@ViewBag.pictitle&id=" +@ViewBag.user.Uid + "&imgid=",                 //获取相册列表数据的URL地址 需要返回 JSON 格式，请参考文件 data.json 格式来输出
+            commentURL: '@Url.Content("~/Controllers/ashxFile/ImgComment.ashx")',            //提交评论 Ajax 发送到 服务器端的地址   返回 JSON 格式，请参考文件 comment.json 格式来输出
+            fix: 5,                           //表示相册列表左右间距的距离                 默认 5
+            minTextLen: 3,                    //发送评论时 表单验证，最少不能少于的字符    默认三个字符
+            maxTextLen: 140,                  //发送评论时 表单验证，最多不能少于的字符    默认140个字符
+            fadeIn: false,                     //图片默认是否开启淡入效果，默认为 false
+            lazyload: '@Url.Content("~/Content/Front/css/QQPhoto/images/lazyload.gif")',   //默认lazyload的图片，默认为1px.gif 透明图片
+            loadding: '@Url.Content("~/Content/Front/css/QQPhoto/images/loading.gif")',    //loading.gif 的文件路径
+            islogin: l
+        });
+    });
+    </script>
+<script type="text/javascript">
+    //选中我的相册标签
+    $(document).ready(function () {        
+            $('.lb_gr_index_top li:eq(1)').children('a').addClass('on').parent().siblings().children('a').removeClass('on');
+          
+    });
+
+    //删除图片
+    function deleteimg(pid) {
+        $.ajax({
+            url: "/YogaPic/Delete/" + pid,
+            type: "post",
+            dataType: "json",
+            data: {
+                pid: pid
+            },
+            success: function (data) {
+
+                if (parseInt(data.code) == 0) {
+
+                    window.location.reload();
+                }
+                else {
+
+                }
+            },
+            async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+        });
+    }
+</script>

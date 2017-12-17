@@ -1,0 +1,202 @@
+﻿@model IYogaKoo.ViewModel.ViewCenters
+@{
+    ViewBag.Title = "创建机构";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    Html.EnableClientValidation();
+}
+
+  
+@using (Html.BeginForm())
+{   @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset style="margin-top:25px; padding-top:10px; border:0px">
+    @Html.HiddenFor(model => model.CenterType)
+               <div class="display-label2">
+               &nbsp;
+            </div>
+        <div class="editor-field">
+            <p style="color:red; font-size:16px;">以下为必填项</p>
+        </div> 
+
+            <div class="display-label2">
+                @Html.LabelFor(model => model.CenterName):
+            </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.CenterName)
+         @*   <span class="spanred">*</span>*@
+           @* @Html.ValidationMessageFor(model => model.CenterName)*@           
+        </div> 
+        <div class="display-label2">
+           @* @Html.LabelFor(model => model.CountryID)*@
+             所在区域：
+        </div>
+            <div class="editor-field" style="width:85%">
+                <select id="ddlCountryID" name="ddlCountryID">
+                    <option value="-1">请选择国家</option>
+                </select> @*<span class="spanred">*</span>*@<br /><br />
+                <select id="ddlProvinceID" name="ddlProvinceID">
+                    <option value="0">请选择省份</option>
+                </select> @*<span class="spanred">*</span>*@
+                <select id="ddlCityID" name="ddlCityID" style="width: 120px;">
+                    <option value="0">请选择城市</option>
+                </select> @*<span class="spanred">*</span>*@
+                <select id="ddlDistrictID" name="ddlDistrictID" style="width: 120px;">
+                    <option value="0">请选择城区</option>
+                </select> @*<span class="spanred">*</span>*@
+
+            </div> 
+        <br/>
+                <div style="float:left; margin:30px 20px;">
+                    <input type="button" id="idsubmit" value="添加" />
+                </div>
+             
+</fieldset>
+}
+@section styles
+{
+    <style type="text/css">
+        .editor-label,.field-validation-valid
+        { 
+            width:100%;
+            font-size:12px;
+            color:red;
+        }
+        .editor-label input, .editor-label span
+        {  
+            float:left;
+        }
+       
+    </style>
+    }                         
+@section Scripts{
+  
+ 
+    <script type="text/javascript">
+        $(function () {
+            //加载国家
+            $.ajax({
+                url: '/Login/GetCountryInfo?t=' + Math.random(),
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {                    
+                    for (var i = 0; i < data.length; i++) {
+                        $("#ddlCountryID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                    };
+                }
+            });
+           
+        });
+        // 加载省级事件
+        $('#ddlCountryID').click(function () {
+
+            var strGuoJia = $(this).val();
+            document.getElementById("ddlProvinceID").innerHTML = "";
+            //加载省
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strGuoJia,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlProvinceID").html("<option value='0'>请选择</option>");
+                    $("#ddlCityID").html("<option value='0'>请选择</option>");
+                    $("#ddlDistrictID").html("<option value='0'>请选择</option>");                    
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+
+        });
+        //加载市级列表
+        $("#ddlProvinceID").click(function () {
+            var strSheng = $(this).val();
+            document.getElementById("ddlCityID").innerHTML = "";
+            //加载市
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strSheng,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlCityID").html("<option value='0'>请选择</option>");
+                    $("#ddlDistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+
+        });
+        //城市事件
+        $("#ddlCityID").click(function () {
+
+            var strShi = $(this).val();
+            document.getElementById("ddlDistrictID").innerHTML = "";
+            //加载城区
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strShi,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlDistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+
+        });
+    </script>
+<script>
+    $('#idsubmit').click(function () {
+        if ($("#CenterName").val().length == 0) {
+            layer.alert("请填写会馆名称");
+            return false;
+        }
+        if ($("#ddlCountryID").val() == "-1") {
+            layer.alert("请选择国家");
+            return false;
+        }
+        //if ($("#ddlProvinceID").val() == "0") {
+        //    alert("请选择省份");
+        //    return false;
+        //}
+        //if ($("#ddlCityID").val() == "0") {
+        //    alert("请选择城市");
+        //    return false;
+        //}
+        //if ($("#ddlDistrictID").val() == "0") {
+        //    alert("请选择城区");
+        //    return false;
+        //}
+        //验证结束
+        var data = $("form").serialize();
+        $.ajax({
+            url: '/CentersAdd/Create?t=' + Math.random(),
+            type: 'POST',
+            data: data,
+            success: function (data) {
+                if (data.code == 0) {
+                    window.opener = null;
+                    layer.alert("添加成功！");
+                    window.close();
+                } else {
+                    layer.alert("添加失败！"+data);
+                }
+            }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                layer.alert("添加失败！" + data);
+            }
+        });
+        return false;
+    });
+</script>
+
+}
+ 

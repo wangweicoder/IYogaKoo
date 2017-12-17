@@ -1,0 +1,157 @@
+﻿@using Webdiyer.WebControls.Mvc
+@using IYogaKoo.ViewModel;
+@model IYogaKoo.ViewModel.ViewtQuestion
+@{
+    ViewBag.Title = "帮助中心";
+
+    Layout = null;
+    //用户ID
+    var id = ViewBag.id;
+
+    Commons.Helper.method method = new Commons.Helper.method();
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta property="qc:admins" content="37466671526117713776375" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽酷， 世界瑜伽人之家。</title>
+    <link rel="shortcut icon" href="/Content/Front/images/2.ico.png" />
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script src="~/Content/ueditor/ueditor.config.js"></script>
+    <script src="~/Content/ueditor/ueditor.all.js"></script>
+    <script src="~/Content/My97DatePicker4.7/WdatePicker.js"></script>
+    <script src="~/Content/jquery/ExistisUpdate.js"></script>
+    <link type="text/css" href="/Content/Front/css/indexnew.css?v=1" rel="stylesheet" />
+    <script type="text/javascript" src="~/Content/Front/js/indexnew.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+    <script src="~/Content/jquery/base64.js"></script>
+    <script src="~/Content/jquery/ReturnUrl.js"></script>
+    <script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")"></script>
+    <script src="~/Content/cutpic.js"></script>
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+    <link href="~/Content/Main.css" rel="stylesheet" />
+    <style>
+        /*隐藏进度条*/
+        #fileQueue {
+            display: none;
+        }
+        .lb_add_index_bz_demo_bottom2 li {
+         float:left; width:470px;
+        }
+    </style>
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#helpSearch').click(function () {
+                var value = $("#searchContent").val();
+                Loading();
+                location.href = "/tQuestion/HelpSearch?questionContent=" + value;
+                return false;
+            });
+        })
+
+    </script>
+
+    @using IYogaKoo.ViewModel.Commons.Enums;
+
+    <script src="~/Content/baiduAdd.js"></script>
+</head>
+<body>
+
+    <div class="lb_index">
+        @Html.Partial("_OtherTopInfo")
+
+        <div class="lb_index_scarh_top">
+
+            <div class="lb_School_index_top">
+                <div class="lb_School_index_top_index">
+                    <b>您所在位置：</b><span>帮助中心</span>
+                </div>
+            </div>
+            @*帮助中心*@
+            <div class="lb_add_index_bz_duv">
+                <div class="lb_add_index_bz_div">
+                    <div class="lb_add_index_bz_div_top">
+                        <b>帮助中心</b>
+                    </div>
+                    <div class="lb_add_index_bz_div_bottom">
+                        <a></a>
+                        <input type="text" value="" id="searchContent" />
+                        <input type="button" value="搜索" class="input" id="helpSearch" />
+                    </div>
+                </div>
+            </div>
+            <div class="lb_add_index_bz_index">
+                <div class="lb_add_index_bz_index_div">
+                    <b>帮助中心</b>
+                </div>
+            </div>
+            <div class="lb_add_index_bz_demo">
+                <div class="lb_add_index_bz_demo_left">
+                    <ul>@{
+                        List<ViewYogaDicItem> ViewYogaDicItemList = (ViewBag.Diclist as List<ViewYogaDicItem>);
+                        foreach (ViewYogaDicItem item in ViewYogaDicItemList)
+                        {
+                            <li><a href="/tQuestion/PersonalHelpCenters?TitleID=@item.ID">@item.ItemName</a></li>
+                        }
+                    }
+                        <li><a href="/tQuestion/Help">寻求帮助</a></li>
+                        <li><a href="">新手上路</a></li>
+                    </ul>
+                </div>
+                <div class="lb_add_index_bz_demo_right">
+                    <div class="lb_add_index_bz_demo_top">
+                        <p>@Model.QuestionContent</p>
+                    </div>
+                    <div class="lb_add_index_bz_demo_bottom2">
+                        @Html.Raw(Model.ReplyContent)
+                        @*<dl>
+                            <dt class="lb_add_dl1">习练者升级填表问题？</dt>
+                            <dd>
+                                <p>在爱瑜伽酷的网站平台注册成功后，级别会被默认为基础习练者，如果您是更高级别的联系者可通过个人设置页面进行级别升级及评测。</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="lb_add_dl2">习练者升级填表问题？</dt>
+                            <dd>
+                                <p>在爱瑜伽酷的网站平台注册成功后，级别会被默认为基础习练者，如果您是更高级别的联系者可通过个人设置页面进行级别升级及评测。</p>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt class="lb_add_dl3">习练者升级填表问题？</dt>
+                            <dd>
+                                <p>在爱瑜伽酷的网站平台注册成功后，级别会被默认为基础习练者，如果您是更高级别的联系者可通过个人设置页面进行级别升级及评测。</p>
+                            </dd>
+                        </dl>*@
+                    </div>
+                    <div class="lb_add_index_bz_demo_top2">
+                        <a>热门问题</a>
+                    </div>
+                    <div class="lb_add_index_bz_demo_bottom lb_add_index_bz_demo_bottom2" style="">
+                        <ul>
+                            @{
+                                List<ViewtQuestion> ViewtQuestionList = (ViewBag.HotList as List<ViewtQuestion>);
+                                foreach (var item in ViewtQuestionList)
+                                {
+                                    <li><a href="/tQuestion/FAQDetail?id=@item.ID">@item.QuestionContent</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="lb_add_index_bz_demo_bottom_bz">
+                        <p>合作联系：您好，如果您是瑜伽机构或是相关的企业想与我们合作，我们很愿意接受，请您通过以下联系方式与爱瑜伽酷联系，进行详细沟通，谢谢！市场部邮箱<a>markat@iyogakoo.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

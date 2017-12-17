@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "详情";
+    Layout = "~/Views/Shared/logDetails.cshtml";
+     }
+   @using IYogaKoo.ViewModel.Commons.Enums;
+   @{ if (ViewBag.user.UserType == (int)UserType.瑜伽会员) //习练者
+                    {
+                        IYogaKoo.Controllers.YogaUserDetailController yd = new IYogaKoo.Controllers.YogaUserDetailController();
+                        var obj = yd.UserDetails(ViewBag.user.Uid);
+    
+<div class="lb_gr_idnex_center_rizhi" style="display: block;">
+        <div class="lb_gr_idnex_center_rizhi_left" style="width: 1200px">
+            <div class="lb_gr_idnex_center_rizhi_left_l" style="width:170px">
+                <div class="lb_add_ind" style="margin-top:0px">
+                <div class="lb_gr_idnex_center_rizhi_left_l_t">
+                    <ul style="margin-left:28px">
+                        <li>
+                            <a href="/YogaUser/FollowList"><b>@obj.ViewBag.iCount</b><br />
+                            <p>关注</p></a>
+                        </li>
+                        <li style="border:0px">
+                            <a href="/YogaUser/FollowList/?typeid=4">
+                            <b>
+                                @{
+                                        string fcount = null;
+                                        if (obj.ViewBag.FCount == null)
+                                        {
+                                            fcount = "0";
+                                        }
+                                        else
+                                        {
+                                            fcount = obj.ViewBag.FCount.ToString();
+                                        }
+                                }
+                                @fcount
+                            </b><br />
+                            <p>粉丝</p></a>
+                        </li>
+                        
+                    </ul>
+                </div>
+               @*<div class="lb_gr_idnex_center_rizhi_left_l_b" id="lb_gr_idnex_center_rizhi_left_l_b_xlz" style="display:none;">
+                        <ul>
+                            <li style="width:150px;">
+                                <div style="background-color:#f2f2f2; line-height:40px; height:40px;"><div style="width:5px; height:40px; float:left; background-color:#65c3a5"></div><span style="float:right; margin-right:14px;">我的信息</span></div>
+                                <ul>
+                                    <li style="height:32px; line-height:32px;margin:3px 0;"><a href="/Message/Index?iType=0">我的留言</a></li>
+                                    <li style="height:32px; line-height:32px; margin:3px 0;"><a href="/Message/Index?iType=1">我的推荐</a></li>
+                                    <li style="height:32px; line-height:32px; margin:3px 0;"><a href="/Message/MyMessage?iType=0">我的评论</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+               </div>*@
+                </div>
+                @* 关注页面左侧导航部分 *@
+
+            </div>
+            <div class="lb_gr_idnex_center_rizhi_left_r" style=" width:1030px;  float: left;">
+                @RenderBody()
+            </div>
+        </div>
+</div>
+       }
+       else{
+       IYogaKoo.Controllers.YogisModelsController yo = new IYogaKoo.Controllers.YogisModelsController();
+    var obj = yo.ModelsDetails(ViewBag.user.Uid);
+    
+<div class="lb_gr_idnex_center_rizhi" style="display: block;">
+        <div class="lb_gr_idnex_center_rizhi_left" style="width: 1200px">
+            <div class="lb_gr_idnex_center_rizhi_left_l" style="width:170px">
+                <div class="lb_add_ind" style="margin-top:0px">
+                <div class="lb_gr_idnex_center_rizhi_left_l_t">
+                    <ul>
+                        <li>
+                            <a href="/YogaUser/FollowList">
+                            <b>@obj.ViewBag.iCount</b><br />
+                            <p>关注</p></a>
+                        </li>
+                        <li>
+                            <a href="/YogaUser/FollowList">
+                            <b>
+                                @{
+                                        string fcount = null;
+                                        if (obj.ViewBag.FCount == null)
+                                        {
+                                            fcount = "0";
+                                        }
+                                        else
+                                        {
+                                            fcount = obj.ViewBag.FCount.ToString();
+                                        }
+                                }
+                                @fcount
+                            </b><br />
+                            <p>粉丝</p></a>
+                        </li> 
+                         <li style="border: 0px">
+                            <b>@obj.ViewBag.tzancount</b><br />
+                            <p>人气</p>
+                        </li>                      
+                    </ul>
+                </div>
+                    @*<div class="lb_gr_idnex_center_rizhi_left_l_b" id="lb_gr_idnex_center_rizhi_left_l_b_xlz">
+                        <ul>
+                            <li style="width:150px;">
+                                <div style="background-color:#f2f2f2; line-height:40px; height:40px;"><div style="width:5px; height:40px; float:left; background-color:#65c3a5"></div><span style="float:right; margin-right:30px;">我的信息</span></div>
+                                <ul>
+                                    <li style="height:32px; line-height:32px;margin:3px 0;"><a href="/Message/Index?iType=0">我的留言</a></li>
+                                    <li style="height:32px; line-height:32px; margin:3px 0;"><a href="/Message/Index?iType=1">我的推荐</a></li>
+                                    <li style="height:32px; line-height:32px; margin:3px 0;"><a href="/Message/MyMessage?iType=0">我的评论</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>*@
+                </div>
+                @* 关注页面左侧导航部分 *@               
+
+            </div>
+            <div class="lb_gr_idnex_center_rizhi_left_r" style=" width:1030px;  float: left;">
+                @RenderBody()
+            </div>
+        </div>
+</div>
+      
+      }
+       
+   }

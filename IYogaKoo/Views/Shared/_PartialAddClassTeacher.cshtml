@@ -1,0 +1,56 @@
+﻿@model  IYogaKoo.ViewModel.ViewClassTeacher
+@section scripts{
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+    <script src="~/Scripts/laydate/laydate.js"></script>
+    <script src="~/Scripts/laypage/laypage.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    @*<script src="~/Content/Front/js/activity.js"></script>*@
+    
+}
+<form id="add-class-teacher" action="/Admin/_PartialAddClassTeacher" method="post">
+    @Html.AntiForgeryToken()
+    <fieldset style="width:600px;">
+        <div class="content-box" style="border:none;">
+            <div class="content-box-content" style="border:none;">
+                <p>
+                    <label>名字</label>
+                    @Html.TextBoxFor(model => model.Name, new { htmlAttributes = new { @class = "text-input large-input" },id="Nameadf" })
+                </p>
+                <p>
+                    <label>头像</label>
+                    <input type="button" id="select-file" value="选择文件" style="float:left;width:180px;" />
+                    <div><span id="progress"></span>&nbsp;</div>
+                    <img id="avatar-img"  style="position: absolute; width: 128px; right: 180px; top: 28px;" />
+                    @Html.HiddenFor(model => model.Avatar)
+                </p>
+                <p>
+                    <label>性别</label>
+                    @Html.DropDownListFor(model => model.Gender, ViewData["Gender"] as IEnumerable<SelectListItem>, new { @style = "width:auto;" })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </p>
+
+                <p style="clear:both;">
+                    <label>国籍</label>
+                    @Html.DropDownListFor(model => model.Country, ViewData["Country"] as IEnumerable<SelectListItem>)
+                    @Html.ValidationMessageFor(model => model.Country, "", new { @class = "text-danger" })
+                </p>
+
+                <p>
+                    <label>教授流派</label>
+                    @Html.DropDownListFor(model => model.YogaSystem, ViewData["YogaSystem"] as IEnumerable<SelectListItem>)
+                    @Html.ValidationMessageFor(model => model.YogaSystem, "", new { @class = "text-danger" })
+                </p>
+                <p>
+                    <label>导师简介</label>
+                    @Html.TextAreaFor(model => model.Info, new { @class = "form-control", @rows = 3 })
+                    @Html.ValidationMessageFor(model => model.Info, "", new { @class = "text-danger" })
+                </p>
+                <p>
+                    <input type="submit" value="添加" class="button " id="add-class-teacher" />
+                </p>
+
+            </div>
+        </div>
+    </fieldset>
+    <br />
+</form>

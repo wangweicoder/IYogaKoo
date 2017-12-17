@@ -1,0 +1,88 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogisModels>
+@{
+    ViewBag.Title = "升级导师列表";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+ 
+<div class="content-box" id="">
+    
+    <table width="100%" cellpadding="3" cellspacing="1" id="searchTable" class="chaxun_table">
+
+        <tr>
+            <td>
+                @Html.ActionLink("添加导师", "DaoShiCreate")
+            </td>
+            <td>
+                查询：
+            </td>
+            <td>
+
+                姓名：
+                <input type="text" placeholder="请输入姓名..." name="RealName" id="RealName" />
+
+                会馆：
+                <input type="text" placeholder="请输入会馆..." name="CenterID" id="CenterID" />
+
+                流派：
+                <input type="text" placeholder="请输入流派..." name="YogaTypeid" id="YogaTypeid" />
+
+                导师级别：
+                <select id="YogisLevel" name="YogisLevel">
+                    <option value="0">--请选择--</option>
+                    <option value="1">初级导师</option>
+                    <option value="2">中级导师</option>
+                    <option value="3">高级导师</option>
+                    <option value="4">大师</option>
+                </select>
+
+                <input type="button" value="搜索" id="searchBtn" onclick="searchBtn()" />
+                <input type="button" value="清空" id="btnClear" onclick="btnClear()" />
+            </td>
+            <td>
+
+        </tr>
+
+    </table>
+    <div id="list">
+        @Html.Partial("UpDaoShiIndex", Model)
+    </div>
+</div> 
+
+<script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    //----------清空
+    $("#btnClear").click(function () {
+        $("#RealName").val("");
+        $("#CenterID").val("");
+        $("#YogaTypeid").val("");
+        $("#YogisLevel").val("0");
+    });
+    //----------搜索
+    $("#searchBtn").click(function () {
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("UpDaoShiIndex", "Member")',
+            data: {
+                RealName: $("#RealName").val(),
+                CenterID: $("#CenterID").val(),
+                YogaTypeid: $("#YogaTypeid").val(),
+                YogisLevel: $("#YogisLevel").val()
+            },
+            success: function (data) {
+                $("#list").html(data);
+            }
+        })
+    });
+</script>
+
+<script type="text/javascript">
+
+    function DaoShiDel(id) {
+        if (confirm("是否删除!")) {
+            window.location = "/Manage/Member/DaoShiDelete/" + id;// 来打开新窗口
+        }
+    }
+
+</script>

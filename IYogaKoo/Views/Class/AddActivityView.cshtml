@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "提交活动";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="lb_hd_index">
+    <div class="lb_hb_faqi">
+        <div class="lb_hd_faqi_left">
+            <div class="lb_hd_faqi_left_top">
+                <h1>发起活动</h1>
+                <p>
+                    三步走&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a>1. 填写活动信息</a>&nbsp;&gt;
+                    <a>2. 上传活动海报 </a>&nbsp;&gt;
+                    <a class="on">3. 提交活动</a>
+                </p>
+            </div>
+            <div class="lb_hd_faqi_left_bottom">
+                <div class="lb_hd_faqi_left_bottom_cg">
+                    <h6>活动内容已提交，审核中......</h6>
+                    <p>爱瑜伽·酷的管理员会在2个工作日审核你的活动内容，并将审核结果通过邮件发给你。</p>
+                    <input type="button" value="查看活动" onclick="window.location.href = '/Class/ViewActivity?id=@ViewBag.ClassId'">
+                    <input type="button" value="继续发布活动" onclick="window.location.href = '/Class/AddActivity'">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="lb_hd_faqi_right">
+            <div class="lb_hd_faqi_right_top">
+                <b>请确保您的活动符合法律规定：</b>
+                <p>按照相关法律规定，营业性演出活动需取得国家行政部门审批，请确保你的活动已经获得相关资质及许可。未获上述批准的活动将被依法删除，且由此造成的后果须由活动举办方自行承担。</p>
+                <b>注意事项：</b>
+                <a href="">什么是合适的同城活动？</a>
+                <a href="">何才能让你的活动更吸引人？</a>
+                <a href="">什么是合适的同城活动？</a>
+                <a href="">何才能让你的活动更吸引人？</a>
+                <a href="">什么是合适的同城活动？</a>
+                <a href="">何才能让你的活动更吸引人？</a>
+                <a href="">什么是合适的同城活动？</a>
+                <a href="">何才能让你的活动更吸引人？</a>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,292 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtWriteLog>
+
+@{
+    ViewBag.Title = "我的日志"; 
+    Layout = "~/Views/Shared/ModelsDetails2.cshtml";
+
+}
+<style>
+    .lb_xc_table_Q {
+        float: left;
+        width: 830px;
+        margin-bottom: 25px;
+       /* margin-left:25px*/
+    }
+
+        .lb_xc_table_Q tr {
+            line-height: 25px;
+        }
+
+    * {
+        list-style: none;
+        margin: 0px;
+        padding: 0px;
+    }
+
+    img {
+        border: 0;
+    }
+
+    #cal a {
+        text-decoration: none;
+    }
+
+        #cal a:hover {
+            text-decoration: none;
+        }
+        /*滚动*/
+     .lb_bc {
+        margin-top:65px
+    }
+        .tempWrap {
+    height:400px!important
+    }
+    /* ================================================================================ */
+
+    /* 日历Div全局样式 */
+
+    #cal {
+        float: right;
+        width: 200px;
+    }
+
+    #cal_bottom {
+        padding: 2px;
+        border-top: 0;
+        text-align: right;
+    }
+
+    /* 日历Table样式 */
+
+    #cal table {
+        border: 0;
+        border-collapse: collapse;
+        border-spacing: 0;
+    }
+
+    #cal tr {
+        height: 30px;
+        line-height: 30px;
+    }
+
+    #cal th {
+        font-weight: normal;
+    }
+
+    .thisDate {
+        display: none;
+    }
+
+    #prevMonth {
+    }
+
+    .nextMonth {
+    }
+
+    #cal th a {
+        display: inline-block;
+        vertical-align: 1px;
+        float:left
+    }
+
+    #cal td {
+        width: 35px;
+        text-align: center;
+    }
+
+        #cal td a {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+        }
+    #cal span {
+    float:left
+    }
+     #cal b {
+    float:left; font-weight:100;
+    }
+    /* 当前日样式 */
+
+    .now_date {
+        background: #BBB;
+    }
+
+    /* 月前，月后样式 */
+
+    .prev_dayN, .next_dayN {
+        color: #CCC;
+    }
+
+    /* 活动数据样式 */
+
+    .activity {
+    }
+
+        .activity a {
+            color: #2F76AC;
+            text-decoration: underline;
+        }
+</style>
+<script src="~/Content/Front/js/jquery-1.8.3.min.js"></script>
+
+<script type="text/javascript">
+    window.location.href = "#lb_mao";
+    function DaoShiDel(id) {
+        if (confirm("是否删除!")) {
+            window.location = "/tWriteLog/Delete/" + id;// 来打开新窗口
+        }
+    }
+
+</script>
+<link href="~/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+
+@*JavaScript 日历*@
+<script type="text/javascript">
+    
+    $(document).ready(function () {
+        $("#lb_gr_idnex_center_rizhi_left_l_b_xlz ul li ul").hide();
+        $("#lb_gr_idnex_center_rizhi_left_l_b_xlz ul li").click(function () {
+            $("#lb_gr_idnex_center_rizhi_left_l_b_xlz ul li ul").toggle();
+        });
+
+        //重新选择月份
+        var bagyear = $("#hid_year").val();
+        var bagmonth = parseInt($("#hid_month").val());
+        if (bagyear != 0) { $('.lb_idnex_table_l p').html(bagyear + "年"); }
+        if (bagmonth != 0) {
+            if (bagyear == 2015) {
+                $('.lb_bc_bottom2015 a').each(function () {
+                    var thisindex = $(this).index() + 1;
+                    if (thisindex == bagmonth) {
+                        $(this).addClass('on').siblings().removeClass("on");
+                    }
+                });
+            } else if (bagyear == 2014) {
+                $('.lb_bc_bottom2014 a').each(function () {
+                    var thisindex = $(this).index() + 1;
+                    if (thisindex == bagmonth) {
+                        $(this).addClass('on').siblings().removeClass("on");
+                    }
+                });
+            }
+            else if (bagyear == 2013) {
+                $('.lb_bc_bottom2013 a').each(function () {
+                    var thisindex = $(this).index() + 1;
+                    if (thisindex == bagmonth) {
+                        $(this).addClass('on').siblings().removeClass("on");
+                    }
+                });
+            }
+        }
+        //$("tr:even").css("background","#999999");//奇数行  
+        $("tr:odd").css("background", "#eeeeee");//偶数行    
+        $("#menutr").css("background", "#fff");
+        $('.lb_idenx_table_hide p').click(function () {
+            var year = $(this).attr("val");
+            formatedate(year, 0);
+        });
+    }
+    );
+ 
+    function formatedate(year, month, desc) { 
+        location.href = "/tWriteLog/logIndex?year=" + year + "&month=" + month + "#indexmenu"; 
+    }
+
+</script>
+   <input type="hidden" id="hid_year" value="@ViewBag.year" />
+<input type="hidden" id="hid_month" value="@ViewBag.month" />
+
+<div class="lb_table_nian" style="overflow:hidden; margin:0px">
+    <p>日志列表<b>(共@(Model.Count())个)</b></p>
+    <div class="lb_index_index">
+        @Html.ActionLink("写日志", "Create")
+    </div>
+    
+</div>
+ <div id="Content">
+    @Html.Partial("logIndexList", Model)
+</div>
+
+<div id="cal" style="  margin-right:0px; ">
+    <div style="">
+    </div>
+    <div class="top_jts" style="margin-bottom:20px;">
+        <a><img class="upprev1" src="~/Content/Front/images/top.png" /></a>
+    </div>
+    <div id="sorolldate" style="height:370px; overflow:hidden;">
+        <div class="lb_bc">
+            <div class="lb_bc_top">
+                <div class="lb_bc_top_l"></div>
+                <div class="lb_bc_top_c"></div>
+                <div class="lb_bc_top_r"></div>
+            </div>
+            <div class="lb_bc_bottom lb_bc_bottom2015" id="lb_bottom">
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>11</a>
+                <a>12</a>
+            </div>
+        </div>
+        <div class="lb_bc">
+            <div class="lb_bc_top">
+                <div class="lb_bc_top_l2"></div>
+                <div class="lb_bc_top_c2"></div>
+                <div class="lb_bc_top_r2"></div>
+            </div>
+            <div class="lb_bc_bottom lb_bc_bottom2014" id="lb_bottom2">
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>11</a>
+                <a>12</a>
+            </div>
+        </div>
+        <div class="lb_bc">
+            <div class="lb_bc_top">
+                <div class="lb_bc_top_l3"></div>
+                <div class="lb_bc_top_c3"></div>
+                <div class="lb_bc_top_r3"></div>
+            </div>
+            <div class="lb_bc_bottom lb_bc_bottom2013" id="lb_bottom3">
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>11</a>
+                <a>12</a>
+            </div>
+        </div>
+    </div>
+    <div class="top_jtx" style="margin-top:20px;">
+        <a><img src="~/Content/Front/images/botoom.png" class="downnext1" /></a>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+<script type="text/javascript">jQuery("#cal").slide({ mainCell: "#sorolldate ", effect: "topLoop", prevCell: ".upprev1", nextCell: ".downnext1", vis: 2, scroll: 1, autoPlay: false, defaultIndex: 0 });</script>
+
+<script src=/Scripts/jquery.unobtrusive-ajax.min.js></script>
+@{Html.RegisterMvcPagerScriptResource();}

@@ -1,0 +1,82 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaArtClass
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+ 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-box" id="">
+
+        <div class="content-box-header">
+
+            <h3 style="cursor:pointer">【添加】文章分类类别</h3>
+            
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+                <fieldset>
+
+                    <p>
+                        类别：
+                   
+                        一级: @Html.DropDownList("ParentID", "请选择")
+                        二级:
+                        <select id="TwoParentID" name="TwoParentID">
+                            <option value="">请选择</option>
+                        </select>
+
+                    </p>
+
+                    <p>
+                        @Html.LabelFor(model => model.ClassName)
+                    
+                        @Html.EditorFor(model => model.ClassName)
+                        @Html.ValidationMessageFor(model => model.ClassName)
+                    </p>
+
+                    <p>
+                        <input type="submit" class="button" value="保存" />
+                        @Html.ActionLink("返回", "Index")
+                    </p>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+}
+ 
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $("#ParentID").click(function () {
+
+            var First = $(this).val();
+
+            //加载二级
+            if (First != '') {
+                $.ajax({
+                    url: '/YogaArtClass/GetClassNameList?id=' + First,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        document.getElementById("TwoParentID").innerHTML = "";
+                        $("#TwoParentID").append("<option value=''>请选择</option>");
+
+                        for (var i = 0; i < data.length; i++) {
+
+                            $("#TwoParentID").append("<option value='" + data[i].ID + "'>" + data[i].ClassName + "</option>");
+
+                        };
+                    }
+                });
+            }
+        });
+    </script>
+}

@@ -1,0 +1,37 @@
+﻿@model IEnumerable<IYogaKoo.Entity.InterestedClass>
+
+@{
+    ViewBag.Title = "兴趣列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+<link href="~/Scripts/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    }
+@section scripts{
+    <script src="~/Scripts/laypage/laypage.js"></script>
+    <script src="~/Content/Front/js/activity.js"></script>
+    <script type="text/javascript">
+        $(function () {           
+            LoadInterests(1);
+        });
+    </script>
+}
+<div class="lb_School_index">
+    <div class="lb_School_index_top">
+        <div class="lb_School_index_top_index">
+            <!-- <b>您所在位置：</b><span>机构</span> -->
+            <ul>
+                <li><a href="" class="on">达人</a></li>
+                <li><a href="">活动</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="lb_hd_index" style="padding:28px;">
+        <div class="container">
+            <div class="row" id="interest-list">
+
+            </div>
+        </div>
+        <div id="pageBox"></div>
+    </div>    
+</div>

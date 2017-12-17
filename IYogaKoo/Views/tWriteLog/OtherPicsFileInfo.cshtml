@@ -1,0 +1,255 @@
+﻿@model List<IYogaKoo.ViewModel.PicListGroup>
+
+@{
+    ViewBag.Title = "我的相册";
+    Layout = "~/Views/Shared/_LayoutSetUpBack.cshtml";
+    var id = ViewBag.id;
+    var Gender = ViewBag.otherGender;
+    //默认显示所有图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> piclistAll = ViewBag.piclistAll;
+    //日志图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> listwlogimg = new List<IYogaKoo.ViewModel.ViewYogaPicture>();
+    //习练笔记App图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> listwlogimgApp = new List<IYogaKoo.ViewModel.ViewYogaPicture>();
+    //活动图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> wlogimgclasslist = new List<IYogaKoo.ViewModel.ViewYogaPicture>();
+    if (piclistAll.Count() > 0)
+    {
+        listwlogimg = piclistAll.Where(X => X.PictureType == 3).ToList();
+        listwlogimgApp = piclistAll.Where(X => X.PictureType == 4).ToList();
+        wlogimgclasslist = piclistAll.Where(X => X.PictureType == 6).ToList();
+    }
+   
+}
+
+@section styles
+{
+    <style type="text/css">
+        /*瀑布流*/
+        .wrapper img {
+            border: none;
+        }
+
+        .wrapper {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+            .wrapper h3 {
+                color: #3366cc;
+                font-size: 16px;
+                height: 35px;
+                line-height: 1.9;
+                text-align: center;
+                border-bottom: 1px solid #E5E5E5;
+                margin: 0 0 10px 0;
+            }
+
+        #con1_1 {
+            position: relative;
+        }
+
+            #product_list {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                padding: 0px;
+                background: #eee;
+                margin: 5px;
+                width:230px;
+            }
+
+        #product_list img {
+            width: 230px;
+        }
+
+        .product_list p {
+            padding: 5px 0px;
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+            white-space: normal;
+            width: 200px;
+            word-break: break-all;
+        }
+
+        #product_list a b {
+            position: absolute;
+            z-index: 1111;
+            bottom: 40px;
+            right: 20px;
+            color: #ffffff;
+            font-weight: 100;
+              background:#000;filter:alpha(Opacity=50);-moz-opacity:0.5;opacity: 0.5;padding:0px 10px;
+        }
+        /*返回顶部*/
+        /*returnTop*/
+        p#back-to-top {
+            position: fixed;
+            display: none;
+            bottom: 300px;
+            right: 150px;
+        }
+
+            p#back-to-top a {
+                text-align: center;
+                text-decoration: none;
+                color: #979797;
+                display: block;
+                width: 64px;
+                /*使用CSS3中的transition属性给跳转链接中的文字添加渐变效果 background:  url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png')  */
+                -moz-transition: color 1s;
+                -webkit-transition: color 1s;
+                -o-transition: color 1s;
+            }
+
+                p#back-to-top a:hover {
+                    color: #65c3a5;
+                }
+
+                p#back-to-top a span {
+                    background-image: url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png');
+                    border-radius: 6px;
+                    display: block;
+                    height: 64px;
+                    width: 58px;
+                    margin-bottom: 5px;
+                    margin: 0 auto;
+                }
+                 #con1_1 .product_list {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                padding: 0px;
+                /*background: #eee;*/
+                margin: 2px;
+                width:230px;
+            }
+        .product_list2 {
+            width:100px; float:left; position:relative
+        }
+            .product_list2 img {
+                width:90px;
+                height:90px;
+
+            }
+            .product_list2 .bbackground {
+            position:absolute; z-index:111;bottom:30px; right:15px;
+            }
+        .lb_ckgd {
+        overflow:hidden; width:200px;text-align:center; border-top:1px solid  #E5E5E5
+        }
+            .lb_ckgd a {
+            text-align:center
+                }
+        .product_list img {
+            width: 230px;
+        }
+
+        #back-to-top a:hover span {
+            background-image: url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png');
+        }
+        .lb_gr_index_top {
+        width:1200px;       }
+            .lb_gr_index_top li {
+            width:300px;
+            }
+        .lb_gr_index_top2 li {
+        width:245px;
+        }
+    </style>
+}
+<input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+
+<p class="lb_inde_x_index" style=" margin-left:0px">
+
+
+</p>
+<div class="lb_gr_index_top lb_gr_index_top2" style="width:980px;">
+    <ul>
+        <li><a href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">@(Gender)的日志</a></li>
+        <li><a class="on" href="/tWriteLog/OtherPics?id=@ViewBag.id">@(Gender)的相册</a></li>
+        <li><a href="/tWriteLog/OtherClass?uid=@ViewBag.id">@(Gender)的活动</a></li>
+        <li><a href="/YogaUser/otherFollowList/@ViewBag.id">@(Gender)的瑜伽圈</a></li>
+    </ul>
+</div>
+
+<div class="lb_gr_idnex_center_rizhi" style=" height: auto;">
+   <div class="lb_gr_xc_left" style="margin-top:17px;">
+        <ul>
+            <li class="on"><a href="/tWriteLog/OtherPics?id=@(ViewBag.id)&imgtypeid=0" class="a1">日志图片<span>@listwlogimg.Count</span></a></li>
+            <li class=""><a href="/tWriteLog/OtherPics?id=@(ViewBag.id)&imgtypeid=1" class="a2">习练图片<span>@listwlogimgApp.Count</span></a></li>
+            <li class=""><a href="/tWriteLog/OtherPics?id=@(ViewBag.id)&imgtypeid=2" class="a3">活动图片<span>@(wlogimgclasslist == null ? 0 : wlogimgclasslist.Count)</span></a></li>
+        </ul>
+        
+    </div>
+    @{
+        <div class="wrapper" style="width:980px; float:right">
+
+            <div class="wrapper" style="width:980px;">
+                @{
+
+                    if (Model != null)
+                    {
+                        if (Model.Count() > 0)
+                        {
+                            <div id="con1_1" style="margin-top:15px;">
+                              
+                                @foreach (var item in Model)
+                                {
+                                    if (item .picnum!= 0)
+                                    {
+                                        <div class="product_list" id="product_list">
+                                            <a href="/tWriteLog/OtherPicsDetails?id=@id&pirctureName=@item.pictitle" id="@item.uid  ">
+                                                <img src="@(item.picsrc)" />
+                                                <b>@item.picnum</b>
+                                            </a>
+                                            <p>@(item.pictitle)</p>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="product_list" id="product_list">
+                                            <a href="/tWriteLog/OtherPicsDetails?id=@id&pirctureName=@item.pictitle" id="@item.uid  ">
+                                                <img src="@(item.picsrc)" />
+                                               
+                                            </a>
+                                            <p>@(item.pictitle)</p>
+
+                                        </div>
+                                    }
+
+
+                                }
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        </div>
+    }
+
+</div>
+
+<script type="text/javascript">
+    //瀑布流
+
+    $(document).ready(function () {
+        var $container = $('#con1_1');
+        $container.imagesLoaded(function () {
+            $container.masonry({
+                itemSelector: '.product_list',
+                columnWidth: 20 //每两列之间的间隙为5像素
+            });
+        });
+    });
+
+    //选中我的相册标签
+    $(document).ready(function () {
+        $('.lb_gr_index_top li:eq(1)').children('a').addClass('on').parent().siblings().children('a').removeClass('on');
+
+    });
+     
+</script>
+

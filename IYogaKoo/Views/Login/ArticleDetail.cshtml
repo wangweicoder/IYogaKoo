@@ -1,0 +1,23 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaArticle
+
+@{
+    ViewBag.Title = "ArticleDetail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="lb_login_idnex_bottom">
+
+    <div>
+        <dl class="dl-horizontal">
+
+            
+            <dd style="padding-left:20px">
+                @Html.Raw(@Model.ArticleCon)<!-- 显示富文本的内容-->
+            </dd>
+ 
+        </dl>
+    </div>
+    <p>
+        @*<a href="/home/index">返回</a>*@
+    </p>
+</div>

@@ -1,0 +1,229 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model PagedList<IYogaKoo.ViewModel.ViewYogaUserDetail>
+@{
+    ViewBag.Title = "习练者列表";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+
+<div class="content-box" id="">
+
+    <table width="100%" cellpadding="3" cellspacing="1" id="searchTable" class="chaxun_table">
+
+        <tr>
+
+            <td>
+                查询：
+            </td>
+            <td> 
+                名称：
+                <input type="text" placeholder="昵称/中文名称/外文名称..." name="RealName_cn" id="RealName_cn" />
+
+                习练者级别：
+                <select id="Ulevel" name="Ulevel">
+                    <option value="">--请选择--</option>
+                    <option value="0">基础习练者</option>
+                    <option value="1">初级习练者</option>
+                    <option value="2">中级习练者</option>
+                    <option value="3">高级习练者</option>
+                </select>
+                流派：
+                <input type="text" placeholder="请输入流派..." name="YogaTypeid" id="YogaTypeid" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                &nbsp;
+            </td>
+            <td>
+        所属区域：
+        <select id="Nationality" name="Nationality">
+            <option value="0">请选择国籍</option>
+        </select>
+        <select id="CountryID" name="CountryID">
+            <option value="-1">请选择国家</option>
+        </select>
+        <select id="ProvinceID" name="ProvinceID">
+            <option value="0">请选择省份</option>
+        </select>
+        <select id="CityID" name="CityID" style="width: 100px;">
+            <option value="0">请选择城市</option>
+        </select>
+        <select id="DistrictID" name="DistrictID" style="width: 100px;">
+            <option value="0">请选择城区</option>
+        </select>
+
+        <input type="button" value="搜索" id="searchBtn" onclick="searchBtn()" />
+        <input type="button" value="清空" id="btnClear" onclick="btnClear()" />
+        </td>
+        <td>
+
+            </tr>
+
+    </table>
+    <div id="list">
+        @Html.Partial("UserDetailsIndex", Model)
+    </div>
+</div>
+
+<script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+    // 国家事件
+    $('#CountryID').click(function () {
+
+        var strGuoJia = $(this).val();
+        if (strGuoJia != "0") {
+            document.getElementById("ProvinceID").innerHTML = "";
+            //加载省
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strGuoJia,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ProvinceID").html("<option value='0'>请选择</option>");
+                    $("#CityID").html("<option value='0'>请选择</option>");
+                    $("#DistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //省事件
+    $("#ProvinceID").click(function () {
+
+        var strSheng = $(this).val();
+        if (strSheng != "0") {
+            document.getElementById("CityID").innerHTML = "";
+            //加载市
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strSheng,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#CityID").html("<option value='0'>请选择</option>");
+                    $("#DistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#CityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //城市事件
+    $("#CityID").click(function () {
+
+        var strShi = $(this).val();
+        if (strShi != "0") {
+            document.getElementById("DistrictID").innerHTML = "";
+            //加载城区
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strShi,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#DistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#DistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //----首次加载--------------------------------------------------------------- 
+
+    $(function () {
+         
+        //国籍
+        
+        $.ajax({
+            url: '/Login/GetNationalityInfo?t=' + Math.random(),
+            type: 'post',
+            datatype: 'json',
+            success: function (data) {
+                 
+                for (var i = 0; i < data.length; i++) {
+                     
+                        $("#Nationality").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                    
+                };
+            }
+        });
+        //国家
+        
+        $.ajax({
+            url: '/Login/GetCountryInfo?t=' + Math.random(),
+            type: 'post',
+            datatype: 'json',
+            success: function (data) { 
+                for (var i = 0; i < data.length; i++) {
+               
+                        $("#CountryID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                     
+                };
+            }
+        });
+          
+    });
+
+</script>
+<script type="text/javascript">
+    //----------清空
+    $("#btnClear").click(function () {
+        $("#RealName_cn").val("");
+        $("#Ulevel").val("");
+        $("#YogaTypeid").val("");
+        $("#Nationality").val("0");
+        $("#CountryID").val("-1");
+        $("#ProvinceID").val("0");
+        $("#CityID").val("0");
+        $("#DistrictID").val("0");
+    });
+    //----------搜索
+    $("#searchBtn").click(function () {
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("UserDetailsIndex", "Member")',
+            data: {
+                RealName_cn: $("#RealName_cn").val(), 
+                YogaTypeid: $("#YogaTypeid").val(),
+                Ulevel: $("#Ulevel").val(),
+
+                Nationality:$("#Nationality").val(),
+                CountryID: $("#CountryID").val(),
+                ProvinceID:$("#ProvinceID").val(),
+                CityID: $("#CityID").val(),
+                DistrictID: $("#DistrictID").val()
+            },
+            success: function (data) {
+                $("#list").html(data);
+            }
+        })
+    });
+</script>
+
+<script type="text/javascript">
+
+    function DaoShiDel(id) {
+        if (confirm("是否删除!")) {            
+            //window.location = "/Manage/Member/DeleteUserDetails/" + id;// 来打开新窗口
+            $.getJSON("/Manage/Member/DeleteUserDetails/",                
+                { id: id },
+                 function (data) {                     
+                    if (data.code == 0) {
+                        window.location.reload();
+                    }
+                });
+        }
+    }
+
+</script>
+

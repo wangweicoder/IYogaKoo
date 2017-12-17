@@ -1,0 +1,82 @@
+﻿@model  List<IYogaKoo.ViewModel.ViewFollow>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSetUpBack.cshtml";
+}
+  
+<div class="lb_gr_index_top">
+    <ul>
+        <li><a href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">我的日志</a></li>
+        <li><a class="mypic" href="/tWriteLog/OtherPics?id=@ViewBag.id">我的相册</a></li>
+        <li><a href="/tWriteLog/OtherClass?uid=@ViewBag.id">我的活动</a></li>
+        <li><a class="on" href="/YogaUser/otherFollowList/@ViewBag.id">我的瑜伽圈</a></li>
+    </ul>
+</div>
+<div id="wrap" style="width:1220px">
+   @{ 
+       var strpic = "/Content/Front/images/defaultImg.png";
+   } 
+    @foreach (var item in ViewBag.listGroup)
+    {
+        if (!string.IsNullOrEmpty(item.spic))
+        {
+            strpic = item.spic;
+        }
+        <div class="box">
+            <div class="info">
+                <div class="pic">
+                    <a href="@item.userurl@item.uid" target="_blank">
+                        <img src="@strpic" width="300"/>
+                    </a>
+                </div>
+                <div class="title lb_gjds">
+                                                            <a href="#" style="margin-left:55px;">@{
+                                                if (item.flag == 0)
+                                                {
+
+                                                    if (item.Leval == 0 || item.Leval == null)
+                                                    {
+                                                                @:基础习练者
+                                   }
+                                                    else if (item.Leval == 1)
+                                                    {
+                                                                @:初级习练者
+                                   }
+                                                    else if (item.Leval == 2)
+                                                    {
+                                                                @:中级习练者
+                                   }
+                                                    else if (item.Leval == 3)
+                                                    {
+                                                                @:高级习练者
+                                   }
+                                                }
+
+                                                else
+                                                {
+                                                    
+                                                    IEnumerable<SelectListItem> list = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.初级老师.ToList();
+                                          foreach (var litem in list)
+                                          {
+                                              if (item.Leval.ToString() == litem.Value)
+                                          {
+                                            @litem.Text
+                                               } 
+                                          }
+
+                                                }
+                                                                        
+                                                            }</a>&nbsp;&nbsp;
+                                                                <div style="float: right; margin-right: 8px">
+                                                                    <img src="/Content/Front/images/_r2_c2.png">&nbsp;&nbsp;@item.FollowersCount
+                                                                </div>
+                                                            <p style="line-height: 25px">@item.FollowersName</p>
+                                                        </div>
+            </div>
+        </div>
+    }
+</div>
+
+
+ 

@@ -1,0 +1,115 @@
+﻿@model IYogaKoo.ViewModel.ViewClass
+
+@{
+    ViewBag.Title = "查看活动";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box">
+    <div class="content-box-header">
+        <h3>活动报道</h3>
+    </div>
+    <div class="content-box-content">
+        <a class="button" href="/manage/class/addreport?classid=@Model.Id">添加报道</a>
+    </div>
+    <div class="content-box-content">
+        @if (Model.ReportCount > 0)
+        {
+            <table>
+                <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>标题</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Reports)
+                    {
+                        <tr>
+                            <td>@item.Id</td>
+                            <td>@item.Title</td>
+                            <td><a href="/Manage/Class/AddReport?classid=@Model.Id&id=@item.Id" target="_blank">编辑</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+<div class="content-box">
+    <div class="content-box-header">
+        <h3>活动详情</h3>
+    </div>
+    <div class="content-box-content">
+        @if (Model.ClassStatus == 1)
+        {
+            <input id="check-class" class="button" type="button" value="审核通过" onclick="SetClass(@Model.Id,2);" />
+            <input id="regect-class" class="button" type="button" value="审核不通过"  />//5表示审核不通过
+        }
+        @if (Model.ClassStatus != 3)
+        {
+            <input id="check-class" class="button" type="button" value="活动结束" onclick="SetClass(@Model.Id,3);" />
+        }
+        @if (Model.ClassStatus != 4)
+        {
+            <input id="delete-class" class="button" type="button" value="撤销" onclick="SetClass(@Model.Id,4);" />
+        }
+        <div id="MessagesDesDiv" style="display:none">
+            <label>原因：</label>
+            <input id="messagesDesText" type="text" />
+            <input id="ok" type="button" class="button" value="确定" />
+        </div>
+    </div>
+    <div class="content-box-content">
+        <div class="information " style="background:none;width:240px;text-align:center;margin:0 auto;">
+            <div style="padding:10px;background-color:#eee;">
+                @(((IYogaKoo.ViewModel.Commons.Enums.ClassStatus)Model.ClassStatus).ToString())
+            </div>
+        </div>
+        <p><img src="@Model.Banner" height="100" /></p>
+        <p><h3>@Model.Name</h3></p>
+        <div style="height:300px;overflow:scroll;color:#999;">
+            @(new HtmlString(Model.Content))
+        </div>
+        <br />
+        <p>@Model.Start @Model.Duration @(((IYogaKoo.ViewModel.Commons.Enums.TimeUnit)Model.DurationUnit).ToString())</p>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Scripts/laypage/laypage-admin.js"></script>
+    <script type="text/javascript">
+        $(function (){
+            $("#regect-class").click(function(){
+                $("#MessagesDesDiv").css('display','block');
+            });
+            $("#ok").click(function(){
+                var text = $("#messagesDesText").val();
+                if(text=="")
+                {
+                    ShowError("请填写审核不通过原因");
+                    return false;
+                }
+                SetClass(@Model.Id,5,text);
+            });
+        })
+        function SetClass(id,status,text) {
+            Class.SetClassStatus(id, status,text, function (result) {
+                $('.information div').text(result.Message);
+                if(status==2){
+                    Msg('审核通过');
+                    $('#check-class').remove();
+                }
+                if(status==4){
+                    $('#delete-class').remove();
+                    Msg("已撤销");
+                }
+                if(status==5){
+                    $('#regect-class').remove();
+                    $("#MessagesDesDiv").css('display','none');
+                    Msg("审核不通过");
+                }
+            });
+        }
+    </script>
+}

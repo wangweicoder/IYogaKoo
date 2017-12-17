@@ -1,0 +1,87 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtMessage>
+
+@{
+    ViewBag.Title = "给我留言";
+    Layout = "~/Views/Shared/_LayoutInstationInfo.cshtml";
+    Commons.Helper.method method = new Commons.Helper.method(); 
+    List<IYogaKoo.ViewModel.ViewFollowUserDetail> listFollowGroup = ViewBag.listFollowGroup;
+}
+
+<div class="lb_znx_index_top">
+    <b>站内信</b>
+    <ul>
+        @*<li>站内公告</li>*@
+        <li><a href="/tInstationInfo/MessageIndex">收到的评论</a></li>
+        <li class="on"><a href="/tInstationInfo/FromMessageIndex">发出的评论</a></li>
+    </ul>
+@using (Html.BeginForm("FromMessageIndex", "tInstationInfo", new { id = "" }, FormMethod.Post, new { id = "searchForm" }))
+{
+    <div class="lb_add_znx_select">
+        <select id="ToType" name="ToType">
+            <option value="">全部</option>
+            <option value="1">我评论了别人</option>
+            <option value="4">我评论了别人的日志</option>
+            <option value="3">我评论了别人的活动</option>
+            <option value="2">我评论了别人的学习</option>
+            <option value="5">我评论了别人的会馆</option>
+        </select>
+        <input type="button" id="searchBtn" value="搜索" />
+    </div>
+}
+</div>
+<div class="lb_znx_index_bottom">
+    <div class="lb_znx_index_bottom_left">
+        <a href="/tInstationInfo/Index?iType=0" class="on1">系统信息</a>
+        <a href="/tInstationInfo/FollowIndex?iType=1">·&nbsp;关注</a>
+        <a href="/tInstationInfo/ZanIndex?iType=2">·&nbsp;赞</a>
+        <a href="/tInstationInfo/MessageIndex?iType=3" class="on">·&nbsp;评论</a>
+    </div>
+    <div class="lb_znx_index_bottom_right" id="Content">
+
+        <!--评论-->
+        @Html.Partial("PartialMessage", Model)
+    </div>
+</div>
+@section styles{
+    <link href="~/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+}
+ 
+    <script type="text/javascript">
+
+        $("#searchBtn").click(function () {
+
+        $.ajax({
+            type: 'GET',
+            url: '@Url.Action("FromMessageIndex", "tInstationInfo")',
+            data: {
+                ToType: $("#ToType").val()
+            },
+            success: function (data) {
+               
+                $("#Content").html(data);
+            }
+        })
+    });
+
+    </script>
+ 
+<div class="text-center" style="" id="menepager">
+    @if (listFollowGroup.Count != 0)
+    {
+        @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    PrevPageText = "上一页",
+    NextPageText = "下一页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a  >{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+}, new MvcAjaxOptions { UpdateTargetId = "Content", HttpMethod = "Post", })
+    }
+</div>
+@{Html.RegisterMvcPagerScriptResource();}

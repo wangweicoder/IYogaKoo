@@ -1,0 +1,198 @@
+﻿@model IYogaKoo.ViewModel.ViewClassReport
+@using IYogaKoo.ViewModel;
+@{
+    ViewBag.Title = "ViewReport";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link href="~/Content/Front/css/activity.css" rel="stylesheet" />
+    <style type="text/css">
+        .lb_login_idnex {
+            width: auto;
+        }
+
+        .lb_hd_index_info_right_fqr .avatar {
+            width: 256px;
+        }
+    </style>
+}
+<div class="lb_School_index">
+    <div class="lb_School_index_top">
+        <div class="lb_School_index_top_index">
+            <!-- <b>您所在位置：</b><span>机构</span> -->
+            <ul>
+                <li><a href="" class="on">达人</a></li>
+                <li><a href="">活动</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="lb_hd_index">
+        <div class="lb_hd_index_info">
+            <div class="lb_hd_index_info_left">
+                <div class="lb_hd_index_vido">
+                    <img src="@ViewBag.Class.Banner" data-bd-imgshare-binded="1">
+                </div>
+                <div class="lb_hd_index_title">
+                    <h3>@Model.Title</h3>
+                    <p>@Model.CreateTime.ToString("yyyy-MM-dd HH:mm")</p>
+                </div>
+                <div class="lb_hd_index_fxiang">
+                    <div class="lb_hd_index_fxiang_left">
+                        <p>分享到：</p>
+                        <div class="bdsharebuttonbox bdshare-button-style0-16" data-bd-bind="1440003067444"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+                        <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"16"},"share":{},"image":{"viewList":["qzone","tsina","tqq","renren","weixin"],"viewText":"分享到：","viewSize":"16"},"selectShare":{"bdContainerClass":null,"bdSelectMiniList":["qzone","tsina","tqq","renren","weixin"]}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];</script>
+                        <p><a href="">365</a>人观看<a href="">329</a>人分享</p>
+                    </div>
+                    <div class="lb_hd_index_fxiang_right">
+                        <h2>233</h2>
+                        <a></a>
+                    </div>
+                </div>
+                <div>
+                    @(new HtmlString(Model.Content))
+                </div>
+            </div>
+
+            <div class="lb_hd_index_info_right">
+                <div class="lb_hd_index_info_right_fqr">
+                    <p>发起人</p>
+                    <img src="@ViewBag.Class.Poster.Avatar" class="avatar">
+                    <p class="p">
+                        <a href="">@ViewBag.Class.User.NickName</a>
+                        <b><a href="">@ViewBag.Class.InterestCount</a>粉丝,<img src="/content/front/images/xin_r2_c2.jpg"></b>
+                    </p>
+                </div>
+                @if (ViewBag.Class.Teachers != null && ViewBag.Class.Teachers.Count > 0)
+                {
+                    <div class="lb_hd_index_info_right_fqr">
+                        <p>参加讲师</p>
+                    </div>
+                    foreach (var item in ViewBag.Class.Teachers)
+                    {
+                        <div class="lb_hd_index_info_right_fqr" id="teacher-@item.UserId">
+                            <img src="@item.Avatar" class="avatar">
+                            <p class="p">
+                                <a href="">@item.Name</a>
+                                <b><a href="@item.UserId">16</a>粉丝,<img src="/content/front/images/xin_r2_c2.jpg"></b>
+                            </p>
+                        </div>
+                    }
+                }
+                <div class="lb_School_index_index_right_ul">
+                    <ul>
+                        <b>本季热门活动</b>
+                        <li><a href="">爱瑜伽酷组织</a><p><a>15</a>人参加</p></li>
+                        <li><a href="">导师组织</a><p><a>15</a>人参加</p></li>
+                        <li><a href="">习练者组织</a><p><a>15</a>人参加</p></li>
+                        <li><a href="">机构组织</a><p><a>15</a>人参加</p></li>
+                    </ul>
+                    <ul>
+                        <b>热门文章</b>
+                        <li><a href="">行走在瑜伽音乐之中</a><p><a>15</a>人气</p></li>
+                        <li><a href="">柏树与瀑布之遐思</a><p><a>15</a>人气</p></li>
+                        <li><a href="">放慢你幸福的脚步</a><p><a>15</a>人气</p></li>
+                        <li><a href="">会有天使替我来爱你</a><p><a>15</a>人气</p></li>
+                        <li><a href="">行走在瑜伽音乐之中</a><p><a>15</a>人气</p></li>
+                        <li><a href="">柏树与瀑布之遐思</a><p><a>15</a>人气</p></li>
+                        <li><a href="">放慢你幸福的脚步</a><p><a>15</a>人气</p></li>
+                        <li><a href="">会有天使替我来爱你</a><p><a>15</a>人气</p></li>
+                        <li><a href="">行走在瑜伽音乐之中</a><p><a>15</a>人气</p></li>
+                        <li><a href="">柏树与瀑布之遐思</a><p><a>15</a>人气</p></li>
+                        <li><a href="">放慢你幸福的脚步</a><p><a>15</a>人气</p></li>
+                        <li><a href="">会有天使替我来爱你</a><p><a>15</a>人气</p></li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+            @if (ViewBag.Class.Reports != null && ViewBag.Class.Reports.Count > 0)
+            {
+                <div class="lb_index_hdhg">
+                    <div class="lb_index_hdhg_left">
+                        <p>更多报道</p>
+                    </div>
+                    <div class="lb_index_hdhg_right">
+                    </div>
+                </div>
+                <div class="lb_lb_hd_index_show_img" id="class-list">
+                   @foreach (var item in ViewBag.Class.Reports)
+                   {
+                    <div class="lb_lb_hd_index_show_img_img">
+                        <div class="lb_lb_hd_index_show_img2_top">
+                            <a href="/class/viewreport?id=@item.Id" style="float:none;"><img src="@ViewBag.Class.Banner"></a>
+                        </div>
+                        <div class="lb_lb_hd_index_show_img2_bott">
+                            <p><a href="/class/viewreport?id=@item.Id" style="float:none;">@item.Title</a></p><p ><a href="/class/viewreport?id=@item.Id" style="float:none;display:block;">北京市&nbsp;@(item.CreateTime.ToString("yyyy-MM-dd"))</a></p>
+                        </div>
+                    </div>
+                   }
+                </div>
+            }
+            <div class="lb_School_pinglun2">
+                <div class="lb_School_pinglun_tab2">
+                    <p>活动评论<b>322</b></p>
+                </div>
+                <div class="lb_School_textarea2">
+                    <textarea rows="6" cols="130"></textarea>
+                    <div class="lb_School_textarea_div2">
+                        <a href="javascript:;">添加表情</a>
+                        <div class="lb_School_textarea_div_right2">
+                            <p>还可输入<a>2000</a>个字符</p>
+                            <input type="button" value="评论">
+                        </div>
+                    </div>
+                </div>
+                <div class="lb_School_qbpl">
+                    <p>全部评论(66)</p>
+                </div>
+                <div class="lb_School_qbpl_div">
+                    <div class="lb_School_qbpl_div_d">
+                        <div class="lb_School_qbpl_div_d_top">
+                            <div class="lb_School_qbpl_div_d_left">
+                                <a href=""><img src="/content/front/images/00_r2_c2.gif" data-bd-imgshare-binded="1"></a>
+                            </div>
+                            <div class="lb_School_qbpl_div_d_right">
+                                <p><a href="">凉水烫心</a>6分钟前<b>41F</b></p>
+                                <p class="p">好漂亮，遗世独立的感觉</p>
+                                <div class="lb_School_qbpl_div_d_right_hide">
+                                    <textarea></textarea>
+                                    <input type="button" value="发表">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lb_School_qbpl_div_d_bottom">
+                            <div class="lb_School_qbpl_div_d_bottom_d">
+                                <a href="javascript:;">回复</a><h1>|</h1>
+                                <a href="javascript:;">赞同</a>
+                                <span>(100)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lb_School_qbpl_div_d">
+                        <div class="lb_School_qbpl_div_d_top">
+                            <div class="lb_School_qbpl_div_d_left">
+                                <a href=""><img src="/content/front/images/00_r2_c2.gif" data-bd-imgshare-binded="1"></a>
+                            </div>
+                            <div class="lb_School_qbpl_div_d_right">
+                                <p><a href="">凉水烫心</a>6分钟前<b>41F</b></p>
+                                <p class="p">好漂亮，遗世独立的感觉</p>
+                                <div class="lb_School_qbpl_div_d_right_hide">
+                                    <textarea></textarea>
+                                    <input type="button" value="发表">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="lb_School_qbpl_div_d_bottom">
+                            <div class="lb_School_qbpl_div_d_bottom_d">
+                                <a href="javascript:;">回复</a><h1>|</h1>
+                                <a href="javascript:;">赞同</a>
+                                <span>(100)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

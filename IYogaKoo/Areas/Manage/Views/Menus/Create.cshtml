@@ -1,0 +1,49 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaMenus
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">添加菜单</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+
+            @using (Html.BeginForm())
+            {
+                <p>
+                    <label>菜单名称</label>
+                    @Html.TextBoxFor(model => model.name)
+                </p>
+                <p>
+                    <label>菜单地址</label>
+                    @Html.TextBoxFor(model => model.url)
+                </p>
+                <p>
+                    <label>启用</label>
+                    @Html.CheckBoxFor(model => model.state, new { @Checked = true })
+                </p>
+                <p>
+                    <label>顺序</label>
+                    @Html.TextBoxFor(model => model.ordervalue, new { @Value = "5" })
+                </p>
+                <p>
+                    <input class="button" type="submit" value="保存" />
+
+                    <a class="button" href="#">继续添加</a>
+                </p>
+            }
+        </div>
+    </div>
+</div>

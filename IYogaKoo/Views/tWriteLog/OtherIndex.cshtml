@@ -1,0 +1,561 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtWriteLog>
+
+@{
+    ViewBag.Title = "我的日志";
+    Layout = "~/Views/Shared/_LayoutSetUpBack.cshtml";
+    var othermember = ViewBag.UserDetail;
+    var othermodels = ViewBag.modelsDetails;
+    var Gender = ViewBag.otherGender;
+    var YogisLevel = ViewBag.YogisLevel;//=4 大师
+}
+
+<style>
+    .lb_bc {
+        margin-top:65px
+    }
+    .tempWrap {
+    height:400px!important
+    }
+</style>
+@section styles
+{
+    <link href="~/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+    <style type="text/css">
+        .lb_otherrz_table {
+            width: 850px;
+            margin-bottom: 25px;
+        }
+
+
+
+            .lb_otherrz_table td {
+                width: 200px;
+                text-align: center;
+                height: 40px;
+            }
+
+        .lb_xc_table_Q a, .lb_xc_table_Q td {
+            color: #666;
+            letter-spacing: 1px;
+        }
+
+        #menepager a {
+            width: auto;
+        }
+        /* 日历Div全局样式 */
+
+        #cal {
+            float: right;
+            width: 239px;
+        }
+
+        #cal_bottom {
+            padding: 2px;
+            border-top: 0;
+            text-align: right;
+        }
+
+        /* 日历Table样式 */
+
+        #cal table {
+            border: 0;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        #cal tr {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        #cal th {
+            font-weight: normal;
+        }
+
+        .thisDate {
+            display: none;
+        }
+
+        #prevMonth {
+        }
+
+        .nextMonth {
+        }
+
+        #cal th a {
+            display: inline-block;
+            vertical-align: 1px;
+            float: left;
+        }
+
+        #cal td {
+            width: 35px;
+            text-align: center;
+        }
+
+            #cal td a {
+                display: inline-block;
+                width: 100%;
+                height: 100%;
+            }
+
+        #cal span {
+            float: left;
+        }
+
+        #cal b {
+            float: left;
+            font-weight: 100;
+        }
+        /* 当前日样式 */
+
+        .now_date {
+            background: #BBB;
+        }
+
+        /* 月前，月后样式 */
+
+        .prev_dayN, .next_dayN {
+            color: #CCC;
+        }
+    </style>
+}
+  
+<div id="othermenu" class="lb_gr_index_top lb_gr_index_top222" style="border:0px">
+    <div class="lb_add_div_index">
+        <ul>
+            @if (YogisLevel == 4)
+            {
+                <li><a class="on" href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">@(Gender)的文章</a></li>
+            }
+            else
+            {
+                <li><a class="on" href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">@(Gender)的日志</a></li>
+            }
+            <li><a class="mypic" href="/tWriteLog/OtherPics?id=@ViewBag.id">@(Gender)的相册</a></li>
+            <li><a href="/tWriteLog/OtherClass?uid=@ViewBag.id">@(Gender)的活动</a></li>
+            <li><a href="/YogaUser/otherFollowList/@ViewBag.id">@(Gender)的瑜伽圈</a></li>
+        </ul>
+    </div>
+</div>
+ @using IYogaKoo.ViewModel.Commons.Enums;
+   @{ 
+       IYogaKoo.Client.YogaUserServiceClient clientUser = new IYogaKoo.Client.YogaUserServiceClient();
+       IYogaKoo.ViewModel.ViewYogaUser youser = clientUser.GetYogaUserById(ViewBag.id);
+       if (youser.UserType == (int)UserType.瑜伽会员) //习练者
+                    {
+                        IYogaKoo.Controllers.YogaUserDetailController yd = new IYogaKoo.Controllers.YogaUserDetailController();
+                        var obj = yd.UserDetails(ViewBag.id);
+    
+<div class="lb_gr_idnex_center_rizhi" style="display: block;">
+        <div class="lb_gr_idnex_center_rizhi_left" style="width: 1200px">
+            <div class="lb_gr_idnex_center_rizhi_left_l" style="width:170px">
+                <div class="lb_add_ind" style="margin-top:0px">
+                <div class="lb_gr_idnex_center_rizhi_left_l_t">
+                    <ul style="margin-left:28px">
+                        <li>
+                            <a href="/YogaUser/otherFollowList/@ViewBag.id"><b>@obj.ViewBag.iCount</b><br />
+                            <p>关注</p></a>
+                        </li>
+                        <li style="border:0px">
+                            <a href="/YogaUser/otherFollowersList/@ViewBag.id">
+                            <b>
+                                @{
+                                        string fcount = null;
+                                        if (obj.ViewBag.FCount == null)
+                                        {
+                                            fcount = "0";
+                                        }
+                                        else
+                                        {
+                                            fcount = obj.ViewBag.FCount.ToString();
+                                        }
+                                }
+                                @fcount
+                            </b><br />
+                            <p>粉丝</p></a>
+                        </li>
+                        
+                    </ul>
+                </div>                
+                </div>
+            </div>
+           
+            <div style="width:1030px; overflow:hidden">
+<div style="float:left; margin-top:0px;">
+    <div class="lb_table_nian" style="width:770px;">
+        <div class="lb_idnex_table" id="lb_idnex_table" style="float:left; margin-bottom:0px; margin:0px auto">
+            @*<div class="lb_idnex_table_l">
+                <p>2015年</p>
+            </div>
+            <div class="lb_idenx_table_hide">
+                <p val="2015">2015年</p>
+                <p val="2014">2014年</p>
+                <p val="2013">2013年</p>
+                <p val="2012">2012年</p>
+                <p val="2011">2011年</p>
+            </div>
+            <div class="lb_idnex_table_r">
+                <p>最新修改</p>
+            </div>*@
+            <p style="line-height:30px; margin-top:10px">日志列表<b>(共@(Model.Count())个)</b></p>
+        </div>
+    </div>
+    <div id="Content" style="width:850px;">
+        @Html.Partial("OtherIndexList", Model)
+    </div>
+</div>
+
+<div id="cal" style="margin-top:55px;width:175px; border-top:1px solid #D2E5DF ">
+   @* <div style="border-top:1px solid #d2e5df; margin-bottom:29px;">
+    </div>*@
+    <div class="top_jts" style="margin-bottom:20px;">
+        <a><img class="upprev1" src="~/Content/Front/images/top.png" /></a>
+    </div>
+    <div id="sorolldate" style="height:370px; overflow:hidden;">
+        <div class="lb_bc">
+            <div class="lb_bc_top">
+                <div class="lb_bc_top_l"></div>
+                <div class="lb_bc_top_c"></div>
+                <div class="lb_bc_top_r"></div>
+            </div>
+            <div class="lb_bc_bottom lb_bc_bottom2015" id="lb_bottom">
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>11</a>
+                <a>12</a>
+            </div>
+        </div>
+        <div class="lb_bc">
+            <div class="lb_bc_top">
+                <div class="lb_bc_top_l2"></div>
+                <div class="lb_bc_top_c2"></div>
+                <div class="lb_bc_top_r2"></div>
+            </div>
+            <div class="lb_bc_bottom lb_bc_bottom2014" id="lb_bottom2">
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>11</a>
+                <a>12</a>
+            </div>
+        </div>
+        <div class="lb_bc">
+            <div class="lb_bc_top">
+                <div class="lb_bc_top_l3"></div>
+                <div class="lb_bc_top_c3"></div>
+                <div class="lb_bc_top_r3"></div>
+            </div>
+            <div class="lb_bc_bottom lb_bc_bottom2013" id="lb_bottom3">
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>11</a>
+                <a>12</a>
+            </div>
+        </div>
+    </div>
+    <div class="top_jtx" style="margin-top:20px;">
+        <a><img src="~/Content/Front/images/botoom.png" class="downnext1" /></a>
+    </div>
+
+</div>
+</div>
+
+
+        </div>
+</div>
+       }
+       else{
+       IYogaKoo.Controllers.YogisModelsController yo = new IYogaKoo.Controllers.YogisModelsController();
+    var obj = yo.ModelsDetails(ViewBag.id);
+    
+<div class="lb_gr_idnex_center_rizhi" style="display: block;">
+        <div class="lb_gr_idnex_center_rizhi_left" style="width: 1200px">
+            <div class="lb_gr_idnex_center_rizhi_left_l" style="width:170px">
+                <div class="lb_add_ind" style="margin-top:0px">
+                <div class="lb_gr_idnex_center_rizhi_left_l_t">
+                    <ul>
+                        <li>
+                            <a href="/YogaUser/otherFollowList/@ViewBag.id">
+                            <b>@obj.ViewBag.iCount</b><br />
+                            <p>关注</p></a>
+                        </li>
+                        <li>
+                             <a href="/YogaUser/otherFollowList/@ViewBag.id?typeid=4">
+                            <b>
+                                @{
+                                        string fcount = null;
+                                        if (obj.ViewBag.FCount == null)
+                                        {
+                                            fcount = "0";
+                                        }
+                                        else
+                                        {
+                                            fcount = obj.ViewBag.FCount.ToString();
+                                        }
+                                }
+                                @fcount
+                            </b><br />
+                            <p>粉丝</p></a>
+                        </li> 
+                         <li style="border: 0px">
+                            <b>@obj.ViewBag.tzancount</b><br />
+                            <p>人气</p>
+                        </li>                      
+                    </ul>
+                </div>
+              
+                </div>
+                @* 关注页面左侧导航部分 *@               
+
+            </div>
+            
+            <div style="width:1030px; overflow:hidden">
+<div style="float:left; margin-top:0px;">
+    <div class="lb_table_nian" style=" width:850px;">
+        <div class="lb_idnex_table" style="float:left">
+            @*<div class="lb_idnex_table_l">
+                <p>2015年</p>
+            </div>
+            <div class="lb_idenx_table_hide">
+                <p val="2015">2015年</p>
+                <p val="2014">2014年</p>
+                <p val="2013">2013年</p>
+                <p val="2012">2012年</p>
+                <p val="2011">2011年</p>
+            </div>
+            <div class="lb_idnex_table_r">
+                <p>最新修改</p>
+            </div>*@
+            @if (YogisLevel == 4)
+            {
+                <p style="line-height:30px; margin-top:10px">文章列表<b>(共@(Model.Count())个)</b></p>
+            }
+            else
+            {
+                <p style="line-height:30px; margin-top:10px">日志列表<b>(共@(Model.Count())个)</b></p>
+            }  
+        </div>
+    </div>
+    <div id="Content" style="width:850px;">
+        @Html.Partial("OtherIndexList", Model)
+    </div>
+</div>
+
+<div id="cal" style="width:175px; margin-top:60px">
+    @*<div style="border-top:1px solid #d2e5df; margin-bottom:29px; margin-top:83px">
+    </div>*@
+    <div class="top_jts" style="margin-bottom:20px;">
+        <a><img class="upprev1" src="~/Content/Front/images/top.png" /></a>
+    </div>
+    <div id="sorolldate" style="height:370px; overflow:hidden;">
+        <div class="lb_bc">
+            <div class="lb_bc_top">
+                <div class="lb_bc_top_l"></div>
+                <div class="lb_bc_top_c"></div>
+                <div class="lb_bc_top_r"></div>
+            </div>
+            <div class="lb_bc_bottom lb_bc_bottom2015" id="lb_bottom">
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>11</a>
+                <a>12</a>
+            </div>
+        </div>
+        <div class="lb_bc">
+            <div class="lb_bc_top">
+                <div class="lb_bc_top_l2"></div>
+                <div class="lb_bc_top_c2"></div>
+                <div class="lb_bc_top_r2"></div>
+            </div>
+            <div class="lb_bc_bottom lb_bc_bottom2014" id="lb_bottom2">
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>11</a>
+                <a>12</a>
+            </div>
+        </div>
+        <div class="lb_bc">
+            <div class="lb_bc_top">
+                <div class="lb_bc_top_l3"></div>
+                <div class="lb_bc_top_c3"></div>
+                <div class="lb_bc_top_r3"></div>
+            </div>
+            <div class="lb_bc_bottom lb_bc_bottom2013" id="lb_bottom3">
+                <a>1</a>
+                <a>2</a>
+                <a>3</a>
+                <a>4</a>
+                <a>5</a>
+                <a>6</a>
+                <a>7</a>
+                <a>8</a>
+                <a>9</a>
+                <a>10</a>
+                <a>11</a>
+                <a>12</a>
+            </div>
+        </div>
+    </div>
+    <div class="top_jtx" style="margin-top:20px;">
+        <a><img src="~/Content/Front/images/botoom.png" class="downnext1" /></a>
+    </div>
+
+</div>
+</div>
+
+
+
+        </div>
+</div>
+      
+      }
+      }
+
+
+<div style="width:100%; height:30px; clear:both;"></div>
+<script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+<script type="text/javascript">jQuery("#cal").slide({ mainCell: "#sorolldate ", effect: "topLoop", prevCell: ".upprev1", nextCell: ".downnext1", vis: 2, scroll: 1, autoPlay: false, defaultIndex: 0 });</script>
+<input type="hidden" id="hid_year" value="@ViewBag.year" />
+<input type="hidden" id="hid_month" value="@ViewBag.month" />
+<script type="text/javascript">
+    window.location.href = "#lb_mao";
+    $(function () {
+        //重新选择月份
+        var bagyear = $("#hid_year").val();
+        var bagmonth = parseInt($("#hid_month").val());
+        if (bagyear != 0) { $('.lb_idnex_table_l p').html(bagyear+"年"); }
+        if (bagmonth != 0) {          
+            if (bagyear == 2015) {
+                $('.lb_bc_bottom2015 a').each(function () {
+                    var thisindex = $(this).index() + 1;
+                    if (thisindex == bagmonth) {
+                        $(this).addClass('on').siblings().removeClass("on");
+                    }
+                });
+            } else if (bagyear == 2014) {
+                $('.lb_bc_bottom2014 a').each(function () {
+                    var thisindex = $(this).index() + 1;
+                    if (thisindex == bagmonth) {
+                        $(this).addClass('on').siblings().removeClass("on");
+                    }
+                });
+            }
+            else if (bagyear == 2013) {
+                $('.lb_bc_bottom2013 a').each(function () {
+                    var thisindex = $(this).index() + 1;
+                    if (thisindex == bagmonth) {
+                        $(this).addClass('on').siblings().removeClass("on");
+                    }
+                });
+            }
+        }
+
+       
+        $('.lb_idenx_table_hide p').click(function () {
+            var year =$(this).attr("val");
+            formatedate(year, 0);
+        });
+    });
+    function formatedate(year, month, desc) {
+        // $("#Content").load("/tWriteLog/OtherIndex?uid=@ViewBag.id&year=" + year + "&month=" + month);
+        location.href = "/tWriteLog/OtherIndex?uid=@ViewBag.id&year=" + year + "&month=" + month + "#othermenu";
+    }
+    function flowuid(obj) {
+        var hhid = $("#hhid").val();
+        if (hhid != '' && hhid != 0) {
+
+            if (obj == '' || obj == undefined || obj == null) {
+                if (confirm("你还没有添加详细信息，是否添加？")) {
+                    window.open("/Login/UserDetailEdit");
+                }
+            } else { 
+                $.ajax({
+                    url: "/Follow/SetFollow",
+                    type: "get",
+                    dataType: "text",
+                    data: {
+                        quertid: obj,
+                        isf: $("#flowuid").html().trim(),
+                        UserType: $("#htype").val()
+                    },
+                    success: function (relust, status) {
+                        if (status == "success") {
+                            if (relust == "1") {
+                                layer.msg("关注成功！");
+                                $("#flowuid").html("已关注");
+                                var ofnum = $(".lb_name_div ul li").eq(1).children("p").text();
+                                $(".lb_name_div ul li").eq(1).children("p").text(parseInt(ofnum) + 1);
+                            }
+                            else if (relust == "0") {
+                                layer.msg("取消成功！");
+                                $("#flowuid").html("+关注");
+                                var ofnum = $(".lb_name_div ul li").eq(1).children("p").text();
+                                $(".lb_name_div ul li").eq(1).children("p").text(parseInt(ofnum) - 1);
+                            }
+                            else if (relust == "3") {
+                                layer.msg("亲自己不需要关注自己的！");
+                            }
+
+                        } else {
+                            layer.msg("关注失败！");
+                        }
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+        } else {
+            if (confirm("登录后才可以加关注!")) {
+
+                window.open("/Login/Login");// 来打开新窗口
+            }
+
+        }
+
+    };
+
+
+
+</script>
+<script src=/Scripts/jquery.unobtrusive-ajax.min.js></script>
+@{Html.RegisterMvcPagerScriptResource();}

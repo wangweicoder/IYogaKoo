@@ -1,0 +1,85 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtWriteLog>
+
+@{
+    ViewBag.Title = "日志管理";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+
+    <table width="100%" cellpadding="3" cellspacing="1" id="searchTable" class="chaxun_table">
+        <tr>
+            <td>
+                查询：
+            </td>
+            <td>
+                姓名：
+                <input type="text" placeholder="请输入姓名..." name="Uid" id="Uid" />
+                标题：
+                <input type="text" placeholder="请输入标题..." name="sTitle" id="sTitle" />
+
+                创建时间：
+                <input type="text" name="CreateTime" id="CreateTime" />
+
+                <input type="button" value="搜索" id="searchBtn" onclick="searchBtn()" />
+                <input type="button" value="清空" id="btnClear" onclick="btnClear()" />
+            </td>
+
+        </tr>
+
+    </table>
+
+    <div id="list">
+        @Html.Partial("~/Areas/Manage/Views/WriteLog/Index.cshtml", Model) 
+    </div>
+     
+</div>
+ 
+<script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+<script src="~/Content/My97DatePicker4.7/WdatePicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        $("#CreateTime").bind("focus click", function () {
+            //WdatePicker("yyyy-MM-dd");
+            WdatePicker({ startDate: '%y-%M-%d 00:00:00', dateFmt: 'yyyy-MM-dd HH:mm:00', alwaysUseStartDate: true })
+        });
+    });
+    //----------清空
+    $("#btnClear").click(function () {
+        $("#Uid").val("");
+        $("#sTitle").val("");
+        $("#CreateTime").val("");
+        window.location = '/Manage/WriteLog/IndexSearch';
+
+    });
+    //----------搜索
+    $("#searchBtn").click(function () {
+        if ($("#Uid").val().trim() == "" && $("#sTitle").val().trim() == "" && $("#CreateTime").val() == "") {
+            alert("请输入查询条件")
+            return false;
+        } else {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("Index", "WriteLog")',
+                datatype: 'json',
+                data: {
+                    Uid: $("#Uid").val().trim(),
+                    sTitle: $("#sTitle").val().trim(),
+                    CreateTime: $("#CreateTime").val()
+                },
+                success: function (data) {
+                    $("#list").html(data);
+                }
+            })
+        }
+    });
+    
+    function DaoShiDel(id) {
+        if (confirm("是否删除!")) {
+            window.location = "/WriteLog/Delete/" + id;// 来打开新窗口
+        }
+    }
+</script>
+

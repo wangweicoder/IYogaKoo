@@ -1,0 +1,132 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaArtClass
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+ 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-box" id="">
+
+        <div class="content-box-header">
+
+            <h3 style="cursor:pointer">【修改】文章分类类别</h3>
+
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+                <fieldset>
+
+                    @Html.HiddenFor(model => model.ID)
+
+                    <p>
+                        类别：一级: @Html.DropDownList("TopParentID", "请选择")
+                        二级:
+                        <select id="TwoParentID" name="TwoParentID">
+                            <option value="">请选择</option>
+                        </select> 
+                    </p>
+                    <p>
+                        @Html.LabelFor(model => model.ClassName)
+                   
+                        @Html.EditorFor(model => model.ClassName)
+                        @Html.ValidationMessageFor(model => model.ClassName)
+                    </p>
+
+                    <input type="hidden" id="hidTopid" name="hidTopid" />
+                    <input type="hidden" id="hidTwoid" name="hidTwoid" />
+                    <p>
+                        <input type="submit" class="button" value="保存" />
+                        @Html.ActionLink("返回", "Index")
+                    </p>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+}
+ 
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+            //锁定
+            $("#TopParentID").attr("disabled","disabled");
+            $("#TwoParentID").attr("disabled","disabled");
+
+            if($("#TopParentID").val()!=''){
+
+                $("#hidTopid").val($("#TopParentID").val());
+
+                $.ajax({
+                    url: '/YogaArtClass/GetClassNameList?id=' + $("#TopParentID").val(),
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        document.getElementById("TwoParentID").innerHTML = "";
+                        $("#TwoParentID").append("<option value=''>请选择</option>");
+
+                        //start
+
+                        $.ajax({
+                            url: '/YogaArtClass/GetClassNameList?id=' + $("#TopParentID").val(),
+                            type: 'post',
+                            datatype: 'json',
+                            success: function (data1) {
+
+                                if(data1.length>0)
+                                {
+                                    for (var i = 0; i < data.length; i++)
+                                    {
+                                        if(@Model.ParentID==data1[i].ID)
+                                        {
+                                            $("#TwoParentID").append("<option  selected='selected' value='" + data1[i].ID + "'>" + data1[i].ClassName + "</option>");
+                                            $("#hidTwoid").val(data1[i].ID);
+                                        }
+                                        else{
+                                            $("#TwoParentID").append("<option value='" + data1[i].ID + "'>" + data1[i].ClassName + "</option>");
+                                        }
+                                    }
+                                }
+
+                            }
+                        });
+
+                        //end
+
+                    }
+                });
+            }
+
+        });
+        $("#TopParentID").click(function () {
+
+            var First = $(this).val();
+
+            //加载二级
+            if (First != '') {
+                $.ajax({
+                    url: '/YogaArtClass/GetClassNameList?id=' + First,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        document.getElementById("TwoParentID").innerHTML = "";
+                        $("#TwoParentID").append("<option value=''>请选择</option>");
+
+                        for (var i = 0; i < data.length; i++) {
+
+                            $("#TwoParentID").append("<option value='" + data[i].ID + "'>" + data[i].ClassName + "</option>");
+
+                        };
+                    }
+                });
+            }
+        });
+    </script>
+}

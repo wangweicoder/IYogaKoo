@@ -1,0 +1,176 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewUserModelsGroup>
+@{
+    ViewBag.Title = "导师";
+}
+@using (Html.BeginForm("Index", "YogisModels", new { id = "" }, FormMethod.Post, new { id = "searchForm" }))
+{
+    <div class="lb_login_idnex_top" style="border-top:5px solid #65C3A5">
+        <div class="lb_login_idnex_top_index">
+            <b>您所在位置：</b><span style="font-weight:bold">瑜伽导师</span>
+        </div>
+    </div>
+    <div id="anchorTag" class="lb_lb_School_zhuti">
+        <b>@*瑜伽导师：*@ &nbsp;</b>
+        <ul>
+            <li tid="0" class="on">全部</li>
+            <li tid="1">初级老师</li>
+            <li tid="2">中级老师</li>
+            <li tid="3">高级老师</li>
+            <li tid="5">资深导师</li>
+            <li tid="6">知名导师</li>
+            <li tid="4">瑜伽大师</li>
+        </ul>
+        <input type="hidden" id="levelid" name="levelid" />
+    </div>
+    <div class="lb_lb_School_liupaii">
+        <b>瑜伽流派：</b>
+        <ul>
+            <li tid="0" class="on">全部</li>
+            <li tid="115">哈他</li>
+            <li tid="118">艾扬格</li>
+            <li tid="119">阿斯汤加</li>
+            <li tid="101">流瑜伽</li>
+            <li tid="120">阴瑜伽</li>
+        </ul>
+        <input type="hidden" id="typeid" name="typeid" />
+    </div>
+    <div class="lb_lb_School_diqu">
+        <b class="b">所在地区：</b>
+        <select id="ddlCountryID" name="ddlCountryID"></select>
+        <input type="hidden" name="hidCountryID" id="hidCountryID" />
+        <select id="ddlProvinceID" name="ddlProvinceID">
+            <option value="0">请选择省份</option>
+        </select>
+        <input type="hidden" name="hidProvinceID" id="hidProvinceID" />
+        <select id="ddlCityID" name="ddlCityID" >
+            <option value="0">请选择城市</option>
+        </select>
+        <input type="hidden" name="hidCityID" id="hidCityID" />
+        <select id="ddlDistrictID" name="ddlDistrictID" >
+            <option value="0">请选择城区</option>
+        </select>
+        <input type="hidden" name="hidDistrictID" id="hidDistrictID" />
+    </div>
+} 
+ 
+
+<div class="lb_School_index_index" style="width:1210px">
+    <div class="lb_School_index_index_lln">
+        <div style="display:block" id="Content">
+            @Html.Partial("IndexList", Model)
+        </div>
+    </div>
+</div>
+@section styles
+{
+    <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+
+}
+@section scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".lb_lb_School_zhuti ul li").click(function () {
+                var typeid = $(this).attr("tid");
+                $("#levelid").val(typeid);
+                $(this).addClass("on").siblings().removeClass("on");
+                $("#searchForm").submit();
+            });
+            $(".lb_lb_School_liupaii ul li").click(function () {
+                var typeid = $(this).attr("tid");
+                $("#typeid").val(typeid);
+                $(this).addClass("on").siblings().removeClass("on");
+                $("#searchForm").submit();
+            });
+
+            $.ajax({
+                url: '/Login/GetCountryInfo?t=' + Math.random(),
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlCountryID").append("<option value='0' selected='selected'>请选择国家</option>");
+                    for (var i = 0; i < data.length; i++) {
+                        $("#ddlCountryID").append("<option value='" + data[i].ID + "'   >" + data[i].ItemName + "</option>");
+                    };
+                }
+            });
+           
+        });
+
+        // 国家事件
+        $('#ddlCountryID').change(function () {
+            var strGuoJia = $(this).val();
+            $("#hidCountryID").val(strGuoJia);
+            //加载省
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strGuoJia,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlProvinceID").html("<option value='0'>请选择</option>");
+                    $("#ddlCityID").html("<option value='0'>请选择</option>");
+                    $("#ddlDistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+            $("#searchForm").submit();
+        });
+        //省事件
+        $("#ddlProvinceID").change(function () {
+            var strSheng = $(this).val();
+            $("#hidProvinceID").val(strSheng);
+            //加载市
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strSheng,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlCityID").html("<option value='0'>请选择</option>");
+                    //$("#ddlDistrictID").html("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+            $("#searchForm").submit();
+        });
+        //城市事件
+        $("#ddlCityID").change(function () {
+            var strShi = $(this).val();
+            $("#hidCityID").val(strShi);
+            //加载城区
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strShi,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                   // $("#ddlDistrictID").append("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+            $("#searchForm").submit();
+        });
+        //城市事件
+        $("#ddlDistrictID").change(function () {
+            var strShi = $(this).val(); console.log(strShi);
+            $("#hidDistrictID").val(strShi);
+            $("#searchForm").submit();
+        });
+        function pagelocation() { 
+            $("html,body").stop(true); $("html,body").animate({ scrollTop: $("#anchorTag").offset().top }, 100);
+        }
+    </script>
+
+    <script src=@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")></script>
+    @{Html.RegisterMvcPagerScriptResource();}
+}

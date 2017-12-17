@@ -1,0 +1,426 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtMessageGroup>
+
+@{
+    ViewBag.Title = "详情";
+    Layout = "~/Views/Shared/_LayoutSetUpBack.cshtml";
+    var othermember = ViewBag.UserDetail;
+    var othermodels = ViewBag.modelsDetails;
+    IYogaKoo.ViewModel.ViewtWriteLog log = (IYogaKoo.ViewModel.ViewtWriteLog)ViewBag.model;
+    var Gender = ViewBag.otherGender;
+    var YogisLevel = ViewBag.YogisLevel;//=4 大师 
+    var ToUid = ViewBag.id;
+}
+<div id="othermenu" class="lb_gr_index_top lb_gr_index_top2222 ">
+    <ul>
+         
+        @{
+            if (ViewBag.id == ViewBag.user.Uid)
+            { 
+                <li><a class="on" href="/tWriteLog/logIndex?page=1">我的日志</a></li>
+                <li><a href="/YogaPic/MyPics">我的相册</a></li>
+                <li><a href="/tWriteLog/MyOtherClass">我的活动</a></li>
+                <li><a href="/YogaUser/FollowList">我的瑜伽圈</a></li>
+            }
+            else
+            {
+                if (YogisLevel == 4)
+                {
+                    <li><a class="on" href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">@(Gender)的文章</a></li>
+                }
+                else
+                {
+                    <li><a class="on" href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">@(Gender)的日志</a></li>
+                }
+                <li><a class="mypic" href="/tWriteLog/OtherPics?id=@ViewBag.id">@(Gender)的相册</a></li>
+                <li><a href="/tWriteLog/OtherClass?uid=@ViewBag.id">@(Gender)的活动</a></li>
+                <li><a href="/YogaUser/otherFollowList/@ViewBag.id">@(Gender)的瑜伽圈</a></li>
+            }
+}
+       
+    </ul>
+</div>
+<fieldset class="lb_filefset" style="width: 1100px;">
+    <input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+    <div class="lb_rz_info_title" style="width: 1100px;">
+        @* <div class="display-label">
+                 @Html.DisplayNameFor(model => model.sTitle)
+            </div>*@
+        <div class="display-field">
+            <div class="lb_rizhi_title">
+                @Html.DisplayFor(l => log.sTitle)
+                <a>
+                    @Html.DisplayFor(l => log.CreateDate)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    阅读（@log.iReadNums）
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="lb_rz_info_time">
+
+        <div class="display-field lb_rizhi_time">
+            <p>
+            </p>
+        </div>
+        <div class="lb_rizhi_zz lb_rizhi_zz1" style="width: 1100px">
+            <ul>
+                @*<li><a class="a1">赞(<label>1</label>)</a></li>*@
+                <li><a class="a2">评论(@ViewBag.rcount)</a></li>
+                <li style="border: 0px"><a class="a3" style="cursor:pointer" id="reprint">转载</a></li>
+            </ul>
+            <div class="bdsharebuttonbox bdsharebuttonbox2">
+                <a href="#" class="bds_more" data-cmd="more"></a>
+                <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+                <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+                <a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+                <a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a>
+                <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+            </div>
+
+        </div>
+    </div>
+    <div class="lb_rz_info_content" style="width: 1100px">
+        <div class="display-field">
+            @Html.Raw(log.sContent)
+        </div>
+    </div>
+    <div class="lb_rizhi_shangxia" style="float:none">
+        @Html.ActionLink("上一篇：" + (string)ViewBag.preTitle, "OtherDetails", new { id = ViewBag.pre, uid = log.Uid })<br />
+        @Html.ActionLink("下一篇：" + (string)ViewBag.nextTitle, "OtherDetails", new { id = ViewBag.next, uid = log.Uid })
+    </div>
+    <div class="lb_newadd_zan">
+        <div class="lb_wzinfo_index_tuijian">
+            <a class="a1"><span id="iZanNums">0</span></a>
+        </div>
+    </div>
+
+</fieldset>
+
+<div class="lb_School_pinglun_tab">
+    <ul>
+        <li class="li">评论</li>
+    </ul>
+</div>
+ 
+    <div class="lb_School_textarea">
+    <textarea placeholder="在此处输入您的评论" rows="6" cols="130" id="sContent" name="sContent"></textarea>
+        <div class="lb_School_textarea_div">
+            <a href="javascript:" class="emotion">添加表情</a>
+            <div class="lb_School_textarea_div_right">
+                <p id="contentle"  ><a id="counta">0</a>/500</p>
+                <input id="btnEval" type="button" style="float:right;" value="评论">
+                <input type="hidden" id="hhid" value="@ViewBag.id" />
+                <input type="hidden" id="hid_log" value="@ViewBag.logid" /> 
+                <input type="hidden" id="hidType" name="hidType" value="4" />
+            </div>
+        </div>
+</div>
+
+<div class="lb_School_qbpl" >
+    <p>全部评论(@ViewBag.rcount)</p>
+</div>
+<div id="mydiv" style="float:right; width:1200px;">
+    @Html.Partial("OtherPartialMsg", Model)
+</div>
+
+@*</div>*@
+@section styles{
+    <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+    <style type="text/css">
+        .emotion {
+            color: #4095CE;
+            font-size: 12px;
+            padding-left: 30px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            background: url(../images/biaoqing.png) 2px 10px no-repeat;
+            line-height: 35px;
+            float: left;
+        }
+        .lb_rizhi_zz1 .a1{cursor:pointer;}
+    </style>
+}
+
+
+@section Scripts {
+<script src="~/Content/Front/js/jquery.qqFace.js"></script>
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script language="javascript">
+    $(function () {
+        $('.emotion').qqFace({
+            assign: 'sContent', //给输入框赋值
+            path: 'face/'    //表情图片存放的路径
+        });
+        //赞数
+        $.ajax({
+            url: "/tWriteLog/GetZanCount",
+            data: { logid: $("#hid_log").val() },
+            success: function (data) {
+                $(".lb_wzinfo_index_tuijian .a1 span").text(data);
+            }
+        });
+        //不可以重复赞
+        $.ajax({
+            url: "/tWriteLog/ifZan",
+            data: { logid: $("#hid_log").val() },
+            success: function (data) {
+                if (data == 0) {
+                    //添加赞
+                    $(".lb_wzinfo_index_tuijian .a1").click(function () {
+
+                        $.ajax({
+                            url: "/tWriteLog/AddZanLog",
+                            data: { logid: $("#hid_log").val(), ToUid: '@ToUid', r: Math.random() },
+                                success: function (data) {
+
+                                    layer.msg("谢谢您的赞！！", { time: 1500 }, function () {
+
+                                        var zancount = $(".lb_wzinfo_index_tuijian .a1 span").text();
+
+                                        $(".lb_wzinfo_index_tuijian .a1 span").text(parseInt(zancount) + 1);
+                                        $(".lb_wzinfo_index_tuijian .a1").unbind("click");
+                                        $(".lb_wzinfo_index_tuijian .a1").attr("title", "已赞");
+                                    });
+                                },
+                                error: function (data) { layer.msg("发生异常"); }
+                            });
+                        });
+                    } else {
+                    $(".lb_wzinfo_index_tuijian .a1").attr("title", "已赞");
+                    }
+                }
+            });
+
+            //转载
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                $("#reprint").click(function () {
+                    $.ajax({
+                        url: '/tWriteLog/Reprint/' + $("#hid_log").val(),
+                        type: "post",
+                        success: function (data) {
+                            layer.msg("转载成功！", { time: 1600 });
+                        }
+                    });
+                });
+            }
+            $("#sContent").keyup(function () {
+                var text = $(this).val();
+                var counter = text.length;
+                if (counter > 500) {
+                    $(this).val($(this).val().substr(0, 500));
+                }
+                counter = $(this).val().length;
+                $(".lb_School_textarea_div_right a").text(counter);    //每次减去字符长度
+            });
+            //绑定发表
+            $("#btnEval").click(function () {
+                btnFaBiao(0, '@ViewBag.id');
+            });
+        });
+        //回复发表
+        function btnFaBiao(id,ToUid) {
+
+            var content = "#sContent";
+            if (id != 0) {
+                content += id;
+            }
+            if ($.trim($(content).val()) == "") {
+                layer.msg("请输入评论内容！", { time: 1500 }, function () {
+                    $(content).focus();
+                });
+                return false;
+            }
+            var touid = $("#hid_log").val();
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                $.ajax({
+                    url: "/tWriteLog/AddFaBiaoInfo",
+                    type: "post",
+                    // dataType: "json",
+                    data: {
+                        Toid:touid,
+                        Uid:ToUid,
+                        sContent: replace_em($(content).val()),
+                        parentID: id,
+                        toType: 4
+                    },
+                    success: function (data) {
+                        if (parseInt(data.code) == 0) {
+                            $(content).val("");
+                            //layer.msg("感谢您的评论！", { time: 2000 });
+                            $.ajax({
+                                url: '/tWriteLog/OtherDetails/' + $("#hid_log").val() + "&uid=" + touid,
+                                type: "post",
+                                success: function (data) {
+                                    $('#mydiv').html(data);
+                                    $(".lb_School_textarea_div_right a").text("0");
+                                }
+                            });
+                            window.location.href = '/tWriteLog/OtherDetails/' + touid + "?uid=" + ToUid;
+
+                        } else if (parseInt(data.code) === 2) {
+                            layer.msg("该信息已经存在！", { time: 2000 });
+                        }
+                        else {
+                            layer.msg("系统错误，请稍后重试！", { time: 2000 });
+                        }
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            } else {
+                layer.confirm("登录后才可以回复,是否现在登录？", { btn: ["确定", "取消"] }
+                    , function () {
+                        window.location = "/Login/Login?ReturnUrl=" + '/tWriteLog/logDetails/' + $("#hid_log").val();// 原来窗口
+                        $(this).close();
+                    },
+                    function () {
+                        $(this).close();
+                    });
+
+            }
+        }
+        //赞
+        function iZan(uid, UserType) {
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                $.ajax({
+                    url: "/tWriteLog/iZan",
+                    type: "post",
+                    dataType: "json",
+                    data: { uid: uid, UserType: UserType },
+                    success: function (data) {
+
+                        if (data.code === 0) {
+                            //刷新
+                            //window.location.reload();
+                            zanplus({ id: uid, style: 'font-weight:bold;', endSize: "60px", interval: 800 });
+                            var count = $("#zancount" + uid).text();
+                            if (count != "")
+                                $("#zancount" + uid).text((parseInt(count) + 1));
+                            else
+                                $("#zancount" + uid).text(1);
+                        } else if (data.code == 2) {
+                            layer.msg("您已经赞过！", { time: 1600 });
+                        }
+                        else {
+                            layer.msg("赞同失败！", { time: 1600 });
+                        }
+
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+            else {
+                if (confirm("登录后才可以点赞!")) {
+                    //window.open("/Login/Login");// 来打开新窗口
+                    window.location = "/Login/Login?ReturnUrl=" + '/YogaUserDetail/Details/' + $("#hidid").val();// 原来窗口
+                }
+            }
+        }
+        //赞特效
+        function zanplus(options) {
+            options = $.extend({
+                str: "+1",
+                startSize: "14px",
+                endSize: "40px",
+                interval: 500,
+                color: "red",
+                style: "",
+                callback: function () { }
+            }, options);
+            $("body").append("<span class='tips_box' style='" + options.style + "'>" + options.str + "</span>");
+            var box = $(".tips_box");
+            var self = $("#zan" + options.id);
+            var top = self.offset().top;
+            var left = self.offset().left + self.width() / 2 - box.width() / 2;
+            box.css({
+                "position": "absolute",
+                "top": top,
+                "left": left,
+                "font-size": options.startSize,
+                //"font-weight": "bold",
+                "color": options.color
+            });
+            box.animate({
+                "top": top - self.height() / 2,
+                "opacity": 0,
+                "font-size": options.endSize
+            }, options.interval, function () {
+                box.remove();
+                options.callback();
+            });
+        }
+
+        function replace_em(str) {
+            str = str.replace(/\</g, '<；');
+            str = str.replace(/\>/g, '>；');
+            str = str.replace(/\n/g, '<；br/>；');
+            str = str.replace(/\[em_([0-9]*)\]/g, '<img src="/Content/Front/js/face/$1.gif" border="0" />');
+            return str;
+        }
+    </script>
+
+    <script>
+        window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {}, "image": { "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"], "viewText": "分享到：", "viewSize": "16" }, "selectShare": { "bdContainerClass": null, "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"] } }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+
+    </script>
+    <script>
+        function flowuid(obj) {
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+
+                if (obj == '' || obj == undefined || obj == null) {
+                    if (confirm("你还没有添加详细信息，是否添加？")) {
+                        window.open("/Login/UserDetailEdit");
+                    }
+                } else {
+                    
+                    $.ajax({
+                        url: "/Follow/SetFollow",
+                        type: "get",
+                        dataType: "text",
+                        data: {
+                            quertid: obj,
+                            isf: $("#flowuid").html().trim(),
+                            UserType: $("#htype").val()
+                    },
+                    success: function (relust, status) {
+                        if (status == "success") {
+                            if (relust == "1") {
+                                layer.msg("关注成功！");
+                                $("#flowuid").html("已关注");
+                                var ofnum = $(".lb_name_div ul li").eq(1).children("p").text();
+                                $(".lb_name_div ul li").eq(1).children("p").text(parseInt(ofnum) + 1);
+                            }
+                            else if (relust == "0") {
+                                layer.msg("取消成功！");
+                                $("#flowuid").html("+关注");
+                                var ofnum = $(".lb_name_div ul li").eq(1).children("p").text();
+                                $(".lb_name_div ul li").eq(1).children("p").text(parseInt(ofnum) - 1);
+                            }
+                            else if (relust == "3") {
+                                layer.msg("亲自己不需要关注自己的！");
+                            }
+
+                        } else {
+                            layer.msg("关注失败！");
+                        }
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+        } else {
+            if (confirm("登录后才可以加关注!")) {
+
+                window.open("/Login/Login");// 来打开新窗口
+            }
+
+        }
+
+    };
+
+    </script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+    @{Html.RegisterMvcPagerScriptResource();}
+}

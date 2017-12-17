@@ -1,0 +1,83 @@
+﻿@model IYogaKoo.ViewModel.ViewtMessage
+
+@{
+    ViewBag.Title = "详情";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">详情</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+            <fieldset>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.ToUid)
+                </p>
+                <p>
+                    @ViewBag.ToUser
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.sContent)
+                </p>
+                <p>
+                    @Html.DisplayFor(model => model.sContent)
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </p>
+                <p>
+                    @Html.DisplayFor(model => model.CreateDate)
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.FromUid)
+                </p>
+                <p>
+                    @ViewBag.FromUser
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.iZan)
+                </p>
+                <p>
+                    @Html.DisplayFor(model => model.iZan)
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.iAudio)
+                </p>
+                <p>
+                    @if (Model.iAudio == 0)
+                    {
+                    @:审核中
+        }
+                    @if (Model.iAudio == 1)
+                    {
+                    @:审核通过
+        }
+                    @if (Model.iAudio == 2)
+                    {
+                    @:审核不通过
+        }
+                </p>
+
+
+            </fieldset>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("返回", "Index")
+</p>

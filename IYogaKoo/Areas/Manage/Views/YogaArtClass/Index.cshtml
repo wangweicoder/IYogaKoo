@@ -1,0 +1,114 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogaArtClass>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+  
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">文章分类列表</h3>
+        <p>
+            @Html.ActionLink("添加类别", "Create")
+        </p>
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <table>
+                <tr>
+                    <th>
+                        编号
+                    </th>
+                    <th>
+                        名称
+                    </th>
+                    <th>
+                        级别
+                    </th>
+                    <th>
+                        创建人
+                    </th>
+                    <th>
+                        创建时间
+                    </th>
+
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ClassName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ParentID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Creator)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateTime)
+                    </td>
+
+                    <td>
+                        @Html.ActionLink("修改", "Edit", new { id = item.ID, parentID = item.ParentID }) |
+                        @*@Html.ActionLink("Details", "Details", new { id=item.ID }) |
+                            @Html.ActionLink("Delete", "Delete", new { id=item.ID })*@
+                        <a href="Javascript:DaoShiDel('@item.ID','@item.ParentID')">删除</a>
+                    </td>
+                </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>
+
+<script type="text/javascript">
+
+    function DaoShiDel(id, parentid) {
+        if (confirm("是否删除!")) {
+            $.ajax({
+                url: "/YogaArtClass/Delete/" + id,
+                type: "post",
+                success: function (data) {
+                    if (data.code == 0) {
+                        window.location.reload();
+                    }
+                    else if (data.code == 2) {
+                        alert("请先删除子项！");
+                    }
+                    else if (data.code == 1) {
+                        alert("删除失败！");
+                    }
+                }
+            });
+        }
+    }
+</script>

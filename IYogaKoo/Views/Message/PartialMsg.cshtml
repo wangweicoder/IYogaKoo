@@ -1,0 +1,185 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewLogsMessages>
+@{
+    Layout = null;
+}
+@foreach (var item in Model)
+{
+    int count=0;
+    string mesvisible = "mesvisible";   
+    <div class="messagemiddlediv" id="divmenu@(item.id)">
+        <div class="logdiv">
+            @if (!String.IsNullOrEmpty(item.imgurl))
+            {
+                <div class="middleimg">
+                    <img src="@item.imgurl" width="100" height="100" />
+                </div>
+            }            
+            <div class="titleline">
+                <p><a href="@item.userurl">@item.name</a>：<a href="/tWriteLog/logDetails/@item.id">@item.title</a></p>
+                <p class="content">@item.content </p>
+            </div>
+        </div>
+        @foreach (var mes in item.messages)
+        { 
+            count++;
+            if (count == 3)
+            {
+                mesvisible = string.Empty;
+            }
+           
+            <div class="divmessage @mesvisible" id="messagediv@(mes.entity.ID)">
+                <div class="messageimg">
+                    <a href="@mes.sUrl"><img src="@mes.DisplayImg" width="45" height="45" /></a>
+                </div>
+                <div class="messageline">
+                  
+                    <p><a href="@mes.sUrl">@mes.FromUser：</a><span>@mes.entity.sContent</span><span class="delmessage" mid="@mes.entity.ID">[删除]</span> </p>
+                    <p class="time"><span> @mes.entity.CreateDate.Value.ToString("MM月dd日 HH:mm")</span>   <a href="javascript:void()" onclick="zk('@mes.entity.ID')">回复</a>
+                     </p>
+                   
+                </div>
+                <div class="div_content " id="div_content@(mes.entity.ID)">
+                    <textarea id="div_text@(mes.entity.ID)" ></textarea>
+                    <div style="float:right; margin-top:4px;">
+                        <input type="button" value="发表" onclick="btnFaBiao('@mes.entity.ID','@item.id')" />
+                        <input type="button" onclick="zk('@mes.entity.ID')" value="取消" />
+                    </div>
+
+                </div>
+                @foreach (var mes2 in mes.msgList)
+                {
+                    count++;
+                    if (count == 4)
+                    {
+                        mesvisible = string.Empty;
+                    }
+                    <div class="divmessage2 @mesvisible">
+                        <div class="messageimg">
+                            <a href="@mes2.sUrl"><img src="@mes2.DisplayImg" width="45" height="45" /></a>
+                        </div>
+                        <div class="messageline">
+                            <p><a href="@mes2.sUrl">@mes2.FromUser ：</a><span>@mes2.entity.sContent</span><span class="delmessage" mid="@mes2.entity.ID">[删除]</span></p>
+                            <p class="time">@mes2.entity.CreateDate.Value.ToString("MM月dd日 HH:mm") 
+                                
+                                  </p>
+                        </div>
+                    </div>
+                }
+            </div>
+   
+        }
+        @if (count > 1) { 
+        <a class="zkimg" mid="@item.id">
+            <img src="~/Content/Front/images/iconfont-icon.png" />
+        </a>
+        }
+    </div>
+  
+}
+ 
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv2", HttpMethod = "Post" })
+</div>
+<script language="javascript">
+    $(function () {
+        var delshow = $("#delif").val();
+        if (delshow == 0)
+        {
+            $(".delmessage").show();
+        }
+        //查看更多
+        var showdiv = true;
+        $(".zkimg").click(function () {          
+            var mid = $(this).attr("mid");
+            var divid = "#divmenu" + mid;           
+            if (showdiv) {              
+                $(divid + " .divmessage," + divid + " .divmessage2").addClass("mesvisiblemore");
+                $(this).children("img").attr("src", "../../Content/Front/images/iconfont-icon2.png");
+                showdiv = false;
+            }
+            else {
+                $(divid + " .divmessage," + divid + " .divmessage2").removeClass("mesvisiblemore");
+                $(this).children("img").attr("src", "../../Content/Front/images/iconfont-icon.png");
+                showdiv = true;
+            }
+        });
+        //删除
+        $(".delmessage").click(function () {
+            var mid = $(this).attr("mid");
+            layer.confirm("删除后不可恢复，您确认继续吗？", { icon: 3, title: '提示' }, function (index) {
+                $.ajax({
+                    url: "/Message/DelMes",
+                    type: "post",
+                    data: {
+                        id:mid
+                    },
+                    success: function (data) {
+                        layer.msg("删除成功", { time: 2000 }, function () {
+                            vardiv = "#messagediv" + mid;
+                            $(vardiv).hide();
+                        });
+                       
+                    }
+                });
+
+                layer.close(index);
+            });
+        });
+    });
+    //发表
+    function btnFaBiao(id, logid) {       
+        var textid = "#div_text" + id;
+        var textval = $.trim($(textid).val());
+
+        if (textval != "") {
+            $.ajax({
+                url: "/tWriteLog/AddFaBiaoInfo",
+                type: "post",
+                // dataType: "json",
+                data: {
+                    Uid: logid,
+                    sContent: textval,
+                    parentID: id,
+                    toType: 4
+                },
+                success: function (data) {
+                    if (parseInt(data.code) == 0) {
+                        $(textid).val("");
+                        layer.msg("感谢您的评论！", { time: 2000 });
+                        $.ajax({
+                            url: location.href,
+                            type: "post",
+                            success: function (data) {
+                                $('#mydiv2').html(data);
+                            }
+                        });
+
+                    } else if (parseInt(data.code) === 2) {
+                        layer.msg("该信息已经存在！", { time: 2000 });
+                    }
+                    else {
+                        layer.msg("系统错误，请稍后重试！", { time: 2000 });
+                    }
+                },
+                async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+            });
+        } else {
+            layer.msg("请输入您要回复的内容！", { time: 1800 });
+            $(textid).focus();
+        }
+    }
+</script>

@@ -1,0 +1,165 @@
+﻿@model IYogaKoo.ViewModel.ViewYogisModels
+@{
+    Layout = null;     
+}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽酷， 世界瑜伽人之家。</title>
+    <link rel="shortcut icon" href="/Content/Front/images/2.ico.png">
+    <link type="text/css" href="/Content/Front/css/indexnew.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+       
+      
+   </script>  
+    <script src="~/Content/baiduAdd.js"></script>
+   
+</head>
+<body> 
+   <form>
+    <div class="lb_index">
+        <div class="lb_School_index" style="background: #fff">
+            <div class="lb_School_index_top">
+                <div class="lb_School_index_top_index">
+                    <b>您所在位置：</b><span>预览</span>
+                </div>
+            </div>
+         
+         @*    <div class="lb_myindex" style="background: url(images/Audit_r2_c2.jpg) no-repeat; background-size:100% 100%; height:auto">
+                <div class="lb_myindex_div2">
+                    <img src="~/Content/Front/images/Audit_r2_c2.jpg" />
+                </div>
+        </div>
+       <div class="lb_audit_hello">
+            <h2>您好:</h2>
+            <p>您提交的升级导师资料正在审核中，我们会在1-2个工作日内进行审核，请耐心等待。审核结果我们会通过手机短信，邮件形式告知您。</p>
+        </div>*@
+        <div class="lb_audit_info">
+            <b>导师提交个人信息</b>
+        </div>
+         <div class="lb_audit_info2">
+             <div class="lb_audit_info2_div">
+                 <ul>
+                     <li>
+                         真实姓名： @Html.DisplayFor(model => model.RealName)
+                     </li>
+                        <li>
+                         性别： @(Model.Gender ==1 ? "男":"女")&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            导师级别：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   @if(Model.YogisLevel==1)
+                    {
+                       @:初级
+                    }
+                  @if(Model.YogisLevel==2)
+                  {
+                    @:中级 
+                  }
+                 @if(Model.YogisLevel==3)
+                 {
+                 @: 高级 
+                 }@if (Model.YogisLevel == 4)
+                  {
+                 @:大师
+                  }
+                     </li>
+                       <li>
+                         证件类型：@Html.DisplayFor(model => model.IdType)
+                     </li>
+                        <li>
+                         身份证号码： @Html.DisplayFor(model => model.IdCardNum)
+                     </li>
+                       <li>
+                         瑜伽会馆：  @ViewBag.CentValue
+                     </li>
+                        <li>
+                         所教授的瑜伽流派： @ViewBag.YogaTypeidValue
+                     </li>
+                       <li>
+                         师从导师： @ViewBag.TeachYogisValue;
+                     </li>
+                        <li>
+                         开始授课时间： @{
+                             var startyear= Model.StartTeachYear;
+                             @Convert.ToDateTime(startyear).ToShortDateString();
+                             }
+                     </li>
+                       <li>
+                         国籍：  @ViewBag.Nationality
+                     </li>
+                        <li>
+                         所在区域：  @ViewBag.Address &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具体街道：  @Html.DisplayFor(model => model.Street)
+                     </li>                       
+                       
+                 </ul>
+             </div>
+             <div class="lb_audit_info2_div" style="margin-top:15px">
+                 <p>自我介绍：  @Html.Raw(Model.YogisDepict)</p>
+             </div>
+          </div>
+           <div class="lb_audit_info">
+            <b>导师资质证明</b>
+        </div>
+             @if (ViewBag.pro != null)
+        {
+            IYogaKoo.ViewModel.ViewYogiProfile pro=ViewBag.pro;
+           
+            <div class="lb_audit_index">
+                <dl>
+                    <dt>
+                        身份证正面：
+                    </dt>
+                    <dd>
+                        <img src="@pro.IDScan" width="300" height="196" />
+                    </dd>
+                </dl>
+                 <dl>
+                    <dt>
+                        身份证反面：
+                    </dt>
+                    <dd>
+                        <img src="@pro.IDScanF" width="300" height="196" />
+                    </dd>
+                </dl>
+                 <dl style="width:900px">
+                    <dt>
+                        手持身份证照片：
+                    </dt>
+                    <dd>
+                        <img src="@pro.IDPhoto" width="300" height="196" />
+                    </dd>
+                </dl>
+                 <dl style="width:900px;">
+                    <dt>
+                        瑜伽导师资格证明文件扫描件：
+                    </dt>
+                    <dd style="width:620px">
+                    @for (int i = 0; i < @pro.Diploma.Split(';').Length - 1; i++)
+                    {
+                        <img src="@pro.Diploma.Split(';')[i]" width="300" height="196" />
+                    }
+                    </dd>
+                </dl>
+            </div>
+         }
+         else 
+         {
+             <div>还没有提交审核</div>
+             }
+            @*<div class="lb_audit_inpuut">
+                <input type="button" id="closebt" onclick="window.close();" value="返回" />
+            </div>*@
+     
+</div> 
+        </div>
+</form>    
+</body>
+</html>
+       
+    
+    
+    

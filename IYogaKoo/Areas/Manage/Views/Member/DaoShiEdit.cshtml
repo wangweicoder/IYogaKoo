@@ -1,0 +1,440 @@
+﻿@model IYogaKoo.ViewModel.ViewYogisModels
+
+@{
+    ViewBag.Title = "编辑导师";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+
+    var CentValue = ViewBag.CentValue;
+    var YogaTypeidValue = ViewBag.YogaTypeidValue;
+}
+<script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+
+<link href="@Url.Content("~/Content/artDialog4.1.1/_doc/demo.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Content/artDialog4.1.1/jquery.artDialog.js?skin=blue")" type="text/javascript"></script>
+<script src="@Url.Content("~/Content/artDialog4.1.1/artDialog.iframeTools.js")" type="text/javascript"></script>
+<script src=@Url.Content("~/Content/ueditor/ueditor.config.js")></script>
+<script src=@Url.Content("~/Content/ueditor/ueditor.all.js")></script>
+
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">编辑导师</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.YID)
+                @Html.HiddenFor(model => model.UID)
+                @Html.HiddenFor(model => model.YogiStatus)
+                <fieldset>
+
+                    <p>
+                        @Html.LabelFor(model => model.RealName)
+                  
+                        @Html.EditorFor(model => model.RealName)
+                        @Html.ValidationMessageFor(model => model.RealName)
+                    </p>
+                    <p>
+                        昵称：
+                            <input type="text" id="nickName" name="nickName" value="@ViewBag.NiceName" />
+                         
+                    </p>
+                    <p>
+                        @Html.LabelFor(model => model.Gender)
+                    
+                        @Html.RadioButtonFor(model => model.Gender, 1)男
+                        @Html.RadioButtonFor(model => model.Gender, 0)女
+                        @Html.ValidationMessageFor(model => model.Gender)
+                    </p>
+
+                    <p>
+                        @Html.LabelFor(model => model.CenterID)
+                  
+                        &nbsp;&nbsp;&nbsp;
+                        @Html.EditorFor(model => model.CenterID)
+                        <input type="button" id="btnCenterID" value="请选择" class="lb_sc" />
+                        <a href="/Centers/Create" target="_blank" id="addCenter" title="如果没有可以添加">添加</a>
+                        <input type="hidden" id="hCenterID" name="hCenterID" value="@Model.CenterID" />
+                        <span>*</span>
+                    </p>
+
+                    <p>
+                        @Html.LabelFor(model => model.YogaTypeid)
+                   
+                        &nbsp;&nbsp;&nbsp;
+                        @Html.EditorFor(model => model.YogaTypeid)
+                        <input type="button" id="btnYogaTypeid" value="请选择" class="lb_sc" />
+                        <input type="hidden" id="hYogaTypeid" name="hYogaTypeid" value="@Model.YogaTypeid" />
+                        <span>*</span>
+                    </p>
+
+                    <p >
+                        @Html.LabelFor(model => model.StartTeachYear)
+                   
+                        @Html.TextBox("StartTeachYear", string.Format("{0:yyyy-MM-dd}", Model == null ? DateTime.Now : Model.StartTeachYear))
+                        @Html.ValidationMessageFor(model => model.StartTeachYear)<span>*</span>
+                    </p>
+
+                    <p >
+                        @Html.LabelFor(model => model.Nationality)
+                   
+                        <select id="ddlNationality" name="ddlNationality">
+                            <option value="0">请选择国籍</option>
+                        </select>
+                    </p>
+                    <p>
+                        所在区域：
+                   
+                        <select id="ddlCountryID" name="ddlCountryID">
+                            <option value="0">请选择国家</option>
+                        </select><br /><br />
+                        <select id="ddlProvinceID" name="ddlProvinceID">
+                            <option value="0">请选择省份</option>
+                        </select>
+                        <select id="ddlCityID" name="ddlCityID" style="width: 100px;">
+                            <option value="0">请选择城市</option>
+                        </select>
+                        <select id="ddlDistrictID" name="ddlDistrictID" style="width: 100px;">
+                            <option value="0">请选择城区</option>
+                        </select>
+                    </p>
+                    <p>
+                        @Html.LabelFor(model => model.Street)
+                   
+                        @Html.EditorFor(model => model.Street)
+                        @Html.ValidationMessageFor(model => model.Street)
+                    </p>
+
+                    <p>
+                        @Html.LabelFor(model => model.YogisLevel)
+                   
+                        @*<select id="YogisLevel" name="YogisLevel">
+
+                            <option value="0">请选择</option>
+                            `
+                            <option value="1">初级</option>
+
+                            <option value="2">中级</option>
+
+                            <option value="3">高级</option>
+
+                            <option value="4">大师</option>
+
+                        </select>*@
+                        @Html.DropDownListFor(model=>model.YogisLevel,IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.初级老师.ToList(),"请选择", "-1")
+                        @Html.ValidationMessageFor(model => model.YogisLevel)
+                    </p>
+
+                    <p>
+                        @Html.LabelFor(model => model.BecomeYogisTime)
+                  
+                        @DateTime.Now
+                    </p>
+                     
+                    <p>
+                        @Html.LabelFor(model => model.YogisDepict)
+                    
+                        @Html.TextAreaFor(model => model.YogisDepict, new { id = "YogisDepict", style = "height:200px; width:650px;margin-left:15px" })
+
+                        @Html.ValidationMessageFor(model => model.YogisDepict)
+                    </p>
+                  
+                    <p>
+                        <input type="button" class="button"  value="保存" id="idsubmit" />
+                    </p>
+                </fieldset>
+            }
+        </div>
+    </div>
+</div>
+<div>
+    @Html.ActionLink("返回", "DaoShiIndexSearch")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+ 
+    <script type="text/javascript">
+        ///弹出头像设置
+        $(function () {
+            $("#CenterID").val('@CentValue');
+
+            $("#YogaTypeid").val('@YogaTypeidValue');
+
+            $("#YogisLevel").val(@Model.YogisLevel);
+
+            UE.getEditor('YogisDepict'); //内容编辑器
+
+            $(".page").hide();
+
+            $("#StartTeachYear").bind("focus click", function () {
+                WdatePicker({ dateFmt: 'yyyy-MM-dd' })
+            });
+
+        });
+        $(".setAvatar").click(function () {
+
+            $(".page").toggle();
+        });
+        $("#btnCenterID").click(function () {
+
+            art.dialog.open('/Login/LoadCenterList', {
+                title: '选择会馆',
+                lock: true,
+                width: 600,
+                hight: 400,
+                close: function () {
+                    var CenterId = art.dialog.data('CenterId', CenterId);
+                    var CenterName = art.dialog.data('CenterName', CenterName);
+
+                    if (CenterId !== undefined) {
+                        document.getElementById('hCenterID').value = CenterId;
+                    }
+                    if (CenterName !== undefined) {
+                        document.getElementById('CenterID').value = CenterName;//显示名称
+                    }
+                }
+            });
+        });
+
+        $("#btnYogaTypeid").click(function () {
+
+            art.dialog.open('/Login/LoadYogaTypeidList', {
+                title: '选择流派',
+                lock: true,
+                width: 600,
+                hight: 400,
+                close: function () {
+                    var ID = art.dialog.data('ID', ID);
+                    var ItemName = art.dialog.data('ItemName', ItemName);
+
+                    if (ID !== undefined) {
+                        document.getElementById('hYogaTypeid').value = ID;
+                    }
+                    if (ItemName !== undefined) {
+                        document.getElementById('YogaTypeid').value = ItemName;//显示名称
+                    }
+                }
+            });
+        });
+
+        $("#btnTeachYogis").click(function () {
+
+            art.dialog.open('/Login/MyTeacherList', {
+                title: '选择导师',
+                lock: true,
+                width: 600,
+                hight: 400,
+                close: function () {
+                    var ID = art.dialog.data('ID', ID);
+                    var TeacherName = art.dialog.data('TeacherName', TeacherName);
+
+                    if (ID !== undefined) {
+                        document.getElementById('hTeachYogis').value = ID;
+                    }
+                    if (TeacherName !== undefined) {
+                        document.getElementById('TeachYogis').value = TeacherName;//显示名称
+                    }
+                }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        // 国家事件
+        $('#ddlCountryID').click(function () {
+
+            var strGuoJia = $(this).val();
+            document.getElementById("ddlProvinceID").innerHTML = "";
+            //加载省
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strGuoJia,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+
+        });
+        //省事件
+        $("#ddlProvinceID").click(function () {
+
+            var strSheng = $(this).val();
+            document.getElementById("ddlCityID").innerHTML = "";
+            //加载市
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strSheng,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+
+        });
+        //城市事件
+        $("#ddlCityID").click(function () {
+
+            var strShi = $(this).val();
+            document.getElementById("ddlDistrictID").innerHTML = "";
+            //加载城区
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strShi,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+
+        });
+    </script>
+
+    <script>
+        $(function () {
+
+            //国籍
+
+            $.ajax({
+                url: '/Login/GetNationalityInfo?t=' + Math.random(),
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+
+                        if (data[i].ID == '@Model.Nationality') {
+                            $("#ddlNationality").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlNationality").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+            //国家
+
+            $.ajax({
+                url: '/Login/GetCountryInfo?t=' + Math.random(),
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ID == '@Model.CountryID') {
+                            $("#ddlCountryID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlCountryID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+            //省
+
+            if ('@Model.ProvinceID' != "0") {
+
+                $.ajax({
+                    url: '/Login/GetAreaInfo?id=' + @Model.CountryID,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].ID == '@Model.ProvinceID') {
+                                $("#ddlProvinceID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                            } else {
+                                $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                            }
+                        };
+                    }
+                });
+            }
+
+            var strProvinceID = '@Model.ProvinceID';
+            if (strProvinceID != "0") {
+                $.ajax({
+                    url: '/Login/GetAreaInfo?id=' + strProvinceID,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].ID == '@Model.CityID') {
+                                $("#ddlCityID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                            } else {
+                                $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                            }
+                        };
+                    }
+                });
+            }
+            var strCityID = '@Model.CityID';
+            if (strCityID != "0") {
+                $.ajax({
+                    url: '/Login/GetAreaInfo?id=' + strCityID,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].ID == '@Model.DistrictID') {
+                                $("#ddlDistrictID").append("<option value='" + data[i].ID + "' selected='selected' >" + data[i].ItemName + "</option>");
+                            } else {
+                                $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                            }
+                        };
+                    }
+                });
+            }
+
+        });
+    </script>
+ 
+
+    <script>
+        $('#idsubmit').click(function () {
+             
+            var data = $("form").serialize();
+
+            $.ajax({
+                url: '/Manage/Member/DaoShiEdit?t=' + Math.random(),
+                type: 'POST',
+                data: data,
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        // alert("添加成功！");
+                        location.href = "/Manage/Member/DaoShiIndexSearch";
+                    } else {
+                        alert("添加失败！");
+
+                    }
+
+                }, error: function () {
+                    alert("添加失败！");
+
+                }
+            });
+            return false;
+        });
+    </script>
+}
+
+

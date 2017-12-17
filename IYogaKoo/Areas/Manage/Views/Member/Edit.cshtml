@@ -1,0 +1,237 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaUser
+
+@{
+    ViewBag.Title = "编辑会员";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}  
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-box" id="">
+
+        <div class="content-box-header">
+
+            <h3 style="cursor:pointer">编辑</h3>
+
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+                <fieldset>
+
+                    <div class="editor-label">
+                        @Html.HiddenFor(model => model.Uid) 
+                        @Html.LabelFor(model => model.UEmail)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.UEmail)
+                        @Html.ValidationMessageFor(model => model.UEmail)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Uphone)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.Uphone)
+                        @Html.ValidationMessageFor(model => model.Uphone)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.NickName)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.NickName)
+                        @Html.ValidationMessageFor(model => model.NickName)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.RegDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.RegDate)
+
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.UStatus)
+                    </div>
+                    <div class="editor-field">
+                        <select id="UStatus" name="UStatus">
+                            <option value="0">未激活</option>
+                            <option value="1">开通</option>
+                            <option value="2">冻结</option>
+                            <option value="3">注销</option>
+                        </select>
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.UserType)
+                    </div>
+                    <div class="editor-field">
+                        <select id="UserType" name="UserType">
+                            <option value="0">习练者</option>
+                            <option value="1">瑜伽导师</option>
+                            <option value="2">瑜伽机构</option>
+                        </select>
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.IsAssessor)
+                    </div>
+                    <div class="editor-field">
+                        <input id="IsAssessor" name="IsAssessor" type="checkbox">
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.IsWebworkers)
+                    </div>
+                    <div class="editor-field">
+                        <input id="IsWebworkers" name="IsWebworkers" type="checkbox">
+                        @Html.ValidationMessageFor(model => model.IsWebworkers)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LastDate)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.LastDate)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LastIP)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.LastIP)
+                        @Html.ValidationMessageFor(model => model.LastIP)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LoginTimes)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.LoginTimes)
+                        @Html.ValidationMessageFor(model => model.LoginTimes)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.LoginType)
+                    </div>
+                    <div class="editor-field">
+                         @{
+    if (Model.LoginType == 0)
+                        {
+                            @:普通登录
+                                                            }
+    else if (Model.LoginType == 1)
+                        {
+                            @:Sina微博
+                                                            }
+    else if (Model.LoginType == 2)
+                        {
+                            @:QQ
+                                                            }
+    else if (Model.LoginType == 3)
+                        {
+                            @:微信
+                                                }
+                        }
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.SinaAuthCode)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.SinaAuthCode)
+                        @Html.ValidationMessageFor(model => model.SinaAuthCode)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.SinaBack)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.SinaBack)
+                        @Html.ValidationMessageFor(model => model.SinaBack)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.QQAuthCode)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.QQAuthCode)
+                        @Html.ValidationMessageFor(model => model.QQAuthCode)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.QQBack)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.QQBack)
+                        @Html.ValidationMessageFor(model => model.QQBack)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WechatAuthCode)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.WechatAuthCode)
+                        @Html.ValidationMessageFor(model => model.WechatAuthCode)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.WechatBack)
+                    </div>
+                    <div class="editor-field">
+                        @Html.DisplayFor(model => model.WechatBack)
+                        @Html.ValidationMessageFor(model => model.WechatBack)
+                    </div> 
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ValCode)
+                    </div>
+                    <div class="editor-field"> 
+                        @Html.DisplayFor(model => model.ValCode) 
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ValExpire)
+                    </div>
+                    <div class="editor-field"> 
+                        @Html.DisplayFor(model => model.ValExpire) 
+                    </div>
+
+                    <p>
+                        <input type="submit" value="编辑" class="button" /> | @Html.ActionLink("返回", "IndexSearch" )
+                    </p>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+}
+ 
+
+<script type="text/javascript">
+    ///弹出头像设置
+    $(function () {
+        $("#UStatus").val('@Model.UStatus');
+        if(@Model.IsAssessor==false)
+        {
+            $("#IsAssessor").attr("checked","");
+        }else{
+            $("#IsAssessor").attr("checked","checked");
+        }
+        if(@Model.IsWebworkers==false)
+        {
+            $("#IsWebworkers").attr("checked","");
+        }else{
+            $("#IsWebworkers").attr("checked","checked");
+        }
+        $("#UserType").val('@Model.UserType');
+
+        $("#LoginType").val(@Model.LoginType);
+      
+    });
+
+</script>
+
+

@@ -1,0 +1,50 @@
+﻿body {
+ font-family:'微软雅黑'
+}
+.aui_title {
+ background:#65C3A5!important;
+}
+.aui_nw, .aui_ne {
+ background:#65C3A5!important;
+}
+.lb_rizi_table {
+ width:880px; margin:0px auto; overflow:hidden
+}
+.lb_rz_table td a {
+color:#333
+}
+    .lb_rz_table td a:hover {
+    text-decoration:underline
+}
+
+#lb_queren {display:block; margin:0px auto;width:100px; height:50px; background:url(../images/queren.png) no-repeat;}
+.centerUl {
+overflow:hidden; height:490px;
+}
+.centerUl ul{
+    margin:0px; padding:0px
+}
+ .centerUl ul li { width:400px; height:55px; float:left; font-size:14px; list-style:none; position:relative;
+    }
+.centerUl ul li a{ display:block; line-height:30px; width:25px; height:25px; float:left; line-height:70px; margin:0px 15px 0px 0px }
+.centerUl ul li b {
+    font-weight:100;position:absolute;z-index:111;top:10px; left:100px
+}
+
+.lb_centerSearch {
+  width:300px; overflow:hidden;margin:0px auto
+}
+    .lb_centerSearch b {
+     font-size:16px; color:#333; font-weight:100; float:left; line-height:27px;
+    }
+    .lb_centerSearch input {
+        width:150px; height:30px; border:1px solid #eee; float:left; padding:0px 5px
+    }
+.lb_page {
+ width:400px; margin:5px auto; overflow:hidden
+}
+    .lb_page a {
+     margin:0px;color:#333
+    }
+      .centerUl ul li img{ border-radius:50%; margin-top:12px}
+

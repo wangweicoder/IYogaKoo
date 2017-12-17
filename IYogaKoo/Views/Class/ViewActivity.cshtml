@@ -1,0 +1,344 @@
+﻿@model IYogaKoo.ViewModel.ViewClass
+@using IYogaKoo.ViewModel
+@{
+    ViewBag.Title = "ViewActivity";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link href="~/Content/Front/css/activity.css" rel="stylesheet" />
+    <style type="text/css">
+        .lb_login_idnex {
+            width: auto;
+        }
+
+        .lb_hd_index_info_right_fqr .avatar {
+            width: 256px;
+        }
+
+        .divDetails {
+            text-align: center;
+        }
+
+            .divDetails p img {
+            }
+        /*#className{
+                 text-overflow:ellipsis;
+                   white-space:nowrap;
+               overflow:hidden;
+                width:500px;
+                cursor:pointer;
+            }*/
+    </style>
+}
+<div class="lb_School_index">
+    <div class="lb_School_index_top">
+        <div class="lb_School_index_top_index">
+            <b>您所在位置：<a href="/">首页</a> >  <a href="/class/Index">活动</a>  >&nbsp;&nbsp;</b><span>活动预告详情</span>
+
+            <ul>
+                @*<li><a href="" class="on">达人</a></li>
+                    <li><a href="">活动</a></li>*@
+            </ul>
+        </div>
+    </div>
+    <div class="lb_hd_index">
+        <input type="hidden" id="hidUid" value="@ViewBag.User.Uid" />
+        <input type="hidden" id="hidid" value="@ViewBag.id" />
+        <input type="hidden" id="classId" value="@Model.Id" />
+        <div class="lb_hd_index_info">
+            <div class="lb_hd_index_info_left">
+                <div class="lb_hd_index_vido">
+                    <div class="lb_hd_index_vido_left">
+                        @*<img src="@Model.Banner">*@
+                        <img src="@(Model.Banner == null ? "" : Url.Action("GetImg", "YogaGuru", new { url = Model.Banner, width = 310, height = 420 }))" />
+                    </div>
+                    <div class="lb_hd_index_vido_right">
+                        <h3 id="className" title="@Model.Name">@Model.Name</h3>
+                        <b>
+                            @if (Model.ClassStatus == 5)
+                            {
+                                @:审核未通过，将不会在平台上展示，未通过原因:（@Model.MessageDes）
+                            }
+                            else if (Model.ClassStatus == 1)
+                            {
+                                @:待审核
+                            }
+                            else if (DateTime.Now >= Convert.ToDateTime(Model.CloseTime))
+                            {
+                                @:来晚了，报名已经截止了...
+                            }
+                            else if (DateTime.Now <= Model.CloseTime)
+                            {
+                                @:报名进行中...
+                            }
+
+                        </b>
+                        <p>时间：@(Convert.ToDateTime(Model.Start).ToString("yyyy-MM-dd hh:mm")) 至 @Model.End</p>
+                        <p>地点：@Model.Address</p>
+                        <p>费用：@(Model.Price == 0 ? "免费" : Model.Price.ToString())</p>
+                        <p>发起人：@Model.User.NickName</p>
+                        <p>活动类型：@Model.TopicIds</p>
+                        <p>截止时间：@(Convert.ToDateTime(Model.CloseTime).ToString("yyyy-MM-dd hh:mm"))</p>
+                        <div class="lb_hd_index_vido_right_div">
+                            <p><a href="">@ViewBag.JoinCount</a><b>人参加</b><a id="axingqu" href="">@ViewBag.InterestCount</a><b>人感兴趣</b></p>
+                            <p>
+                                @if (DateTime.Now <= Convert.ToDateTime(Model.CloseTime))
+                                {
+                                    @*<a href="#" id="ahrefValue" class="button">我要参加</a>*@
+                                    <input type="button" value="我要参加" onclick="btnYou()" />
+
+                                    @*<a href="/Class/Apply?id=@Model.Id" class="button" target="_blank">我要参加</a>*@
+
+                                    <input type="button" class="addInterest @(ViewBag.IsInterest==true ? "interested" : "")" value="我感兴趣">
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lb_hd_index_title">
+                    <h4>活动详情</h4>
+                </div>
+                <div>
+                    @*class="lb_hd_index_font"*@
+                    @*@(new HtmlString(Model.Content))*@
+                    <div class="lb_aaaaaaa">
+                        @Html.Raw(Model.Content)
+                    </div>
+                </div>
+            </div>
+
+            <div class="lb_hd_index_info_right">
+                @{
+                    IYogaKoo.Client.YogisModelsServiceClient ymClient = new IYogaKoo.Client.YogisModelsServiceClient();
+                    List<IYogaKoo.ViewModel.ViewYogisModels> fqrEntity = ymClient.GetYogisModelsUid(Model.User.Uid);
+                    <div class="lb_hd_index_info_right_fqr">
+                        <p>发起人</p>
+                        <img src="@Model.Poster.Avatar" class="avatar">
+                        <p class="p">
+                            @if (!fqrEntity.Any())
+                            {
+                                <a href="/YogaUserDetail/Details/@Model.User.Uid">@Model.User.NickName</a>
+
+                            }
+                            else if (fqrEntity.First().YogisLevel == 4)
+                            {
+                                <a href="/YogaGuru/Details/@Model.User.Uid">@Model.User.NickName</a>
+                            }
+                            else
+                            {
+                                <a href="/YogisModels/Details/@Model.User.Uid">@Model.User.NickName</a>
+                            }
+                            <b><a href="">@ViewBag.Sponsor</a>粉丝,<img src="/Content/Front/images/_r2_c2.png"></b>
+                        </p>
+                    </div>
+                }
+
+                @if (Model.Teachers != null && Model.Teachers.Count > 0)
+                {
+                    <div class="lb_hd_index_info_right_fqr">
+                        <p>参加讲师</p>
+                    </div>
+                    foreach (var item in Model.Teachers)
+                    {
+                        IYogaKoo.ViewModel.ViewYogisModels vymEntity = ymClient.GetById(Convert.ToInt32(item.TeacherId));
+                        <div class="lb_hd_index_info_right_fqr" id="teacher-@item.UserId">
+                            @*@if (vymEntity.DisplayImg.Split(';').Count() > 2)
+                                {
+                                    <img src="@vymEntity.DisplayImg.Split(';').[1]" class="avatar">
+                                }
+                                else
+                                {
+                                    <img src="" alt="" />
+                                }*@
+                            @if (!string.IsNullOrWhiteSpace(vymEntity.DisplayImg))
+                            {
+                                var str = vymEntity.DisplayImg.Split(';');
+                                if (str.Length > 1)
+                                {
+                                    if (!string.IsNullOrEmpty(str[1]))
+                                    {                                        
+                                        if (vymEntity.YogisLevel == null)
+                                        {
+                                            <a href="#">@item.Name</a>
+                                        }
+                                        else if (vymEntity.YogisLevel == 4)
+                                        {
+                                            <a href=/YogaGuru/Details/@vymEntity.UID><img src="@vymEntity.DisplayImg.Split(';').Last()" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href=/YogisModels/Details/@vymEntity.UID><img src="@vymEntity.DisplayImg.Split(';').Last()" /></a>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (vymEntity.YogisLevel == null)
+                                        {
+                                            <a href="#">@item.Name</a>
+                                        }
+                                        else if (vymEntity.YogisLevel == 4)
+                                        {
+                                            <a href=/YogaGuru/Details/@vymEntity.UID><img src="@Url.Action("getimg", "YogaGuru" , new
+     {
+     url=vymEntity.DisplayImg.Split(';').FirstOrDefault(),
+     width=249,
+     height=188,
+     mode="Cut" ,
+     ischange=false
+     })" /></a>
+                                        }
+                                        else
+                                        {
+                                            <a href=/YogisModels/Details/@vymEntity.UID><img src="@Url.Action("getimg", "YogaGuru" , new
+     {
+     url=vymEntity.DisplayImg.Split(';').FirstOrDefault(),
+     width=249,
+     height=188,
+     mode="Cut" ,
+     ischange=false
+     })" /></a>
+                                        }
+                                    }
+                                }
+                                else
+                                {
+
+                                    if (vymEntity.YogisLevel == null)
+                                    {
+                                        <a href="#">@item.Name</a>
+                                    }
+                                    else if (vymEntity.YogisLevel == 4)
+                                    {
+                                        <a href=/YogaGuru/Details/@vymEntity.UID><img src="@Url.Action(" getimg", "YogaGuru" , new
+     {
+     url=vymEntity.DisplayImg.Split(';').FirstOrDefault(),
+     width=249,
+     height=188,
+     mode="Cut" ,
+     ischange=false
+     })" /></a>
+                                    }
+                                    else
+                                    {
+                                        <a href=/YogisModels/Details/@vymEntity.UID><img src="@Url.Action(" getimg", "YogaGuru" , new
+     {
+     url=vymEntity.DisplayImg.Split(';').FirstOrDefault(),
+     width=249,
+     height=188,
+     mode="Cut" ,
+     ischange=false
+     })" /></a>
+                                    }
+
+
+
+                                }
+                            }
+                            else
+                            {
+                                <img src="/Content/Front/images/defaultImg.png" alt="/Content/Front/images/defaultImg.png" />
+                            }
+                            <p class="p">
+
+                                @if (vymEntity.YogisLevel == null)
+                                {
+                                    <a href="#">@item.Name</a>
+                                }
+                                else if (vymEntity.YogisLevel == 4)
+                                {
+                                    <a href=/YogaGuru/Details/@vymEntity.UID>@item.Name</a>
+                                }
+                                else
+                                {
+                                    <a href=/YogisModels/Details/@vymEntity.UID>@item.Name</a>
+                                }
+                                <b><a href="/Follow/Index?Uid=@item.UserId">@ViewData[item.UserId.ToString()] </a>粉丝,<img src="/content/front/images/_r2_c2.png"></b>
+
+                            </p>
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+
+        <div class="lb_hd_index_addhd">
+            <div class="lb_hd_index_addhd_top">
+                <p><a href="">@ViewBag.JoinCount</a>名瑜伽达人在这里等你加入此活动</p>
+            </div>
+            <div class="lb_hd_index_addhd_bottom">
+                <div class="lb_hd_index_addhd_bottom_left">
+                    @if (ViewData["AllJoinAvatars"] != null)
+                    {
+                        <input style="display:none" />
+                        foreach (UserListItem item in ViewData["AllJoinAvatars"] as List<UserListItem>)
+                        {
+                            if (item.YogisLevel == -99)
+                            {
+                                <a href="/YogaUserDetail/Details/@item.ID" title="@item.Name"><img src="@item.Avatar" /></a>
+                            }
+                            else if (item.YogisLevel == 4)
+                            {
+                                <a href="/YogaGuru/Details/@item.ID" title="@item.Name"><img src="@item.Avatar" /></a>
+                            }
+                            else
+                            {
+                                <a href="/YogisModels/Details/@item.ID" title="@item.Name"><img src="@item.Avatar" /></a>
+                            }
+                        }
+                    }
+            </div>
+            <div class="lb_hd_index_addhd_bottom_right">
+                <input type="button" value="" onclick="btnYou()" />
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+</div>
+@section scripts{
+    <script src="~/Content/Front/js/activity.js"></script>
+    <script>
+        $(function () {
+            //我要参加
+            // InterestedClass();
+            @*if(@ViewBag.isOrder=="True")
+            {
+                layer.confirm('报名成功', {
+                    btn: ['确定'] //按钮
+                }, function () {
+                    time: 0;
+                })
+            }*@
+        });
+        function btnYou() {
+            if(@ViewBag.user.Uid!=0)
+            {
+                //登录
+                window.location.href= '/Class/Apply?id='+@ViewBag.id;
+            }
+            else{
+                if (confirm("登录后才可以参加!")) {
+                    window.location = "/Login/Login?ReturnUrl=" + '/Class/Apply?id=' + @ViewBag.id;// 新窗口
+                }
+            }
+        }
+
+        function InterestedClass(){
+            if(@ViewBag.user.Uid!=0)
+            {
+                //判断登录
+                $("#ahrefValue").attr('href','/Class/Apply?id='+@ViewBag.id).attr('target','_blank');
+            }
+            else{
+                if (confirm("登录后才可以参加!")) {
+                    window.location = "/Login/Login?ReturnUrl=" + '/Class/ViewActivity?id=' + @ViewBag.id;// 新窗口
+                }else{
+                    $("#ahrefValue").attr('href','Javascript:InterestedClass()');
+                }
+            }
+        }
+    </script>
+}

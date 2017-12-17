@@ -1,0 +1,198 @@
+﻿@model IYogaKoo.ViewModel.ViewtLearing
+
+@{
+    ViewBag.Title = "添加文章";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")"></script>
+<div class="lb_School_index_top">
+    <div class="lb_School_index_top_index">
+        <b>您所在位置：</b><span>添加社区</span>
+    </div>
+</div>
+@*<div class="lb_rizi" style="width:1200px; overflow:hidden">
+    <h2>添加文章</h2>
+</div>*@
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset id="lb_add_wenzhang">
+
+        <div class="editor-label" style="overflow: hidden;">
+            操作人：
+        </div>
+        <div class="editor-field">
+            @ViewBag.Name
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.iType)
+        </div>
+        <div class="editor-field">
+            <select id="iType" name="iType">
+                <option value="">--请选择--</option>
+                  @{
+    List<IYogaKoo.ViewModel.ViewYogaDicItem> list = ViewBag.Diclist;
+                        foreach (var item in list)
+                        {
+                            <option value="@item.ID">@item.ItemName</option>
+               
+                        } 
+                    }   
+            </select> 
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sPic)
+        </div>
+        <div class="editor-field" style="height:100px">
+            <img id="imgsPic" src="" width="200" height="100" />
+            <input id="sPic" name="sPic" type="hidden" value="" />
+            <div class="lb_liulan" style="top:-105px">
+                <input id="btnsPic" type="file" value="上传图片" />
+            </div> 
+            @*<span>提示：上传小于4M 的jpg文件</span>*@
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sTitle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.sTitle)
+            @Html.ValidationMessageFor(model => model.sTitle)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sContent)
+        </div>
+        <div class="editor-field lb_textart">
+            @Html.TextAreaFor(model => model.sContent, new { id = "sContent", style = "width:650px;margin-left:0px" })
+            @Html.ValidationMessageFor(model => model.sContent)
+            <input type="hidden" id="hsContent" name="hsContent" value="" />
+        </div>
+         
+        <div class="editor-label">&nbsp;</div>
+        <div class="editor-field">
+            <p style="float: left">
+                <input type="button" value="保存" id="idsubmit" />
+            </p>
+            <div class="lb_return">
+                <p style="float: left">
+                    @Html.ActionLink("返回", "Index")
+
+                </p>
+            </div>
+        </div>
+    </fieldset>
+}
+
+
+
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+    <script src="@Url.Content("~/Content/ueditor/ueditor.config.js")"></script>
+    <script src="@Url.Content("~/Content/ueditor/ueditor.all.js")"></script>
+    <script type="text/javascript">
+        $(function () {
+            UE.getEditor('sContent'); //内容编辑器
+            $('#idsubmit').click(function () {
+                if ($("#iType").val() == "") {
+                    layer.msg("请选择文章类型！");
+                } else if ($("#sPic").val() == "") {
+                    layer.msg("请上传图片！");
+                } else {
+                    var data = $("form").serialize();
+                    $.ajax({
+                        url: '/Learn/Create?t=' + Math.random(),
+                        type: 'POST',
+                        data: data,
+                        success: function (data) {
+
+                            if (data.code == 0) {
+                                window.location = '/Learn/Index';
+                            }else if (data.code == 2) {
+                                layer.msg("已经存在该文章！");
+                            } else {
+                                layer.msg("添加失败！");
+                            }
+
+                        }, error: function () {
+                            layer.msg("添加失败！");
+
+                        }
+                    });
+                }
+                return false;
+            });
+        });
+        // 关闭窗口.
+        function closeWin() {
+            // 可能存在frame页面,所以要引用top窗口.
+            var win = top.window;
+            try {
+                // 聚焦.
+                if (win.opener) win.opener.focus();
+                // 避免IE的关闭确认对话框.
+                win.opener = null;
+            } catch (ex) {
+                // 防止opener被关闭时代码异常。
+            } finally {
+                win.close();
+            }
+        }
+        // 刷新打开本窗口的opener窗口.
+        function refreshOpener() {
+            // 可能存在frame页面,所以要引用top窗口.
+            var win = top.window;
+            try {
+                // 刷新.
+                if (win.opener) win.opener.location.reload();
+            } catch (ex) {
+                // 防止opener被关闭时代码异常。
+            }
+        }// 刷新opener窗口后关闭自己。
+        function refreshOpenerAndCloseMe() {
+            refreshOpener();
+            closeWin();
+        }
+    </script>
+
+<script type="text/javascript">
+    $(function () {
+
+        //封面图片
+        $('#btnsPic').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+            'uploader': '@Url.Content("~/Controllers/ashxFile/tLearnImg.ashx")',
+            'buttonText': '浏览',
+            'height': '30',
+            'width': '120',
+            'fileTypeDesc': '.jpg,.gif,.png',
+            'fileTypeExts': '*.jpg;*.gif;*.png;',
+            'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+            'sizeLimit': 1024 * 1024 * 4, //4M
+            'multi': false,//设置为true时可以同时上传多个文件。
+            'post_params': {
+                "Uid": '@ViewBag.user.Uid'
+            },
+            'onUploadSuccess': function (file, data, response) {
+                if (data.indexOf('文件太大！请上传小于4M的图片！') != -1) {
+                    layer.msg(data);
+                }
+                else {
+                    $("#sPic").val("/" + data);
+                    $("#imgsPic").attr("src", "/" + data);
+                }
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+            }
+        });
+
+    });
+
+</script>
+}

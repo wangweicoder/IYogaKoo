@@ -1,0 +1,74 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewLevelOrder>
+@{
+    ViewBag.Title = "升级导师列表";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+@using (Html.BeginForm("UpgradeTeacherList", "Member", new { id = "" }, FormMethod.Post, new { id = "searchForm" }))
+{
+    <table width="100%" cellpadding="3" cellspacing="1" id="searchTable" class="chaxun_table">
+
+        <tr>
+            
+            <td>
+                查询：
+            </td>
+            <td>
+                姓名：
+                <input type="text" placeholder="请输入昵称..." name="Name" id="Name" />
+                 
+                目标级别：
+                <select id="TargetLevel" name="TargetLevel">
+                    <option value="">--请选择--</option>
+                    <option value="基础习练者">基础习练者</option>
+                    <option value="初级习练者">初级习练者</option>
+                    <option value="中级习练者">中级习练者</option>
+                    <option value="高级习练者">高级习练者</option>
+                    <option value="初级老师">初级老师</option>
+                    <option value="初级老师">中级老师</option>
+                    <option value="初级老师">高级老师</option>
+                </select>
+                订单类型：
+                <select id="OrderType" name="OrderType">
+                    <option value="">--请选择--</option>
+                    <option value="习练者到习练者">习练者到习练者</option>
+                    <option value="习练者到老师">习练者到老师</option>
+                    <option value="老师到老师">老师到老师</option>
+                </select>
+                申请状态：
+                <select id="OrderState" name="OrderState">
+                    <option value="">--请选择--</option>
+                    <option value="申请中">申请中</option>
+                    <option value="通过">通过</option>
+                    <option value="未通过">未通过</option>
+                </select>
+                <input type="button" value="搜索" id="searchBtn" />
+                
+            </td>
+            <td>
+
+        </tr>
+
+    </table>
+}
+    <div id="list">
+        @Html.Partial("PartTeacherList", Model)
+    </div>
+
+</div>
+@section scripts {
+<script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript">
+   
+    //----------搜索
+    $("#searchBtn").click(function () {
+
+        $("#searchForm").submit(); 
+    });
+  
+</script>
+<script src=@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")></script>
+@{Html.RegisterMvcPagerScriptResource();}
+    }

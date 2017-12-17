@@ -1,0 +1,159 @@
+﻿@using zzfIBM.WebControls.Mvc
+@model zzfIBM.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogisModels>
+@{
+    ViewBag.Title = "SearchList";
+} 
+@{
+    var index = 1;
+    if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+    {
+        var p = int.Parse(Request.QueryString["page"]) - 1;
+        if (p > 0)
+        {
+            index = p * 10 + 1;
+        }
+    }
+} 
+<div class="lb_School_index_info_right_hg_dsjj2">
+    @{
+        int i = 0;
+    }
+    @if (ViewBag.hidid == 2 && ViewBag.listGroup!=null)
+    {
+    foreach (var entity in ViewBag.listGroup)
+    {
+        i++;
+        <div class="lb_School_index_info_right_hg_dsjj_b2">
+            <div class="lb_School_index_info_right_hg_dsjj_b_left2">
+                <a href="/YogisModels/Details/@entity.UID" target="_blank">
+                    @{
+        var prsrc = @entity == null ? "" : @entity.DisplayImg;
+                    }
+                    <img src="@prsrc" />
+
+                </a>
+
+                <div class="lb_School_index_info_hg_hide2">
+                    <div class="lb_School_index_info_hg_hide_le2">
+                        <p>@entity.RealName</p>
+                    </div>
+                    <div class="lb_School_index_info_hg_hide_rig2">
+                        <a href="/YogisModels/Details/@entity.UID"><img src="/Content/Front/images/ds_zan.png" /></a>
+                        @*<p></p>*@
+                    </div>
+                </div>
+            </div>
+            <div class="lb_School_index_info_right_hg_dsjj_b_right2">
+                @Html.Raw(entity.YogisDepict)
+
+            </div>
+        </div>
+
+    }
+    
+    }
+    else if (ViewBag.hidid == 1 && ViewBag.listGroup != null)
+    {
+        foreach (var entity in ViewBag.listGroup)
+        {
+            i++;
+            <div class="lb_School_index_info_right_hg_dsjj_b2">
+                <div class="lb_School_index_info_right_hg_dsjj_b_left2">
+                    <a href="/YogaUserDetail/Details/@entity.UID" target="_blank">
+                        @{
+            var prsrc = @entity == null ? "" : @entity.DisplayImg;
+                        }
+                        <img src="@prsrc" />
+
+                    </a>
+
+                    <div class="lb_School_index_info_hg_hide2">
+                        <div class="lb_School_index_info_hg_hide_le2">
+                            <p>@entity.RealName_cn</p>
+                        </div>
+                        <div class="lb_School_index_info_hg_hide_rig2">
+                            <a href="/YogaUserDetail/Details/@entity.UID"><img src="/Content/Front/images/ds_zan.png" /></a>
+                            <p>@entity.iZan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lb_School_index_info_right_hg_dsjj_b_right2">
+                    @Html.Raw(entity.GudWords)
+
+                </div>
+            </div>
+
+        }
+    }
+    else if (ViewBag.hidid == 4 && ViewBag.listGroup != null)
+    {
+        foreach (var entity in ViewBag.listGroup)
+        {
+            i++;
+            <div class="lb_School_index_info_right_hg_dsjj_b2">
+                <div class="lb_School_index_info_right_hg_dsjj_b_left2">
+                    <a href="/YogisModels/Details/@entity.ID" target="_blank">
+                        @{
+            var prsrc = @entity == null ? "" : @entity.PicPath;
+                        }
+                        <img src="@prsrc" />
+
+                    </a>
+
+                    <div class="lb_School_index_info_hg_hide2">
+                        <div class="lb_School_index_info_hg_hide_le2">
+                            <p>@entity.Author</p>
+                        </div>
+                        <div class="lb_School_index_info_hg_hide_rig2">
+                            <a href="/YogaUserDetail/Details/@entity.ID"><img src="/Content/Front/images/ds_zan.png" /></a>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lb_School_index_info_right_hg_dsjj_b_right2">
+                    @Html.Raw(entity.ArticleCon)
+
+                </div>
+            </div>
+
+        }
+    }
+    //活动
+    else if (ViewBag.hidid == 3 && ViewBag.listGroup != null)
+    {
+        foreach (var entity in ViewBag.listGroup)
+        {
+            i++;
+            <div class="lb_School_index_info_right_hg_dsjj_b2">
+                <div class="lb_School_index_info_right_hg_dsjj_b_left2">
+                    <a href="/Class/ViewActivity?id=@entity.Id" target="_blank">
+                        @{
+            var prsrc = @entity == null ? "" : @entity.Banner;
+                        }
+                        <img src="@prsrc" />
+
+                    </a>
+
+                    <div class="lb_School_index_info_hg_hide2">
+                        <div class="lb_School_index_info_hg_hide_le2">
+                            <p>@entity.Name</p>
+                        </div>
+                        <div class="lb_School_index_info_hg_hide_rig2">
+                            <a href="/Class/ViewActivity?id=@entity.Id"><img src="/Content/Front/images/ds_zan.png" /></a>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lb_School_index_info_right_hg_dsjj_b_right2">
+                    @Html.Raw(entity.Summary)
+
+                </div>
+            </div>
+
+        }
+    }
+</div>
+
+<div id="pager">
+    @Html.AjaxPager(Model, new PagerOptions { PageIndexParameterName = "page",Id="2" },   new AjaxOptions { UpdateTargetId = "right_con" })
+</div>

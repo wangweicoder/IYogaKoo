@@ -1,0 +1,51 @@
+﻿.fl{ float:left;}
+
+.avatarbg
+{
+	position: relative;
+	width: 500px;
+	height: 500px;
+	display: table;
+	text-align: center;
+	border: 1px solid #c9c9c9;
+	background: #f7f7f7;
+	margin: 0 20px 10px 0;
+	overflow: hidden;
+}
+.avatarboxbar
+{ *position:absolute;*left:50%;*top:50%;display:table-cell;vertical-align:middle;text-align:center;}
+#bgDiv
+{ *left:-50%;*top:-50%;text-align:center;margin:0 auto;}
+.avatarthumb
+{
+	float: left;
+	width: 300px;
+	height: 323px!important;
+	border: 1px solid #c9c9c9;
+	padding: 2px;
+	overflow: hidden;
+}
+.RealNameClass { 
+  text-align:center;
+  width:80px;
+}
+.avatarthumb img
+{
+	width: 300px;
+	height: 300px;
+}
+
+
+ .upload{ float:left; width:615px; overflow:hidden;}
+ .upload .starcolor{color:#ff0000; padding:0 5px 0 0; }
+ .upload .starlineh{vertical-align:top; line-height:28px;}
+ .uploadimg{clear:both; margin-bottom:10px; color:#777a77;overflow:hidden;}
+ .uploadimg label{ float:left; display:block; width:115px; font-size:14px; color:#333333; text-align:left; padding-top:15px;}
+ .uploadimg .uploadswf{ float:left; width:120px;}
+ .uploadimg .uploadswf input{ height:26px;}
+ .uploadimg .uploadbtn{ float:left; width:150px;}
+ .uploadimg .uploadbtn img{ margin-left:10px; display:inline;}
+ .uploadimg .showimg{ clear:both; margin-top:5px;}
+ .uploadimg .showimg img{ float:left; width:75px; height:75px;padding:5px; border:1px solid #ebebeb; margin-right:5px;}
+ p.shoppingornno label{ line-height:20px;}
+ p.servicebtn{ width:100%; text-align:center; margin:25px 0;}

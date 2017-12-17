@@ -1,0 +1,117 @@
+﻿/* 添加活动*/
+.content-box-content {padding:14px;}
+.search-teacher{line-height:27px}
+.teachers{margin:0;padding:0}
+.teachers .teacher{position:relative;display:block;overflow:hidden;margin:7px 14px 0 0;min-width:300px;border:1px solid #ddd;border-radius:20px;line-height:30px}
+.teachers .teacher .teacher-info{float:left;width:80%;text-align:center}
+.teachers .teacher .teacher-info img{float:left;margin:1px 5px 1px -11px;border-radius:20px;width:40px;height:40px;border:1px solid #ccc;border-width:1px 0;background-color:#ccc;transition:all ease-out 150ms}
+.teachers .teacher .teacher-info .name{font-weight:700;font-size:14px;text-align: left;padding-left: 14px;}
+.teachers .teacher .teacher-info .name span{color:#999;font-size:10px;float:none;display:inline-block;margin:0 3px;}
+.teachers .teacher .teacher-close{float:right;margin:1px;border-radius:20px;width:40px;height:40px;border:1px solid #ccc;border-width:1px 0;background-color:#ccc;transition:all ease-out 150ms}
+.teachers .teacher .teacher-close:hover{border-color:#df8f8f;background-color:#d43f3a;transition:all ease-out 150ms;}
+.teachers .teacher .remove{position:absolute;display:none;width:4pc;height:4pc;border-radius:9pt;background-color:#d10505;color:#fff;text-align:center;font-weight:700;font-size:14px;line-height:4pc;cursor:pointer}
+.teachers .teacher:hover .remove{display:block;animation:leftease 4s ease 3s infinite forwards;-webkit-animation:leftease .3s ease 0 forwards;-moz-animation:leftease 4s ease 3s infinite forwards}
+.teachers .noteacher:hover .remove{display:none}
+.teachers .noteacher{border:1px dashed #ddd;cursor:pointer}
+.teachers .noteacher .remove{display:none}
+.teachers .noteacher:hover{border:1px dashed #6c9a25}
+.teachers .teacher img{width:100%;height:100%;border-radius:9pt}
+
+
+.centers{margin:0;padding:0}
+.centers .Center{position:relative;display:block;overflow:hidden;margin:7px 14px 0 0;min-width:300px;border:1px solid #ddd;border-radius:20px;line-height:30px}
+.centers .Center .Center-info{float:left;width:80%;text-align:center}
+.centers .Center .Center-info img{float:left;margin:1px 5px 1px -11px;border-radius:20px;width:40px;height:40px;border:1px solid #ccc;border-width:1px 0;background-color:#ccc;transition:all ease-out 150ms}
+.centers .Center .Center-info .name{font-weight:700;font-size:14px;text-align: left;padding-left: 14px;}
+.centers .Center .Center-info .name span{color:#999;font-size:10px;float:none;display:inline-block;margin:0 3px;}
+.centers .Center .Center-close{float:right;margin:1px;border-radius:20px;width:40px;height:40px;border:1px solid #ccc;border-width:1px 0;background-color:#ccc;transition:all ease-out 150ms}
+.centers .Center .Center-close:hover{border-color:#df8f8f;background-color:#d43f3a;transition:all ease-out 150ms;}
+.centers .Center .remove{position:absolute;display:none;width:4pc;height:4pc;border-radius:9pt;background-color:#d10505;color:#fff;text-align:center;font-weight:700;font-size:14px;line-height:4pc;cursor:pointer}
+.centers .Center:hover .remove{display:block;animation:leftease 4s ease 3s infinite forwards;-webkit-animation:leftease .3s ease 0 forwards;-moz-animation:leftease 4s ease 3s infinite forwards}
+.centers .noteacher:hover .remove{display:none}
+.centers .noteacher{border:1px dashed #ddd;cursor:pointer}
+.centers .noteacher .remove{display:none}
+.centers .noteacher:hover{border:1px dashed #6c9a25}
+.centers .Center img{width:100%;height:100%;border-radius:9pt}
+
+.teacher-wall {margin-top:7px;}
+.teacher-wall .teacher{overflow:hidden;padding:7px 7px 7px 92px;height:4pc;border:1px solid #ddd;-webkit-transition-duration:.3s;margin-top:3px;font-size:10px;line-height:15px}
+.teacher-wall .teacher:hover{background-color:#eee;cursor:pointer}
+.teacher-wall .teacher small{display:block;padding:2px 0}
+.teacher-wall .teacher h5{padding:1px 0;font-size:14px}
+.teacher-wall .teacher .description{overflow:hidden;height:30px}
+.teacher-wall .teacher .avatar{float:left;margin-left:-78px;width:4pc;height:4pc;border-radius:9pt}
+.layui-layer-content .content-box{margin:0}
+form .textarea{min-height:10pc}
+@keyframes leftease{0%{margin-left:4pc;opacity:0}
+to{margin-left:0;opacity:1}
+}
+@-webkit-keyframes leftease{0%{margin-left:4pc;opacity:0}
+to{margin-left:0;opacity:1}
+}
+.tags .tag{display:inline-block;margin-right:14px;padding:7px 14px;border-radius:19.5px;background-color:#ccc;color:#000;line-height:25px;cursor:pointer;transition:all ease-out .15s}
+.tags .tag.selected{background-color:#06aeae;color:#fff}
+.tags .tag:hover{background-color:#068d8d;color:#fff}
+
+/*表单样式修正*/
+form input[type=radio] {width:20px !important;float:left;margin-top:0px;}
+form dd label {display:inline-block;float:left;line-height:40px;}
+form .radios {display:inline-block;}
+    form .radios .radio {display:inline-block;margin-right:7px;}
+/*添加课程导师*/
+form fieldset{border:none;}
+form p label:first-child{display:block;margin:3px}
+form p input {width:120px;margin:3px;padding:5px;border:1px solid #ccc;border-radius:3px;}
+form p input:focus {border:1px solid #65C3A5;}
+form p select {width:192px;margin:3px;padding:5px;border:1px solid #ccc;}
+form p textarea {width:480px;margin:3px;padding:5px;border:1px solid #ccc;}
+form p .button{width: 120px;height: 35px;background: #65C3A5;font-size: 16px;color: #fff;margin-top: 14px;cursor: pointer;}
+    form p .button:hover {background: #40c399;}
+    form p .button.cancel-button { background: #DDDDDD; color:#333;  }
+        form p .button.cancel-button:hover {background: #CCC;}
+
+        /*活动海报*/
+#uploaded-image {    overflow:hidden;}
+   #uploaded-image img {
+        min-height:327px;
+        min-width:235px;
+        max-height:300px;
+    }
+#select-file-queue {
+    display:none;
+}
+.lb_hd_faqi_left_bottom_right p.p1 {
+    float:none;
+    clear:both;
+}
+/***************数据表**************/
+.data-table {width:100%;}
+    .data-table thead tr {background-color:#65C3A5;color:white;font-weight:bold; line-height:30px;}
+        .data-table thead tr td {padding:3px 7px; }
+    .data-table tbody tr:hover {background-color:#eee;color:#666;}
+    .data-table tbody tr td {padding:7px 7px; }
+        .data-table tbody tr td .op-add {width:40px;background:#65C3A5;border:1px solid #77e2c0;color:white;padding:3px 5px;cursor:pointer;  }
+            .data-table tbody tr td .op-add:hover {background:#4ab995;}
+/***************分页 laypage**************/
+#pageBox {margin-top:14px;}
+#pageBox span {float:none;}
+/******************头像*********************/
+.small-avatar {width:32px;height:32px;border-radius:16px;border:1px solid #eee;}
+/*按钮*/
+.button {
+      width: 130px;
+  height: 40px;
+  background: #65C3A5;
+  border: 0px;
+  color: #fff !important;
+  text-align:center;
+  font-size: 18px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+#noSearchResult {
+      text-align: center;
+  padding: 14px;
+  margin-bottom: 28px;
+  color: red;
+}

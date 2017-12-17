@@ -1,0 +1,101 @@
+﻿@model IYogaKoo.ViewModel.ViewtQuestion
+@{
+    ViewBag.Title = "Reply";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+@section styles{
+    <link href="~/Content/Back/css/class.css" rel="stylesheet" />
+    <link href="~/Content/front/css/activity.css" rel="stylesheet" />
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+    <script src="/Content/ueditor/ueditor.config.js"></script>
+    <script src="/Content/ueditor/ueditor.all.js"></script>
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+    <script src="~/Scripts/laydate/laydate.js"></script>
+    <script src="~/Scripts/laypage/laypage.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script type="text/javascript">
+        //var ue = UE.getEditor('ReplyContent', { initialFrameWidth: 660 });
+
+        $('#idsubmit').click(function () {
+            if ($("#QuestionContent").val().length == 0) {
+                layer.msg("问题不能为空");
+                return false;
+            }
+            if ($("#ReplyContent").val().length == 0) {
+                layer.msg("答案不能不为空");
+                return false;
+            }
+            //验证结束
+
+            var value = $("form").serialize();
+
+            Loading();
+            $.ajax({
+                url: '/Manage/tQuestion/Reply?t=' + Math.random(),
+                type: 'post',
+                datatype: 'json',
+                data: value,
+                success: function (msg) {
+                    Loaded();
+                    if (msg.code == 0) {
+                        layer.msg("修改成功！");
+                    } else {
+                        layer.msg("修改失败！");
+                    }
+                }
+            });
+            return false;
+        });
+    </script>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset id="lb_sjds_fiel">
+        <label> 类型：@ViewBag.SelectedDicItemName</label>
+        <input type="hidden" name="ID" id="ID" value="@Model.ID" />
+        <div class="editor-label">
+            @Html.LabelFor(model => model.QuestionContent)
+            @Html.TextBoxFor(model => model.QuestionContent, new { @class = "text-input medium-input", @disabled = "disabled" })
+        </div>
+        <div class="editor-field">
+            @Html.LabelFor(model => model.ReplyContent)
+            @if (Model.State == 1)
+            {
+                @Html.TextAreaFor(model => model.ReplyContent, new { @class = "text-input textarea", @cols = "79", @rows = "15" })
+            }
+            else
+            {
+                @Html.TextAreaFor(model => model.ReplyContent, new { @class = "text-input textarea", @cols = "79", @rows = "15", @disabled = "disabled" })
+            }
+        </div>
+        <div class="editor-field">
+            @Html.LabelFor(model => model.ReplyUid)  @if (Model.State == 1)
+            {
+                @Html.TextBoxFor(model => model.ReplyUid, new { @class = "text-input medium-input" })}
+            else
+            {
+                @Html.TextBoxFor(model => model.ReplyUid, new { @class = "text-input medium-input", @disabled = "disabled" })
+            }
+        </div>
+        <div class="editor-field">
+
+            <div class="lb_qq_index">
+
+                <div class="lbn_qq_p">
+                    <p>
+                        @if (Model.State == 1)
+                        {
+                            <input type="button" class="button" value="保存" id="idsubmit" />
+                        }
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+}

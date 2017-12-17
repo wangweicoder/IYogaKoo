@@ -1,0 +1,74 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model PagedList<IYogaKoo.ViewModel.ViewOrder>
+@{
+    ViewBag.Title = "订单列表";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+
+<div class="content-box" id="">
+    <table width="100%" cellpadding="3" cellspacing="1" id="searchTable" class="chaxun_table">
+        <tr>
+            <td>
+                查询：
+            </td>
+            <td>
+                手机号：
+                <input type="text" name="Phone" id="Phone" />
+                开始时间：
+                <input type="text" placeholder="" name="CreateTime" id="CreateTime" />
+                结束时间：
+                <input type="text" name="EndTime" id="EndTime" />
+                <input type="button" value="搜索" id="searchBtn" onclick="searchBtn()" />
+            </td>
+
+        </tr>
+
+    </table>
+
+    <div id="list">
+        <div class="content-box" id="">
+            <div class="content-box-header">
+
+                <h3 style="cursor:pointer">订单列表</h3>
+
+                <div class="clear"></div>
+
+            </div>
+            <div id="mydiv">
+                @Html.Partial("OrderList", Model)
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+<script src="~/Content/My97DatePicker4.7/WdatePicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        $("#CreateTime").bind("focus click", function () {
+            //WdatePicker("yyyy-MM-dd");
+            WdatePicker({ startDate: '%y-%M-%d 00:00:00', dateFmt: 'yyyy-MM-dd HH:mm:00', alwaysUseStartDate: true })
+        });
+        $("#EndTime").bind("focus click", function () {
+            //WdatePicker("yyyy-MM-dd");
+            WdatePicker({ startDate: '%y-%M-%d 00:00:00', dateFmt: 'yyyy-MM-dd HH:mm:00', alwaysUseStartDate: true })
+        });
+    });
+    $("#searchBtn").click(function () {
+        $.ajax({
+            type: 'post',
+            url: '@Url.Action("Order", "Class")',
+            datatype: 'json',
+            data: {
+                Phone: $("#Phone").val().trim(),
+                CreateTime: $("#CreateTime").val().trim(),
+                EndTime: $("#EndTime").val()
+            },
+            success: function (data) {
+                $("#mydiv").html(data);
+            }
+        })
+    });
+</script>

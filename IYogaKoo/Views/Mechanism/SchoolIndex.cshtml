@@ -1,0 +1,107 @@
+﻿@model IEnumerable<IYogaKoo.ViewModel.ViewCenters>
+
+@{
+    ViewBag.Title = "SchoolIndex";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SchoolIndex</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CenterId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Uid)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CenterName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CenterAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DistrictID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CityID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProvinceID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CountryID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpgradeDate)
+        </th>
+        
+        <th>
+            @Html.DisplayNameFor(model => model.OpenTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CloseTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CenterType)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CenterId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Uid)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CenterName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CenterAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DistrictID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CityID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProvinceID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CountryID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpgradeDate)
+        </td>
+       
+        <td>
+            @Html.DisplayFor(modelItem => item.OpenTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CloseTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CenterType)
+        </td>
+        <td>
+           
+            @Html.ActionLink("Details", "SchoolDetails", new {id=item.CenterId })  
+        </td>
+    </tr>
+}
+
+</table>

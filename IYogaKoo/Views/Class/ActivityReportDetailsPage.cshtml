@@ -1,0 +1,311 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtMessageGroup>
+
+@{
+    ViewBag.Title = "ActivityReportDetailsPage";
+}
+
+<div class="lb_index">
+
+    <div class="lb_School_index">
+        <div class="lb_School_index_top">
+            <div class="lb_School_index_top_index">
+                <b>您所在位置：<a href="/">首页</a> >  <a href="/class/Index">活动</a>  >&nbsp;&nbsp;</b><span>活动报道详情</span>
+                <ul>
+                    @*<li><a href="" class="on">活动</a></li>*@
+                </ul>
+            </div>
+        </div>
+        <div class="lb_hd_index">
+            <div class="lb_hd_index_info">
+                <div class="lb_hd_index_info_left">
+                    <div class="lb_hd_index_vido2">
+                        @*<img src="@ViewBag.Entity.Banner"  />*@
+                        <img src="@(ViewBag.Entity.Banner == null ? "" : Url.Action("GetImg", "YogaGuru", new
+                              {
+                                  url = ViewBag.Entity.Banner,
+                                  width = 900,
+                                  height = 460,
+                                  mode = "Cut",
+                                  isChange = false
+                              }))" />
+                    </div>
+                </div>
+
+                <div class="lb_hd_index_info_right">
+                    @{
+                        IYogaKoo.Client.YogisModelsServiceClient ymClient = new IYogaKoo.Client.YogisModelsServiceClient();
+                        List<IYogaKoo.ViewModel.ViewYogisModels> fqrEntity = ymClient.GetYogisModelsUid(ViewBag.Entity.User.Uid);
+
+                        <div class="lb_hd_index_info_right_fqr">
+                            <p>发起人</p>
+                            <img src="@ViewBag.Entity.Poster.Avatar" />
+                            <p class="p">
+                                @if (!fqrEntity.Any())
+                                {
+                                    <a href="/YogaUserDetail/Details/@ViewBag.Entity.User.Uid">@ViewBag.Entity.User.NickName</a>
+                                }
+                                else if (fqrEntity.First().YogisLevel == 4)
+                                {
+                                    <a href="/YogaGuru/Details/@ViewBag.Entity.User.Uid">@ViewBag.Entity.User.NickName</a>
+                                }
+                                else
+                                {
+                                    <a href="/YogisModels/Details/@ViewBag.Entity.User.Uid">@ViewBag.Entity.User.NickName</a>
+                                }
+                                <b>@ViewBag.Sponsor 粉丝 <img src="/Content/Front/images/_r2_c2.png" /></b>
+                            </p>
+                        </div>
+
+                        if (ViewBag.Entity.Teachers != null && ViewBag.Entity.Teachers.Count > 0)
+                        {
+                            <div class="lb_hd_index_info_right_fqr">
+                                <p>参加讲师</p>
+                                @foreach (var item in ViewBag.Entity.Teachers)
+                                {
+                                    IYogaKoo.ViewModel.ViewYogisModels vymEntity = ymClient.GetById(Convert.ToInt32(item.TeacherId));
+                                    if (!string.IsNullOrWhiteSpace(vymEntity.DisplayImg))
+                                    {
+                                        var str = vymEntity.DisplayImg.Split(';');
+                                        if (str.Length > 1)
+                                        {
+                                            if (!string.IsNullOrEmpty(str[1]))
+                                            {
+
+                                                if (vymEntity.YogisLevel == null)
+                                                {  <a href="#">@item.Name</a>
+                                                }
+                                                else if (vymEntity.YogisLevel == 4)
+                                                {
+                                                    <a href=/YogaGuru/Details/@vymEntity.UID><img src="@vymEntity.DisplayImg.Split(';').Last()" /></a>
+                                                }
+                                                else
+                                                {
+                                                    <a href=/YogisModels/Details/@vymEntity.UID><img src="@vymEntity.DisplayImg.Split(';').Last()" /></a>
+                                                }
+                                            }
+                                            else
+                                            {
+
+                                                if (vymEntity.YogisLevel == null)
+                                                {  <a href="#">@item.Name</a>
+                                                }
+                                                else if (vymEntity.YogisLevel == 4)
+                                                {
+                                                    <a href=/YogaGuru/Details/@vymEntity.UID>
+                                                        <img src="@Url.Action(" getimg", "YogaGuru" , new
+                                                             {
+                                                             url=vymEntity.DisplayImg.Split(';').FirstOrDefault(),
+                                                             width=249,
+                                                             height=188,
+                                                             mode="Cut" ,
+                                                             ischange=false
+                                                             })" />
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href=/YogisModels/Details/@vymEntity.UID>
+                                                        <img src="@Url.Action(" getimg", "YogaGuru" , new
+                                                             {
+                                                             url=vymEntity.DisplayImg.Split(';').FirstOrDefault(),
+                                                             width=249,
+                                                             height=188,
+                                                             mode="Cut" ,
+                                                             ischange=false
+                                                             })" />
+                                                    </a>
+                                                }
+
+
+
+
+
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (vymEntity.YogisLevel == null)
+                                            {  <a href="#">@item.Name</a>
+                                            }
+                                            else if (vymEntity.YogisLevel == 4)
+                                            {
+                                                <a href=/YogaGuru/Details/@vymEntity.UID>
+                                                    <img src="@Url.Action("getimg", "YogaGuru", new
+     {
+         url = vymEntity.DisplayImg.Split(';').FirstOrDefault(),
+         width = 249,
+         height = 188,
+         mode = "Cut",
+         ischange = false
+     })" />
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href=/YogisModels/Details/@vymEntity.UID>
+                                                    <img src="@Url.Action("getimg", "YogaGuru", new
+     {
+         url = vymEntity.DisplayImg.Split(';').FirstOrDefault(),
+         width = 249,
+         height = 188,
+         mode = "Cut",
+         ischange = false
+     })" />
+                                                </a>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <img src="/Content/Front/images/defaultImg.png" alt="/Content/Front/images/defaultImg.png" />
+                                    }
+                                    <p class="p">
+                                        @{
+                                    if (vymEntity.YogisLevel == null)
+                                    {  <a href="#">@item.Name</a>
+                                    }
+                                    else if (vymEntity.YogisLevel == 4)
+                                    {
+                                        <a href=/YogaGuru/Details/@vymEntity.UID>@item.Name</a>
+                                    }
+                                    else
+                                    {
+                                        <a href=/YogisModels/Details/@vymEntity.UID>@item.Name</a>
+                                    }}
+                                        <b>@ViewData[item.UserId.ToString()] 粉丝 <img src="/Content/Front/images/_r2_c2.png" /></b>
+                                    </p>
+                                }
+                            </div>
+                        }
+                    }
+                    <div class="lb_School_index_index_right_ul">
+
+                        <ul>
+                            <b>所有报道</b>
+                            @{
+                                foreach (var item in ViewBag.ClassReport)
+                                {
+                                    <li><a href="/class/ActivityReportDetailsPage?id=@item.ClassId&&classreportid=@item.Id">@item.Title</a></li>
+                                }
+                            }
+                        </ul>
+                    </div>
+
+                </div>
+
+
+
+                <div class="lb_hd_index_title">
+                    <h3>@ViewBag.Entity.Name</h3>
+                    <p>@ViewBag.Entity.Start   @*来源：新华网*@</p>
+                </div>
+                <div class="lb_hd_index_fxiang">
+                    <div class="lb_hd_index_fxiang_left" style="float:none">
+                        <p>分享到：</p>
+                        <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_renren" data-cmd="renren" title="分享到人人网"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a></div>
+                        <script>window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "0", "bdSize": "16" }, "share": {}, "image": { "viewList": ["qzone", "tsina", "tqq", "renren", "weixin"], "viewText": "分享到：", "viewSize": "16" }, "selectShare": { "bdContainerClass": null, "bdSelectMiniList": ["qzone", "tsina", "tqq", "renren", "weixin"] } }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];</script>
+                        <p><a href="">@(ViewBag.Entity.iReadNums == null ? 0 : ViewBag.Entity.iReadNums)</a>人观看<a href="">@ViewBag.iShareNums</a>人分享</p>
+                    </div>
+                    <div class="lb_hd_index_fxiang_right huodonghuigu" style="float:none; width:900px">
+                        @*@if (ViewBag.ClassReportShow.Any())
+                            {
+                                @Html.Raw(ViewBag.ClassReportShow.Content);
+                            }*@
+                        @Html.Raw(ViewBag.ClassReportShow.Content)
+                        <a></a>
+                    </div>
+                </div>
+                <div class="lb_hd_index_font">
+                    @Html.Raw(ViewBag.Entity.Content)
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+        <div class="lb_School_dzdp">
+            <p>伽人留言</p>
+        </div>
+
+        <div class="lb_School_pinglun" id="pinglun" style="width:1197px">
+
+            <div class="lb_School_pinglun_tab">
+                <p>伽人留言<b></b></p>
+
+            </div>
+            <div class="lb_School_textarea">
+                <textarea rows="6" cols="130" id="sContent" name="sContent"></textarea>
+                <div class="lb_School_textarea_div">
+
+                    <a href="javascript:tabFace();" class="emotion">添加表情</a>
+
+                    <div class="lb_School_textarea_div_right">
+                        <p><a>0</a>/500</p>
+                        <input type="button" id="btnMsg" totype="3" value="留言" />
+                        <input type="hidden" id="hidid" name="hidid" value="@ViewBag.id" />
+                        <input type="hidden" id="hidType" name="hidType" value="3" />
+                    </div>
+                </div>
+            </div>
+            <div class="lb_School_qbpl">
+                <p>全部留言</p>
+            </div>
+            <div class="lb_School_qbpl_div">
+                @Html.Partial("PartialMessage", Model)
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+@section scripts {
+
+    <link type="text/css" href="/Content/Front/css/indexnew.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+    <link href="~/Content/Front/css/QQPhoto/style.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+    <script src="~/Content/Front/js/jquery.qqFace.js"></script>
+    <script src="~/Content/jquery/ExistisUpdate.js"></script>
+    <script src="~/Content/Front/js/QQPhoto/QQPhoto.min.js"></script>
+    <script src="~/Content/MsgInfo/msginfo.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var ClassStatus = '@ViewData["ClassStatus"]';
+            if (ClassStatus == '2')
+                $("#pinglun").css('display', 'none');
+
+
+            $(".bdsharebuttonbox a").click(function () {
+                $.ajax({
+                    url: '/class/EditShare?id=' + @ViewBag.Entity.Id,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (msg) {
+                    }
+                });
+            })
+            $('body').on('click', '.bdshare_dialog_list li a', function () {$.ajax({
+                url: '/class/EditShare?id=' + @ViewBag.Entity.Id,
+                type: 'post',
+                datatype: 'json',
+                success: function (msg) {
+                }
+            });
+            })
+            $('body').on('click', '.bdshare_popup_list li a', function () {
+                $.ajax({
+                    url: '/class/EditShare?id=' + @ViewBag.Entity.Id,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (msg) {
+                    }
+                });
+            })
+
+        });
+    </script>
+}

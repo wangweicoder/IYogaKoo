@@ -1,0 +1,127 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{46E95BE3-FE09-446E-9D12-2D5F1D1996B8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Commons.Helper</RootNamespace>
+    <AssemblyName>Commons.Helper</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\IYogaKoo\Content\ueditor\net\Bin\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Extensions.Design" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BasicInfo.cs" />
+    <Compile Include="CommonInfo.cs" />
+    <Compile Include="JsonHelper\Base64Provider.cs" />
+    <Compile Include="JsonHelper\Encrypt.cs" />
+    <Compile Include="JsonHelper\JsonHelper.cs" />
+    <Compile Include="LoginMethod\class\OauthInfo.cs" />
+    <Compile Include="LoginMethod\class\UrlParameter.cs" />
+    <Compile Include="LoginMethod\HttpSend.cs" />
+    <Compile Include="LoginMethod\IoAuth.cs" />
+    <Compile Include="LoginMethod\Login.cs" />
+    <Compile Include="LoginMethod\OAuthRequest.cs" />
+    <Compile Include="LoginMethod\QQ.cs" />
+    <Compile Include="LoginMethod\Sina.cs" />
+    <Compile Include="LoginMethod\WeiXin.cs" />
+    <Compile Include="method\method.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools.cs" />
+    <Compile Include="WebHelper\ApplicationCache.cs" />
+    <Compile Include="WebHelper\BindDataControl.cs" />
+    <Compile Include="WebHelper\CacheHelper.cs" />
+    <Compile Include="WebHelper\CCPRestSDK.cs" />
+    <Compile Include="WebHelper\Class1.cs" />
+    <Compile Include="WebHelper\CookieHelper.cs" />
+    <Compile Include="WebHelper\FileHelper.cs" />
+    <Compile Include="WebHelper\JScript.cs" />
+    <Compile Include="WebHelper\PostLogin.cs" />
+    <Compile Include="WebHelper\QueryString.cs" />
+    <Compile Include="WebHelper\RupengPager.cs" />
+    <Compile Include="WebHelper\SessionHelper.cs" />
+    <Compile Include="WebHelper\Sis.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dll\EntityFramework.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IYogaKoo.Client\IYogaKoo.Client.csproj">
+      <Project>{2b37c401-a821-417b-acc5-6ae88f44e1ca}</Project>
+      <Name>IYogaKoo.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IYogaKoo.Entity\IYogaKoo.Entity.csproj">
+      <Project>{cb0d1b93-c5fc-4734-866e-b0326c80bbc9}</Project>
+      <Name>IYogaKoo.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IYogaKoo.Service\IYogaKoo.Service.csproj">
+      <Project>{a9c1adb4-27f9-4421-ba40-ff15e57fe1af}</Project>
+      <Name>IYogaKoo.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IYogaKoo.ViewModel\IYogaKoo.ViewModel.csproj">
+      <Project>{1ce6e4bd-4d2b-4e41-bdbd-58a273ca1aab}</Project>
+      <Name>IYogaKoo.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

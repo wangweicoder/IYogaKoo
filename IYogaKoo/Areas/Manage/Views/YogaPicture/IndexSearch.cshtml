@@ -1,0 +1,126 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogaPicture>
+
+@{
+    ViewBag.Title = "相册管理";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+    <table width="100%" cellpadding="3" cellspacing="1" id="searchTable" class="chaxun_table">
+        <tr> 
+            <td>
+                查询：
+            </td>
+            <td> 
+                姓名：
+                <input type="text" placeholder="请输入姓名..." name="Uid" id="Uid" />
+
+                创建时间：
+                <input type="text" name="CreateTime" id="CreateTime" />
+                 
+                <input type="button" value="搜索" id="searchBtn" onclick="searchBtn()" />
+                <input type="button" value="清空" id="btnClear" onclick="btnClear()" />
+            </td>
+            
+        </tr>
+
+    </table>
+    <div id="list">
+        @Html.Partial("Index", Model)
+    </div>
+   
+</div>
+ <script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+<script src="~/Content/My97DatePicker4.7/WdatePicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+         
+        $("#CreateTime").bind("focus click", function () {
+            //WdatePicker("yyyy-MM-dd");
+            WdatePicker({ startDate: '%y-%M-%d 00:00:00', dateFmt: 'yyyy-MM-dd HH:mm:00', alwaysUseStartDate: true })
+        });
+    });
+    //----------清空
+    $("#btnClear").click(function () {
+        $("#Uid").val(""); 
+        $("#CreateTime").val("");
+        window.location = '/Manage/YogaPicture/IndexSearch';
+        
+    });
+    //----------搜索
+    $("#searchBtn").click(function () {
+        if ($("#Uid").val().trim() == "" && $("#CreateTime").val() == "") {
+            alert("请输入查询条件")
+            return false;
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Index", "YogaPicture")',
+                data: {
+                    Uid: $("#Uid").val(),
+                    CreateTime: $("#CreateTime").val()
+                },
+                success: function (data) {
+                    $("#list").html(data);
+                }
+            })
+        }
+    });
+</script>
+
+<script type="text/javascript">
+
+    function DaoShiDel(id,dtTime) {
+        if (confirm("确定删除所有图片吗!")) {
+            window.location = "/YogaPicture/Delete?id=" + id + "&CreateTime="+dtTime;// 来打开新窗口
+        }
+    }
+    function AudioState(id, iAudio) {
+       
+        if (confirm("是否审核通过?")) {
+            $.ajax({
+                url: '/YogaPicture/AudioState?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    Uid: id,
+                    iAudio: 1
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        alert("审核成功！");
+                        location.href = "/YogaPicture/Index";
+                    } else {
+                        alert("审核失败！");
+                    }
+
+                }, error: function () {
+                    alert("审核失败！");
+                }
+            });
+        } else {
+            $.ajax({
+                url: '/YogaPicture/AudioState?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    Uid: id,
+                    iAudio: 2
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        alert("审核成功！");
+                        location.href = "/YogaPicture/Index";
+                    } else {
+                        alert("审核失败！");
+                    }
+
+                }, error: function () {
+                    alert("审核失败！");
+                }
+            });
+        }
+        // return false;
+    }
+</script>

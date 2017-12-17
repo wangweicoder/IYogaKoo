@@ -1,0 +1,62 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaDicItem
+@{
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">添加字典</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+            @using (Html.BeginForm())
+            {
+                @ViewData["message"]
+                <p>
+                    <label>字典名</label>
+                    @Html.TextBoxFor(model => model.ItemName)
+                </p>
+                <p>
+                    <label>父字典编号</label>
+                    @Html.TextBox("DicId", 0)
+                </p>
+                <p>
+                    <label>字典项值</label>
+                    @Html.TextBoxFor(model => model.ItemValue)
+                </p>
+                <p>
+                    <label>排序号</label>
+                    @Html.TextBoxFor(model => model.SortId)
+                </p>
+                <p>
+                    <label>使用</label>
+                    @Html.CheckBoxFor(model => model.IsUse, new { @checked = true })
+                </p>
+                <p>
+                    <label>删除</label>
+                    @Html.CheckBoxFor(model => model.IsDelete)
+                </p>
+                @*<p>
+                        <label>创建时间</label>
+                        @Html.TextBoxFor(model => model.CreateTime)
+                    </p>*@
+                <p>
+                    <input class="button" type="submit" value="保存" />
+
+                   
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
+
+

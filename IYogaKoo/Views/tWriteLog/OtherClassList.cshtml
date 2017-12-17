@@ -1,0 +1,46 @@
+﻿@model List<IYogaKoo.ViewModel.ViewClass>
+@{
+    Layout = null;
+}
+<div class="wrapper">
+    <div class="lb_myindex_mjianjie wrapper" id="divmyphoto" style="width:950px;">
+        <div id="con1_1">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="product_list">
+                        @if (item.EndTime <= DateTime.Now&&item.ReportCount>0)
+                        {
+                            <a href="/class/ViewReport?classid=@item.Id" id="@item.Id">
+                                <img src="@(item.Banner == null ? "" : item.Banner)" />
+                            </a>
+                        }
+                        else
+                        {  <a href="/class/viewactivity?id=@item.Id" id="@item.Id">
+                            <img src="@(item.Banner == null ? "" : item.Banner)" />
+                        </a>
+                          
+                        }
+                    
+                        <p>@(item.Name)</p>
+                    </div>
+                }
+                }
+        </div>
+    </div>
+</div>
+ 
+
+<script language="javascript">
+    $(document).ready(function () {
+        var $container = $('#con1_1');
+        $container.imagesLoaded(function () {
+            $container.masonry({
+                itemSelector: '.product_list',
+                columnWidth: 5 //每两列之间的间隙为5像素
+            });
+        });      
+    });
+
+</script>

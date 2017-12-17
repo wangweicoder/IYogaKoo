@@ -1,0 +1,111 @@
+﻿@model IYogaKoo.ViewModel.ViewtQuestion
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+@section styles{
+    <link href="~/Content/Back/css/class.css" rel="stylesheet" />
+    <link href="~/Content/front/css/activity.css" rel="stylesheet" />
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+    <script src="/Content/ueditor/ueditor.config.js"></script>
+    <script src="/Content/ueditor/ueditor.all.js"></script>
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+    <script src="~/Scripts/laydate/laydate.js"></script>
+    <script src="~/Scripts/laypage/laypage.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script type="text/javascript">
+        var ue = UE.getEditor('ReplyContent', { initialFrameWidth: 660 });
+
+        $('#idsubmit').click(function () {
+            if ($("#QuestionContent").val().length == 0) {
+                layer.msg("问题不能为空");
+                return false;
+            }
+            if (ue.getPlainTxt().length == 1) {
+                layer.msg("答案不能不为空");
+                return false;
+            }
+            //验证结束
+
+            var value = $("form").serialize();
+
+            Loading();
+            $.ajax({
+                url: '/Manage/tQuestion/Update?t=' + Math.random(),
+                type: 'post',
+                datatype: 'json',
+                data: value,
+                success: function (msg) {
+                    Loaded();
+                    if (msg.code == 0) {
+                        layer.msg("修改成功！");
+                    } else {
+                        layer.msg("修改失败！");
+                    }
+                }
+            });
+            return false;
+        });
+    </script>
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <fieldset id="lb_sjds_fiel">
+        类型：
+        @*<select id="TitleID" name="TitleID">
+            @{
+    List<IYogaKoo.ViewModel.ViewYogaDicItem> list = ViewBag.Diclist;
+    foreach (var item in list)
+    {
+        if (item.ID == ViewBag.SelectedDiclist)
+        {
+
+            <option selected value="@item.ID">@item.ItemName</option>
+        }
+        else
+        {
+            <option value="@item.ID">@item.ItemName</option>
+        }
+
+    }
+            }
+        </select>*@
+
+        <input type="hidden" name="ID" id="ID" value="@Model.ID" />
+        @Html.DropDownListFor(model => model.TitleID, ViewData["Diclist"] as SelectList)
+        <div class="editor-label">
+            @Html.LabelFor(model => model.QuestionContent)
+            @Html.TextBoxFor(model => model.QuestionContent, new { @class = "text-input medium-input" })
+        </div>
+        <div class="editor-field">
+            @Html.LabelFor(model => model.ReplyContent)
+            @Html.TextAreaFor(model => model.ReplyContent, new { @class = "text-input textarea", @cols = "79", @rows = "15" })
+        </div>
+        <div class="editor-field">
+            @Html.LabelFor(model => model.ReplyUid)
+            @Html.TextBoxFor(model => model.ReplyUid, new { @class = "text-input medium-input" })
+        </div>
+        <div class="editor-field">
+            @Html.LabelFor(model => model.Hot)
+            @Html.CheckBoxFor(model => model.Hot)
+        </div>
+        <div class="editor-field">
+
+            <div class="lb_qq_index">
+
+                <div class="lbn_qq_p">
+                    <p>
+                        <input type="button" class="button" value="保存" id="idsubmit" />
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+}

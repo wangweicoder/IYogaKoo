@@ -1,0 +1,58 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtWriteLog>
+@{
+    Layout = null;
+}
+<table class="lb_xc_table_Q" width="830" style=" margin-top:2px;"  cellpadding="0" cellspacing="0">
+
+    @foreach (var item in Model)
+    {
+        <tr>
+
+            <td style="text-align:left;padding-left:5px;">
+                @{
+        var title = item.sTitle;
+        if (title.Length > 37)
+        {
+            title = title.Substring(0, 37) + "......";
+        }
+                }
+
+                <a href="/tWriteLog/OtherDetails?id=@item.ID&uid=@ViewBag.id" title="@item.sTitle">· @title</a>
+
+            </td>
+            <td style=" width:100px;">
+                @{
+        DateTime tempdt = Convert.ToDateTime(item.CreateDate);
+        string time = tempdt.ToString("yyyy-MM-dd");
+
+                }
+                @time
+            </td>
+
+        </tr>
+    }
+    <tr>
+        <td colspan="2" align="center" style="border:0px; line-height:18px;">
+            <div style="display:block; width:100%">
+                <div class="text-center" style="text-align:center; " id="menepager">
+
+                    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    PrevPageText = "上一页",
+    NextPageText = "下一页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a  >{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+}, new MvcAjaxOptions { UpdateTargetId = "Content", HttpMethod = "Post",   })
+
+                </div>
+            </div>
+        </td>
+    </tr>
+</table> 

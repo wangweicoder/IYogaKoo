@@ -1,0 +1,520 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaUserDetail
+
+@{
+    ViewBag.Title = "习练者详情";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">习练者详情</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <fieldset>
+
+                <div class="display-label">
+                    <label>昵称：</label>
+                </div>
+                <div class="display-field">
+                    @ViewBag.NickName
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.RealName_cn)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.RealName_cn)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsRealName_cn)：
+
+                    @{
+                        if (Model.IsRealName_cn == null || Model.IsRealName_cn == 0)
+                        {
+                            @:否
+                        }
+                        else
+                        {
+                            @:是
+                        }
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.RealName_en)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.RealName_en)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsRealName_en)：
+                
+                    @{
+                        if (Model.IsRealName_en == null || Model.IsRealName_en == 0)
+                        { 
+                            @:否
+                        }
+                        else { 
+                            @:是
+                        }
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Gender)：
+                </div>
+                <div class="display-field">
+                    @{
+                        if (Model.Gender == 0)
+                        {
+                            @:女
+                        }
+                        else if (Model.Gender == 1)
+                        {
+                            @:男
+                        }
+                        else { 
+                            @:未设置
+                        }
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.BirthYear)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.BirthYear)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsBirthYear)：
+                </div>
+                <div class="display-field">
+                    @{
+                        if (Model.IsBirthYear == null || Model.IsBirthYear == 0)
+                        {
+                            @:否
+                        }
+                        else
+                        {
+                            @:是
+                        }
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.BirthMonth)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.BirthMonth)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsBirthMonth)：
+                </div>
+                <div class="display-field">
+                    @{
+                        if (Model.IsBirthMonth == null || Model.IsBirthMonth == 0)
+                        {
+                            @:否
+                        }
+                        else
+                        {
+                            @:是
+                        }
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.BirthDay)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.BirthDay)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsBirthDay)：
+                </div>
+                <div class="display-field">
+                    @{
+                        if (Model.IsBirthDay == null || Model.IsBirthDay == 0)
+                        {
+                            @:否
+                        }
+                        else
+                        {
+                            @:是
+                        }
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Nationality)：
+                </div>
+                <div class="display-field">
+                    @ViewBag.Nationality
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsNationality)：
+                </div>
+                <div class="display-field">
+                    @{
+                        if (Model.IsNationality == null || Model.IsNationality == 0)
+                        {
+                            @:否
+                        }
+                        else
+                        {
+                            @:是
+                        }
+                    }
+                </div>
+                <div class="display-label">
+                    <label>所在地区：</label>
+                </div>
+                <div class="display-field">
+                    @ViewBag.Address
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Street)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Street)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.LocationID)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.LocationID)
+                </div>
+                 
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.MSN)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.MSN)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsMsn)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.IsMsn)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.QQ)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.QQ)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsQQ)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.IsQQ)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Postal)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Postal)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsPostal)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.IsPostal)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Zip)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Zip)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsZip)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.IsZip)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Tel)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Tel)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsTel)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.IsTel)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Mobile)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Mobile)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsMobile)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.IsMobile)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Profile)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Profile)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Weibo)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Weibo)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsWeibo)：
+                </div>
+                <div class="display-field">
+                   @{
+                       if (Model.IsWeibo == null || Model.IsWeibo == 0)
+                       {
+                        @:否
+                        }
+                       else
+                       {
+                        @:是
+                        }
+                }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.PersonalURL)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.PersonalURL)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsPersonalURL)：
+                </div>
+                <div class="display-field">
+                    @{
+                        if (Model.IsPersonalURL == null || Model.IsPersonalURL == 0)
+                        {
+                            @:否
+                        }
+                        else
+                        {
+                            @:是
+                        }
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.StartYear)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.StartYear)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsUserYogaType)：
+                </div>
+                <div class="display-field">
+                    @{
+                        if (Model.IsUserYogaType == null || Model.IsUserYogaType == "")
+                        {
+                            @:否
+                        }
+                        else
+                        {
+                            @:是
+                        }
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsUserYogaPlace)：
+                </div>
+                <div class="display-field">
+                    @{
+                        if (Model.IsUserYogaPlace == null || Model.IsUserYogaPlace == "")
+                        {
+                            @:否
+                        }
+                        else
+                        {
+                            @:是
+                        }
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsYogisMap)：
+                </div>
+                <div class="display-field">
+                   @{
+                       if (Model.IsYogisMap == null || Model.IsYogisMap == false)
+                       {
+                        @:否
+                        }
+                       else
+                       {
+                        @:是
+                        }
+                }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.GudWords)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.GudWords)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.DisplayImg)：
+                </div>
+                <div class="display-field">
+                    @{
+
+                        var strDisplayImg = Model.DisplayImg;
+                        var str2 = "";
+                        if (strDisplayImg != null)
+                        {
+                            if (strDisplayImg.IndexOf(';') != -1)
+                            {
+                                var str = strDisplayImg.Split(';');
+                                if (str.Length > 1)
+                                {
+                                    if (!string.IsNullOrEmpty(str[1]))
+                                    {
+                                        str2 = str[1];
+                                    }
+                                    else
+                                    {
+                                        str2 = str[0];
+                                    }
+                                }
+                                else
+                                {
+                                    str2 = str[0];
+                                }
+                            }
+                        }
+                    }
+                    <img id="imgCut" width="200" height="200" src="@str2" />
+                   
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.CreateTime)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.CreateTime)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsUserWeeknumber)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.IsUserWeeknumber)
+                </div>
+                 
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Ulevel)：
+                </div>
+                <div class="display-field">
+                    @if (Model.Ulevel == 0)
+                    {
+                        @:基础习练者
+                    }
+                    @if (Model.Ulevel == 1)
+                    {
+                        @:初级习练者
+                     }
+                    @if (Model.Ulevel == 2)
+                    {
+                        @:中级习练者
+                    }@if (Model.Ulevel == 3)
+                    {
+                        @:高级习练者
+                    }
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Uscore)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Uscore)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.AlipayUser)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.AlipayUser)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.UpgradeDate)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.UpgradeDate)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.YogaTypeid)：
+                </div>
+                <div class="display-field">
+                    @ViewBag.YogaTypeid
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.iZan)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.iZan)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Covimg)：
+                </div>
+                <div class="display-field">
+                   <img src="@Model.Covimg" width="300" />
+                </div>
+                  
+            </fieldset>
+        </div>
+    </div>
+</div>
+<p> 
+    @Html.ActionLink("返回", "UserDetailsSearch")
+</p>

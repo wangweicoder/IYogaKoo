@@ -1,0 +1,101 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogaMenus>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+@section scripts{
+    <script src="~/Scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript">
+        
+        $(document).ready(function () { 
+            $(".sosuo .btn").click(function(){ 
+                window.location.href="/Manage/Menus/Create?pid=0";
+            });  
+        }); 
+
+    </script>
+}
+
+
+<form action="/DicSet/AllDic" method="post">
+    <input type="hidden" name="checkVal" id="checkItem" />
+    <div class="content-box" id="">
+
+        <div class="content-box-header">
+
+            <h3 style="cursor:pointer">菜单导航</h3>
+
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="content-box-content">
+
+            <div class="sosuo"> 
+                     <dl>
+                    <dd> <input type="button" class="btn" style="width:100px;" value="添加菜单" /> </dd>
+                </dl>
+
+                <div class="clear"></div>
+            </div>
+         
+
+            <div class="tab-content default-tab" id="tab1">
+                <table>
+                    <thead>
+                        <tr>  
+                            <th>菜单编号</th>
+                            <th>菜单名称</th>
+                            <th>菜单地址</th> 
+                            <th>菜单状态</th>
+                            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;操作</th>
+                        </tr>
+                    </thead>
+
+                   @foreach (var item in Model) { 
+                   <tr>
+                       <td>
+                           @Html.DisplayFor(m=>item.Id)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(m => item.name)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(m => item.url)
+                       </td>
+                       <td>
+                           @Html.DisplayFor(m => item.ordervalue)
+                       </td>
+                       <td>
+                           @Html.ActionLink("编辑", "Edit", new { id = item.Id })
+                           @Html.ActionLink("删除", "Delete", new { id=item.Id})
+                           @Html.ActionLink("添加子项", "Delete", new { id = item.Id })
+                       </td>
+                   </tr>
+                   }
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="10">
+                                <div class="xianshitiaoshu pagination">
+                                    <span>显示条数</span>
+                                    <a href="#" class="number current" id="pageSize1">5</a>
+                                    <a href="#" class="number" id="pageSize2">10</a>
+                                    <a href="#" class="number" id="pageSize3">20</a>
+                                </div>
+                          
+                                <div class="clear"></div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="myDiv">
+
+    </div>
+</form>

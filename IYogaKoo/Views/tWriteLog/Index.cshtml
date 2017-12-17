@@ -1,0 +1,94 @@
+﻿@*@using zzfIBM.WebControls.Mvc
+@model zzfIBM.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtWriteLog>*@
+@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtWriteLog>
+
+@{
+    ViewBag.Title = "我的日志";
+    Layout = "~/Views/Shared/_LayoutSetUp.cshtml";
+}
+@*<h2>我的日志列表</h2>*@
+@section styles{
+<link href="~/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+    }
+<p class="lb_inde_x_index" style=" margin-left:0px">
+    @Html.ActionLink("写日志", "Create")
+</p>
+<table class="lb_rz_table">
+    <tr>
+        <th style="text-align:center;">
+            创建时间
+        </th>
+        <th style="text-align:left;">
+            标题
+        </th>
+        <th >操作</th>
+    </tr>
+
+    @{
+        var index = 1;
+        if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+        {
+            var p = int.Parse(Request.QueryString["page"]) - 1;
+            if (p > 0)
+            {
+                index = p * 10 + 1;
+            }
+        }
+    }
+    @foreach (var item in ViewBag.listGroup)
+    {
+        <tr>
+            <td style="text-align:left; width:160px;">
+                @{
+        string strValue = item.entity.CreateDate.ToString();
+        strValue = strValue.Replace('/', '-');
+                }
+                @strValue
+            </td>
+            <td style="text-align:left; width:550px;">
+                @{
+        if (item.entity.sTitle != null)
+        {
+            var title = item.entity.sTitle;
+            if (title.Length > 15)
+            {
+                title = title.Substring(0, 15) + "......";
+            }
+                
+                <a href="javascript:" title="@item.entity.sTitle"> · @title</a>}
+                }
+            </td>
+            <td style="width:150px">
+                @Html.ActionLink("编辑", "Edit", new { id = item.entity.ID }) |
+                @Html.ActionLink("详情", "Details", new { id = item.entity.ID }) |
+                <a href="Javascript:DaoShiDel('@item.entity.ID')">删除</a>
+            </td>
+        </tr>
+    }
+
+</table>
+<div class="text-center" style="" id="menepager">
+@Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    PrevPageText = "上一页",
+    NextPageText = "下一页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a  >{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+}, new MvcAjaxOptions { UpdateTargetId = "Content", HttpMethod = "Post", })
+    </div>
+@{Html.RegisterMvcPagerScriptResource();}
+<script type="text/javascript">
+
+    function DaoShiDel(id) {
+        if (confirm("是否删除!")) {
+            window.location = "/tWriteLog/Delete/" + id;// 来打开新窗口
+        }
+    }
+</script>

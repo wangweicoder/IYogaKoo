@@ -1,0 +1,66 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaDicItem
+@{
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+@section scripts
+{
+    <script language="javascript">
+        function difbtn(obj)
+        {
+             $("#hiddif").val(obj);
+           
+        }
+    </script>
+    }
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">添加字典项</h3>
+      
+        <div class="clear"></div>
+    </div>
+
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+            @using (Html.BeginForm())
+            {
+                @ViewData["info"]                <input type="hidden" id="hiddif" name="hiddif">
+                <p>
+                    <label>父字典编号</label>
+                    <input type="hidden" value="@(ViewBag.id??Model.DicId)" id="DicId" name="DicId" />
+                    <label for="DicId">@(ViewBag.id ?? Model.DicId)</label>
+                </p>
+                <p>
+                    <label>字典项名称</label>
+                    @Html.TextBoxFor(model => model.ItemName)
+                </p>
+                <p>
+                    <label>字典项值</label>
+                    @Html.TextBoxFor(model => model.ItemValue)
+                </p>
+                <p>
+                    <label>排序号</label>
+                    @Html.TextBoxFor(model => model.SortId)
+                </p>
+                <p>
+                    <label>使用</label>
+                    @Html.CheckBoxFor(model => model.IsUse, new { @checked = true })
+                </p>
+                <p>
+                    <label>删除</label>
+                    @Html.CheckBoxFor(model => model.IsDelete)
+                </p>
+                <p>
+                    <input class="button" onclick="difbtn(0)" type="submit" value="保存" /> 
+                    <input class="button" onclick="difbtn(1)" type="submit" value="继续添加" /> 
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
+
+

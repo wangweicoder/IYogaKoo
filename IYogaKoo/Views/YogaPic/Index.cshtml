@@ -1,0 +1,128 @@
+﻿
+@using zzfIBM.WebControls.Mvc
+@model zzfIBM.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogaPicture>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutSetUp.cshtml";
+}
+
+@*<h2>我的相册</h2>*@
+
+<p class="lb_inde_x_index" style=" margin-left:0px">
+    @Html.ActionLink("添加相册", "Create")
+
+    <span style="">
+        @*@Html.DropDownList("FName", ViewData["FName"] as SelectList)*@
+    </span>
+</p>
+ <table class="lb_xc_table" cellpadding="0" cellspacing="0">
+    <tr>
+        <th>
+            编号
+        </th> 
+        
+        <th>
+            图片路径
+        </th>
+        <th>
+            描述
+        </th>
+
+        <th>
+            创建时间
+        </th>
+        
+        <th>
+            点击率
+        </th>
+        <th>
+            审核状态
+        </th>
+        <th>操作</th>
+    </tr>
+    @{
+        var index = 1;
+        if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+        {
+            var p = int.Parse(Request.QueryString["page"]) - 1;
+            if (p > 0)
+            {
+                index = p * 10 + 1;
+            }
+        }
+    }
+    @if(Model!=null)
+     {
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Pid
+            </td>
+            
+            
+            <td>
+                <img src="@item.PictureOriginal" width="40"  height="40"/>
+            </td>
+            <td>
+                @item.PictureContent
+            </td>
+
+            <td>
+                @item.CreateTime
+            </td> 
+            <td>
+                @item.HitNum
+            </td>
+            <td>
+                @if (item.iAudio == 0 || item.iAudio == null)
+                {
+                    @:审核中
+                }
+                 @if (item.iAudio == 1)
+                {
+                    @:审核通过
+                } @if (item.iAudio == 2)
+                {
+                    @:审核不通过
+                }
+        </td>
+        <td> 
+            <a href="Javascript:DaoShiDel('@item.Pid','@item.PictureOriginal')">删除</a>
+        </td>
+    </tr>
+    }
+     }
+
+</table>
+@Html.AjaxPager(Model, new PagerOptions { PageIndexParameterName = "page" }, new AjaxOptions { UpdateTargetId = "right_con" })
+<script type="text/javascript">
+
+    function DaoShiDel(id, PictureOriginal) {
+        if (confirm("是否删除!")) {
+            //window.location = "/YogaPic/Delete/" + id + "&PictureOriginal=" +;// 来打开新窗口
+            $.ajax({
+                url: '/YogaPic/Delete',
+                type: 'POST',
+                data: {
+                    id: id,
+                    PictureOriginal: PictureOriginal
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                       
+                        location.href = "/YogaPic/Index";
+                    } else {
+                        layer.msg("删除失败！");
+                    }
+
+                }, error: function () {
+                    layer.msg("删除失败！");
+                }
+            });
+        }
+    }
+</script>

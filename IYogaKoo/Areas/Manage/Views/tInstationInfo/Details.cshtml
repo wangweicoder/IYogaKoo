@@ -1,0 +1,149 @@
+﻿@model IYogaKoo.ViewModel.ViewtInstationInfo
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+    IYogaKoo.Client.YogaDicItemServiceClient dicclient = new IYogaKoo.Client.YogaDicItemServiceClient();
+}
+
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">详情</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+
+            <fieldset>
+                 
+                <p class="display-label">
+                    会员
+                </p>
+                <div style="height:auto; overflow:hidden">
+                      
+                    <input type="hidden" id="hidselectType" name="hidselectType" />
+                    <ul id="userlist"></ul>
+                    
+                </div> 
+
+                <p class="display-label">
+                    @Html.DisplayNameFor(model => model.CreateTime)
+                </p>
+                <p class="display-field">
+                    @Html.DisplayFor(model => model.CreateTime)
+                </p>
+
+                <p class="display-label">
+                    @Html.DisplayNameFor(model => model.sContent)
+                </p>
+                <p class="display-field">
+                    @Html.DisplayFor(model => model.sContent)
+                </p>
+
+                <p class="display-label">
+                    @Html.DisplayNameFor(model => model.iType)
+                </p>
+                <p class="display-field">
+                    @dicclient.GetById(Model.iType.Value).ItemName
+                </p>
+
+                <p class="display-label">
+                    @Html.DisplayNameFor(model => model.CreateUser)
+                </p>
+                <p class="display-field">
+                    @(Model.CreateUser == "100316" ? "管理员" : Model.CreateUser)
+                </p>
+
+                <p class="display-label">
+                    @Html.DisplayNameFor(model => model.ifDel)
+                </p>
+                <p class="display-field">
+                    @Html.DisplayFor(model => model.ifDel)
+                </p>
+                 
+            </fieldset>
+            <p>
+                @Html.ActionLink("修改", "Edit", new { id = Model.ID }) |
+                @Html.ActionLink("返回", "Index")
+            </p>
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    #mType {
+        width: 750px;
+    }
+
+        #mType li {
+            float: left;
+            width: 120px;
+            background-color: #20cf13;
+            color: white;
+            font-size: 13px;
+            text-align: center;
+            line-height: 25px;
+            cursor: pointer;
+        }
+
+    .memeber {
+        width: 700px;
+    }
+
+        .memeber li {
+            float: left;
+            width: 120px;
+            background-color: #808080;
+            color: white;
+            font-size: 13px;
+            margin-right: 5px;
+            line-height: 25px;
+            margin-bottom: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    .user_li {
+        background-color: #20cf13;
+    }
+</style>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            url: "/Manage/tInstationInfo/Detailslistuser",
+            type: "get",
+            data: { sContent: '@Model.sContent' },
+            dataType: "json",
+            success: function (Data) {
+                $("#userlist").html(""); 
+                $.each(Data.listinfo, function (i, field) {
+
+                    if (field.NickName.length > 8) {
+                        NickName = field.NickName.substring(0, 8);
+                    } else {
+                        NickName = field.NickName;
+                    }
+                    $("#userlist").append("<li value='' style='background-color:#808080' id='" + field.UId + "'>" + NickName + "</li>");
+
+                });
+                $("#userlist").addClass("memeber");
+
+            }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+            complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+        });
+    })
+</script>
+}

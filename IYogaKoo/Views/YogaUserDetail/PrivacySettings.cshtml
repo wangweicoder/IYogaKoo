@@ -1,0 +1,544 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaUserDetail
+@{
+    ViewBag.Title = "隐私设置";
+    Layout = "~/Views/Shared/_LayoutSetUp.cshtml";
+    //用户ID
+    var id = ViewBag.id;
+
+    var YogaTypeidValue = ViewBag.YogaTypeidValue == null ? "" : ViewBag.YogaTypeidValue;
+
+}
+
+<script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+
+<link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+<script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+<link href="@Url.Content("~/Content/artDialog4.1.1/_doc/demo.css")" rel="stylesheet" />
+<script src="@Url.Content("~/Content/artDialog4.1.1/jquery.artDialog.js?skin=blue")" type="text/javascript"></script>
+<script src="@Url.Content("~/Content/artDialog4.1.1/artDialog.iframeTools.js")" type="text/javascript"></script>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="lb_xlz_idnex_file">
+        <span class="lb_span">隐私设置</span>
+
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.UID)
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RealName_cn)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RealName_cn)
+            @Html.ValidationMessageFor(model => model.RealName_cn)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsRealName_cn)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsRealName_cn" name="IsRealName_cn" @(Model.IsRealName_cn == 1 ? "checked=checked" : "") value='@Model.IsRealName_cn' />
+        </div>
+
+        @*    <div class="editor-label">
+                @Html.LabelFor(model => model.RealName_en)
+            </div>
+            <div class="editor-field">
+                @Html.EditorFor(model => model.RealName_en)
+                @Html.ValidationMessageFor(model => model.RealName_en)
+            </div>*@
+
+        @*<div class="editor-label">
+                @Html.LabelFor(model => model.IsRealName_en)
+            </div>
+            <div class="editor-field">
+                <input type="checkbox" id="IsRealName_en" name="IsRealName_en" @(Model.IsRealName_en == 1 ? "checked=checked" : "") value='@Model.IsRealName_en' />
+            </div>*@
+
+        @*<div class="editor-label">
+                @Html.LabelFor(model => model.Gender)
+            </div>
+            <div class="editor-field">
+                @Html.RadioButtonFor(model => model.Gender, 1)<span class="span">男</span>
+                @Html.RadioButtonFor(model => model.Gender, 0)<span class="span">女</span>
+                @Html.ValidationMessageFor(model => model.Gender)
+            </div>*@
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BirthYear)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.BirthYear)
+            @Html.ValidationMessageFor(model => model.BirthYear)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsBirthYear)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsBirthYear" name="IsBirthYear" @(Model.IsBirthYear == 1 ? "checked=checked" : "") value='@Model.IsBirthYear' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BirthMonth)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.BirthMonth)
+            @Html.ValidationMessageFor(model => model.BirthMonth)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsBirthMonth)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsBirthMonth" name="IsBirthMonth" @(Model.IsBirthMonth == 1 ? "checked=checked" : "") value='@Model.IsBirthMonth' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.BirthDay)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.BirthDay)
+            @Html.ValidationMessageFor(model => model.BirthDay)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsBirthDay)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsBirthDay" name="IsBirthDay" @(Model.IsBirthDay == 1 ? "checked=checked" : "") value='@Model.IsBirthDay' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.MSN)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.MSN)
+            @Html.ValidationMessageFor(model => model.MSN)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsMsn)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsMsn" name="IsMsn" @(Model.IsMsn == 1 ? "checked=checked" : "") value='@Model.IsMsn' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.QQ)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.QQ)
+            @Html.ValidationMessageFor(model => model.QQ)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsQQ)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsQQ" name="IsQQ" @(Model.IsQQ == 1 ? "checked=checked" : "") value='@Model.IsQQ' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Postal)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Postal)
+            @Html.ValidationMessageFor(model => model.Postal)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsPostal)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsPostal" name="IsPostal" @(Model.IsPostal == 1 ? "checked=checked" : "") value='@Model.IsPostal' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Zip)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Zip)
+            @Html.ValidationMessageFor(model => model.Zip)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsZip)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsZip" name="IsZip" @(Model.IsZip == 1 ? "checked=checked" : "") value='@Model.IsZip' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Tel)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Tel)
+            @Html.ValidationMessageFor(model => model.Tel)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsTel)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsTel" name="IsTel" @(Model.IsTel == 1 ? "checked=checked" : "") value='@Model.IsTel' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Mobile)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Mobile)
+            @Html.ValidationMessageFor(model => model.Mobile)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsMobile)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsMobile" name="IsMobile" @(Model.IsMobile == 1 ? "checked=checked" : "") value='@Model.IsMobile' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Profile)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Profile)
+            @Html.ValidationMessageFor(model => model.Profile)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Weibo)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Weibo)
+            @Html.ValidationMessageFor(model => model.Weibo)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsWeibo)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsWeibo" name="IsWeibo" @(Model.IsWeibo == 1 ? "checked=checked" : "") value='@Model.IsWeibo' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.PersonalURL)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.PersonalURL)
+            @Html.ValidationMessageFor(model => model.PersonalURL)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsPersonalURL)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsPersonalURL" name="IsPersonalURL" @(Model.IsPersonalURL == 1 ? "checked=checked" : "") value='@Model.IsPersonalURL' />
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.StartYear)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.StartYear)
+            @Html.ValidationMessageFor(model => model.StartYear)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsUserYogaType)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.IsUserYogaType)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsUserYogaPlace)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.IsUserYogaPlace)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IsYogisMap)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="IsYogisMap" name="IsYogisMap" @(Model.IsYogisMap == true ? "checked=checked" : "") value='@Model.IsYogisMap' />
+        </div>
+
+        <div class="editor-field">
+            <p>
+                <input type="submit" value="保存" class="lb_baocun" />
+            </p>
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+
+    $(".lb_baocun").click(function () {
+        if ($("#ddlDistrictID").val() == "0") {
+            layer.msg("请选择城区");
+            return false;
+        }
+        if ($("#ddlCountryID").val() == "0") {
+            layer.msg("请选择国家");
+            return false;
+        }
+        if ($("#ddlProvinceID").val() == "0") {
+            layer.msg("请选择省份");
+            return false;
+        }
+        if ($("#ddlCityID").val() == "0") {
+            layer.msg("请选择城市");
+            return false;
+        }
+    });
+        $("#btnYogaTypeid").click(function () {
+
+            art.dialog.open('LoadYogaTypeidList', {
+                title: '选择流派',
+                lock: true,
+                width: 600,
+                hight: 400,
+                close: function () {
+                    var ID = art.dialog.data('ID', ID);
+                    var ItemName = art.dialog.data('ItemName', ItemName);
+
+                    if (ID !== undefined) {
+                        document.getElementById('hYogaTypeid').value = ID;
+                    }
+                    if (ItemName !== undefined) {
+                        document.getElementById('YogaTypeid').value = ItemName;//显示名称
+                    }
+                }
+            });
+        });
+
+        $(function () {
+
+            //  UE.getEditor('editor'); //内容编辑器
+
+            $('#file_upload').uploadify({
+                'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                'uploader': '@Url.Content("~/Controllers/ashxFile/TopImg.ashx")',
+                'buttonText': '浏览',
+                'height': '30',
+                'width': '120',
+                'cancelImg': '/Content/Front/images/close.png',//取消
+                'sizeLimit': 1024 * 1024 * 4, //4M
+                'multi': true,//设置为true时可以同时上传多个文件。
+                //'onComplete': Complete
+                'onUploadSuccess': function (file, data, response) {
+
+                    $("#DisplayImg").val("/" + data);
+                    $("#DetDisplayImg").attr("src", "/" + data);
+
+                },
+                'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                    layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+                }
+            });
+
+            $("#BirthYear").bind("focus click", function () {
+               
+                WdatePicker({ dateFmt: 'yyyy' })
+            });
+            $("#BirthMonth").bind("focus click", function () {
+
+                WdatePicker({ dateFmt: 'MM' })
+            });
+            $("#BirthDay").bind("focus click", function () {
+
+                WdatePicker({ dateFmt: 'dd' })
+            });
+            $("#StartYear").bind("focus click", function () {
+
+                WdatePicker({ dateFmt: 'yyyy' })
+            });
+            $("#Ulevel").val(@Model.Ulevel);
+
+        });
+    </script>
+
+    <script type="text/javascript">
+    // 国家事件
+    $('#ddlCountryID').click(function () {
+
+        var strGuoJia = $(this).val();
+        if (strGuoJia != "0") {
+            document.getElementById("ddlProvinceID").innerHTML = "";
+            //加载省
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strGuoJia,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlProvinceID").append("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //省事件
+    $("#ddlProvinceID").click(function () {
+
+        var strSheng = $(this).val();
+        if (strSheng != "0") {
+            document.getElementById("ddlCityID").innerHTML = "";
+            //加载市
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strSheng,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlCityID").append("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //城市事件
+    $("#ddlCityID").click(function () {
+
+        var strShi = $(this).val();
+        if (strShi != "0") {
+            document.getElementById("ddlDistrictID").innerHTML = "";
+            //加载城区
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strShi,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlDistrictID").append("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //-------------------------------------------------------------------
+
+    $(function () {
+
+        $("#YogaTypeid").val('@YogaTypeidValue');
+        $("#hYogaTypeid").val($("#hidYogaTypeid").val());
+
+        //国籍
+        var strNationality = $("#hNationality").val();
+       
+        $("#Nationality").val(strNationality);
+
+        $.ajax({
+            url: '/Login/GetNationalityInfo?t=' + Math.random(),
+            type: 'post',
+            datatype: 'json',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+
+                    if (data[i].ID == $("#hNationality").val()) {
+                        $("#ddlNationality").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                    } else {
+                        $("#ddlNationality").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                    }
+                };
+            }
+        });
+        //国家
+        var strCountryID = $("#hCountryID").val();
+        $("#CountryID").val(strCountryID);
+
+        //if (strCountryID != "0") {
+        $.ajax({
+            url: '/Login/GetCountryInfo?t=' + Math.random(),
+            type: 'post',
+            datatype: 'json',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].ID == $("#hCountryID").val()) {
+                        $("#ddlCountryID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                    } else {
+                        $("#ddlCountryID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                    }
+                };
+            }
+        });
+        // }
+        //省
+
+        if ($("#hProvinceID").val() != "0") {
+
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strCountryID,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ID == $("#hProvinceID").val()) {
+                            $("#ddlProvinceID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+        }
+        var strProvinceID = $("#hProvinceID").val();
+        if (strProvinceID != "0") {
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strProvinceID,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ID == $("#hCityID").val()) {
+                            $("#ddlCityID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+        }
+        var strCityID = $("#hCityID").val();
+        if (strCityID != "0") {
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strCityID,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ID == $("#hDistrictID").val()) {
+                            $("#ddlDistrictID").append("<option value='" + data[i].ID + "' selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+        }
+
+    });
+    </script>
+    <script type="text/javascript">
+
+       // var data = $("form").serialize();
+
+    </script>
+}

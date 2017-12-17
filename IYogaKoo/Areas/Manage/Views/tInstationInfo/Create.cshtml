@@ -1,0 +1,375 @@
+﻿@model IYogaKoo.ViewModel.ViewtInstationInfo
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">添加站内信</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <fieldset>
+                    
+                    <div style="height:auto; overflow:hidden">
+                        <ul id="mType">
+                            <li id="all">全部会员</li>
+                            <li id="user">习练者</li>
+                            <li id="models">导师</li>
+                        </ul>
+                        <br />
+                        <input type="hidden" id="hidselectType" name="hidselectType" />
+                        <ul id="userlist"></ul>
+                        <ul id="modelslist"></ul>
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.sContent)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.sContent)
+                        @Html.ValidationMessageFor(model => model.sContent)
+
+                    </div>
+
+                    @*<div class="editor-label">
+        @Html.LabelFor(model => model.iType)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.iType)
+        @Html.ValidationMessageFor(model => model.iType)
+    </div>
+
+    <div class="editor-label">
+        @Html.LabelFor(model => model.CreateUser)
+    </div>
+    <div class="editor-field">
+        @Html.EditorFor(model => model.CreateUser)
+        @Html.ValidationMessageFor(model => model.CreateUser)
+    </div>*@
+
+                    <p>
+                        <input type="button" class="button" id="idsubmit" value="添加" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        @Html.ActionLink("返回", "Index")
+                        <input type="hidden" id="hiduserInfo" name="hiduserInfo" />
+                    </p>
+                </fieldset>
+            }
+        </div>
+    </div>
+</div>
+
+
+<style type="text/css">
+    #mType {
+        width: 750px;
+    }
+
+        #mType li {
+            float: left;
+            width: 120px;
+            background-color: #20cf13;
+            color: white;
+            font-size: 13px;
+            text-align: center;
+            line-height: 25px;
+            cursor: pointer;
+        }
+
+    .memeber {
+        width: 700px;
+    }
+
+        .memeber li {
+            float: left;
+            width: 120px;
+            background-color: #808080;
+            color: white;
+            font-size: 13px;
+            margin-right: 5px;
+            line-height: 25px;
+            margin-bottom: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    .user_li {
+        background-color: #20cf13;
+    }
+</style>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+    <script src=@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")></script>
+    <script type="text/javascript">
+
+
+        $("#all").click(function () {
+            $("#hidselectType").val("2");//第一次加载必须为空
+            $("#userlist").hide();
+            $("#modelslist").hide();
+            $("#all").css("background", "#808080");
+            $("#user").css("background", "#20cf13");
+            $("#models").css("background", "#20cf13");
+        })
+        //习练者
+        $("#user").click(function () {
+            $("#hidselectType").val("0");//第一次加载必须为空
+
+            $("#all").css("background", "#20cf13");
+            $("#user").css("background", "#808080");
+            $("#models").css("background", "#20cf13");
+            $("#userlist").show();
+            $("#modelslist").hide();
+            var NickName = "";
+            $.ajax({
+                url: "/Manage/tInstationInfo/listuser",
+                type: "get",
+                data: { userType: 0 },
+                dataType: "json",
+                success: function (Data) {
+                    $("#userlist").html("");
+                    $("#userlist").append("<li  value='' id='10' style='background-color:#7e6d6d'>全部</li>");
+                    $.each(Data, function (i, field) {
+
+                        if (field.NickName.length > 8) {
+                            NickName = field.NickName.substring(0, 8);
+                        } else {
+                            NickName = field.NickName;
+                        }
+                        $("#userlist").append("<li value='' id='" + field.UId + "'>" + NickName + "</li>");
+
+                    });
+                    $("#userlist").addClass("memeber");
+
+                }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    this; // 调用本次AJAX请求时传递的options参数
+                }
+            });
+
+
+        })
+
+        $('body').on("click", "#userlist li", function () {
+
+            if ($(this).attr("id") == "10") {
+
+                var cNode = document.getElementById('userlist').getElementsByTagName('li');
+                if ($(this).attr("value") == "0") {
+                    $(this).attr("value", $(this).attr("id"));
+                    for (var i = 0; i < cNode.length; i++) {
+                        if (cNode[i].id != "10") {
+
+                            cNode[i].setAttribute("value", cNode[i].id);
+                            cNode[i].setAttribute("style", "background-color:#20cf13");
+
+                        }
+                    }
+
+                } else {
+                    $(this).attr("value", "");
+
+                    for (var i = 0; i < cNode.length; i++) {
+                        if (cNode[i].id != "10") {
+
+                            cNode[i].setAttribute("value", "");
+                            cNode[i].setAttribute("style", "background-color:#808080");
+
+                        }
+                    }
+
+                }
+
+            } else {
+
+                if ($(this).attr("value") == "0") {
+
+                    $(this).attr("value", $(this).attr("id"));
+                    $(this).css("background-color", "#20cf13");
+                } else {
+
+                    $(this).attr("value", "");
+                    $(this).css("background-color", "#808080");
+                }
+
+            }
+
+        })
+
+        //导师
+        $("#models").click(function () {
+            $("#hidselectType").val("1");//第一次加载必须为空
+
+            $("#all").css("background", "#20cf13");
+            $("#models").css("background", "#808080");
+            $("#user").css("background", "#20cf13");
+
+            $("#userlist").hide();
+            $("#modelslist").show();
+            $.ajax({
+                url: "/Manage/tInstationInfo/listuser",
+                type: "get",
+                data: { userType: 1 },
+                dataType: "json",
+                success: function (Data) {
+                    $("#modelslist").html("");
+                    $("#modelslist").append("<li  value='' id='11' style='background-color:#7e6d6d'>全部</li>");
+                    $.each(Data, function (i, field) {
+
+                        if (field.NickName.length > 8) {
+                            NickName = field.NickName.substring(0, 8);
+                        } else {
+                            NickName = field.NickName;
+                        }
+                        $("#modelslist").append("<li  value='' id='" + field.UId + "'>" + NickName + "</li>");
+
+                    });
+
+                    $("#modelslist").addClass("memeber");
+
+                }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert(XMLHttpRequest.status);
+                    alert(XMLHttpRequest.readyState);
+                    alert(textStatus);
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    this; // 调用本次AJAX请求时传递的options参数
+                }
+            });
+
+
+        })
+
+        $('body').on("click", "#modelslist li", function () {
+
+            if ($(this).attr("id") == "11") {
+
+                var cNode = document.getElementById('modelslist').getElementsByTagName('li');
+                if ($(this).attr("value") == "0") {
+                    $(this).attr("value", $(this).attr("id"));
+                    for (var i = 0; i < cNode.length; i++) {
+                        if (cNode[i].id != "11") {
+
+                            cNode[i].setAttribute("value", cNode[i].id);
+                            cNode[i].setAttribute("style", "background-color:#20cf13");
+
+                        }
+                    }
+
+                } else {
+                    $(this).attr("value", "");
+
+                    for (var i = 0; i < cNode.length; i++) {
+                        if (cNode[i].id != "11") {
+
+                            cNode[i].setAttribute("value", "");
+                            cNode[i].setAttribute("style", "background-color:#808080");
+
+                        }
+                    }
+
+                }
+
+            } else {
+
+                if ($(this).attr("value") == "0") {
+
+                    $(this).attr("value", $(this).attr("id"));
+                    $(this).css("background-color", "#20cf13");
+                } else {
+
+                    $(this).attr("value", "");
+                    $(this).css("background-color", "#808080");
+                }
+
+            }
+
+        })
+
+        //获取选择的数据
+        function userInfo() {
+            var strValue = "";
+            if ($("#hidselectType").val() == "0") {
+                var cNode = document.getElementById('userlist').getElementsByTagName('li');
+
+                for (var i = 0; i < cNode.length; i++) {
+
+                    if (cNode[i].value != 0) {
+                        strValue += cNode[i].value + ",";
+                    }
+
+                }
+
+            }
+            else if ($("#hidselectType").val() == "1") {
+                var cNode = document.getElementById('modelslist').getElementsByTagName('li');
+
+                for (var i = 0; i < cNode.length; i++) {
+                    if (cNode[i].value != 0) {
+                        strValue += cNode[i].value + ",";
+                    }
+                }
+
+            }
+            else if ($("#hidselectType").val() == "2") {
+                //全部会员 直接从后台取表中的数据 判断hidselectType=2
+            }
+            return strValue;
+        }
+
+        //保存
+        $('#idsubmit').click(function () {
+            Loading();
+            $("#hiduserInfo").val(userInfo());
+            if ($("#hidselectType").val() != "") {
+                var data = $("form").serialize();
+
+                $.ajax({
+                    url: '/Manage/tInstationInfo/Create?t=' + Math.random(),
+                    type: 'POST',
+                    data: data,
+                    success: function (data) {
+                        Loaded();
+                        if (data.code == 0) {
+                            alert("添加成功！");
+                            location.href = "/Manage/tInstationInfo/Index";
+                        } else {
+                            alert("添加失败！");
+
+                        }
+
+                    }, error: function () {
+                        alert("添加失败！");
+
+                    }
+                });
+            } else {
+                alert("请选择会员类型");
+            }
+            return false;
+        });
+    </script>
+}
+

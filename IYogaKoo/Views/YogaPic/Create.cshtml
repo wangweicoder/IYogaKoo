@@ -1,0 +1,326 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaPicture
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/ModelsDetails.cshtml";
+}
+<style>
+    #fileDiplomaYuLan2 {
+    margin-top:0px!important; margin-left:35px!important;
+    }
+    .uploadify-button-text {
+    line-height:35px!important;
+    }
+    #fileDiplomaYuLan {
+    margin-top:0px!important;margin-left:10px!important; float:left
+    }
+    .lb_qq_lb span {
+    float:left!important;
+    }
+    .lb_qq_lb img {
+    width:255px; height:135px;margin-bottom:10px   }
+    #PictureName {
+   width:150px; height:30px; border:1px solid #65c3a5; margin-right:15px;
+    }
+    .lb_qq_inde_x a {
+    display:block; float:left; padding:4px 27px; background:#65c3a5; border:0px; color:#fff; margin-top:2px
+    }
+    .lbn_qq_p {
+    border:0px
+    }
+    #divImgDiploma {
+    width:1190px; margin:0px auto; overflow:hidden; background:#fff; min-height:250px; margin-bottom:5px;
+    }
+    #idsubmit {
+    margin-top:20px;
+    }
+    .lb_gr_index_top {
+    border:0px
+    }
+    .lb_xc_index h2 {
+    margin:10px 0px
+    }
+</style>
+<div class="lb_xc_index" style="border-top:1px solid #65c3a5; border-bottom:0px">
+    @*<h2>上传照片</h2>*@
+</div> 
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset style="margin:0px;padding-left:0px; width:1200px;">
+         <div class="lb_index_qq_q">
+            
+            
+            <div class="lb_qq_inde_x" style="margin-bottom:0px; margin-top:2px">
+                 
+                
+                 <span style="line-height:30px">上传至：</span>
+                 <span style="margin-top:3px">
+                     @Html.DropDownList("PictureName", ViewData["PictureName"] as SelectList)
+                 </span>
+                <a href="Javascript:AddPhtotoFile();">创建相册</a>
+                  
+                     <div class="lb_idnex_qq" style="margin: 0px; width:300px!important;">
+                        
+                         
+                     </div><br><br>
+                     
+
+</div>
+            
+            
+             
+        </div>
+        <div class="lb_qq_index">
+
+          
+                <input id="Diploma" name="Diploma" type="hidden" value="" />
+                <input id="PictureContent" name="PictureContent" type="hidden" value="" />
+
+                <input id="iNums" name="iNums" type="hidden" value="" />
+                <input id="iNumsp" name="iNumsp" type="hidden" value="" />
+                <input id="iNumsdiv" name="iNumsdiv" type="hidden" value="" />
+            <div class="lbn_qq_p" style="margin:0px;    ">
+                <div class="lb_add_xiangce_da">
+                    <div class="lb_add_xiangce_da_div">
+                        <input id="fileDiplomaYuLan" name="fileDiplomaYuLan" type="file" value="上传图片" />
+                        <b>支持jpg/png/gif/jpeg格式,不能超过4M</b>
+                    </div>
+                    <div id="divImgDiploma">
+                        <div id="lb_add_scanniu" class="lb_add_scanniu">
+                            <input id="fileDiplomaYuLan2" name="fileDiplomaYuLan2" type="file" value="上传图片" />
+                        </div>
+
+                    </div>
+                    <input type="button" class="button" value="开始上传" id="idsubmit" style=" margin-left:20px; height:30px; font-size:14px; margin-bottom:20px" />
+                </div>
+               
+            </div>
+            </div>
+      
+        <input id="hidtitle" name="hidtitle" type="hidden" value="@ViewBag.pictitle" />
+    </fieldset>
+}
+ 
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+<link href=@Url.Content("~/Content/uploadify/uploadify.css") rel="stylesheet" />
+<script src=@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.min.js")></script>
+      
+<script type="text/javascript">
+    $(function () {
+        $("#PictureName").val('@ViewBag.pictitle');
+
+        $('#idsubmit').hide();
+         
+        $('#PictureName').click(function () {
+            $("#fileDiplomaYuLan").uploadify("settings", 'formData', {
+                'Uid': '@ViewBag.user.Uid',
+                'fName': document.getElementById('PictureName').value
+            });          //更新参数
+        });
+    });
+
+    $(function () {
+       
+        $('#idsubmit').click(function () {
+
+            var strpicvalue = "";
+            $('input[name="picContent"]').each(function () {
+                strpicvalue += $(this).val() + "|";
+
+            });
+
+            $("#PictureContent").val(strpicvalue);
+
+            var data = $("form").serialize();
+
+            $.ajax({
+                url: '/YogaPic/Create?t=' + Math.random(),
+                type: 'POST',
+                data: data,
+                success: function (data) {
+                    if (data.code == 0) {
+                      
+                        layer.msg('创建成功，需要网站后台审核', { time: 1600 });
+                      
+                        location.href = "/YogaPic/MyPicsDetails/" + $("#hidtitle").val();    //YogaPic/MyPicsDetails/eeeee
+                    } else {
+                         
+                        layer.msg('添加失败', { time: 1600 });
+                    }
+
+                }, error: function () {
+                 
+                    layer.msg('添加失败', { time: 1600 });
+                }
+            });
+            return false;
+        });
+
+
+        //上传1
+        $('#fileDiplomaYuLan').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+            'uploader': '@Url.Content("~/Areas/Manage/Controllers/backashxFile/PirtureType2.ashx")',
+            'buttonText': '上传图片',
+            'height': '30',
+            'width': '120',
+            'formData': { 'Uid': '@ViewBag.user.Uid', 'fName': document.getElementById('PictureName').value },
+            'fileTypeDesc': '.jpg,.gif,.png',
+            'fileTypeExts': '*.jpg;*.gif;*.png;',
+            'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+            'sizeLimit': 1024 * 1024 * 4, //4M
+            'multi': true,//设置为true时可以同时上传多个文件。
+
+            'onUploadSuccess': function (file, data, response) {
+                if (data.indexOf('还没有创建相册哦！') != -1) {
+                    layer.msg(data);
+                }
+                else {
+                    $("#lb_add_scanniu").hide();
+                    $("#idsubmit").show();
+                    var strdata = "/" + data + ";"
+
+                    document.getElementById('iNums').value += "1";
+                    document.getElementById('iNumsp').value += "2";
+                    document.getElementById('iNumsdiv').value += "3";
+
+                    var strNums = $("#iNums").val();
+                    var strNumsp = $("#iNumsp").val();
+                    var strNumsdiv = $("#iNumsdiv").val();
+                    //路径
+                    document.getElementById('Diploma').value += strdata;
+
+                    var strValue = "<img id='" + strNums + "' src='/" + data + "' style='width:275px;height:150px;' />";
+                    var strA = "a" + strNums;
+
+                    //图片描述
+
+                    var strPictureContent = '<span  id="s' + strNumsp + '">描述：</span><input name="picContent" type="text"  id="' + strNumsp + '"/>';
+
+                    //根据ID 删除img
+                    var strDelImg = '<a href="javascript:void(0);" id="' + strA + '" onclick="delImg(this,' + strNums + ',' + strNumsp + ',' + strNumsdiv + ');">删除</a>';
+
+                    document.getElementById('divImgDiploma').innerHTML += "<div class='lb_qq_lb'  id=" + strNumsdiv + ">" + strValue + "&nbsp;&nbsp;" + strDelImg + "&nbsp;&nbsp;" + strPictureContent + "&nbsp;&nbsp;" + "</div>";
+
+
+                }
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                
+                layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString, { time: 1600 });
+            }
+        });
+        //上传2
+        $('#fileDiplomaYuLan2').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+            'uploader': '@Url.Content("~/Areas/Manage/Controllers/backashxFile/PirtureType2.ashx")',
+            'buttonText': '上传图片',
+            'height': '30',
+            'width': '120',
+            'formData': { 'Uid': '@ViewBag.user.Uid', 'fName': document.getElementById('PictureName').value },
+            'fileTypeDesc': '.jpg,.gif,.png',
+            'fileTypeExts': '*.jpg;*.gif;*.png;',
+            'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+            'sizeLimit': 1024 * 1024 * 4, //4M
+            'multi': true,//设置为true时可以同时上传多个文件。
+
+            'onUploadSuccess': function (file, data, response) {
+                if (data.indexOf('还没有创建相册哦！') != -1) {
+                    
+                    layer.msg(data, { time: 1600 });
+                }
+                else {
+                    $("#lb_add_scanniu").hide();
+                    $("#idsubmit").show();
+                    var strdata = "/" + data + ";"
+
+                    document.getElementById('iNums').value += "1";
+                    document.getElementById('iNumsp').value += "2";
+                    document.getElementById('iNumsdiv').value += "3";
+
+                    var strNums = $("#iNums").val();
+                    var strNumsp = $("#iNumsp").val();
+                    var strNumsdiv = $("#iNumsdiv").val();
+                    //路径
+                    document.getElementById('Diploma').value += strdata;
+
+                    var strValue = "<img id='" + strNums + "' src='/" + data + "' style='width:275px;height:150px;' />";
+                    var strA = "a" + strNums;
+
+                    //图片描述
+
+                    var strPictureContent = '<span  id="s' + strNumsp + '">描述：</span><input name="picContent" type="text"  id="' + strNumsp + '"/>';
+
+                    //根据ID 删除img
+                    var strDelImg = '<a href="javascript:void(0);" id="' + strA + '" onclick="delImg(this,' + strNums + ',' + strNumsp + ',' + strNumsdiv + ');">删除</a>';
+
+                    document.getElementById('divImgDiploma').innerHTML += "<div class='lb_qq_lb'  id=" + strNumsdiv + ">" + strValue + "&nbsp;&nbsp;" + strDelImg + "&nbsp;&nbsp;" + strPictureContent + "&nbsp;&nbsp;" + "</div>";
+
+
+                }
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                
+                layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString, { time: 1600 });
+            }
+        });
+    })
+
+    //删除图片
+    function delImg(aid, imgid, conid, sdiv) {
+
+        layer.confirm('确认删除该图片吗？', {
+            btn: ['是', '否'] //按钮
+        }, function (index) {
+            var strsrc = $("#" + imgid).attr("src") + ";";
+
+            var strRep = $("#Diploma").val().replace(strsrc, '');
+
+            ///删除描述
+            $("#" + conid).remove();
+
+            document.getElementById('Diploma').value = strRep;
+
+            $("#" + imgid).remove();
+            $("#" + sdiv).remove();
+            $("#s" + conid).hide();
+
+
+            $(aid).hide();
+            layer.close(index);
+        });
+
+       
+    }
+    //创建相册
+    function AddPhtotoFile() {
+
+        layer.prompt({ title: '创建相册', formType: 2 }, function (text) {
+            // layer.msg('演示完毕！您的口令：' +  ' 您最后写下了：' + text);
+            $.ajax({
+                url: '/YogaPic/Info?t=' + Math.random(),
+                type: 'post',
+                datatype: 'json',
+                data: {
+                    txtpicName: text
+                },
+                success: function (data) {
+                  
+                    layer.msg('创建相册成功', function () {
+                        //关闭后的操作
+                        window.location.href = '/YogaPic/Create';
+                    });
+                }
+            });
+        });
+
+
+    }
+</script>
+}

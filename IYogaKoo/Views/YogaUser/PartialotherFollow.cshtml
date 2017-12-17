@@ -1,0 +1,203 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewFollowUserDetail>
+@{
+    Layout = null;
+}
+@if (Model.Count!=0)
+{
+                <div class="lb_gz_index_all_bottom">
+                     
+                         @if (ViewBag.typeid == "2")
+                         {
+                            <div id="wrap" style="width:1000px; float:left">
+                                @{
+                             var strpic = "/Content/Front/images/defaultImg.png";
+                                }
+                                @foreach (var item in Model)
+                                {
+                                    if (!string.IsNullOrEmpty(item.spic))
+                                    {
+                                        strpic = item.spic;
+                                    }
+                                    <div class="box">
+                                        <div class="info">
+                                            <div class="pic">
+                                                <a href="@item.userurl@item.uid" target="_blank">
+                                                    <img src="@strpic" width="300" />
+                                                </a>
+                                            </div>
+                                            <div class="title lb_gjds">
+                                                <a href="#" style="margin-left:55px;">
+                                                    @{
+                                    if (item.flag == 0)
+                                    {
+
+                                        if (item.Leval == 0 || item.Leval == null)
+                                        {
+                                            @:基本习练者
+    }
+                                        else if (item.Leval == 1)
+                                        {
+                                            @:初级习练者
+    }
+                                        else if (item.Leval == 2)
+                                        {
+                                            @:中级习练者
+    }
+                                        else if (item.Leval == 3)
+                                        {
+                                            @:高级习练者
+    }
+                                    }
+
+                                    else
+                                    {
+                                        IEnumerable<SelectListItem> list = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.初级老师.ToList();
+                                        foreach (var litem in list)
+                                        {
+                                            if (item.Leval.ToString() == litem.Value)
+                                            {
+                                                @litem.Text
+                                            }
+                                        }
+
+                                    }
+
+                                                }
+                                            </a>&nbsp;&nbsp;
+                                            <div style="float: right; margin-right: 8px">
+                                                <img src="/Content/Front/images/_r2_c2.png">&nbsp;&nbsp;@item.FollowersCount
+                                            </div>
+                                            <p style="line-height: 25px">@item.FollowersName</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                }
+                            </div>
+                         }
+                         else if (ViewBag.typeid == "4" || ViewBag.typeid == "5" || ViewBag.typeid == "6")
+                         {
+                             if (Model.Count != 0)
+                             {
+                              <div class="lb_gz_index_all_bottom">
+                     
+                         @foreach (var item in Model)
+                         {
+                             var scr = "/Content/Front/images/defaultImg.png";
+                             <div class="lb_gz_index_fensi">
+                        <div class="lb_gz_index_fensi_left">
+                           <a href="@item.userurl@item.uid"><img src="@(!string.IsNullOrEmpty(item.spic)? item.spic: scr)" /></a>
+                        </div>
+                                 <div class="lb_gz_index_fensi_center">
+                                <p>
+                                     <b><a href="@item.userurl@item.uid">@item.nickname</a></b>
+                                <b>
+                                    @{
+                                        string rscr = null;
+                                        if (item.gender == "0")
+                                        {
+                                            rscr = "/Content/Front/images/women.png";
+                                        }
+                                        else
+                                        {
+                                            rscr = "/Content/Front/images/men.png";
+                                        }
+                                }
+                                    <img src="@rscr" /></b>
+                                </p>
+                            <p>
+                                <a>关注</a><span>@item.FollowCount</span><a style="margin-right:15px">|</a><a>粉丝</a><span>@item.FollowersCount</span>
+                            </p>
+                            <p>
+                                <a>地址：</a>@item.ressname
+                            </p>
+                             <p>
+                                <a>简介：</a>@{
+                             string Profile = null;
+                                    if(item.Asign==null)
+                                    {
+                                        Profile = item.Profile;       
+                                            
+                                    }else{
+                                        Profile = item.Asign;                                    
+                                    }
+                                            @Html.Raw(Profile)
+                                            }
+                            </p>
+                            </div>
+                        <div class="lb_gz_index_fensi_right">
+                             @if (ViewBag.isfollow == false)
+                                     {
+                            <a id="flowuid" class="a1" onclick="flowuid('@item.uid')">
+                                        +关注
+                                    </a>
+                             }
+                            else{
+                            <a class="a2">                                
+                            </a>
+                             }
+                        @* <a class="a3" href="javascript:Cancelf('@item.uid ',' @ViewBag.user.Uid')"></a>*@
+                        </div>
+                    </div>
+                         } 
+                    
+                        </div> 
+                             }
+                         }
+                         else
+                         {
+                             foreach (var item in Model)
+                             {
+                                 var scr = "/Content/Front/images/defaultImg.png";
+                             <div class="lb_gz_index_all_bottom_div">
+                        <div class="lb_gz_index_all_bottom_div_left">
+                           <a href="@item.userurl@item.uid"><img src="@(!string.IsNullOrEmpty(item.spic)? item.spic: scr)" /></a>
+                        </div>
+                        <div class="lb_gz_index_all_bottom_div_right">
+                            <div class="lb_gz_index_all_bottom_div_right_top">
+                                <b><a href="@item.userurl@item.uid">@item.nickname</a></b>
+                                <b>
+                                    @{
+                                        string rscr = null;
+                                        if (item.gender == "0")
+                                        { 
+                                            rscr = "/Content/Front/images/women.png";
+                                        }
+                                        else
+                                        {
+                                            rscr = "/Content/Front/images/men.png";
+                                        }
+                                }
+                                    <img src="@rscr" /></b>
+                                <b><span>已关注</span></b>
+                            </div>
+                            <div class="lb_gz_index_all_bottom_div_right_center">
+                                <p>@item.Asign</p>
+                            </div>
+                            @*<div class="lb_gz_index_all_bottom_div_right_bottom">
+                                <a href="javascript:Cancelf('@item.uid ',' @ViewBag.user.Uid')";>取消关注</a>
+                            </div>*@
+                        </div>
+                    </div>
+                         }                  
+                         }
+                     
+                </div>
+                     }
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>

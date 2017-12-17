@@ -1,0 +1,109 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaArticle
+@{
+    ViewBag.Title = "申请成为导师";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="lb_index_sq_xy">
+    <div class="lb_index_sq_xy_left">
+        <div class="lb_index_sq">
+            @* <h1><span>@Model.ArticleTitle /</span>&nbsp;使用条款</h1>
+            style="padding: 10px 60px 10px 60px; height: 540px; overflow-y: scroll; border: 1px solid #c0c0c0;" *@
+            <h1>@Model.ArticleTitle</h1>
+        </div>
+
+        @using (Html.BeginForm())
+        {
+            <div id="agreement" >
+                @Html.Raw(Model == null ? "" : Model.ArticleCon)
+            </div>
+            if (Request.QueryString["id"] != null)
+            {
+                if (Request.QueryString["id"] == "16")
+                {
+                <div class="lb_index_ty">
+                <p>
+                    <input type="checkbox" id="isAgree" name="isAgree" />
+                    <label for="isAgree">同意以上协议</label>
+
+                </p>
+                <p>
+                    <input class="border_radius submit" type="submit" value="下一步" id="btnNext" />
+
+                    <a href="/home/Index" class="border_radius" style="color: #333; font-size: 12px; background: none;">取消申请</a>
+                </p>
+            </div>
+                }
+            }
+            else 
+            {
+            <div class="lb_index_ty">
+                <p>
+                    <input type="checkbox" id="isAgree" name="isAgree" />
+                    <label for="isAgree">同意以上协议</label>
+
+                </p>
+                <p>
+                    <input class="border_radius submit lb_input" type="submit" value="下一步" id="btnNext" />
+
+                    <a href="/home/Index" class="border_radius" style="color: #333; font-size: 12px; background: none;">取消申请</a>
+                </p>
+            </div>
+            }
+
+            <script type="text/javascript">
+
+                $("#btnNext").click(function () {
+                    var checkbox = document.getElementById('isAgree');//
+
+                    if (checkbox.checked) {
+                        //选中了
+                    } else {
+                        layer.msg("同意以上协议才能继续下一步");//是否被选中
+                        return false;
+                    }
+                });
+            </script>
+        }
+    </div>
+    <div class="lb_index_sq_xy_right">
+        <ul>
+            @{
+                if (ViewBag.Artlist != null)
+                {
+                    foreach (var item in ViewBag.Artlist)
+                    {
+                        if (Request.QueryString["id"] != null)
+                        {
+                            if (Request.QueryString["id"] == @item.ID.ToString())
+                            {
+                <li><a class="on" href="/Home/ApplyTeachAgreement?id=@item.ID">@item.ArticleTitle</a></li>
+                            }
+                            else
+                            {
+                <li><a href="/Home/ApplyTeachAgreement?id=@item.ID">@item.ArticleTitle</a></li>
+                            }
+                        }
+                        else //点升级导师，没id的情况
+                        {
+                            if (@item.ID == 16)
+                            {
+                <li><a class="on" href="/Home/ApplyTeachAgreement?id=@item.ID">@item.ArticleTitle</a></li>
+                            }
+                            else
+                            {
+                <li><a href="/Home/ApplyTeachAgreement?id=@item.ID">@item.ArticleTitle</a></li>                        
+                            }
+                        }
+
+                    }
+
+                }                
+            }
+            @* <li><a href="">爱瑜伽酷使用协议</a></li>
+             <li><a href="">导师升级使用协议</a></li>
+             <li><a href="">隐私声明</a></li>
+             <li><a href="">免责声明</a></li>*@
+        </ul>
+
+    </div>
+</div>

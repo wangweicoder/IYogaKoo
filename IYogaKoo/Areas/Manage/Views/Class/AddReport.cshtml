@@ -1,0 +1,150 @@
+﻿@model IYogaKoo.ViewModel.ViewClassReport
+
+@{
+    ViewBag.Title = "添加活动报道";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+@section styles{
+<link href="~/Content/Back/css/class.css" rel="stylesheet" />
+    }
+
+<div class="content-box">
+    <div class="content-box-header">
+        <h3>添加活动报道</h3>
+    </div>
+    <div class="content-box-content" style="position:relative;">
+        <form action="/manage/class/addreport" method="post" id="add-report">
+            <fieldset>
+                @Html.HiddenFor(m=>m.Id)
+                @Html.HiddenFor(m=>m.ClassId)
+                <p>
+                    <label>报道标题</label>
+                    @Html.TextBoxFor(model => model.Title, new { @class = "text-input medium-input" })
+                </p>
+                <p>
+                    <label>报道内容</label>
+                    @Html.TextAreaFor(model => model.Content, new { @class = "text-input textarea", @cols = "79", @rows = "15" })
+                </p>
+                <p>
+                    <label>图片</label>
+                    <div><a id="upload-image">上传活动照片</a></div>
+                    <ul class="report-images">
+                        @if (Model.Images != null)
+                        {
+                            foreach (var item in Model.Images)
+                            {
+                                <li class='report-image'><img src='@item.Url' class='banner'/><span class="remove">删除</span></li>
+                            } 
+                        }                   
+                    </ul>
+                    @Html.HiddenFor(model => model.Title, new { @class = "text-input medium-input" })
+                </p>
+                <p class="clear">
+                    <label>视频</label>
+                    <div>视频swf连接 <input type="text" id="txt-video" class="text-input"/> <a id="upload-video" class="button" style="height:auto;" onclick="AddVideo();">添加</a></div>
+                    <ul class="report-videos">
+                        @if (Model.Videos != null)
+                        {
+                            foreach (var item in Model.Videos)
+                            {
+                                 <li class="report-video"><embed src='@item.Url' allowfullscreen="true" quality="high" width="256" height="256" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" /><span class="remove">删除</span></li>
+                            }
+                        }
+                        
+                    </ul>
+                    @Html.HiddenFor(model => model.Title, new { @class = "text-input medium-input",@style="wdith:60%;" })
+                </p>
+
+                <p class="clear">
+                    <br />
+                    <input type="submit" class="button" value="保存" />
+                </p>
+            </fieldset>
+        </form>
+    </div>
+</div>
+@section scripts{
+
+<script src=@Url.Content("~/Content/ueditor/ueditor.config.js")></script>
+<script src=@Url.Content("~/Content/ueditor/ueditor.all.js")></script>
+
+<link href=@Url.Content("~/Content/uploadify/uploadify.css") rel="stylesheet" />
+<script src=@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.min.js")></script>
+    <script type="text/javascript">
+        var ue;
+        var report = {};
+        $(function () {
+            ue = UE.getEditor('Content'); //内容编辑器
+            $('#upload-image').uploadify(uploadifySetting);
+            $('#add-report').submit(function () {
+                if ($('#Title').val() == '') {
+                    Msg("请输入报道标题");
+                    return false;
+                }
+                if (!ue.hasContents()) {
+                    Msg("请输入报道内容");
+                    return false;
+                }
+                var images = [];
+                var eles = $('.report-images .report-image img');
+                if (eles.length > 0) {
+                    for (var i = 0; i < eles.length; i++) {
+                        images.push({ "Url": $(eles[i]).attr('src')});
+                    }
+                }
+                var videos = [];
+                eles = $('.report-videos .report-video embed');
+                if (eles.length > 0) {
+                    for (var i = 0; i < eles.length; i++) {
+                        videos.push({ "Url": $(eles[i]).attr('src')});
+                    }
+                }
+                report = {
+                    Id: $('#Id').val(), Title: $('#Title').val(), Content: ue.getContent(), ClassId: $('#ClassId').val(),
+                    "Images": images, "Videos": videos
+                };
+                PostData('/manage/class/addreport', { "data": JSON.stringify(report) }, function (json) {
+                    if (json.Id > 0)
+                        window.location.href = "/manage/class/viewclass?id=" + json.ClassId;
+                    else
+                        ShowError("保存失败了");
+                });
+                return false;
+            });
+            $(document).on('click', '.report-images .report-image .remove', function () {
+                var curr = $(this).parent();
+               $(this).parent().fadeOut('fast', function () { curr.remove(); });
+            });
+            $(document).on('click', '.report-videos .report-video .remove', function () {
+                var curr = $(this).parent();
+                $(this).parent().fadeOut('fast', function () {curr.remove(); });
+            });
+        });
+        function AddVideo() {
+            var url = $('#txt-video').val();
+            if (url == "")
+                return false;
+            var html = '<li class="report-video"><embed src="' + url + '" allowfullscreen="true" quality="high" width="256" height="256" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" /><span class="remove">删除</span></li>';
+            $('.report-videos').append(html);
+            $('#txt-video').val('');
+        }
+        var uploadifySetting = {
+            'swf': '/content/uploadify/uploadify-v3.1/uploadify.swf',
+            'buttonImage': '/content/uploadify/uploadify-v3.1/uploadify-class.png',
+            'queueSizeLimit': 500,
+            'uploader': '/class/upload',
+            'width': 135,
+            'height': 40,
+            'post_params': { 'category': '/class/report/img' },
+            'fileTypeDesc': 'Image Files',
+            'fileTypeExts': '*.gif; *.jpg; *.png; *.jpeg; *.bmp',
+            'onUploadSuccess': function (file, data, response) {
+                if (response) {
+                    var html = "<li class='report-image'><img src='" + data + "' class='banner'/><span class='remove'>删除</span></li>";
+                    $('.report-images').append(html);
+                }
+            }
+        };
+    </script>
+    }
+

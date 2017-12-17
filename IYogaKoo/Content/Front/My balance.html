@@ -1,0 +1,475 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+<meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+<title>我的订单</title>
+<link type="text/css"  href="css/index2.css" rel="stylesheet" />
+
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script language="javascript" type="text/javascript" src="jb51.net/My97DatePicker/WdatePicker.js"></script>
+<!-- <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script> -->
+<script language="javascript" type="text/javascript" src="My97DatePicker/WdatePicker.js"></script>
+<script type="text/javascript" src="js/jquery.masonry.js"></script>
+<script type="text/javascript" src="js/jquery.infinitescroll.js"></script>
+<script type="text/javascript" src="js/jquery.SuperSlide.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/layer.min.js"></script>
+<script type="text/javascript">
+var isWidescreen=screen.width>=1280; 
+if(isWidescreen){document.write("<style type='text/css'>.demo{width:740px;}</style>");}
+</script>
+<script type="text/javascript">
+function item_masonry(){ 
+	$('.item img').load(function(){ 
+		$('.infinite_scroll').masonry({ 
+			itemSelector: '.masonry_brick',
+			columnWidth:226,
+			gutterWidth:15								
+		});		
+	});
+		
+	$('.infinite_scroll').masonry({ 
+		itemSelector: '.masonry_brick',
+		columnWidth:226,
+		gutterWidth:15								
+	});	
+}
+
+$(function(){
+
+	function item_callback(){ 
+		
+		$('.item').mouseover(function(){
+			$(this).css('box-shadow', '0 1px 5px rgba(35,25,25,0.5)');
+			$('.btns',this).show();
+		}).mouseout(function(){
+			$(this).css('box-shadow', '0 1px 3px rgba(34,25,25,0.2)');
+			$('.btns',this).hide();		 	
+		});
+		
+		item_masonry();	
+
+	}
+
+	item_callback();  
+
+	$('.item').fadeIn();
+
+	var sp = 1
+	
+	$(".infinite_scroll").infinitescroll({
+		navSelector  	: "#more",
+		nextSelector 	: "#more a",
+		itemSelector 	: ".item",
+		
+		loading:{
+			img: "images/masonry_loading_1.gif",
+			msgText: ' ',
+			finishedMsg: '当前页木有了',
+			finished: function(){
+				sp++;
+				if(sp>=10){ //到第10页结束事件
+					$("#more").remove();
+					$("#infscr-loading").hide();
+					$("#page").show();
+					$(window).unbind('.infscr');
+				}
+			}	
+		},errorCallback:function(){ 
+			$("#page").show();
+		}
+		
+	},function(newElements){
+		var $newElems = $(newElements);
+		$('.infinite_scroll').masonry('appended', $newElems, false);
+		$newElems.fadeIn();
+		item_callback();
+		return;
+	});
+
+});
+</script>
+</head>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.lb_inde_right li p').click(function(){
+			$('.lb_china_hide').toggle();	
+		})
+	})
+</script>
+<body style="background:#ECECEC">
+
+
+
+
+
+    <div class="lb_index" style="height:100px">
+    	<div class="lb_index_daohang lb_teacher_daohang">
+        	<div class="lb_in_left lb_teacher_left lb_teacher_dh_le">
+            	<img src="images/logo-white.png" />
+            </div>
+            <div class="lb_in_right lb_teacher_dh_rig">
+            	<div class="lb_inde_top" style="float:left;">
+                  <!--   <div class="lb_rig_div1">
+                        
+                    </div> -->
+                    <div class="lb_rig_div2 lb_teacher_div2">
+                        <input type="text" value="瑜伽人、瑜伽机构、活动、文章" id="lb_input" />
+                    </div>
+                     <div class="lb_rig_div3">
+                        <input type="button" value="搜索" />
+                    </div>
+                </div>
+               <div class="lb_teacher_fi">
+					<ul>
+						<li><a class="a1" href="">首页</a></li>
+						<li><a class="a2" href="">发现</a></li>
+						<li><a class="a5" href="">购物车(1)</a></li>
+						<!--  <li><a href="">登陆</a><a href="">注册</a></li>  -->
+						<li style="float:right"><!-- <a href="">张莉</a> --><a href=""><img src="images/tearcher.jpg" /></a><a class="a3" style="margin:0px;">&nbsp;</a></li>
+					</ul>
+			   </div>
+            </div>
+        </div>
+    </div>
+	
+	<div class="lb_teacher" style="background:none;height: 100px;width: 100%;">
+	<!-- 	<div class="lb_index_lbb_xx" style="">
+		<div class="lb_dvw" style="height:100px">
+			</div>
+		</div> -->
+	</div>
+	<div class="lb_teacher_index lbb" style=" margin:10px auto; background:#fff;min-height:750px">
+		<div class="lb_left_lbb">
+			<div class="lb_teacher_index_left" style="background:#fff; width:217px; height:730px;">
+					<!-- <div class="lb_kb">
+						
+					</div> -->
+					<div class="lb_teach">
+							<div class="lb_teach_left">
+									<img src="images/defaultImg.png" />
+									<div class="lb_add_dingwei">
+										<a href="">编辑头像</a>
+									</div>
+							</div>
+							<div class="lb_teach_right">
+									<b>小胖</b>
+									<!-- <p>17317.....@qq.com</p> -->
+									<a href="" class="a1"></a><a href="" class="a2"></a><a href="" class="a3"></a>
+							</div>
+					</div>
+					<div class="lb_teach_ul">
+								<ul>
+									<li class="li1"><a href="javascript:;" class="a">课程管理</a></li>
+									<li class="li2"><a href="javascript:;">活动管理</a></li>
+									<li class="li3"><a href="javascript:;">我的钱包</a></li>
+									<li class="li4"><a href="javascript:;">图片管理</a></li>
+									<li class="li5"><a href="javascript:;">留言管理</a></li>
+									<li class="li6"><a href="javascript:;">评价管理</a></li>
+									<li class="li7"><a href="javascript:;">日志管理</a></li>
+									<li class="li8"><a href="javascript:;">个人信息维护</a></li>
+								</ul>
+					</div>
+					
+			</div>
+		</div>
+		
+		<div class="lb_index_rightt">
+				<div class="lb_index_order_index">
+						<div class="lb_idnex_order_index_top">
+								<div class="lb_order_top_left">
+										<a href="javascript:;" class="a1">我的Iyoga</a>
+										<a href="javascript:;">个人主页</a>
+										<a href="javascript:;" class="a2">设置
+												<div class="lb_order_dingwei">
+														<p class="p1">设置</p>
+												</div>
+										</a>
+										<a href="javascript:;" class="a2">社区(10)
+											<div class="lb_order_dingwei">
+														<p class="p2">社区(10)</p>
+												</div>
+										</a>
+								</div>
+						</div>
+						<div class="lb_index_order_index_center">
+							<div class="lb_index_order_index_center_left">
+									<p>
+										<span>可用余额：</span><a>296.00</a>
+										<span>账户状态：</span><a>有效</a>
+									</p>
+							</div>
+							<div class="lb_index_order_index_center_right">
+									<input type="button" value="充值" />
+									<a href="">查看充值明细</a>
+							</div>
+						</div>
+						
+						<div class="lb_index_order_bottom">
+								<div class="lb_index_order_bottom_top">
+										<ul>
+											<li class="on sanyue">近三个月的收支明细  </li>
+											<li class="sanyueq">三个月前收支明细  </li>
+										</ul>
+								</div>
+								<div class="lb_index_order_bottom_bot">
+										<table cellpadding="0" cellspacing="0">
+											<tr style="background:#dfdfdf">
+													<td style="width:190px;">时间</td>
+													<td style="width:147px;">存入</td>
+													<td style="width:148px;">支出</td>
+													<td style="width:250px;">备注</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr><tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr><tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr><tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											
+										</table>
+										<div class="lb_tishi">
+												<p>提示：系统仅显示您两年之内的余额明细，更早的余额明细不再显示。</p>
+										</div>
+										 <div class="lb_new_fenye">
+    	<a href=""> &lt; </a>
+        <a href=""> 1 </a>
+        <a href=""> 2 </a>
+        <a href=""> 3 </a>
+        <a href=""> 4 </a>
+        <a href=""> 5 </a>
+        <a href=""> &gt; </a>
+    </div> 
+								</div>
+								
+								
+								<div class="lb_index_order_bottom_bot1">
+										<table cellpadding="0" cellspacing="0">
+											<tr style="background:#dfdfdf">
+													<td style="width:190px;">时间</td>
+													<td style="width:147px;">存入</td>
+													<td style="width:148px;">支出</td>
+													<td style="width:250px;">备注</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 21:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr><tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr><tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr><tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											<tr>
+													<td>2015-02-25 09:22:49</td>
+													<td>￥200.00</td>
+													<td>￥100.00</td>
+													<td>订单8554756147使用余额</td>
+											</tr>
+											
+										</table>
+										<div class="lb_tishi">
+												<p>提示：系统仅显示您两年之内的余额明细，更早的余额明细不再显示。</p>
+										</div>
+										 <div class="lb_new_fenye">
+    	<a href=""> &lt; </a>
+        <a href=""> 1 </a>
+        <a href=""> 2 </a>
+        <a href=""> 3 </a>
+        <a href=""> 4 </a>
+        <a href=""> 5 </a>
+        <a href=""> &gt; </a>
+    </div> 
+								</div>
+								
+								
+								
+						</div>
+						
+						
+					
+				</div>
+								
+							
+		</div>
+</div>
+	
+    
+	
+	<div class="lb_forter">
+			<div class="lb_ix_xi">
+				<div class="lb_ix_xi_left">
+						<div class="lb_ix_xi_letp">
+								<img src="images/LOGO2.png" />
+						</div>
+						<div class="lb_ix_xi_bott">
+								<p class="p">我们是热爱瑜伽的习练者。</p>
+								<p>请加入我们的平台,与世界各地的瑜伽行者一起探索身心灵的成长。</p>
+								<p class="p">Powered by</p>
+								<p>©copyright 2015 北京华夏迅联信息技术有限公司</p>
+								<p>www.inetkoo.com</p>
+								<p>京ICP备12009999号 </p>
+								<p>京公网安备121105009999号</p>
+						</div>
+				</div>
+				<div class="lb_ix_xi_right">
+						<ul>
+							<li class="li"><p>获取帮助</p></li>
+							<li><a href="">常见问题</a></li>
+							<li><a href="">网络技术支持</a></li>
+							<li><a href="">广告宣传计划</a></li>
+							<li><a href="">工作坊有人帮</a></li>
+							<li><a href="">问题反馈</a></li>
+						</ul>
+						<ul>
+							<li class="li"><p>加入我们</p></li>
+							<li><a href="">瑜伽机构入口</a></li>
+							<li><a href="">瑜伽导师入口</a></li>
+							<li><a href="">加入爱瑜伽酷团队</a></li>
+							<li><a href="">瑜伽文章发布</a></li>
+						</ul>
+						<ul>
+							<li class="li"><p>更多操作</p></li>
+							<li><a href="">IOS应用程序</a></li>
+							<li><a href="">Android应用程序</a></li>
+							<li><a href="">瑜伽导师客户端</a></li>
+							<li><a href="">瑜伽机构客户端</a></li>
+						</ul>
+						<ul style="width:200px">
+							<li class="li"><p>关注我们</p></li>
+							<li style=" width:200px">
+									<a href=""><img src="images/XL.png" /></a>
+									<a href=""><img src="images/WX.png" /></a>
+							</li>
+						</ul>
+				</div>
+			</div>
+	</div>
+		<script>
+	;!function(){
+	layer.use('extend/layer.ext.js', function(){
+	//初始加载即调用，所以需放在ext回调里
+	layer.ext = function(){
+		layer.photosPage({
+			html:'<div style="padding:20px;">这里传入自定义的html<p>相册支持左右方向键，支持Esc关闭</p><p>另外还可以通过异步返回json实现相册。更多用法详见官网。</p><p>'+ unescape("懒人之家  - www.lanrenzhijia.com") +'</p><p id="change"></p></div>',
+			title: '快捷模式-获取页面元素包含的所有图片',
+			id: 100, //相册id，可选
+			parent:'.imgs'
+		});
+	};
+	});
+	}();
+</script>
+												
+	
+	
+</body>
+</html>

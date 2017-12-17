@@ -1,0 +1,140 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaArticle
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+ 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-box" id="">
+
+        <div class="content-box-header">
+
+            <h3 style="cursor:pointer">修改文章</h3>
+
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+                <fieldset>
+
+                    @Html.HiddenFor(model => model.ID)
+                    @Html.HiddenFor(model => model.ClassID) 
+                    <p>
+                        类别： @ViewBag.ClassName
+                    </p>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.ArticleTitle)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.ArticleTitle, new { style = "width:300px;" })
+                        @Html.ValidationMessageFor(model => model.ArticleTitle)
+                    </div>
+
+                    <p>
+                        @Html.LabelFor(model => model.ArticleCon)
+
+                        @Html.TextAreaFor(model => model.ArticleCon, new { id = "editor", style = " width:99%;margin-left:15px" })
+
+                        @Html.ValidationMessageFor(model => model.ArticleCon)
+                    </p>
+
+                    <p>
+                        @Html.LabelFor(model => model.Author)
+
+                        @Html.EditorFor(model => model.Author)
+                        @Html.ValidationMessageFor(model => model.Author)
+                    </p>
+
+                    <p>
+                        @Html.LabelFor(model => model.PicPath)
+
+                        <img id="ImgPicPath" src="@Model.PicPath" style='width:300px;height:150px;' />
+                        <input id="PicPath" name="PicPath" type="hidden" value="@Model.PicPath" />
+
+                        <span>只能传一张，大小不超过2M，格式为jpg或png</span>
+                        <div>
+                            <input id="filePicPath" name="filePicPath" type="file" value="上传并预览" />
+                        </div>
+                    </p>
+
+                    <p>
+                        <input type="submit" class="button" value="保存" />
+                        @Html.ActionLink("返回", "Index")
+                    </p>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+
+    <script src=@Url.Content("~/Content/ueditor/ueditor.config.js")></script>
+    <script src=@Url.Content("~/Content/ueditor/ueditor.all.js")></script>
+
+    <link href=@Url.Content("~/Content/uploadify/uploadify.css") rel="stylesheet" />
+    <script src=@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.min.js")></script>
+
+    <script type="text/javascript">
+        $(function () {
+            UE.getEditor('editor'); //内容编辑器
+
+            $('#filePicPath').uploadify({
+                'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                'uploader': '@Url.Content("~/Areas/Manage/Controllers/backashxFile/YogaArticle.ashx")',
+                'buttonText': '上传并预览',
+                'height': '30',
+                'width': '120',
+                'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+                'sizeLimit': 1024 * 1024 * 4, //4M
+                'multi': false,//设置为true时可以同时上传多个文件。
+
+                'onUploadSuccess': function (file, data, response) {
+
+                    $("#PicPath").val("/" + data);
+                    $("#ImgPicPath").attr("src", "/" + data);
+
+                },
+                'onUploadError': function (file, errorCode, errorMsg, errorString) {
+
+                    alert('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $("#ClassID").click(function () {
+
+            var First = $(this).val();
+
+            //加载二级
+            if (First != '') {
+                $.ajax({
+                    url: '/YogaArtClass/GetClassNameList?id=' + First,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        document.getElementById("TwoParentID").innerHTML = "";
+                        $("#TwoParentID").append("<option value=''>请选择</option>");
+
+                        for (var i = 0; i < data.length; i++) {
+
+                            $("#TwoParentID").append("<option value='" + data[i].ID + "'>" + data[i].ClassName + "</option>");
+
+                        };
+                    }
+                });
+            }
+        });
+    </script>
+}

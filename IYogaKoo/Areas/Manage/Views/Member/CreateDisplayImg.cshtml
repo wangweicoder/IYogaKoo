@@ -1,0 +1,274 @@
+﻿@model IYogaKoo.ViewModel.ViewYogisModels
+
+@{
+    ViewBag.Title = "TopPic";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+        @Html.HiddenFor(model => model.YID)
+        @Html.HiddenFor(model => model.UID)
+        <input type="hidden" id="ClassTeacherId" value="@ViewBag.ClassTeacherId" />
+
+        <div class="fl avatarbg">
+            <div class="avatarboxbar">
+                <div id="bgDiv">
+                    <div id="dragDiv">
+                        <div id="rRightDown" style="right: 0; bottom: 0;">
+                        </div>
+                        <div id="rLeftDown" style="left: 0; bottom: 0;">
+                        </div>
+                        <div id="rRightUp" style="right: 0; top: 0;">
+                        </div>
+                        <div id="rLeftUp" style="left: 0; top: 0;">
+                        </div>
+                        <div id="rRight" style="right: 0; top: 50%;">
+                        </div>
+                        <div id="rLeft" style="left: 0; top: 50%;">
+                        </div>
+                        <div id="rUp" style="top: 0; left: 50%;">
+                        </div>
+                        <div id="rDown" style="bottom: 0; left: 50%;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="avatarthumb">
+            @{
+    var strDisplayImg = Model.DisplayImg;
+    var str2 = "";
+    if (!string.IsNullOrEmpty(strDisplayImg))
+    {
+        if (strDisplayImg.IndexOf(';') != -1)
+        {
+            var str = strDisplayImg.Split(';');
+            if (str.Length > 1)
+            {
+                if (!string.IsNullOrEmpty(str[1]))
+                {
+                    str2 = str[1];
+                }
+                else
+                {
+                    str2 = str[0];
+                }
+            }
+            else
+            {
+                str2 = str[0];
+            }
+        }
+    }
+            }
+            <img id="imgCut" width="90" height="90" src="@str2" />
+            <span class="RealNameClass">@Model.RealName</span>
+        </div>
+
+        <br />
+        <div class="uploadimg">
+            <div class="upload">
+                <div class="uploadswf">
+                    <input type="file" name="uploadify" id="uploadify" />
+                </div>
+                <br />
+                <p id="fileQueue">
+                </p>
+            </div>
+        </div>
+        <input id="btnSave" type="button" value="保存" class="lb_xg" style="display: none;" />
+        <input id="x" type="hidden" value="0" />
+        <input id="y" type="hidden" value="0" />
+        <input id="hidImageUrl" type="hidden" value="" />
+        <input id="maxVal" type="hidden" value="100" />
+        <input id="UID" name="UID" type="hidden" value="@ViewBag.Uid" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+    <script src="~/Content/Back/scripts/activity.js"></script>
+    <script src="~/Content/cutpic.js"></script>
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+    <link href="~/Content/Main.css" rel="stylesheet" />
+    <style>
+        /*隐藏进度条*/
+        #fileQueue {
+            display: none;
+        }
+    </style>
+
+    <script type="text/javascript">
+        var imageWidth = 300;
+        var imageHeiht = 300;
+        //首次加载
+        $(function () {
+            var imgWidth = 300;
+            var imgHeight = 300;
+            var imgPath = '';
+            DisplayImg();
+            ShowImg2();
+            function DisplayImg() {
+                var result = '';
+                var strDisplayImg = '@Model.DisplayImg';
+
+                if (strDisplayImg.indexOf(';') != -1) {
+                    result = strDisplayImg;// strDisplayImg.split(';');
+                    // alert(result);
+                    $("#maxVal").val(200);
+                    $("#btnSave").show();
+                }
+                if (result == '')
+                    return strDisplayImg;
+                else return result;
+            }
+            function ShowImg2() {
+
+                var path = DisplayImg();
+
+                if (path.indexOf(';') != -1) {
+                    imgPath = path.split('$')[0];
+                    imgWidth = path.split('$')[1];
+                    imgHeight = path.split('$')[2];
+
+                    $("#hidImageUrl").val(path.split('$')[0]);             //上传路径存入隐藏域
+
+                } else {
+                    imgPath = path;
+                }
+
+                var ic = new ImgCropper("bgDiv", "dragDiv", imgPath, imgWidth, imgHeight, { Right: "rRight", Left: "rLeft", Up: "rUp", Down: "rDown", RightDown: "rRightDown", LeftDown: "rLeftDown", RightUp: "rRightUp", LeftUp: "rLeftUp" });
+
+            }
+        });
+
+        $(function () {
+            $('#uploadify').uploadify({
+                'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                'uploader': '@Url.Content("~/Controllers/ashxFile/yogakooUserImg.ashx")',
+                'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+                //'folder': '/Temp',
+                'buttonText': '浏览图片',
+                'queueID': 'fileQueue',
+                'auto': true,
+                'multi': false,
+                'method': 'get',
+                'fileExt': '*.jpg;*.png',
+                'fileDesc': '请选择jpg , png文件...',
+                'scriptData': null,
+                'sizeLimit': 1024 * 1024 * 4,
+                'post_params': {
+                    "Uid": $("#UID").val(),
+                    "UserType": 1
+                },
+                // 'onComplete': function (event, queueID, fileObj, response, data) {
+                'onUploadSuccess': function (file, data, response) {
+
+                    if (data.indexOf('original') != -1) {
+
+                        $("#bgDiv img").remove();                      //移除截图区里image标签
+                        $("#btnSave").show();                          //保存按钮显示
+                        var result = data.split('$');              //得返回参数
+
+                        var maxVal = 0;
+                        if (result[1] > result[2]) {
+                            if (result[2] > 200) {
+                                maxVal = 200;
+                            } else {
+                                maxVal = result[2];
+                            }
+                        }
+                        else {
+                            if (result[1] > 200) {
+                                maxVal = 200;
+                            } else {
+                                maxVal = result[1];
+                            }
+                        }
+                        $("#maxVal").val(maxVal);                     //设置截图区大小
+
+                        $("#hidImageUrl").val(result[0]);             //上传路径存入隐藏域
+
+                        ShowImg(result[0], result[1], result[2]);       //在截图区显示
+
+                        $("#uploadify").uploadifySettings('scriptData', { 'LastImgUrl': $('#hidImageUrl').val() });          //更新参数
+
+                    }
+                    else {
+                        alert(data);
+                    }
+                }
+            });
+
+
+            $("#btnSave").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Content("~/Controllers/ashxFile/CutAvatarHandler.ashx")',
+                    data: {
+                        imgUrl: $('#hidImageUrl').val(),
+                        pointX: $("#x").val(),
+                        pointY: $("#y").val(),
+                        maxVal: $("#maxVal").val(),
+                        iType: 1,//导师
+                        Uid: $("#UID").val()
+                    },
+                    success: function (msg) {
+                        ClassTeacherId = $("#ClassTeacherId").val();
+                        
+                        imgUrl = $('#hidImageUrl').val();
+                        if (ClassTeacherId != undefined && ClassTeacherId !='') {
+                            $.ajax({
+                                url: '/Class/UpdateAvatar?t=' + Math.random() + "&ClassTeacherId=" + ClassTeacherId + "&imgUrl=" + imgUrl,
+                                type: 'POST',
+                                data: "",
+                                success: function (data) {
+
+                                    if (data.Avatar != "") {
+                                        //window.location = '/Manage/Class/AddActivity';
+                                        //HtmlClassTeacher(data);
+                                        window.close();
+                                    } else {
+                                        alert("添加失败！");
+
+                                    }
+
+                                }, error: function () {
+                                    alert("添加失败！");
+
+                                }
+                            });
+                        }
+                        else if (msg.indexOf('original') != -1) {
+                            $("#imgCut").attr("src", msg);
+                            window.location = '/Manage/Member/DaoShiIndexSearch';
+                        }
+                        else {
+                            alert("error");
+                        }
+                    },
+                    error: function (xhr, msg, e) {
+                        alert("error");
+                    }
+                });
+            });
+        });
+
+        function ShowImg(imagePath, imgWidth, imgHeight) {
+            var imgPath = imagePath != "" ? imagePath : "/Content/Front/images/defaultImg.png";
+
+            var ic = new ImgCropper("bgDiv", "dragDiv", imgPath, imgWidth, imgHeight, { Right: "rRight", Left: "rLeft", Up: "rUp", Down: "rDown", RightDown: "rRightDown", LeftDown: "rLeftDown", RightUp: "rRightUp", LeftUp: "rLeftUp" });
+        }
+
+        //{ Right: "rRight", Left: "rLeft", Up: "rUp", Down: "rDown", RightDown: "rRightDown", LeftDown: "rLeftDown", RightUp: "rRightUp", LeftUp: "rLeftUp"}
+    </script>
+}

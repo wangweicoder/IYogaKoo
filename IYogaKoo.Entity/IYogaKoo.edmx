@@ -1,0 +1,2382 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="iyogakoodbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SellerID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="ObjectID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" />
+          <Property Name="ObjectImage" Type="nvarchar(max)" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ClassTime" Type="datetime" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Seller_UID" Type="nvarchar" MaxLength="128" />
+          <Property Name="User_UID" Type="nvarchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Centers">
+          <Key>
+            <PropertyRef Name="CenterId" />
+          </Key>
+          <Property Name="CenterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uid" Type="nvarchar" MaxLength="30" />
+          <Property Name="CenterName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CenterAddress" Type="nvarchar" MaxLength="200" />
+          <Property Name="DistrictID" Type="int" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="ProvinceID" Type="int" />
+          <Property Name="CountryID" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpgradeDate" Type="datetime" />
+          <Property Name="CenterProfile" Type="text" />
+          <Property Name="OpenTime" Type="datetime" />
+          <Property Name="CloseTime" Type="datetime" />
+          <Property Name="CenterType" Type="varchar" MaxLength="20" />
+          <Property Name="CenterBanner" Type="nvarchar" MaxLength="200" />
+          <Property Name="CenterIntroduction" Type="text" />
+          <Property Name="CenterPortrait" Type="nvarchar" MaxLength="200" />
+          <Property Name="YogaTypeid" Type="nvarchar" MaxLength="200" />
+          <Property Name="CenterState" Type="int" />
+          <Property Name="CenterSource" Type="int" />
+        </EntityType>
+        <EntityType Name="CenterStare">
+          <Key>
+            <PropertyRef Name="Sid" />
+          </Key>
+          <Property Name="Sid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="Centerclass" Type="int" Nullable="false" />
+          <Property Name="Service" Type="int" Nullable="false" />
+          <Property Name="Env" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="Uid" Type="int" Nullable="false" />
+          <Property Name="Mid" Type="int" Nullable="false" />
+          <Property Name="Satate" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YogaTypeID" Type="int" Nullable="false" />
+          <Property Name="Summary" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="Banner" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Start" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="DurationUnit" Type="int" Nullable="false" />
+          <Property Name="AreaID" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsItem" Type="bit" Nullable="false" />
+          <Property Name="ItemClassID" Type="int" Nullable="false" />
+          <Property Name="Max" Type="int" Nullable="false" />
+          <Property Name="ClassType" Type="int" Nullable="false" />
+          <Property Name="ClassStatus" Type="int" Nullable="false" />
+          <Property Name="NoPassMsg" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="TopicIds" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Tags" Type="nvarchar" MaxLength="500" />
+          <Property Name="iShareNums" Type="int" />
+          <Property Name="iReadNums" Type="int" />
+          <Property Name="CloseTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="MessageDes" Type="nvarchar" MaxLength="300" />
+          <Property Name="CenterID" Type="nvarchar" MaxLength="300" />
+          <Property Name="FieldID" Type="int" />
+        </EntityType>
+        <EntityType Name="ClassDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="15" Nullable="false" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="Duration" Type="int" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" />
+          <Property Name="CenterID" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="YID" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="UpdateTime" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="Mark" Type="nvarchar" MaxLength="100" />
+          <Property Name="Mark2" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ClassFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="300" />
+          <Property Name="Url" Type="nvarchar" MaxLength="500" />
+          <Property Name="ExtendName" Type="nvarchar(max)" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="ReportId" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="300" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClassTeacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Gender" Type="nvarchar" MaxLength="50" />
+          <Property Name="Country" Type="nvarchar" MaxLength="50" />
+          <Property Name="YogaSystem" Type="nvarchar" MaxLength="50" />
+          <Property Name="Info" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="Class_Id" Type="int" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="TeacherId" Type="int" />
+          <Property Name="Avatar" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="ClassTopic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="TopicID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evaluates">
+          <Key>
+            <PropertyRef Name="Evaluateid" />
+          </Key>
+          <Property Name="Evaluateid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="EContent" Type="nvarchar(max)" />
+          <Property Name="ToUid" Type="int" />
+          <Property Name="FromUid" Type="int" />
+          <Property Name="iZan" Type="int" />
+          <Property Name="iShow" Type="int" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="Recommend" Type="int" />
+          <Property Name="Pic" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="Follow">
+          <Key>
+            <PropertyRef Name="Followid" />
+          </Key>
+          <Property Name="Followid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uid" Type="int" Nullable="false" />
+          <Property Name="QuiltUid" Type="int" Nullable="false" />
+          <Property Name="FollowDate" Type="datetime" Nullable="false" />
+          <Property Name="QuiltCenterID" Type="int" />
+          <Property Name="isfollow" Type="bit" />
+          <Property Name="iType" Type="int" />
+          <Property Name="loginType" Type="int" />
+        </EntityType>
+        <EntityType Name="InterestedClass">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LevelOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LevelOrderID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderType" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="OrderState" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderScore" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderDel" Type="int" Nullable="false" />
+          <Property Name="OriginalLevel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TargetLevel" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ManageID" Type="int" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="100" />
+          <Property Name="Remark1" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark2" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar(max)" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Number" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="float" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="PayAccount" Type="nvarchar(max)" />
+          <Property Name="Payment" Type="nvarchar(max)" />
+          <Property Name="IsPaid" Type="bit" Nullable="false" />
+          <Property Name="PayTime" Type="datetime" />
+          <Property Name="PayNO" Type="varchar" MaxLength="32" />
+          <Property Name="PayDomain" Type="varchar" MaxLength="100" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ClassId" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="openid" Type="varchar" MaxLength="128" />
+        </EntityType>
+        <EntityType Name="Space">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="300" Nullable="false" />
+          <Property Name="PersonNum" Type="int" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="IsDefault" Type="bit" Nullable="false" />
+          <Property Name="Point" Type="nvarchar(max)" />
+          <Property Name="OwnerID" Type="int" Nullable="false" />
+          <Property Name="OpenTime" Type="datetime" Nullable="false" />
+          <Property Name="CloseTime" Type="datetime" Nullable="false" />
+          <Property Name="PriceOfDay" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PriceOfHour" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PriceOfMonth" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsRenting" Type="bit" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="UpdateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tBanner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="spic" Type="nvarchar" MaxLength="500" />
+          <Property Name="sUrl" Type="nvarchar" MaxLength="500" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="iType" Type="int" />
+        </EntityType>
+        <EntityType Name="tInstationInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uid" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="sContent" Type="nvarchar" MaxLength="300" />
+          <Property Name="iType" Type="int" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="200" />
+          <Property Name="ifDel" Type="bit" />
+          <Property Name="loginType" Type="int" />
+        </EntityType>
+        <EntityType Name="tKeyWord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uid" Type="int" />
+          <Property Name="sWord" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tLearing">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uid" Type="nvarchar" MaxLength="300" />
+          <Property Name="sPic" Type="nvarchar" MaxLength="300" />
+          <Property Name="sTitle" Type="nvarchar" MaxLength="300" />
+          <Property Name="iReadNums" Type="int" />
+          <Property Name="iWritelogNums" Type="int" />
+          <Property Name="iZanNums" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="iType" Type="int" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="ifexamine" Type="bit" />
+          <Property Name="UrlType" Type="int" />
+        </EntityType>
+        <EntityType Name="tMessage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ToUid" Type="int" />
+          <Property Name="Toid" Type="int" />
+          <Property Name="ToType" Type="int" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="FromUid" Type="int" />
+          <Property Name="FormType" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="iZan" Type="int" />
+          <Property Name="iAudio" Type="int" />
+          <Property Name="ParentID" Type="int" />
+          <Property Name="photo" Type="nvarchar(max)" />
+          <Property Name="loginType" Type="int" />
+        </EntityType>
+        <EntityType Name="tQuestion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="QuestionContent" Type="nvarchar(max)" />
+          <Property Name="TitleID" Type="int" Nullable="false" />
+          <Property Name="QuestionTime" Type="datetime" />
+          <Property Name="State" Type="int" />
+          <Property Name="Uid" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContactInformation" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReplyUid" Type="int" />
+          <Property Name="ReplyContent" Type="nvarchar(max)" />
+          <Property Name="ReplyTime" Type="datetime" />
+          <Property Name="IsFAQ" Type="bit" Nullable="false" />
+          <Property Name="BeFrom" Type="int" />
+          <Property Name="IsDelete" Type="bit" Nullable="false" />
+          <Property Name="Hot" Type="bit" Nullable="false" />
+          <Property Name="Mark" Type="nvarchar" MaxLength="200" />
+          <Property Name="Mark2" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="tSign">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uid" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="sMemo" Type="nvarchar" MaxLength="100" />
+          <Property Name="iType" Type="int" />
+          <Property Name="iIntegral" Type="int" />
+        </EntityType>
+        <EntityType Name="tUserLoginInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uid" Type="int" />
+          <Property Name="sloginInfo" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoginTime" Type="datetime" />
+          <Property Name="QuitTime" Type="datetime" />
+          <Property Name="NickName" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tWriteLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Uid" Type="int" />
+          <Property Name="sTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="sContent" Type="nvarchar(max)" />
+          <Property Name="ifShow" Type="bit" />
+          <Property Name="iReadNums" Type="int" />
+          <Property Name="ifpush" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ValueType" Type="int" />
+        </EntityType>
+        <EntityType Name="tZanModels">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="iFromUid" Type="int" />
+          <Property Name="iToUid" Type="int" />
+          <Property Name="ToUid" Type="int" />
+          <Property Name="iType" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="iToType" Type="int" />
+          <Property Name="loginType" Type="int" />
+        </EntityType>
+        <EntityType Name="YogaArtClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IsDelete" Type="int" Nullable="false" />
+          <Property Name="Creator" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="ParentID" Type="int" />
+        </EntityType>
+        <EntityType Name="YogaArticle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClassID" Type="int" Nullable="false" />
+          <Property Name="ArticleTitle" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ArticleCon" Type="text" Nullable="false" />
+          <Property Name="CheckID" Type="int" Nullable="false" />
+          <Property Name="IsCheck" Type="int" Nullable="false" />
+          <Property Name="Uid" Type="int" />
+          <Property Name="Author" Type="nvarchar" MaxLength="50" />
+          <Property Name="Creator" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="IsDelete" Type="int" Nullable="false" />
+          <Property Name="IsPicture" Type="int" Nullable="false" />
+          <Property Name="PicPath" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="YogaDicItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DicId" Type="int" Nullable="false" />
+          <Property Name="ItemName" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ItemValue" Type="nvarchar" MaxLength="500" />
+          <Property Name="SortId" Type="int" Nullable="false" />
+          <Property Name="IsUse" Type="int" Nullable="false" />
+          <Property Name="IsDelete" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="YogaMenus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="pid" Type="int" />
+          <Property Name="state" Type="int" />
+          <Property Name="url" Type="nvarchar" MaxLength="100" />
+          <Property Name="ordervalue" Type="int" />
+        </EntityType>
+        <EntityType Name="YogaPicture">
+          <Key>
+            <PropertyRef Name="Pid" />
+          </Key>
+          <Property Name="Pid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PictureType" Type="int" />
+          <Property Name="Uid" Type="int" Nullable="false" />
+          <Property Name="AlbumId" Type="int" />
+          <Property Name="EvaluateId" Type="int" />
+          <Property Name="Comid" Type="int" />
+          <Property Name="PictureName" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="PictureContent" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="PictureOriginal" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="PictureLarge" Type="varchar" MaxLength="300" />
+          <Property Name="PictureMiddle" Type="varchar" MaxLength="300" />
+          <Property Name="PictureSmall" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="PircureSize" Type="varchar" MaxLength="200" />
+          <Property Name="CommentCount" Type="int" />
+          <Property Name="LikeCount" Type="int" />
+          <Property Name="NotLikeCount" Type="int" />
+          <Property Name="CommentLimite" Type="int" />
+          <Property Name="CreateTime" Type="datetime" />
+          <Property Name="CreateUser" Type="int" />
+          <Property Name="LastChangeTime" Type="datetime" />
+          <Property Name="HitNum" Type="int" />
+          <Property Name="iAudio" Type="int" />
+        </EntityType>
+        <EntityType Name="YogaUser">
+          <Key>
+            <PropertyRef Name="Uid" />
+          </Key>
+          <Property Name="Uid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UEmail" Type="varchar" MaxLength="50" />
+          <Property Name="Uphone" Type="varchar" MaxLength="50" />
+          <Property Name="Pwd" Type="varchar" MaxLength="500" />
+          <Property Name="NickName" Type="varchar" MaxLength="50" />
+          <Property Name="RegDate" Type="datetime" />
+          <Property Name="UStatus" Type="int" />
+          <Property Name="IsAssessor" Type="bit" />
+          <Property Name="IsWebworkers" Type="bit" />
+          <Property Name="LastDate" Type="datetime" />
+          <Property Name="LastIP" Type="varchar" MaxLength="50" />
+          <Property Name="LoginTimes" Type="int" />
+          <Property Name="UserType" Type="int" />
+          <Property Name="LoginType" Type="int" />
+          <Property Name="SinaAuthCode" Type="varchar" MaxLength="50" />
+          <Property Name="SinaBack" Type="varchar" MaxLength="50" />
+          <Property Name="QQAuthCode" Type="varchar" MaxLength="50" />
+          <Property Name="QQBack" Type="varchar" MaxLength="50" />
+          <Property Name="WechatAuthCode" Type="varchar" MaxLength="50" />
+          <Property Name="WechatBack" Type="varchar" MaxLength="50" />
+          <Property Name="ValCode" Type="varchar" MaxLength="36" />
+          <Property Name="ValExpire" Type="datetime" />
+          <Property Name="delState" Type="int" />
+          <Property Name="salt" Type="varchar" MaxLength="500" />
+          <Property Name="objectId" Type="varchar" MaxLength="500" />
+          <Property Name="InputType" Type="int" />
+        </EntityType>
+        <EntityType Name="YogaUserDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="RealName_cn" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsRealName_cn" Type="int" />
+          <Property Name="RealName_en" Type="varchar" MaxLength="50" />
+          <Property Name="IsRealName_en" Type="int" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="BirthYear" Type="int" />
+          <Property Name="IsBirthYear" Type="int" />
+          <Property Name="BirthMonth" Type="int" />
+          <Property Name="IsBirthMonth" Type="int" />
+          <Property Name="BirthDay" Type="int" />
+          <Property Name="IsBirthDay" Type="int" />
+          <Property Name="Nationality" Type="int" />
+          <Property Name="IsNationality" Type="int" />
+          <Property Name="Street" Type="nvarchar" MaxLength="300" />
+          <Property Name="LocationID" Type="int" />
+          <Property Name="DistrictID" Type="int" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="ProvinceID" Type="int" />
+          <Property Name="CountryID" Type="int" />
+          <Property Name="MSN" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsMsn" Type="int" />
+          <Property Name="QQ" Type="varchar" MaxLength="30" />
+          <Property Name="IsQQ" Type="int" />
+          <Property Name="Postal" Type="nvarchar" MaxLength="300" />
+          <Property Name="IsPostal" Type="int" />
+          <Property Name="Zip" Type="varchar" MaxLength="30" />
+          <Property Name="IsZip" Type="int" />
+          <Property Name="Tel" Type="varchar" MaxLength="50" />
+          <Property Name="IsTel" Type="int" />
+          <Property Name="Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="IsMobile" Type="int" />
+          <Property Name="Profile" Type="text" />
+          <Property Name="Weibo" Type="varchar" MaxLength="300" />
+          <Property Name="IsWeibo" Type="int" />
+          <Property Name="PersonalURL" Type="varchar" MaxLength="300" />
+          <Property Name="IsPersonalURL" Type="int" />
+          <Property Name="StartYear" Type="int" />
+          <Property Name="IsUserYogaType" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsUserYogaPlace" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsYogisMap" Type="bit" />
+          <Property Name="GudWords" Type="nvarchar" MaxLength="500" />
+          <Property Name="DisplayImg" Type="varchar" MaxLength="300" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="Ulevel" Type="int" Nullable="false" />
+          <Property Name="Uscore" Type="int" Nullable="false" />
+          <Property Name="AlipayUser" Type="varchar" MaxLength="50" />
+          <Property Name="UpgradeDate" Type="datetime" />
+          <Property Name="YogaTypeid" Type="varchar" MaxLength="300" />
+          <Property Name="iZan" Type="int" />
+          <Property Name="IsUserWeeknumber" Type="varchar" MaxLength="300" />
+          <Property Name="sContent" Type="varchar" MaxLength="300" />
+          <Property Name="knowledge" Type="varchar" MaxLength="300" />
+          <Property Name="Covimg" Type="nvarchar" MaxLength="200" />
+          <Property Name="delState" Type="int" />
+        </EntityType>
+        <EntityType Name="YogiProfile">
+          <Key>
+            <PropertyRef Name="ProfileID" />
+          </Key>
+          <Property Name="ProfileID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="IDType" Type="varchar" MaxLength="50" />
+          <Property Name="IDNum" Type="varchar" MaxLength="50" />
+          <Property Name="IDPhoto" Type="varchar" MaxLength="100" />
+          <Property Name="IDScan" Type="varchar" MaxLength="100" />
+          <Property Name="IDScanF" Type="varchar" MaxLength="100" />
+          <Property Name="Diploma" Type="nvarchar(max)" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="UpgradeDate" Type="datetime" Nullable="false" />
+          <Property Name="sMemo" Type="nvarchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="YogisModels">
+          <Key>
+            <PropertyRef Name="YID" />
+          </Key>
+          <Property Name="YID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UID" Type="int" Nullable="false" />
+          <Property Name="RealName" Type="nvarchar" MaxLength="100" />
+          <Property Name="Gender" Type="int" />
+          <Property Name="Headid" Type="int" />
+          <Property Name="CenterID" Type="varchar" MaxLength="100" />
+          <Property Name="YogaTypeid" Type="varchar" MaxLength="300" />
+          <Property Name="TeachYogis" Type="varchar" MaxLength="100" />
+          <Property Name="EachClassCost" Type="varchar" MaxLength="200" />
+          <Property Name="IdType" Type="varchar" MaxLength="100" />
+          <Property Name="IdCardNum" Type="varchar" MaxLength="100" />
+          <Property Name="StartTeachYear" Type="datetime" />
+          <Property Name="Nationality" Type="varchar" MaxLength="50" />
+          <Property Name="Street" Type="nvarchar" MaxLength="300" />
+          <Property Name="LocationID" Type="int" />
+          <Property Name="DistrictID" Type="int" />
+          <Property Name="CityID" Type="int" />
+          <Property Name="ProvinceID" Type="int" />
+          <Property Name="CountryID" Type="int" />
+          <Property Name="YogisLevel" Type="int" />
+          <Property Name="YogiStatus" Type="int" />
+          <Property Name="BecomeYogisTime" Type="datetime" />
+          <Property Name="YogisScore" Type="int" />
+          <Property Name="DisplayImg" Type="varchar" MaxLength="300" />
+          <Property Name="IsPayRecord" Type="bit" />
+          <Property Name="Profileid" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="UpgradeDate" Type="datetime" />
+          <Property Name="IsAcceptAgreement" Type="bit" />
+          <Property Name="YogisDepict" Type="nvarchar(max)" />
+          <Property Name="GudWords" Type="nvarchar" MaxLength="500" />
+          <Property Name="iRate" Type="int" />
+          <Property Name="CoverImg" Type="nvarchar" MaxLength="600" />
+          <Property Name="delState" Type="int" />
+          <Property Name="Leveldetails" Type="nvarchar" MaxLength="20" />
+          <Property Name="iZan" Type="int" />
+        </EntityType>
+        <Association Name="FK_dbo_ClassFile_dbo_ClassReport_ReportId">
+          <End Role="ClassReport" Type="Self.ClassReport" Multiplicity="1" />
+          <End Role="ClassFile" Type="Self.ClassFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassReport">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassFile">
+              <PropertyRef Name="ReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ClassReport_dbo_Class_ClassId">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="ClassReport" Type="Self.ClassReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassReport">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ClassTeacher_dbo_Class_Class_Id">
+          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+          <End Role="ClassTeacher" Type="Self.ClassTeacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassTeacher">
+              <PropertyRef Name="Class_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ClassTopic_dbo_Class_ClassID">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="ClassTopic" Type="Self.ClassTopic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassTopic">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_InterestedClass_dbo_Class_ClassId">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="InterestedClass" Type="Self.InterestedClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterestedClass">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_dbo_Class_ClassId">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Fk_QuiltUidasFollow">
+          <End Role="YogaUser" Type="Self.YogaUser" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YogaUser">
+              <PropertyRef Name="Uid" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="QuiltUid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UID">
+          <End Role="YogaUser" Type="Self.YogaUser" Multiplicity="1" />
+          <End Role="YogisModels" Type="Self.YogisModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YogaUser">
+              <PropertyRef Name="Uid" />
+            </Principal>
+            <Dependent Role="YogisModels">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UseruidasFollow">
+          <End Role="YogaUser" Type="Self.YogaUser" Multiplicity="1" />
+          <End Role="Follow" Type="Self.Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YogaUser">
+              <PropertyRef Name="Uid" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="Uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="iyogakoodbModelStoreContainer">
+          <EntitySet Name="CartItem" EntityType="Self.CartItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Centers" EntityType="Self.Centers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CenterStare" EntityType="Self.CenterStare" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Class" EntityType="Self.Class" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassDetail" EntityType="Self.ClassDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassFile" EntityType="Self.ClassFile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassReport" EntityType="Self.ClassReport" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassTeacher" EntityType="Self.ClassTeacher" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClassTopic" EntityType="Self.ClassTopic" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Evaluates" EntityType="Self.Evaluates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Follow" EntityType="Self.Follow" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InterestedClass" EntityType="Self.InterestedClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LevelOrder" EntityType="Self.LevelOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Space" EntityType="Self.Space" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tBanner" EntityType="Self.tBanner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tInstationInfo" EntityType="Self.tInstationInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tKeyWord" EntityType="Self.tKeyWord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tLearing" EntityType="Self.tLearing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tMessage" EntityType="Self.tMessage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tQuestion" EntityType="Self.tQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tSign" EntityType="Self.tSign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tUserLoginInfo" EntityType="Self.tUserLoginInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tWriteLog" EntityType="Self.tWriteLog" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tZanModels" EntityType="Self.tZanModels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YogaArtClass" EntityType="Self.YogaArtClass" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YogaArticle" EntityType="Self.YogaArticle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YogaDicItem" EntityType="Self.YogaDicItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YogaMenus" EntityType="Self.YogaMenus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YogaPicture" EntityType="Self.YogaPicture" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YogaUser" EntityType="Self.YogaUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YogaUserDetail" EntityType="Self.YogaUserDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YogiProfile" EntityType="Self.YogiProfile" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YogisModels" EntityType="Self.YogisModels" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_ClassFile_dbo_ClassReport_ReportId" Association="Self.FK_dbo_ClassFile_dbo_ClassReport_ReportId">
+            <End Role="ClassReport" EntitySet="ClassReport" />
+            <End Role="ClassFile" EntitySet="ClassFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ClassReport_dbo_Class_ClassId" Association="Self.FK_dbo_ClassReport_dbo_Class_ClassId">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="ClassReport" EntitySet="ClassReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ClassTeacher_dbo_Class_Class_Id" Association="Self.FK_dbo_ClassTeacher_dbo_Class_Class_Id">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="ClassTeacher" EntitySet="ClassTeacher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ClassTopic_dbo_Class_ClassID" Association="Self.FK_dbo_ClassTopic_dbo_Class_ClassID">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="ClassTopic" EntitySet="ClassTopic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_InterestedClass_dbo_Class_ClassId" Association="Self.FK_dbo_InterestedClass_dbo_Class_ClassId">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="InterestedClass" EntitySet="InterestedClass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_dbo_Class_ClassId" Association="Self.FK_dbo_Order_dbo_Class_ClassId">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="Fk_QuiltUidasFollow" Association="Self.Fk_QuiltUidasFollow">
+            <End Role="YogaUser" EntitySet="YogaUser" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UID" Association="Self.FK_UID">
+            <End Role="YogaUser" EntitySet="YogaUser" />
+            <End Role="YogisModels" EntitySet="YogisModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UseruidasFollow" Association="Self.FK_UseruidasFollow">
+            <End Role="YogaUser" EntitySet="YogaUser" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="iyogakoodbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CartItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SellerID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="ObjectID" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ObjectImage" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="ClassTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Seller_UID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="User_UID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          </EntityType>
+        <EntityType Name="Centers">
+          <Key>
+            <PropertyRef Name="CenterId" />
+          </Key>
+          <Property Name="CenterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uid" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="CenterName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CenterAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DistrictID" Type="Int32" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="ProvinceID" Type="Int32" />
+          <Property Name="CountryID" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpgradeDate" Type="DateTime" Precision="3" />
+          <Property Name="CenterProfile" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="OpenTime" Type="DateTime" Precision="3" />
+          <Property Name="CloseTime" Type="DateTime" Precision="3" />
+          <Property Name="CenterType" Type="String" MaxLength="20" Unicode="false" FixedLength="false" />
+          <Property Name="CenterBanner" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CenterIntroduction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="CenterPortrait" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="YogaTypeid" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CenterState" Type="Int32" />
+          <Property Name="CenterSource" Type="Int32" />
+        </EntityType>
+        <EntityType Name="Class">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YogaTypeID" Type="Int32" Nullable="false" />
+          <Property Name="Summary" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Banner" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Start" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="DurationUnit" Type="Int32" Nullable="false" />
+          <Property Name="AreaID" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsItem" Type="Boolean" Nullable="false" />
+          <Property Name="ItemClassID" Type="Int32" Nullable="false" />
+          <Property Name="Max" Type="Int32" Nullable="false" />
+          <Property Name="ClassType" Type="Int32" Nullable="false" />
+          <Property Name="ClassStatus" Type="Int32" Nullable="false" />
+          <Property Name="NoPassMsg" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Name" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TopicIds" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Tags" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClassReport" Relationship="Self.FK_dbo_ClassReport_dbo_Class_ClassId" FromRole="Class" ToRole="ClassReport" />
+          <NavigationProperty Name="ClassTeacher" Relationship="Self.FK_dbo_ClassTeacher_dbo_Class_Class_Id" FromRole="Class" ToRole="ClassTeacher" />
+          <NavigationProperty Name="ClassTopic" Relationship="Self.FK_dbo_ClassTopic_dbo_Class_ClassID" FromRole="Class" ToRole="ClassTopic" />
+          <NavigationProperty Name="InterestedClass" Relationship="Self.FK_dbo_InterestedClass_dbo_Class_ClassId" FromRole="Class" ToRole="InterestedClass" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_dbo_Order_dbo_Class_ClassId" FromRole="Class" ToRole="Order" />
+          <NavigationProperty Name="User" Relationship="iyogakoodbModel.YogaUserClass" FromRole="Class" ToRole="YogaUser" />
+          <Property Name="iReadNums" Type="Int32" />
+          <Property Name="CloseTime" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="EndTime" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="MessageDes" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="CenterID" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="FieldID" Type="Int32" />
+          <Property Name="iShareNums" Type="Int32" />
+        </EntityType>
+        <EntityType Name="ClassFile">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Url" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ExtendName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="ReportId" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ClassReport" Relationship="Self.FK_dbo_ClassFile_dbo_ClassReport_ReportId" FromRole="ClassFile" ToRole="ClassReport" />
+        </EntityType>
+        <EntityType Name="ClassReport">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_dbo_ClassReport_dbo_Class_ClassId" FromRole="ClassReport" ToRole="Class" />
+          <NavigationProperty Name="ClassFile" Relationship="Self.FK_dbo_ClassFile_dbo_ClassReport_ReportId" FromRole="ClassReport" ToRole="ClassFile" />
+        </EntityType>
+        <EntityType Name="ClassTeacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Gender" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Country" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="YogaSystem" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Info" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Class_Id" Type="Int32" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_dbo_ClassTeacher_dbo_Class_Class_Id" FromRole="ClassTeacher" ToRole="Class" />
+          <Property Name="TeacherId" Type="Int32" />
+          <Property Name="Avatar" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ClassTopic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="TopicID" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_dbo_ClassTopic_dbo_Class_ClassID" FromRole="ClassTopic" ToRole="Class" />
+        </EntityType>
+        <EntityType Name="Follow">
+          <Key>
+            <PropertyRef Name="Followid" />
+          </Key>
+          <Property Name="Followid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uid" Type="Int32" Nullable="false" />
+          <Property Name="QuiltUid" Type="Int32" Nullable="false" />
+          <Property Name="FollowDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="QuiltCenterID" Type="Int32" />
+          <Property Name="isfollow" Type="Boolean" />
+          <Property Name="iType" Type="Int32" />
+          <NavigationProperty Name="YogaUser" Relationship="iyogakoodbModel.Fk_QuiltUidasFollow" FromRole="Follow" ToRole="YogaUser" />
+          <NavigationProperty Name="YogaUser1" Relationship="iyogakoodbModel.FK_UseruidasFollow" FromRole="Follow" ToRole="YogaUser" />
+          <Property Name="loginType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="InterestedClass">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_dbo_InterestedClass_dbo_Class_ClassId" FromRole="InterestedClass" ToRole="Class" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="Double" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PayAccount" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Payment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsPaid" Type="Boolean" Nullable="false" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ClassId" Type="Int32" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Class" Relationship="Self.FK_dbo_Order_dbo_Class_ClassId" FromRole="Order" ToRole="Class" />
+          <Property Name="PayTime" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="PayNO" Type="String" FixedLength="false" MaxLength="32" Nullable="true" Unicode="false" />
+          <Property Name="PayDomain" Type="String" FixedLength="false" MaxLength="100" Nullable="true" Unicode="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="openid" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          </EntityType>
+        <EntityType Name="Space">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="300" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PersonNum" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsDefault" Type="Boolean" Nullable="false" />
+          <Property Name="Point" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="OwnerID" Type="Int32" Nullable="false" />
+          <Property Name="OpenTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CloseTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PriceOfDay" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PriceOfHour" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PriceOfMonth" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IsRenting" Type="Boolean" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="YogaArtClass">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IsDelete" Type="Int32" Nullable="false" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ParentID" Type="Int32" />
+        </EntityType>
+        <EntityType Name="YogaArticle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClassID" Type="Int32" Nullable="false" />
+          <Property Name="ArticleTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ArticleCon" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CheckID" Type="Int32" Nullable="false" />
+          <Property Name="IsCheck" Type="Int32" Nullable="false" />
+          <Property Name="Uid" Type="Int32" />
+          <Property Name="Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Creator" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDelete" Type="Int32" Nullable="false" />
+          <Property Name="IsPicture" Type="Int32" Nullable="false" />
+          <Property Name="PicPath" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="YogaDicItem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DicId" Type="Int32" Nullable="false" />
+          <Property Name="ItemName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ItemValue" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="SortId" Type="Int32" Nullable="false" />
+          <Property Name="IsUse" Type="Int32" Nullable="false" />
+          <Property Name="IsDelete" Type="Int32" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="YogaPicture">
+          <Key>
+            <PropertyRef Name="Pid" />
+          </Key>
+          <Property Name="Pid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PictureType" Type="Int32" />
+          <Property Name="Uid" Type="Int32" Nullable="false" />
+          <Property Name="AlbumId" Type="Int32" />
+          <Property Name="EvaluateId" Type="Int32" />
+          <Property Name="Comid" Type="Int32" />
+          <Property Name="PictureName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PictureContent" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PictureOriginal" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PictureLarge" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="PictureMiddle" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="PictureSmall" Type="String" MaxLength="300" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PircureSize" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="CommentCount" Type="Int32" />
+          <Property Name="LikeCount" Type="Int32" />
+          <Property Name="NotLikeCount" Type="Int32" />
+          <Property Name="CommentLimite" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateUser" Type="Int32" />
+          <Property Name="LastChangeTime" Type="DateTime" Precision="3" />
+          <Property Name="HitNum" Type="Int32" />
+          <Property Name="iAudio" Type="Int32" />
+        </EntityType>
+        <EntityType Name="YogiProfile">
+          <Key>
+            <PropertyRef Name="ProfileID" />
+          </Key>
+          <Property Name="ProfileID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="IDType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDNum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IDPhoto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IDScan" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IDScanF" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Diploma" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpgradeDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="sMemo" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_dbo_ClassReport_dbo_Class_ClassId">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="ClassReport" Type="Self.ClassReport" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassReport">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ClassTeacher_dbo_Class_Class_Id">
+          <End Role="Class" Type="Self.Class" Multiplicity="0..1" />
+          <End Role="ClassTeacher" Type="Self.ClassTeacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassTeacher">
+              <PropertyRef Name="Class_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ClassTopic_dbo_Class_ClassID">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="ClassTopic" Type="Self.ClassTopic" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassTopic">
+              <PropertyRef Name="ClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_InterestedClass_dbo_Class_ClassId">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="InterestedClass" Type="Self.InterestedClass" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="InterestedClass">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Order_dbo_Class_ClassId">
+          <End Role="Class" Type="Self.Class" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Class">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ClassId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_ClassFile_dbo_ClassReport_ReportId">
+          <End Role="ClassReport" Type="Self.ClassReport" Multiplicity="1" />
+          <End Role="ClassFile" Type="Self.ClassFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClassReport">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClassFile">
+              <PropertyRef Name="ReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="iyogakoodbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CartItem" EntityType="Self.CartItem" />
+          <EntitySet Name="Centers" EntityType="Self.Centers" />
+          <EntitySet Name="Class" EntityType="Self.Class" />
+          <EntitySet Name="ClassFile" EntityType="Self.ClassFile" />
+          <EntitySet Name="ClassReport" EntityType="Self.ClassReport" />
+          <EntitySet Name="ClassTeacher" EntityType="Self.ClassTeacher" />
+          <EntitySet Name="ClassTopic" EntityType="Self.ClassTopic" />
+          <EntitySet Name="Follow" EntityType="Self.Follow" />
+          <EntitySet Name="InterestedClass" EntityType="Self.InterestedClass" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="Space" EntityType="Self.Space" />
+          <EntitySet Name="YogaArtClass" EntityType="Self.YogaArtClass" />
+          <EntitySet Name="YogaArticle" EntityType="Self.YogaArticle" />
+          <EntitySet Name="YogaDicItem" EntityType="Self.YogaDicItem" />
+          <EntitySet Name="YogaPicture" EntityType="Self.YogaPicture" />
+          <EntitySet Name="YogiProfile" EntityType="Self.YogiProfile" />
+          <AssociationSet Name="FK_dbo_ClassReport_dbo_Class_ClassId" Association="Self.FK_dbo_ClassReport_dbo_Class_ClassId">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="ClassReport" EntitySet="ClassReport" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ClassTeacher_dbo_Class_Class_Id" Association="Self.FK_dbo_ClassTeacher_dbo_Class_Class_Id">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="ClassTeacher" EntitySet="ClassTeacher" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ClassTopic_dbo_Class_ClassID" Association="Self.FK_dbo_ClassTopic_dbo_Class_ClassID">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="ClassTopic" EntitySet="ClassTopic" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_InterestedClass_dbo_Class_ClassId" Association="Self.FK_dbo_InterestedClass_dbo_Class_ClassId">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="InterestedClass" EntitySet="InterestedClass" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Order_dbo_Class_ClassId" Association="Self.FK_dbo_Order_dbo_Class_ClassId">
+            <End Role="Class" EntitySet="Class" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_ClassFile_dbo_ClassReport_ReportId" Association="Self.FK_dbo_ClassFile_dbo_ClassReport_ReportId">
+            <End Role="ClassReport" EntitySet="ClassReport" />
+            <End Role="ClassFile" EntitySet="ClassFile" />
+          </AssociationSet>
+          <EntitySet Name="YogaMenus" EntityType="iyogakoodbModel.YogaMenus" />
+          <EntitySet Name="tMessage" EntityType="iyogakoodbModel.tMessage" />
+          <EntitySet Name="tBanner" EntityType="iyogakoodbModel.tBanner" />
+          <EntitySet Name="tWriteLog" EntityType="iyogakoodbModel.tWriteLog" />
+          <EntitySet Name="CenterStare" EntityType="iyogakoodbModel.CenterStare" />
+          <EntitySet Name="Evaluates" EntityType="iyogakoodbModel.Evaluates" />
+          <EntitySet Name="tZanModels" EntityType="iyogakoodbModel.tZanModels" />
+          <EntitySet Name="YogisModels" EntityType="iyogakoodbModel.YogisModels" />
+          <EntitySet Name="YogaUserDetail" EntityType="iyogakoodbModel.YogaUserDetail" />
+          <EntitySet Name="YogaUser" EntityType="iyogakoodbModel.YogaUser" />
+          <AssociationSet Name="Fk_QuiltUidasFollow" Association="iyogakoodbModel.Fk_QuiltUidasFollow">
+            <End Role="YogaUser" EntitySet="YogaUser" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UseruidasFollow" Association="iyogakoodbModel.FK_UseruidasFollow">
+            <End Role="YogaUser" EntitySet="YogaUser" />
+            <End Role="Follow" EntitySet="Follow" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UID" Association="iyogakoodbModel.FK_UID">
+            <End Role="YogaUser" EntitySet="YogaUser" />
+            <End Role="YogisModels" EntitySet="YogisModels" />
+          </AssociationSet>
+          <AssociationSet Name="YogaUserClass" Association="iyogakoodbModel.YogaUserClass">
+            <End Role="YogaUser" EntitySet="YogaUser" />
+            <End Role="Class" EntitySet="Class" />
+          </AssociationSet>
+          <EntitySet Name="tLearing" EntityType="iyogakoodbModel.tLearing" />
+          <EntitySet Name="tSign" EntityType="iyogakoodbModel.tSign" />
+          <EntitySet Name="LevelOrder" EntityType="iyogakoodbModel.LevelOrder" />
+          <EntitySet Name="tUserLoginInfo" EntityType="iyogakoodbModel.tUserLoginInfo" />
+          <EntitySet Name="tInstationInfo" EntityType="iyogakoodbModel.tInstationInfo" />
+          <EntitySet Name="tQuestion" EntityType="iyogakoodbModel.tQuestion" />
+          <EntitySet Name="tKeyWord" EntityType="iyogakoodbModel.tKeyWord" />
+          <EntitySet Name="ClassDetail" EntityType="iyogakoodbModel.ClassDetail" />
+          </EntityContainer>
+        <EntityType Name="YogaMenus">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pid" Type="Int32" />
+          <Property Name="state" Type="Int32" />
+          <Property Name="url" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ordervalue" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tMessage">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToUid" Type="Int32" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FromUid" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="iZan" Type="Int32" />
+          <Property Name="iAudio" Type="Int32" />
+          <Property Name="ToType" Type="Int32" />
+          <Property Name="FormType" Type="Int32" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="photo" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Toid" Type="Int32" />
+          <Property Name="loginType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tBanner">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="spic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="sUrl" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="iType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tWriteLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uid" Type="Int32" />
+          <Property Name="sTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ifShow" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="iReadNums" Type="Int32" />
+          <Property Name="ifpush" Type="Boolean" />
+          <Property Name="ValueType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="CenterStare">
+          <Key>
+            <PropertyRef Name="Sid" />
+          </Key>
+          <Property Name="Sid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="Centerclass" Type="Int32" Nullable="false" />
+          <Property Name="Service" Type="Int32" Nullable="false" />
+          <Property Name="Env" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Uid" Type="Int32" Nullable="false" />
+          <Property Name="Mid" Type="Int32" Nullable="false" />
+          <Property Name="Satate" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Evaluates">
+          <Key>
+            <PropertyRef Name="Evaluateid" />
+          </Key>
+          <Property Name="Evaluateid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ToUid" Type="Int32" />
+          <Property Name="FromUid" Type="Int32" />
+          <Property Name="iZan" Type="Int32" />
+          <Property Name="iShow" Type="Int32" />
+          <Property Name="ParentID" Type="Int32" />
+          <Property Name="Recommend" Type="Int32" />
+          <Property Name="Pic" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tZanModels">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="iFromUid" Type="Int32" />
+          <Property Name="iToUid" Type="Int32" />
+          <Property Name="iType" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="iToType" Type="Int32" />
+          <Property Name="ToUid" Type="Int32" />
+          <Property Name="loginType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="YogisModels">
+          <Key>
+            <PropertyRef Name="YID" />
+          </Key>
+          <Property Name="YID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="RealName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="Headid" Type="Int32" />
+          <Property Name="CenterID" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="YogaTypeid" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="TeachYogis" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EachClassCost" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="IdType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="IdCardNum" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StartTeachYear" Type="DateTime" Precision="3" />
+          <Property Name="Nationality" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Street" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="LocationID" Type="Int32" />
+          <Property Name="DistrictID" Type="Int32" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="ProvinceID" Type="Int32" />
+          <Property Name="CountryID" Type="Int32" />
+          <Property Name="YogisLevel" Type="Int32" />
+          <Property Name="YogiStatus" Type="Int32" />
+          <Property Name="BecomeYogisTime" Type="DateTime" Precision="3" />
+          <Property Name="YogisScore" Type="Int32" />
+          <Property Name="DisplayImg" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="IsPayRecord" Type="Boolean" />
+          <Property Name="Profileid" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="UpgradeDate" Type="DateTime" Precision="3" />
+          <Property Name="IsAcceptAgreement" Type="Boolean" />
+          <Property Name="YogisDepict" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="GudWords" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="iRate" Type="Int32" />
+          <Property Name="CoverImg" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <Property Name="delState" Type="Int32" />
+          <Property Name="Leveldetails" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="iZan" Type="Int32" />
+          <NavigationProperty Name="YogaUser" Relationship="iyogakoodbModel.FK_UID" FromRole="YogisModels" ToRole="YogaUser" />
+        </EntityType>
+        <EntityType Name="YogaUserDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="RealName_cn" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsRealName_cn" Type="Int32" />
+          <Property Name="RealName_en" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsRealName_en" Type="Int32" />
+          <Property Name="Gender" Type="Int32" />
+          <Property Name="BirthYear" Type="Int32" />
+          <Property Name="IsBirthYear" Type="Int32" />
+          <Property Name="BirthMonth" Type="Int32" />
+          <Property Name="IsBirthMonth" Type="Int32" />
+          <Property Name="BirthDay" Type="Int32" />
+          <Property Name="IsBirthDay" Type="Int32" />
+          <Property Name="Nationality" Type="Int32" />
+          <Property Name="IsNationality" Type="Int32" />
+          <Property Name="Street" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="LocationID" Type="Int32" />
+          <Property Name="DistrictID" Type="Int32" />
+          <Property Name="CityID" Type="Int32" />
+          <Property Name="ProvinceID" Type="Int32" />
+          <Property Name="CountryID" Type="Int32" />
+          <Property Name="MSN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsMsn" Type="Int32" />
+          <Property Name="QQ" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IsQQ" Type="Int32" />
+          <Property Name="Postal" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="IsPostal" Type="Int32" />
+          <Property Name="Zip" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="IsZip" Type="Int32" />
+          <Property Name="Tel" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsTel" Type="Int32" />
+          <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="IsMobile" Type="Int32" />
+          <Property Name="Profile" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Weibo" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="IsWeibo" Type="Int32" />
+          <Property Name="PersonalURL" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="IsPersonalURL" Type="Int32" />
+          <Property Name="StartYear" Type="Int32" />
+          <Property Name="IsUserYogaType" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsUserYogaPlace" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="IsYogisMap" Type="Boolean" />
+          <Property Name="GudWords" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DisplayImg" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Ulevel" Type="Int32" Nullable="false" />
+          <Property Name="Uscore" Type="Int32" Nullable="false" />
+          <Property Name="AlipayUser" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UpgradeDate" Type="DateTime" Precision="3" />
+          <Property Name="YogaTypeid" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="iZan" Type="Int32" />
+          <Property Name="IsUserWeeknumber" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="sContent" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="knowledge" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="Covimg" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="delState" Type="Int32" />
+        </EntityType>
+        <EntityType Name="YogaUser">
+          <Key>
+            <PropertyRef Name="Uid" />
+          </Key>
+          <Property Name="Uid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Uphone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Pwd" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="NickName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RegDate" Type="DateTime" Precision="3" />
+          <Property Name="UStatus" Type="Int32" />
+          <Property Name="IsAssessor" Type="Boolean" />
+          <Property Name="IsWebworkers" Type="Boolean" />
+          <Property Name="LastDate" Type="DateTime" Precision="3" />
+          <Property Name="LastIP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LoginTimes" Type="Int32" />
+          <Property Name="UserType" Type="Int32" />
+          <Property Name="LoginType" Type="Int32" />
+          <Property Name="SinaAuthCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SinaBack" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QQAuthCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QQBack" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WechatAuthCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="WechatBack" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ValCode" Type="String" MaxLength="36" FixedLength="false" Unicode="false" />
+          <Property Name="ValExpire" Type="DateTime" Precision="3" />
+          <Property Name="delState" Type="Int32" />
+          <NavigationProperty Name="Follow" Relationship="iyogakoodbModel.Fk_QuiltUidasFollow" FromRole="YogaUser" ToRole="Follow" />
+          <NavigationProperty Name="Follow1" Relationship="iyogakoodbModel.FK_UseruidasFollow" FromRole="YogaUser" ToRole="Follow" />
+          <NavigationProperty Name="YogisModels" Relationship="iyogakoodbModel.FK_UID" FromRole="YogaUser" ToRole="YogisModels" />
+          <NavigationProperty Name="Classes" Relationship="iyogakoodbModel.YogaUserClass" FromRole="YogaUser" ToRole="Class" />
+          <Property Name="salt" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="InputType" Type="Int32" />
+          <Property Name="objectId" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="Fk_QuiltUidasFollow">
+          <End Type="iyogakoodbModel.YogaUser" Role="YogaUser" Multiplicity="1" />
+          <End Type="iyogakoodbModel.Follow" Role="Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YogaUser">
+              <PropertyRef Name="Uid" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="QuiltUid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UseruidasFollow">
+          <End Type="iyogakoodbModel.YogaUser" Role="YogaUser" Multiplicity="1" />
+          <End Type="iyogakoodbModel.Follow" Role="Follow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YogaUser">
+              <PropertyRef Name="Uid" />
+            </Principal>
+            <Dependent Role="Follow">
+              <PropertyRef Name="Uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UID">
+          <End Type="iyogakoodbModel.YogaUser" Role="YogaUser" Multiplicity="1" />
+          <End Type="iyogakoodbModel.YogisModels" Role="YogisModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YogaUser">
+              <PropertyRef Name="Uid" />
+            </Principal>
+            <Dependent Role="YogisModels">
+              <PropertyRef Name="UID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="YogaUserClass">
+          <End Type="iyogakoodbModel.YogaUser" Role="YogaUser" Multiplicity="1" />
+          <End Type="iyogakoodbModel.Class" Role="Class" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YogaUser">
+              <PropertyRef Name="Uid" />
+            </Principal>
+            <Dependent Role="Class">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tLearing">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uid" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="sPic" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="sTitle" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="iReadNums" Type="Int32" />
+          <Property Name="iWritelogNums" Type="Int32" />
+          <Property Name="iZanNums" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="iType" Type="Int32" />
+          <Property Name="sContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ifexamine" Type="Boolean" />
+          <Property Name="UrlType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tSign">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uid" Type="Int32" />
+          <Property Name="sMemo" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="iType" Type="Int32" />
+          <Property Name="iIntegral" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="true" Precision="3" />
+        </EntityType>
+        <EntityType Name="LevelOrder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LevelOrderID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="UID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="OrderState" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderScore" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrderDel" Type="Int32" Nullable="false" />
+          <Property Name="OriginalLevel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TargetLevel" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ManageID" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Remark1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remark2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tUserLoginInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uid" Type="Int32" />
+          <Property Name="sloginInfo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="LoginTime" Type="DateTime" Precision="3" />
+          <Property Name="QuitTime" Type="DateTime" Precision="3" />
+          <Property Name="NickName" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tInstationInfo">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uid" Type="Int32" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+          <Property Name="sContent" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Name="iType" Type="Int32" />
+          <Property Name="CreateUser" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ifDel" Type="Boolean" />
+          <Property Name="loginType" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tQuestion">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuestionContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TitleID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionTime" Type="DateTime" Precision="3" />
+          <Property Name="State" Type="Int32" />
+          <Property Name="Uid" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContactInformation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ReplyUid" Type="Int32" />
+          <Property Name="ReplyContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ReplyTime" Type="DateTime" Precision="3" />
+          <Property Name="IsFAQ" Type="Boolean" Nullable="false" />
+          <Property Name="BeFrom" Type="Int32" />
+          <Property Name="IsDelete" Type="Boolean" Nullable="false" />
+          <Property Name="Hot" Type="Boolean" Nullable="false" />
+          <Property Name="Mark" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Mark2" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tKeyWord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Uid" Type="Int32" />
+          <Property Name="sWord" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ClassDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Duration" Type="Int32" Nullable="false" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="CenterID" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="YID" Type="Int32" Nullable="false" />
+          <Property Name="Mark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Mark2" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UpdateTime" Type="DateTime" Precision="3" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="iyogakoodbModelStoreContainer" CdmEntityContainer="iyogakoodbEntities">
+          <EntitySetMapping Name="CartItem">
+            <EntityTypeMapping TypeName="iyogakoodbModel.CartItem">
+              <MappingFragment StoreEntitySet="CartItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="SellerID" ColumnName="SellerID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ObjectID" ColumnName="ObjectID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ObjectImage" ColumnName="ObjectImage" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="ClassTime" ColumnName="ClassTime" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Seller_UID" ColumnName="Seller_UID" />
+                <ScalarProperty Name="User_UID" ColumnName="User_UID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Centers">
+            <EntityTypeMapping TypeName="iyogakoodbModel.Centers">
+              <MappingFragment StoreEntitySet="Centers">
+                <ScalarProperty Name="CenterSource" ColumnName="CenterSource" />
+                <ScalarProperty Name="CenterState" ColumnName="CenterState" />
+                <ScalarProperty Name="YogaTypeid" ColumnName="YogaTypeid" />
+                <ScalarProperty Name="CenterPortrait" ColumnName="CenterPortrait" />
+                <ScalarProperty Name="CenterIntroduction" ColumnName="CenterIntroduction" />
+                <ScalarProperty Name="CenterBanner" ColumnName="CenterBanner" />
+                <ScalarProperty Name="CenterType" ColumnName="CenterType" />
+                <ScalarProperty Name="CenterId" ColumnName="CenterId" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="CenterName" ColumnName="CenterName" />
+                <ScalarProperty Name="CenterAddress" ColumnName="CenterAddress" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpgradeDate" ColumnName="UpgradeDate" />
+                <ScalarProperty Name="CenterProfile" ColumnName="CenterProfile" />
+                <ScalarProperty Name="OpenTime" ColumnName="OpenTime" />
+                <ScalarProperty Name="CloseTime" ColumnName="CloseTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Class">
+            <EntityTypeMapping TypeName="iyogakoodbModel.Class">
+              <MappingFragment StoreEntitySet="Class">
+                <ScalarProperty Name="iShareNums" ColumnName="iShareNums" />
+                <ScalarProperty Name="FieldID" ColumnName="FieldID" />
+                <ScalarProperty Name="CenterID" ColumnName="CenterID" />
+                <ScalarProperty Name="MessageDes" ColumnName="MessageDes" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="CloseTime" ColumnName="CloseTime" />
+                <ScalarProperty Name="iReadNums" ColumnName="iReadNums" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="YogaTypeID" ColumnName="YogaTypeID" />
+                <ScalarProperty Name="Summary" ColumnName="Summary" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Banner" ColumnName="Banner" />
+                <ScalarProperty Name="Start" ColumnName="Start" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="DurationUnit" ColumnName="DurationUnit" />
+                <ScalarProperty Name="AreaID" ColumnName="AreaID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="IsItem" ColumnName="IsItem" />
+                <ScalarProperty Name="ItemClassID" ColumnName="ItemClassID" />
+                <ScalarProperty Name="Max" ColumnName="Max" />
+                <ScalarProperty Name="ClassType" ColumnName="ClassType" />
+                <ScalarProperty Name="ClassStatus" ColumnName="ClassStatus" />
+                <ScalarProperty Name="NoPassMsg" ColumnName="NoPassMsg" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TopicIds" ColumnName="TopicIds" />
+                <ScalarProperty Name="Tags" ColumnName="Tags" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassFile">
+            <EntityTypeMapping TypeName="iyogakoodbModel.ClassFile">
+              <MappingFragment StoreEntitySet="ClassFile">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Url" ColumnName="Url" />
+                <ScalarProperty Name="ExtendName" ColumnName="ExtendName" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="ReportId" ColumnName="ReportId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassReport">
+            <EntityTypeMapping TypeName="iyogakoodbModel.ClassReport">
+              <MappingFragment StoreEntitySet="ClassReport">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassTeacher">
+            <EntityTypeMapping TypeName="iyogakoodbModel.ClassTeacher">
+              <MappingFragment StoreEntitySet="ClassTeacher">
+                <ScalarProperty Name="Avatar" ColumnName="Avatar" />
+                <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="YogaSystem" ColumnName="YogaSystem" />
+                <ScalarProperty Name="Info" ColumnName="Info" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Class_Id" ColumnName="Class_Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassTopic">
+            <EntityTypeMapping TypeName="iyogakoodbModel.ClassTopic">
+              <MappingFragment StoreEntitySet="ClassTopic">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="TopicID" ColumnName="TopicID" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Follow">
+            <EntityTypeMapping TypeName="iyogakoodbModel.Follow">
+              <MappingFragment StoreEntitySet="Follow">
+                <ScalarProperty Name="loginType" ColumnName="loginType" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="Followid" ColumnName="Followid" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="QuiltUid" ColumnName="QuiltUid" />
+                <ScalarProperty Name="FollowDate" ColumnName="FollowDate" />
+                <ScalarProperty Name="QuiltCenterID" ColumnName="QuiltCenterID" />
+                <ScalarProperty Name="isfollow" ColumnName="isfollow" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InterestedClass">
+            <EntityTypeMapping TypeName="iyogakoodbModel.InterestedClass">
+              <MappingFragment StoreEntitySet="InterestedClass">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="iyogakoodbModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="openid" ColumnName="openid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PayDomain" ColumnName="PayDomain" />
+                <ScalarProperty Name="PayNO" ColumnName="PayNO" />
+                <ScalarProperty Name="PayTime" ColumnName="PayTime" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Number" ColumnName="Number" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="PayAccount" ColumnName="PayAccount" />
+                <ScalarProperty Name="Payment" ColumnName="Payment" />
+                <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClassId" ColumnName="ClassId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Space">
+            <EntityTypeMapping TypeName="iyogakoodbModel.Space">
+              <MappingFragment StoreEntitySet="Space">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PersonNum" ColumnName="PersonNum" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="IsDefault" ColumnName="IsDefault" />
+                <ScalarProperty Name="Point" ColumnName="Point" />
+                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+                <ScalarProperty Name="OpenTime" ColumnName="OpenTime" />
+                <ScalarProperty Name="CloseTime" ColumnName="CloseTime" />
+                <ScalarProperty Name="PriceOfDay" ColumnName="PriceOfDay" />
+                <ScalarProperty Name="PriceOfHour" ColumnName="PriceOfHour" />
+                <ScalarProperty Name="PriceOfMonth" ColumnName="PriceOfMonth" />
+                <ScalarProperty Name="IsRenting" ColumnName="IsRenting" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YogaArtClass">
+            <EntityTypeMapping TypeName="iyogakoodbModel.YogaArtClass">
+              <MappingFragment StoreEntitySet="YogaArtClass">
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClassName" ColumnName="ClassName" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YogaArticle">
+            <EntityTypeMapping TypeName="iyogakoodbModel.YogaArticle">
+              <MappingFragment StoreEntitySet="YogaArticle">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClassID" ColumnName="ClassID" />
+                <ScalarProperty Name="ArticleTitle" ColumnName="ArticleTitle" />
+                <ScalarProperty Name="ArticleCon" ColumnName="ArticleCon" />
+                <ScalarProperty Name="CheckID" ColumnName="CheckID" />
+                <ScalarProperty Name="IsCheck" ColumnName="IsCheck" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="Author" ColumnName="Author" />
+                <ScalarProperty Name="Creator" ColumnName="Creator" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="IsPicture" ColumnName="IsPicture" />
+                <ScalarProperty Name="PicPath" ColumnName="PicPath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YogaDicItem">
+            <EntityTypeMapping TypeName="iyogakoodbModel.YogaDicItem">
+              <MappingFragment StoreEntitySet="YogaDicItem">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="DicId" ColumnName="DicId" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemValue" ColumnName="ItemValue" />
+                <ScalarProperty Name="SortId" ColumnName="SortId" />
+                <ScalarProperty Name="IsUse" ColumnName="IsUse" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YogaPicture">
+            <EntityTypeMapping TypeName="iyogakoodbModel.YogaPicture">
+              <MappingFragment StoreEntitySet="YogaPicture">
+                <ScalarProperty Name="iAudio" ColumnName="iAudio" />
+                <ScalarProperty Name="Pid" ColumnName="Pid" />
+                <ScalarProperty Name="PictureType" ColumnName="PictureType" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="AlbumId" ColumnName="AlbumId" />
+                <ScalarProperty Name="EvaluateId" ColumnName="EvaluateId" />
+                <ScalarProperty Name="Comid" ColumnName="Comid" />
+                <ScalarProperty Name="PictureName" ColumnName="PictureName" />
+                <ScalarProperty Name="PictureContent" ColumnName="PictureContent" />
+                <ScalarProperty Name="PictureOriginal" ColumnName="PictureOriginal" />
+                <ScalarProperty Name="PictureLarge" ColumnName="PictureLarge" />
+                <ScalarProperty Name="PictureMiddle" ColumnName="PictureMiddle" />
+                <ScalarProperty Name="PictureSmall" ColumnName="PictureSmall" />
+                <ScalarProperty Name="PircureSize" ColumnName="PircureSize" />
+                <ScalarProperty Name="CommentCount" ColumnName="CommentCount" />
+                <ScalarProperty Name="LikeCount" ColumnName="LikeCount" />
+                <ScalarProperty Name="NotLikeCount" ColumnName="NotLikeCount" />
+                <ScalarProperty Name="CommentLimite" ColumnName="CommentLimite" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="LastChangeTime" ColumnName="LastChangeTime" />
+                <ScalarProperty Name="HitNum" ColumnName="HitNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YogiProfile">
+            <EntityTypeMapping TypeName="iyogakoodbModel.YogiProfile">
+              <MappingFragment StoreEntitySet="YogiProfile">
+                <ScalarProperty Name="sMemo" ColumnName="sMemo" />
+                <ScalarProperty Name="ProfileID" ColumnName="ProfileID" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="IDType" ColumnName="IDType" />
+                <ScalarProperty Name="IDNum" ColumnName="IDNum" />
+                <ScalarProperty Name="IDPhoto" ColumnName="IDPhoto" />
+                <ScalarProperty Name="IDScan" ColumnName="IDScan" />
+                <ScalarProperty Name="IDScanF" ColumnName="IDScanF" />
+                <ScalarProperty Name="Diploma" ColumnName="Diploma" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="UpgradeDate" ColumnName="UpgradeDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YogaMenus">
+            <EntityTypeMapping TypeName="iyogakoodbModel.YogaMenus">
+              <MappingFragment StoreEntitySet="YogaMenus">
+                <ScalarProperty Name="ordervalue" ColumnName="ordervalue" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="state" ColumnName="state" />
+                <ScalarProperty Name="pid" ColumnName="pid" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tMessage">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tMessage">
+              <MappingFragment StoreEntitySet="tMessage">
+                <ScalarProperty Name="loginType" ColumnName="loginType" />
+                <ScalarProperty Name="Toid" ColumnName="Toid" />
+                <ScalarProperty Name="photo" ColumnName="photo" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="FormType" ColumnName="FormType" />
+                <ScalarProperty Name="ToType" ColumnName="ToType" />
+                <ScalarProperty Name="iAudio" ColumnName="iAudio" />
+                <ScalarProperty Name="iZan" ColumnName="iZan" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="FromUid" ColumnName="FromUid" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="ToUid" ColumnName="ToUid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tBanner">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tBanner">
+              <MappingFragment StoreEntitySet="tBanner">
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="sUrl" ColumnName="sUrl" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="spic" ColumnName="spic" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tWriteLog">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tWriteLog">
+              <MappingFragment StoreEntitySet="tWriteLog">
+                <ScalarProperty Name="ValueType" ColumnName="ValueType" />
+                <ScalarProperty Name="ifpush" ColumnName="ifpush" />
+                <ScalarProperty Name="iReadNums" ColumnName="iReadNums" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ifShow" ColumnName="ifShow" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="sTitle" ColumnName="sTitle" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CenterStare">
+            <EntityTypeMapping TypeName="iyogakoodbModel.CenterStare">
+              <MappingFragment StoreEntitySet="CenterStare">
+                <ScalarProperty Name="Satate" ColumnName="Satate" />
+                <ScalarProperty Name="Mid" ColumnName="Mid" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Env" ColumnName="Env" />
+                <ScalarProperty Name="Service" ColumnName="Service" />
+                <ScalarProperty Name="Centerclass" ColumnName="Centerclass" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Sid" ColumnName="Sid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Evaluates">
+            <EntityTypeMapping TypeName="iyogakoodbModel.Evaluates">
+              <MappingFragment StoreEntitySet="Evaluates">
+                <ScalarProperty Name="Pic" ColumnName="Pic" />
+                <ScalarProperty Name="Recommend" ColumnName="Recommend" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
+                <ScalarProperty Name="iShow" ColumnName="iShow" />
+                <ScalarProperty Name="iZan" ColumnName="iZan" />
+                <ScalarProperty Name="FromUid" ColumnName="FromUid" />
+                <ScalarProperty Name="ToUid" ColumnName="ToUid" />
+                <ScalarProperty Name="EContent" ColumnName="EContent" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Evaluateid" ColumnName="Evaluateid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tZanModels">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tZanModels">
+              <MappingFragment StoreEntitySet="tZanModels">
+                <ScalarProperty Name="loginType" ColumnName="loginType" />
+                <ScalarProperty Name="ToUid" ColumnName="ToUid" />
+                <ScalarProperty Name="iToType" ColumnName="iToType" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="iToUid" ColumnName="iToUid" />
+                <ScalarProperty Name="iFromUid" ColumnName="iFromUid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YogisModels">
+            <EntityTypeMapping TypeName="iyogakoodbModel.YogisModels">
+              <MappingFragment StoreEntitySet="YogisModels">
+                <ScalarProperty Name="iZan" ColumnName="iZan" />
+                <ScalarProperty Name="Leveldetails" ColumnName="Leveldetails" />
+                <ScalarProperty Name="delState" ColumnName="delState" />
+                <ScalarProperty Name="CoverImg" ColumnName="CoverImg" />
+                <ScalarProperty Name="iRate" ColumnName="iRate" />
+                <ScalarProperty Name="GudWords" ColumnName="GudWords" />
+                <ScalarProperty Name="YogisDepict" ColumnName="YogisDepict" />
+                <ScalarProperty Name="IsAcceptAgreement" ColumnName="IsAcceptAgreement" />
+                <ScalarProperty Name="UpgradeDate" ColumnName="UpgradeDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Profileid" ColumnName="Profileid" />
+                <ScalarProperty Name="IsPayRecord" ColumnName="IsPayRecord" />
+                <ScalarProperty Name="DisplayImg" ColumnName="DisplayImg" />
+                <ScalarProperty Name="YogisScore" ColumnName="YogisScore" />
+                <ScalarProperty Name="BecomeYogisTime" ColumnName="BecomeYogisTime" />
+                <ScalarProperty Name="YogiStatus" ColumnName="YogiStatus" />
+                <ScalarProperty Name="YogisLevel" ColumnName="YogisLevel" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="StartTeachYear" ColumnName="StartTeachYear" />
+                <ScalarProperty Name="IdCardNum" ColumnName="IdCardNum" />
+                <ScalarProperty Name="IdType" ColumnName="IdType" />
+                <ScalarProperty Name="EachClassCost" ColumnName="EachClassCost" />
+                <ScalarProperty Name="TeachYogis" ColumnName="TeachYogis" />
+                <ScalarProperty Name="YogaTypeid" ColumnName="YogaTypeid" />
+                <ScalarProperty Name="CenterID" ColumnName="CenterID" />
+                <ScalarProperty Name="Headid" ColumnName="Headid" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="RealName" ColumnName="RealName" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="YID" ColumnName="YID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YogaUserDetail">
+            <EntityTypeMapping TypeName="iyogakoodbModel.YogaUserDetail">
+              <MappingFragment StoreEntitySet="YogaUserDetail">
+                <ScalarProperty Name="delState" ColumnName="delState" />
+                <ScalarProperty Name="Covimg" ColumnName="Covimg" />
+                <ScalarProperty Name="knowledge" ColumnName="knowledge" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="IsUserWeeknumber" ColumnName="IsUserWeeknumber" />
+                <ScalarProperty Name="iZan" ColumnName="iZan" />
+                <ScalarProperty Name="YogaTypeid" ColumnName="YogaTypeid" />
+                <ScalarProperty Name="UpgradeDate" ColumnName="UpgradeDate" />
+                <ScalarProperty Name="AlipayUser" ColumnName="AlipayUser" />
+                <ScalarProperty Name="Uscore" ColumnName="Uscore" />
+                <ScalarProperty Name="Ulevel" ColumnName="Ulevel" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="DisplayImg" ColumnName="DisplayImg" />
+                <ScalarProperty Name="GudWords" ColumnName="GudWords" />
+                <ScalarProperty Name="IsYogisMap" ColumnName="IsYogisMap" />
+                <ScalarProperty Name="IsUserYogaPlace" ColumnName="IsUserYogaPlace" />
+                <ScalarProperty Name="IsUserYogaType" ColumnName="IsUserYogaType" />
+                <ScalarProperty Name="StartYear" ColumnName="StartYear" />
+                <ScalarProperty Name="IsPersonalURL" ColumnName="IsPersonalURL" />
+                <ScalarProperty Name="PersonalURL" ColumnName="PersonalURL" />
+                <ScalarProperty Name="IsWeibo" ColumnName="IsWeibo" />
+                <ScalarProperty Name="Weibo" ColumnName="Weibo" />
+                <ScalarProperty Name="Profile" ColumnName="Profile" />
+                <ScalarProperty Name="IsMobile" ColumnName="IsMobile" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="IsTel" ColumnName="IsTel" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="IsZip" ColumnName="IsZip" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="IsPostal" ColumnName="IsPostal" />
+                <ScalarProperty Name="Postal" ColumnName="Postal" />
+                <ScalarProperty Name="IsQQ" ColumnName="IsQQ" />
+                <ScalarProperty Name="QQ" ColumnName="QQ" />
+                <ScalarProperty Name="IsMsn" ColumnName="IsMsn" />
+                <ScalarProperty Name="MSN" ColumnName="MSN" />
+                <ScalarProperty Name="CountryID" ColumnName="CountryID" />
+                <ScalarProperty Name="ProvinceID" ColumnName="ProvinceID" />
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="DistrictID" ColumnName="DistrictID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Street" ColumnName="Street" />
+                <ScalarProperty Name="IsNationality" ColumnName="IsNationality" />
+                <ScalarProperty Name="Nationality" ColumnName="Nationality" />
+                <ScalarProperty Name="IsBirthDay" ColumnName="IsBirthDay" />
+                <ScalarProperty Name="BirthDay" ColumnName="BirthDay" />
+                <ScalarProperty Name="IsBirthMonth" ColumnName="IsBirthMonth" />
+                <ScalarProperty Name="BirthMonth" ColumnName="BirthMonth" />
+                <ScalarProperty Name="IsBirthYear" ColumnName="IsBirthYear" />
+                <ScalarProperty Name="BirthYear" ColumnName="BirthYear" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="IsRealName_en" ColumnName="IsRealName_en" />
+                <ScalarProperty Name="RealName_en" ColumnName="RealName_en" />
+                <ScalarProperty Name="IsRealName_cn" ColumnName="IsRealName_cn" />
+                <ScalarProperty Name="RealName_cn" ColumnName="RealName_cn" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="YogaUser">
+            <EntityTypeMapping TypeName="iyogakoodbModel.YogaUser">
+              <MappingFragment StoreEntitySet="YogaUser">
+                <ScalarProperty Name="objectId" ColumnName="objectId" />
+                <ScalarProperty Name="InputType" ColumnName="InputType" />
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="delState" ColumnName="delState" />
+                <ScalarProperty Name="ValExpire" ColumnName="ValExpire" />
+                <ScalarProperty Name="ValCode" ColumnName="ValCode" />
+                <ScalarProperty Name="WechatBack" ColumnName="WechatBack" />
+                <ScalarProperty Name="WechatAuthCode" ColumnName="WechatAuthCode" />
+                <ScalarProperty Name="QQBack" ColumnName="QQBack" />
+                <ScalarProperty Name="QQAuthCode" ColumnName="QQAuthCode" />
+                <ScalarProperty Name="SinaBack" ColumnName="SinaBack" />
+                <ScalarProperty Name="SinaAuthCode" ColumnName="SinaAuthCode" />
+                <ScalarProperty Name="LoginType" ColumnName="LoginType" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+                <ScalarProperty Name="LoginTimes" ColumnName="LoginTimes" />
+                <ScalarProperty Name="LastIP" ColumnName="LastIP" />
+                <ScalarProperty Name="LastDate" ColumnName="LastDate" />
+                <ScalarProperty Name="IsWebworkers" ColumnName="IsWebworkers" />
+                <ScalarProperty Name="IsAssessor" ColumnName="IsAssessor" />
+                <ScalarProperty Name="UStatus" ColumnName="UStatus" />
+                <ScalarProperty Name="RegDate" ColumnName="RegDate" />
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="Pwd" ColumnName="Pwd" />
+                <ScalarProperty Name="Uphone" ColumnName="Uphone" />
+                <ScalarProperty Name="UEmail" ColumnName="UEmail" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tLearing">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tLearing">
+              <MappingFragment StoreEntitySet="tLearing">
+                <ScalarProperty Name="UrlType" ColumnName="UrlType" />
+                <ScalarProperty Name="ifexamine" ColumnName="ifexamine" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="iZanNums" ColumnName="iZanNums" />
+                <ScalarProperty Name="iWritelogNums" ColumnName="iWritelogNums" />
+                <ScalarProperty Name="iReadNums" ColumnName="iReadNums" />
+                <ScalarProperty Name="sTitle" ColumnName="sTitle" />
+                <ScalarProperty Name="sPic" ColumnName="sPic" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tSign">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tSign">
+              <MappingFragment StoreEntitySet="tSign">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="iIntegral" ColumnName="iIntegral" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="sMemo" ColumnName="sMemo" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LevelOrder">
+            <EntityTypeMapping TypeName="iyogakoodbModel.LevelOrder">
+              <MappingFragment StoreEntitySet="LevelOrder">
+                <ScalarProperty Name="Remark2" ColumnName="Remark2" />
+                <ScalarProperty Name="Remark1" ColumnName="Remark1" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="ManageID" ColumnName="ManageID" />
+                <ScalarProperty Name="TargetLevel" ColumnName="TargetLevel" />
+                <ScalarProperty Name="OriginalLevel" ColumnName="OriginalLevel" />
+                <ScalarProperty Name="OrderDel" ColumnName="OrderDel" />
+                <ScalarProperty Name="OrderScore" ColumnName="OrderScore" />
+                <ScalarProperty Name="OrderState" ColumnName="OrderState" />
+                <ScalarProperty Name="OrderType" ColumnName="OrderType" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UID" ColumnName="UID" />
+                <ScalarProperty Name="LevelOrderID" ColumnName="LevelOrderID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tUserLoginInfo">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tUserLoginInfo">
+              <MappingFragment StoreEntitySet="tUserLoginInfo">
+                <ScalarProperty Name="NickName" ColumnName="NickName" />
+                <ScalarProperty Name="QuitTime" ColumnName="QuitTime" />
+                <ScalarProperty Name="LoginTime" ColumnName="LoginTime" />
+                <ScalarProperty Name="sloginInfo" ColumnName="sloginInfo" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tInstationInfo">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tInstationInfo">
+              <MappingFragment StoreEntitySet="tInstationInfo">
+                <ScalarProperty Name="loginType" ColumnName="loginType" />
+                <ScalarProperty Name="ifDel" ColumnName="ifDel" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="iType" ColumnName="iType" />
+                <ScalarProperty Name="sContent" ColumnName="sContent" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tQuestion">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tQuestion">
+              <MappingFragment StoreEntitySet="tQuestion">
+                <ScalarProperty Name="Mark2" ColumnName="Mark2" />
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
+                <ScalarProperty Name="Hot" ColumnName="Hot" />
+                <ScalarProperty Name="IsDelete" ColumnName="IsDelete" />
+                <ScalarProperty Name="BeFrom" ColumnName="BeFrom" />
+                <ScalarProperty Name="IsFAQ" ColumnName="IsFAQ" />
+                <ScalarProperty Name="ReplyTime" ColumnName="ReplyTime" />
+                <ScalarProperty Name="ReplyContent" ColumnName="ReplyContent" />
+                <ScalarProperty Name="ReplyUid" ColumnName="ReplyUid" />
+                <ScalarProperty Name="ContactInformation" ColumnName="ContactInformation" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="QuestionTime" ColumnName="QuestionTime" />
+                <ScalarProperty Name="TitleID" ColumnName="TitleID" />
+                <ScalarProperty Name="QuestionContent" ColumnName="QuestionContent" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tKeyWord">
+            <EntityTypeMapping TypeName="iyogakoodbModel.tKeyWord">
+              <MappingFragment StoreEntitySet="tKeyWord">
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="sWord" ColumnName="sWord" />
+                <ScalarProperty Name="Uid" ColumnName="Uid" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClassDetail">
+            <EntityTypeMapping TypeName="iyogakoodbModel.ClassDetail">
+              <MappingFragment StoreEntitySet="ClassDetail">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UpdateTime" ColumnName="UpdateTime" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Mark2" ColumnName="Mark2" />
+                <ScalarProperty Name="Mark" ColumnName="Mark" />
+                <ScalarProperty Name="YID" ColumnName="YID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CenterID" ColumnName="CenterID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,720 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtMessageGroup>
+@{
+    Layout = null;
+    var userdetail = ViewBag.UserDetail;
+    var Gender = "";
+    if (ViewBag.Gender == 0)
+    {
+        Gender = "她";
+    }
+    else if (ViewBag.Gender == 1)
+    {
+        Gender = "他";
+    }
+    else if (ViewBag.Gender == 2)
+    {
+        Gender = "我";
+    }
+}
+@using IYogaKoo.ViewModel.Commons.Enums;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽酷， 世界瑜伽人之家。</title>
+    <link rel="shortcut icon" href="/Content/Front/images/2.ico.png" />
+    <link type="text/css" href="/Content/Front/css/indexnew.css" rel="stylesheet" />
+    <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+    <link href="~/Content/Front/css/QQPhoto/style.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/indexnew.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+    <script src="~/Content/Front/js/jquery.qqFace.js"></script>
+    <script src="~/Content/jquery/ExistisUpdate.js"></script>
+    <script src="~/Content/Front/js/QQPhoto/QQPhoto.min.js"></script>
+    <script src="~/Content/MsgInfo/msginfo.js"></script>
+    <script src="~/Content/jquery/base64.js"></script>
+    <script src="~/Content/jquery/ReturnUrl.js"></script>
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //点击查看相册
+            //判断是否登录
+            var l = "false";
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                l = "true";
+            }
+            //相册
+            $("#divmyphoto a").QQPhoto({
+                url: "/Controllers/ashxFile/GetMyselfImg.ashx?part=0&id=" + @ViewBag.id + "&imgid=",                 //获取相册列表数据的URL地址 需要返回 JSON 格式，请参考文件 data.json 格式来输出
+                commentURL: '@Url.Content("~/Controllers/ashxFile/ImgComment.ashx")',            //提交评论 Ajax 发送到 服务器端的地址   返回 JSON 格式，请参考文件 comment.json 格式来输出
+                fix: 5,                           //表示相册列表左右间距的距离                 默认 5
+                minTextLen: 3,                    //发送评论时 表单验证，最少不能少于的字符    默认三个字符
+                maxTextLen: 140,                  //发送评论时 表单验证，最多不能少于的字符    默认140个字符
+                fadeIn: false,                     //图片默认是否开启淡入效果，默认为 false
+                lazyload: '@Url.Content("~/Content/Front/css/QQPhoto/images/lazyload.gif")',   //默认lazyload的图片，默认为1px.gif 透明图片
+                loadding: '@Url.Content("~/Content/Front/css/QQPhoto/images/loading.gif")',    //loading.gif 的文件路径
+                islogin: l
+            });
+
+
+            //更多伽图
+            $("#picrightdiv").click(function () {
+                location.href = '/YogaUserDetail/PicList/@ViewBag.id';
+            });
+
+        });
+
+    </script>
+    <script type="text/javascript">
+        window.location.href = "#lb_mao";
+        //发表删除
+        function delFaBiao(id) {
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                if (confirm("确认删除吗？")) {
+                    $.ajax({
+                        url: "/YogaUserDetail/delFaBiao",
+                        type: "post",
+                        dataType: "json",
+                        data: { id: id },
+                        success: function (data) {
+
+                            if (data.code === 0) {
+                                //刷新
+                                window.location.reload();
+
+                            }
+                            else {
+                                layer.msg('删除失败', { time: 1600 });
+
+                            }
+
+                        },
+                        async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                    });
+                }
+            }
+            else {
+                //询问框
+                layer.confirm('登录后才可以删除？', {
+                    btn: ['登录', '不登录'] //按钮
+                }, function () {
+                    window.location = "/Login/Login?ReturnUrl=" + '/YogaUserDetail/Details/' + $("#hidid").val();
+                });
+
+            }
+        }
+        //赞
+        function iZan(id, UserType) {
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                $.ajax({
+                    url: "/YogaUserDetail/iZan",
+                    type: "post",
+                    dataType: "json",
+                    data: { uid: id, UserType: UserType },//UserType 留言人类型
+                    success: function (data) {
+
+                        if (data.code === 0) {
+                            //刷新
+                            //window.location.reload();
+                            zanplus({ id: uid, style: 'font-weight:bold;', endSize: "60px", interval: 800 });
+                            var count = $("#zancount" + uid).text();
+                            if (count != "")
+                                $("#zancount" + uid).text((parseInt(count) + 1));
+                            else
+                                $("#zancount" + uid).text(1);
+                        } else if (data.code == 2) {
+                            layer.msg("您已经赞过！", { time: 1600 });
+                        }
+                        else {
+                            layer.msg("赞同失败！", { time: 1600 });
+                        }
+
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+            else {
+                layer.confirm('登录后才可以点赞？', {
+                    btn: ['登录', '不登录'] //按钮
+                }, function () {
+                    window.location = "/Login/Login?ReturnUrl=" + '/YogaUserDetail/Details/' + $("#hidid").val();
+                });
+                //if (confirm("登录后才可以点赞!")) {
+                //    //window.open("/Login/Login");// 来打开新窗口
+                //    window.location = "/Login/Login?ReturnUrl=" + '/YogaUserDetail/Details/' + $("#hidid").val();// 原来窗口
+                //}
+            }
+        }
+        //加关注
+        function flowuid(obj) {
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+
+                if (obj == '' || obj == undefined || obj == null) {
+                    layer.confirm('你还没有添加详细信息，是否添加？', {
+                        btn: ['登录', '不登录'] //按钮
+                    }, function () {
+                        window.location = "/Login/UserDetailEdit";
+                    });
+                    //if (confirm("你还没有添加详细信息，是否添加？")) {
+                    //    window.open("/Login/UserDetailEdit");
+                    //}
+                } else {
+
+                    $.ajax({
+                        url: "/Follow/SetFollow",
+                        type: "get",
+                        dataType: "text",
+                        data: {
+                            quertid: obj,
+                            isf: $("#flowuid").html().trim(),
+                            UserType: '@ViewBag.UserType',
+                            r: Math.random()
+                        },
+                        success: function (relust, status) {
+                            if (status == "success") {
+                                if (relust == "1") {
+
+                                    layer.msg("关注成功！", { time: 1600 });
+                                    $("#flowuid").html("已关注").css('background', '#FF9933');
+
+                                }
+                                else if (relust == "0") {
+
+                                    layer.msg("取消成功！", { time: 1600 });
+                                    $("#flowuid").html("+关注").css('background', '#65C3A5');
+                                }
+                                else if (relust == "3") {
+
+                                    layer.msg("亲自己不需要关注自己的！", { time: 1600 });
+                                }
+
+                            } else {
+
+                                layer.msg("关注失败！", { time: 1600 });
+                            }
+                        },
+                        async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                    });
+                }
+            } else {
+                //if (confirm("登录后才可以加关注!")) {
+                //    window.location = "/Login/Login?ReturnUrl=" + '/YogaUserDetail/Details/' + $("#hidid").val();// 原来窗口
+                //}
+                layer.confirm('登录后才可以加关注', {
+                    btn: ['登录', '不登录'] //按钮
+                }, function () {
+                    window.location = "/Login/Login?ReturnUrl=" + '/YogaUserDetail/Details/' + $("#hidid").val();// 原来窗口
+
+                });
+
+            }
+
+        }
+    </script>
+
+    <script type="text/javascript">
+
+        //赞特效
+        function zanplus(options) {
+            options = $.extend({
+                str: "+1",
+                startSize: "14px",
+                endSize: "40px",
+                interval: 500,
+                color: "red",
+                style: "",
+                callback: function () { }
+            }, options);
+            $("body").append("<span class='tips_box' style='" + options.style + "'>" + options.str + "</span>");
+            var box = $(".tips_box");
+            var self = $("#zan" + options.id);
+            var top = self.offset().top;
+            var left = self.offset().left + self.width() / 2 - box.width() / 2;
+            box.css({
+                "position": "absolute",
+                "top": top,
+                "left": left,
+                "font-size": options.startSize,
+                //"font-weight": "bold",
+                "color": options.color
+            });
+            box.animate({
+                "top": top - self.height() / 2,
+                "opacity": 0,
+                "font-size": options.endSize
+            }, options.interval, function () {
+                box.remove();
+                options.callback();
+            });
+        }
+
+    </script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+    @{Html.RegisterMvcPagerScriptResource();}
+    <style>
+        .lb_index_top_right_ul li a {
+            line-height: 80px;
+            color: #336765;
+            font-size: 15px;
+            padding: 0px 5px;
+        }
+
+        .lb_li_idnex_hide2 li a {
+            padding: 0px !important;
+        }
+        .lb_li_idnex_hide li a {
+            line-height: 30px !important;
+
+        }
+
+
+
+        .lb_index_top_right {
+            width: auto;
+            height: 40px;
+            float: right;
+        }
+        /*更多伽图*/
+        #picrightdiv {
+            width: 100px;
+            height: 100px;
+            display: table;
+            float: right;
+            vertical-align: bottom;
+            background-color: #65c3a5;
+            cursor: pointer;
+        }
+
+            #picrightdiv:hover {
+                background-color: #f77d25;
+            }
+
+            #picrightdiv p {
+                text-align: center;
+                vertical-align: middle;
+                font-style: italic;
+                display: table-cell;
+                color: white;
+                font-family: 微软雅黑, 'Microsoft YaHei';
+                font-size: 15px;
+            }
+
+                #picrightdiv p:hover {
+                    font-size: 16px;
+                    text-decoration: underline;
+                }
+    </style>
+    <script src="~/Content/baiduAdd.js"></script>
+</head>
+<body>
+    <form>
+        <div class="lb_index">
+            @Html.Partial("_OtherTopInfo")
+
+            <div class="lb_School_index" style="background: #fff">
+                <div class="lb_School_index_top">
+                    <div class="lb_School_index_top_index">
+                        <b>您所在位置：<a href="/">首页</a> >  <a href="/YogaUserDetail">瑜伽习练者</a>  >&nbsp;&nbsp;</b><span>瑜伽习练者个人主页</span>
+                    </div>
+                </div>
+                @{
+                    var strImg = "/Content/Front/images/1920360.jpg";
+
+                    if (!string.IsNullOrEmpty(userdetail.Covimg))
+                    {
+                        strImg = userdetail.Covimg.Split(',')[0];
+                    }
+
+                }
+
+                <div class="lb_myindex" style=" background=url(@strImg) no-repeat=no-repeat center=center center;">
+                    <div class="lb_myindex_div" style="margin-top:0px">
+                        <div class="lb_myindex_div_left">
+                            <div class="lb_myindex_div_left_top">
+                                @{
+                                    var drcurl = "";
+                                    // var strName = "";//姓名
+                                    var gender = "";//性别
+                                    var GudWords = "";//座右铭
+                                    var YogisLevel = "";//级别
+
+                                    drcurl = userdetail.DisplayImg;
+
+                                    YogisLevel = userdetail.Ulevel.ToString();
+                                    gender = userdetail.Gender == null ? "" : userdetail.Gender.ToString();
+                                    GudWords = userdetail.GudWords;
+
+                                    string drscr = null;
+
+                                    if (drcurl != null && drcurl != "")
+                                    {
+                                        drscr = drcurl;
+
+                                        if (drscr.IndexOf(';') != -1)
+                                        {
+                                            var str = drscr.Split(';');
+                                            if (str.Length > 1)
+                                            {
+                                                if (!string.IsNullOrEmpty(str[1]))
+                                                {
+                                                    drscr = str[1];
+                                                }
+                                                else
+                                                {
+                                                    drscr = str[0];
+                                                }
+                                            }
+                                            else
+                                            {
+                                                drscr = str[0];
+                                            }
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        drscr = "/Content/Front/images/defaultImg.png";
+                                    }
+                                }
+                                <a href="/YogaUserDetail/Details/@ViewBag.id"><img src="@drscr" /></a>
+                                <ul>
+                                    <li>
+                                        <a> @ViewBag.NickName</a>
+                                        @{
+                                            string rscr = null;
+                                            if (userdetail.Gender == 0)
+                                            {
+                                                rscr = "/Content/Front/images/women.png";
+                                            }
+                                            else
+                                            {
+                                                rscr = "/Content/Front/images/men.png";
+                                            }
+                                        }
+                                        <img src="@rscr" />
+                                    </li>
+                                    <li id="lb_mao">
+                                        @if (ViewBag.isfollow == false && ViewBag.user.Uid != ViewBag.strUid)
+                                        {
+                                            <a id="flowuid" onclick="flowuid('@ViewBag.strUid')" class="jiaguanzhu">
+                                                +关注
+
+                                            </a>
+                                        }
+                                        else if (ViewBag.isfollow == true)
+                                        {
+                                            <a id="flowuid" onclick="flowuid('@ViewBag.strUid')" class="yiguanzhu">
+                                                已关注
+
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a id="flowuid" onclick="flowuid('@ViewBag.strUid')" class="jiaguanzhu">
+                                                +关注
+                                            </a>
+                                        }
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="lb_index_gulu" style="width:1200px; margin:0px auto">
+                    <div class="lb_add_div_new">
+                        <div class="lb_myindex_div_left_center lb_myindex_div_left_center_gu" style="">
+                            <ul>
+                                <li>
+                                    @if (YogisLevel == "0" || YogisLevel == null)
+                                    {
+                                        @:基本习练者
+                                   }
+                                    else if (YogisLevel == "1")
+                                    {
+                                        @:初级习练者
+                                   }
+                                    else if (YogisLevel == "2")
+                                    {
+                                        @:中级习练者
+                                   }
+                                    else if (YogisLevel == "3")
+                                    {
+                                        @:高级习练者
+                                   }
+                                </li>
+                                <li>
+                                    @ViewBag.YogaTypeid
+                                    <input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+                                </li>
+                                <li class="lb_address">  @ViewBag.AddRessName</li>
+                            </ul><br /><br />
+                            <p>@GudWords &nbsp;</p>
+                        </div>
+                        <div class="lb_myindex_div_left_center_lu">
+                            <div class="lb_name_div" style="width:auto">
+                                <ul style="margin-left:50px">
+                                    <li>
+                                        <p>@ViewBag.iCount</p>
+                                        <a href="/YogaUser/otherFollowList/@ViewBag.id">关注</a>
+                                    </li>
+                                    <li style="border:0px">
+                                        <p>
+                                            @{
+                                                string fcount = null;
+                                                if (ViewBag.FCount == null)
+                                                {
+                                                    fcount = "0";
+                                                }
+                                                else
+                                                {
+                                                    fcount = @ViewBag.FCount.ToString();
+                                                }
+                                            }
+                                            @fcount
+                                        </p>
+                                        <a href="/YogaUser/otherFollowList/@ViewBag.id?typeid=4">粉丝</a>
+                                    </li>
+                                    @*<li>
+                                            <p>243</p>
+                                            <a>人气</a>
+                                        </li>*@
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="lb_myindex_mjianjie">
+                    <div class="lb_myindex_mjianjie_left">
+                        <div class="lb_myindex_mjianjie_left_top">
+                        </div>
+                        <div class="lb_myindex_mjianjie_left_img">
+                            <h2>
+                                瑜伽圈
+                                @if (ViewBag.id == ViewBag.user.Uid)
+                                {
+                                    <a href="/YogaUser/FollowList">更多..</a>
+                                }
+                                else
+                                {
+                                    <a href="/YogaUser/otherFollowList/@ViewBag.id">更多..</a>
+                                }
+                            </h2>
+                            <div class="div div2">
+                                @foreach (var item in ViewBag.list2Group)
+                                {
+                                    var scr = "/Content/Front/images/defaultImg.png";
+
+                                    <a href="@item.userurl@item.uid">
+                                        <img src="@(!string.IsNullOrEmpty(item.spic) ? item.spic : scr)" width="90" />
+                                    </a>
+                                }
+                            </div>
+                        </div>
+                        <div class="lb_myindex_mjianjie_left_img">
+
+                            <div class="lb_myindex_wz_hd2" style="margin-top:5px; width:400px;border:0px">
+
+                                <h2 style="border-bottom:1px solid #65c3a5">
+                                    @(Gender)的相册
+                                @if (ViewBag.id == ViewBag.user.Uid)
+                                {
+                                    <a href="/YogaPic/MyPics">更多..</a>
+                                }
+                                else
+                                {
+                                    <a href="/tWriteLog/OtherPics?id=@ViewBag.id">更多..</a>
+                                }
+
+                            </h2>
+                            <div class="div" id="divmyphoto">
+                                @if (ViewBag.listPic != null)
+                                {
+                                    foreach (var item in ViewBag.listPic)
+                                    {
+                                        <a href="#" id="@item.Pid">
+                                            <img src="@(item.PictureOriginal == null ? "" : Url.Action("GetImg", new { url = item.PictureOriginal }))" />
+
+                                        </a>
+                                    }
+                                    if ((ViewBag.listPic).Count == 8)
+                                    {
+                                        <div id="picrightdiv">
+                                            <p>更多伽图</p>
+                                        </div>
+
+                                    }
+                                }
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="lb_myindex_wz_hd_right">
+                    <div class="lb_myindex_wz_hd_left_top">
+                        <p>@(Gender)的日志</p>
+                        @if (ViewBag.id == ViewBag.user.Uid)
+                        {
+                            <span>
+                                <a href=""></a>
+                            </span>
+                            <a href="/tWriteLog/logIndex?page=1">更多...</a>
+                        }
+                        else
+                        {
+                            <a href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">更多...</a>
+                        }
+                    </div>
+                    <div class="lb_rizhi">
+                        <ul>
+                            @if (ViewBag.listLog != null)
+                            {
+                                @*if (ViewBag.id == ViewBag.user.Uid)
+                                    {
+                                        foreach (var item in ViewBag.listLog)
+                                        {
+                                    <li><a href="/tWriteLog/Details/@item.entity.ID">·
+                                        @{
+                                            if (item.entity.sTitle != null)
+                                            {
+                                                if (item.entity.sTitle.Length > 30)
+                                                {
+                                            @item.entity.sTitle.Substring(0, 30)
+                                                }
+                                                else
+                                                {
+                                            @item.entity.sTitle
+                                                }
+                                            }
+                                        }
+                                    </a></li>
+                                        }
+                                    }
+                                    else
+                                    {*@
+                                foreach (var item in ViewBag.listLog)
+                                {
+                                    <li>
+                                        <a href="/tWriteLog/OtherDetails/@item.entity.ID?uid=@ViewBag.id">
+                                            ·
+                                            @{
+                                    if (item.entity.sTitle != null)
+                                    {
+                                        if (item.entity.sTitle.Length > 30)
+                                        {
+                                            @item.entity.sTitle.Substring(0, 30)
+                                        }
+                                        else
+                                        {
+                                            @item.entity.sTitle
+                                        }
+                                    }
+                                            }
+                                        </a>
+                                    </li>
+                                }
+                                //}
+                            }
+
+                        </ul>
+                    </div>
+                    <div class="lb_myindex_wz_hd_right_top">
+                        <p>@(Gender)的活动</p>
+                        @if (ViewBag.id == ViewBag.user.Uid)
+                        {
+
+                            <a href=" /tWriteLog/MyOtherClass">更多...</a>
+                        }
+                        else
+                        {
+                            <a href="/tWriteLog/OtherClass?uid=@ViewBag.id">更多...</a>
+                        }
+                    </div>
+                    <div class="lb_myindex_wz_hd_right_img">
+                        @foreach (var item in ViewBag.classlist)
+                        {
+                            if (item.EndTime > DateTime.Now || string.IsNullOrWhiteSpace(item.MessageDes))
+                            {
+                                <div class="lb_myindex_wz_hd_right_img_div">
+                                    <a href="/class/viewactivity?id=@item.Id">
+                                        <img src="@item.Banner" width="184" height="125" />
+                                    </a>
+                                    <div class="lb_myindex_wz_hd_right_img_hide">
+                                        <a href="/class/viewactivity?id=@item.Id">@item.Name</a>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="lb_myindex_wz_hd_right_img_div">
+                                    <a href="/class/ActivityReportDetailsPage?id=@item.Id&&classReportId=-99">
+                                        <img src="@item.Banner" width="184" height="125" />
+                                    </a>
+                                    <div class="lb_myindex_wz_hd_right_img_hide">
+                                        <a href="/class/ActivityReportDetailsPage?id=@item.Id&&classReportId=-99">@item.Name</a>
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="lb_School_dzdp">
+                <p>伽人留言</p>
+            </div>
+            <div class="lb_School_pinglun">
+                <div class="lb_School_pinglun_tab">
+                    <ul>
+                        <li class="li">留言(@ViewBag.rcount)</li>
+                        @*<li>推荐（225）</li>*@
+                    </ul>
+                </div>
+
+                <div class="lb_School_textarea">
+                    <textarea rows="6" cols="130" id="sContent" name="sContent"></textarea>
+                    <div class="lb_School_textarea_div">
+
+                        <a href="javascript:tabFace();" class="emotion">添加表情</a>
+
+                        <div class="lb_School_textarea_div_right">
+                            <p><a>0</a>/500</p>
+                            <input type="button" id="btnMsg" totype="0" value="评论" />
+                            <input type="hidden" id="hidid" name="hidid" value="@ViewBag.id" />
+                            <input type="hidden" id="hidType" name="hidType" value="1" />
+                        </div>
+                    </div>
+                </div>
+                @if (ViewBag.MsgInfo != null)
+                {
+                    <div class="lb_School_qbpl">
+                        <p>全部留言(@ViewBag.rcount)</p>
+                    </div>
+                    <div id="mydiv" style="float:right">
+                        @*@Html.Partial("PartialMsg", Model)*@
+                        @Html.Partial("PartialMessage", Model)
+                    </div>
+                }
+            </div>
+        </div>
+
+    </div>
+</form>
+</body>
+</html>

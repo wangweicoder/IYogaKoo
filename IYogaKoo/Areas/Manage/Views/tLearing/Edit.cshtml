@@ -1,0 +1,177 @@
+﻿@model IYogaKoo.ViewModel.ViewtLearing
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+ 
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">编辑社区</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                @Html.HiddenFor(model => model.ID)
+                @Html.HiddenFor(model => model.Uid)
+                @Html.HiddenFor(model => model.iZanNums)
+                @Html.HiddenFor(model => model.iWritelogNums)
+                @Html.HiddenFor(model => model.iReadNums)
+                @Html.HiddenFor(model => model.ifexamine) 
+                @Html.HiddenFor(model => model.UrlType)
+                @Html.HiddenFor(model => model.CreateDate)
+                <fieldset id="lb_add_wenzhang">
+
+                    <div class="editor-label" style="overflow: hidden;">
+                        操作人：
+                    </div>
+                    <div class="editor-field">
+                        @ViewBag.Name
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.iType)
+                    </div>
+                    <div class="editor-field">
+                        <select id="iType" name="iType">
+                            <option value="">--请选择--</option>
+                            @{
+                                List<IYogaKoo.ViewModel.ViewYogaDicItem> list = ViewBag.Diclist;
+                                foreach (var item in list)
+                                {
+                                    <option value="@item.ID">@item.ItemName</option> 
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.sPic)
+                    </div>
+                    <div class="editor-field" style="height:100px">
+                        <img id="imgsPic" src="@Model.sPic" width="200" height="100" />
+                        <input id="sPic" name="sPic" type="hidden" value="@Model.sPic" />
+                        <div class="lb_liulan" style="top:-105px">
+                            <input id="btnsPic" type="file" value="上传图片" />
+                        </div> 
+                    </div> 
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.sTitle)
+                    </div>
+                    <div class="editor-field">
+                        @Html.EditorFor(model => model.sTitle)
+                        @Html.ValidationMessageFor(model => model.sTitle)
+                    </div>
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.sContent)
+                    </div>
+                    <div class="editor-field lb_textart">
+                        @Html.TextAreaFor(model => model.sContent, new { id = "sContent", style = "width:90%;margin-left:0px" })
+                        @Html.ValidationMessageFor(model => model.sContent)
+                        <input type="hidden" id="hsContent" name="hsContent" value="" />
+                    </div>
+
+                    <div class="editor-label">&nbsp;</div>
+                    <div class="editor-field">
+                        <p style="float: left">
+                            <input type="submit" value="保存" id="idsubmit" />
+                        </p>
+                        <div class="lb_return">
+
+                            <input type="hidden" id="webType" name="webType" value="@ViewBag.iType" />
+                            <p style="float: left">
+                                @{
+                                        if (ViewBag.iType == 1)
+                                        {
+                                            @Html.ActionLink("返回", "ExamineSearch")
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink("返回", "IndexSearch")
+                                        }
+                                }
+
+                            </p>
+                        </div>
+                    </div>
+                </fieldset>
+            }
+
+        </div>
+    </div>
+</div>
+@section scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+    <script src="@Url.Content("~/Content/ueditor/ueditor.config.js")"></script>
+    <script src="@Url.Content("~/Content/ueditor/ueditor.all.js")"></script>
+    <script type="text/javascript">
+        $(function () {
+            UE.getEditor('sContent'); //内容编辑器
+            $("#iType").val(@Model.iType);
+            $('#idsubmit').click(function () {
+                if ($("#iType").val() == "") {
+                    alert("请选择文章类型！");
+                    return false;
+                }
+                else if ($("#sPic").val() == "") {
+                    alert("请上传图片！");
+                    return false;
+                }
+                else {
+                    return true;
+                }
+
+            });
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        $(function () {
+
+            //封面图片
+            $('#btnsPic').uploadify({
+                'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                'uploader': '@Url.Content("~/Controllers/ashxFile/tLearnImg.ashx")',
+                'buttonText': '浏览',
+                'height': '30',
+                'width': '120',
+                'fileTypeDesc': '.jpg,.gif,.png',
+                'fileTypeExts': '*.jpg;*.gif;*.png;',
+                'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+                'sizeLimit': 1024 * 1024 * 4, //4M
+                'multi': false,//设置为true时可以同时上传多个文件。
+                'post_params': {
+                    "Uid": '@ViewBag.user.Uid'
+                },
+                'onUploadSuccess': function (file, data, response) {
+                    if (data.indexOf('文件太大！请上传小于4M的图片！') != -1) {
+                        alert(data);
+                    }
+                    else {
+                        $("#sPic").val("/" + data);
+                        $("#imgsPic").attr("src", "/" + data);
+                    }
+                },
+                'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                    alert('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+                }
+            });
+
+        });
+
+    </script>
+}

@@ -1,0 +1,360 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaUser
+
+@{
+    ViewBag.Title = "UpdatePwd";
+    Layout = "~/Views/Shared/_LayoutSetUp.cshtml";
+    //用户ID
+    var id = ViewBag.id; 
+}
+
+<h2 style="margin-left:60px">设置密码</h2>
+<div class="lb_index_rightt_div_jibenxx1" style="display:block;">
+    <dl>
+        <dt>原密码：</dt>
+        <dd>
+            <input type="password" value="" name="OldPwd" id="OldPwd" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>新密码：</dt>
+        <dd>
+            <input type="password" value="" name="NewPwd" id="NewPwd" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>确认新密码：</dt>
+        <dd>
+            <input type="password" value="" name="NewPwd2" id="NewPwd2" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>&nbsp;</dt>
+        <dd>
+            <input type="button" id="btnpwd" value="修改" class="lb_xg" />
+        </dd>
+    </dl>
+</div>
+
+@*<h2>设置电话</h2>
+<div class="lb_index_rightt_div_jibenxx1">
+    <dl>
+        <dt>原电话：</dt>
+        <dd>
+            <label id="Uphone" name="Uphone">@ViewBag.Uphone</label>
+        </dd>
+    </dl>
+    <dl>
+        <dt>新电话：</dt>
+        <dd>
+            <input type="text" value="" name="NewUphone" id="NewUphone" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>确认新电话：</dt>
+        <dd>
+            <input type="text" value="" name="NewUphone2" id="NewUphone2" />
+        </dd>
+    </dl>
+    <dl>
+          <dt>&nbsp;</dt>
+          <dd>
+            <input type="text" id="CAPTCHA" name="CAPTCHA" placeholder="验证码" />
+           <input type="button" id="button" value="获取验证码" class="yzm" onclick="checkUserName()" />
+             <a id="a" onclick="angerEx();">没收到验证码？</a>
+            </dd>
+          </dl>
+    <dl>
+        <dt>&nbsp;</dt>
+        <dd>
+            <input type="button" id="btnUphone" value="修改" class="lb_xg" />
+        </dd>
+    </dl>
+</div>
+<h2>设置邮箱</h2>
+<div class="lb_index_rightt_div_jibenxx1">
+    <dl>
+        <dt>原邮箱：</dt>
+        <dd>
+            <label id="UEmail" name="UEmail">
+            @{ 
+                if (!string.IsNullOrEmpty(ViewBag.UEmail))
+                { 
+                    @ViewBag.UEmail
+                }
+                else 
+                { 
+                    @:未设置
+                }
+            }</label>
+        </dd>
+    </dl>
+    <dl>
+        <dt>新邮箱：</dt>
+        <dd>
+            <input type="text" value="" name="NewUEmail" id="NewUEmail" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>确认新邮箱：</dt>
+        <dd>
+            <input type="text" value="" name="NewUEmail2" id="NewUEmail2" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>&nbsp;</dt>
+        <dd>
+            <input type="button" id="btnUEmail" value="修改" class="lb_xg" />
+        </dd>
+    </dl>
+</div>*@
+@if (ViewBag.user.UserType == 1)
+{
+<h2>设置证件信息</h2>
+<div class="lb_index_rightt_div_jibenxx1">
+    <dl>
+        <dt>真实姓名：</dt>
+        <dd>
+            <label id="RealName" name="RealName">
+                @{
+                    if (!string.IsNullOrEmpty(ViewBag.RealName))
+                    {
+                        @ViewBag.RealName
+                    }
+                    else
+                    {
+                        @:未设置
+                }
+                }
+            </label>
+        </dd>
+    </dl>
+    <dl>
+        <dt>证件类型：</dt>
+        <dd>
+            <select name="IdType" id="IdType">
+                <option value="0">--请选择--</option> 
+                    <option value="身份证">身份证</option>  
+                    <option value="护照">护照</option> 
+            </select>
+        </dd>
+    </dl>
+    <dl>
+        <dt>证件号码：</dt>
+        <dd>
+            <input type="text" value="" name="IdCardNum" id="IdCardNum" />
+        </dd>
+    </dl>
+    <dl>
+        <dt>&nbsp;</dt>
+        <dd>
+            <input type="button" id="btnIdType" value="修改" class="lb_xg" />
+        </dd>
+    </dl>
+</div>
+}
+    <script src="~/Scripts/PhoneValidate.js"></script>
+<script type="text/javascript">
+    $(function () {
+        if(@ViewBag.IdType==null)
+        {
+            $("#IdType").val("0");
+        }else{
+            $("#IdType").val('@ViewBag.IdType');
+        }
+       
+        $("#IdCardNum").val('@ViewBag.IdCardNum');
+    })
+    function checkpwdNull() {
+        var oldpwd = $("#OldPwd").val();
+        var spwd = $("#NewPwd").val();
+        var spwd2 = $("#NewPwd2").val();
+        var bl = true;
+        if (oldpwd.trim().length == 0)
+        {
+            layer.msg("密码不能为空");
+            bl = false;
+        }
+        else if (spwd.length < 6)
+        {
+            layer.msg("密码长度不能少于6位");
+            bl = false;
+        }
+        else if (spwd != spwd2) {
+            layer.msg("两次密码输入的不一致，请重新输入！");
+            bl = false;
+        }
+        return bl;
+    }
+    $('#btnpwd').click(function () {
+        var NewPwd = $("#NewPwd").val();
+        var NewPwd2 = $("#NewPwd2").val();
+        if (checkpwdNull()) {
+
+            $.ajax({
+                url: '/Login/UpdatePwd?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    OldPwd: $("#OldPwd").val(),
+                    NewPwd: NewPwd
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        layer.msg("密码修改成功！");
+                        window.location = '/Login/UpdatePwd';
+
+                        $("#NewPwd").val("");
+                        $("#NewPwd2").val("");
+                        $("#OldPwd").val("");
+                    }
+                    else {
+                        layer.msg("密码修改失败！");
+                    }
+
+                }, error: function () {
+                    layer.msg("密码修改失败"+data.code);
+                }
+            });
+
+        }
+
+    });
+
+    function checkUphoneNull() {
+        var NewUphone = $("#NewUphone").val();
+        var NewUphone2 = $("#NewUphone2").val();
+        var bl = true;
+        var tel = /^[1][34578]\d{9}$/;
+
+        if (!tel.test(NewUphone)) {
+            layer.msg("请输入正确手机号");
+            bl = false;
+        }
+        else if (!tel.test(NewUphone2)) {
+            layer.msg("请输入正确手机号");
+            bl = false;
+        }
+        else if (NewUphone != NewUphone2) {
+            layer.msg("两次号码输入的不一致，请重新输入！");
+            bl = false;
+        }
+        return bl;
+    }
+
+    $('#btnUphone').click(function () {
+        var NewUphone = $("#NewUphone").val();
+        var NewUphone2 = $("#NewUphone2").val();
+        if (checkUphoneNull()) {
+            $.ajax({
+                url: '/Login/UpdateUphone?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    NewUphone: NewUphone
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        layer.msg("电话修改成功！");
+                        window.location = '/Login/UpdatePwd';
+                        $("#NewUphone").val("");
+                        $("#NewUphone2").val("");
+                    } else {
+                        layer.msg("电话修改失败！");
+                    }
+
+                }, error: function () {
+                    layer.msg("电话修改失败");
+                }
+            });
+        }
+
+    });
+
+    function checkUEmailNull() {
+        var NewUEmail = $("#NewUEmail").val();
+        var NewUEmail2 = $("#NewUEmail2").val();
+        var bl = true;
+
+        if (NewUEmail.trim().length==0) {
+            layer.msg("邮箱不能为空");
+            bl = false;
+        }
+        else if (NewUEmail != NewUEmail2) {
+            layer.msg("两次邮箱输入的不一致，请重新输入！");
+            bl = false;
+        }
+        return bl;
+    }
+    $('#btnUEmail').click(function () {
+        var NewUEmail = $("#NewUEmail").val();
+        var NewUEmail2 = $("#NewUEmail2").val();
+        if (checkUEmailNull()) {
+            $.ajax({
+                url: '/Login/UpdateUEmail?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    NewUEmail: NewUEmail
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        layer.msg("邮箱修改成功！");
+                        window.location = '/Login/UpdatePwd';
+                        $("#NewUEmail").val("");
+                        $("#NewUEmail2").val("");
+                    } else {
+                        layer.msg("邮箱修改失败！");
+                    }
+
+                }, error: function () {
+                    layer.msg("邮箱修改失败");
+                }
+            });
+        }
+
+    });
+
+    function checkIdTypeNull()
+    {
+        var IdType = $("#IdType").val();
+        var IdCardNum = $("#IdCardNum").val();
+        var bl =false;
+        if (IdType != "0" && IdCardNum != "")
+        {
+            bl = true;
+        }
+        return bl;
+    }
+    $('#btnIdType').click(function () {
+        var IdType = $("#IdType").val();
+        var IdCardNum = $("#IdCardNum").val();
+
+        if (checkIdTypeNull()) {
+            $.ajax({
+                url: '/Login/UpdateIdType?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    IdType: IdType,
+                    IdCardNum: IdCardNum
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        layer.msg("证件信息修改成功！");
+                        window.location = '/Login/UpdatePwd';
+
+                    } else {
+                        layer.msg("证件信息修改失败！");
+                    }
+
+                }, error: function () {
+                    layer.msg("证件信息修改失败");
+                }
+            });
+        }
+        else {
+            layer.msg("请输入正确的证件信息！");
+        }
+        return false;
+    });
+</script>  

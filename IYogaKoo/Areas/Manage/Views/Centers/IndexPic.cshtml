@@ -1,0 +1,157 @@
+﻿@{
+    ViewBag.Title = "IndexPic";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+} 
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">机构相册</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+            @{
+                using (Html.BeginForm())
+                {
+                    <input type="hidden" id="centerid" name="centerid" value="@ViewBag.centerid" />
+                    List<IYogaKoo.ViewModel.ViewYogaPicture> pic = ViewBag.Pic;
+                    if (pic.Count() > 0)
+                    {
+                        var stri = "1";
+                        var strNums = stri;
+                        var picValue = "";
+                        <div id="divImgDiploma">
+                            
+                            @for (var i = 0; i < pic.Count(); i++)
+                            { 
+                                <img id="@strNums" src="@pic[i].PictureOriginal" style="width:300px;height:150px;" />
+
+                               var strA = "a" + strNums;
+                                //根据ID 删除img
+                                <a href="javascript:void(0);" id="@strA" onclick="delImg(this,@strNums,@pic[i].Pid);">删除</a>
+
+                                @: <span id="b@(strNums)" > 描述：<input name="picContent" type="text" value="@pic[i].PictureContent" /></span>
+
+                                strNums = stri + stri;
+                                picValue += pic[i].PictureOriginal + ";";
+                           
+                            }    
+                        </div>
+                        <input id="Diploma" name="Diploma" type="hidden" value="@picValue" />
+                        <input id="PictureContent" name="PictureContent" type="hidden" value="" />
+                        <input id="iNums" name="iNums" type="hidden" value="" />
+                        <span>格式为jpg或png</span>
+                    }
+                    else
+                    {
+                        <div id="divImgDiploma"></div>
+                        <input id="Diploma" name="Diploma" type="hidden" value="" />
+                        <input id="PictureContent" name="PictureContent" type="hidden" value="" />
+                        <input id="iNums" name="iNums" type="hidden" value="" />
+                        <span>格式为jpg或png</span>
+                    }
+                    <br /><br />
+                    <div>
+                        <input id="fileDiploma" name="fileDiploma" type="file" value="上传并预览" />
+                    </div>
+    <br />
+                    <p>
+                        <input type="submit" class="button" value="保存" id="idsubmit" />
+                    </p>
+                }
+            }
+
+        </div>
+
+    </div>
+</div>
+@section Scripts
+{
+    <script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+    <link href=@Url.Content("~/Content/uploadify/uploadify.css") rel="stylesheet" />
+    <script src=@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.min.js")></script>
+    <script language="javascript">
+        $(function () {
+            $("#idsubmit").click(function () {
+
+                var strpicvalue = "";
+                $('input[name="picContent"]').each(function () {
+                    strpicvalue += $(this).val() + "|";
+                });
+
+                $("#PictureContent").val(strpicvalue);
+            });
+
+            $('#fileDiploma').uploadify({
+                'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                'uploader': '@Url.Content("~/Areas/Manage/Controllers/backashxFile/UploadImg.ashx")',
+                'buttonText': '上传并预览',
+                'height': '30',
+                'width': '120',
+                'fileTypeDesc': '.jpg,.gif,.png',
+                'fileTypeExts': '*.jpg;*.gif;*.png;',
+                'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+                'sizeLimit': 1024 * 1024 * 4, //4M
+                'multi': true,//设置为true时可以同时上传多个文件。
+
+                'onUploadSuccess': function (file, data, response) {
+
+                    var strdata = "/" + data + ";"
+
+                    document.getElementById('iNums').value += "1";
+                    var strNums = $("#iNums").val();
+                    //路径
+                    document.getElementById('Diploma').value += strdata;
+
+                    var strValue = "<img id='" + strNums + "' src='/" + data + "' style='width:300px;height:150px;' />";
+                    var strA = "a" + strNums;
+                    //根据ID 删除img
+                    var strDelImg = '<a href="javascript:void(0);" id="' + strA + '" onclick="delImg(this,' + strNums + ');">删除</a>';
+
+                    //图片描述
+                    var strPictureContent = " <span id='b" + strNums + "'>描述：" + '<input name="picContent" type="text" /></span>';
+
+                    document.getElementById('divImgDiploma').innerHTML += strValue + "&nbsp;&nbsp;" + strDelImg + "&nbsp;&nbsp;" + strPictureContent + "&nbsp;&nbsp;";
+
+                },
+                'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                    alert('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+                }
+            });
+        });
+        //删除图片
+        function delImg(aid, imgid,Pid) {
+            if (confirm("确认删除该图片吗？")) {
+
+                var strsrc = $("#" + imgid).attr("src") + ";";
+
+                var strRep = $("#Diploma").val().replace(strsrc, '');
+
+                document.getElementById('Diploma').value = strRep; 
+
+                $.ajax({
+                    url: 'DeletePicbyid',
+                    type: 'POST',
+                    data: {
+                        id: Pid                       
+                    },
+                    success: function (data) { 
+                        if (data == 0) {
+                            alert("删除失败！");
+                        }
+                        else {
+                            location.href = location.reload();
+                        }
+                    }, error: function () {
+                        alert("删除失败！");
+                    }
+                });
+            }
+        }
+    </script>
+}

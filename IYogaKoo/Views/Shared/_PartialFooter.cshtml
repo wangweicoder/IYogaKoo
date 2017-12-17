@@ -1,0 +1,77 @@
+﻿ 
+<div class="lb_index_foter">
+    <div class="lb_index_forter_index">
+    <div class="lb_index_foter_left">
+        <div class="lb_logo">
+           <img src="/Content/Front/images/logoimg.jpg" />
+        </div>
+        <div class="lb_index_foter_left_div">
+            <p>我们是热爱瑜伽的习练者。</p>
+            <p>请加入我们的平台,与世界各地的瑜伽行者</p>
+            <p>一起探索身心灵的成长。</p>
+            <p style="margin-top:6px">©2015 北京华夏迅联信息技术有限公司</p>
+            <p>www.inetkoo.com</p>
+            <p>京ICP备12009999号</p>
+            <p>京公网安备121105009999号</p>
+        </div>
+    </div>
+    <div class="lb_index_foter_right">
+         <ul style="background:none">
+             <li class="li li1"><a href="/Home/BottomNavigation?id=1">关于我们</a></li>
+            <li><a href="/Home/BottomNavigation?id=2" class="lbba">加入我们</a></li>
+			<li><a href="/Home/BottomNavigation?id=3" class="lbba">联系我们</a></li>
+            @*@foreach (DataRow dr in BLL.Article.GetArticle("关于我们").Rows)
+            {
+                <li><a href="/Settings/ArticleDetail/@dr["ID"]" target="_blank">@dr["ArticleTitle"].ToString()</a></li>                       
+            }*@
+        </ul>
+        <ul>
+            <li class="li li2">获取帮助</li>
+            @*<li><a href="javascript:;">常见问题</a></li>
+									<li><a href="javascript:;">网络技术支持</a></li>
+									<li><a href="javascript:;">广告宣传计划</a></li>
+									<li><a href="javascript:;">工作坊有人帮</a></li>
+									<li><a href="javascript:;">问题反馈</a></li>*@
+            @*@foreach (DataRow dr in BLL.Article.GetArticle("获取帮助").Rows)
+    {
+        <li><a href="/Settings/ArticleDetail/@dr["ID"]" target="_blank"  class="lbba">@dr["ArticleTitle"].ToString()</a></li>
+    }*@
+        </ul>
+        <ul style="width:200px" id="ul">
+            <li class="li li3">更多操作</li>
+            <li><a href="http://t.cn/zl3rNEs" target="_blank" class="ios">IOS应用程序</a></li>
+            <li><a href="~/DownLoad/iyogaAndroid.apk" class="android">Android应用程序</a></li>
+            @*<li><a href="javascript:;">瑜伽导师客户端</a></li>
+            <li><a href="javascript:;">瑜伽机构客户端</a></li>*@
+        </ul>
+
+        <ul style="border: 0px; width: 300px">
+            <li class="li li4">关注我们</li>
+            <li style="position:relative; margin-left:0px" class="lb_add_li">
+                @*<a class="li1" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=25dd3d779b6f8e468ad9f079cda96e5248be8bb2757078d9f62ef4284d69f804">
+                    <img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="爱瑜伽酷反馈QQ群" title="爱瑜伽酷反馈QQ群">
+                </a>*@
+                <a class="li1" target="_blank" href="http://shang.qq.com/wpa/qunwpa?idkey=02ba4e9b1109c73771bf68ece4a165ebd14c5dc157b39bcf52e4049f17034c67">
+                    <img border="0" src="http://pub.idqqimg.com/wpa/images/group.png" alt="爱瑜伽酷反馈QQ群" title="爱瑜伽酷反馈QQ群">
+                </a>
+                <a class="li2">
+                        <img src="/Content/Front/images/weixinguanzhu.png" />
+                </a>
+                <a class="li3" style="margin-left:30px;" href="http://weibo.com/iyogakoo" target="_blank">
+
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+ </div>
+<script>
+    $(function () {
+        //底部导航关注我们
+        $('.lb_add_li a').mouseover(function () {
+            $(this).children('img').show();
+        }).mouseout(function () {
+            $(this).children('img').hide();
+        })
+    })
+</script>

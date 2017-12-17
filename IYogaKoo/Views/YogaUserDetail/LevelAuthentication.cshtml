@@ -1,0 +1,142 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaUserDetail
+
+@{
+    ViewBag.Title = "LevelAuthentication";
+    Layout = "~/Views/Shared/_LayoutSetUp.cshtml";
+}
+<style>
+    #lb_casuh label {
+    line-height:25px
+    }
+</style>
+<div class="lb_pd_index">
+    <p style="margin-left:45px!important">自我级别评定&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        @Html.LabelFor(model => model.Ulevel)：
+        @{
+            if (Model.Ulevel == null || Model.Ulevel == 0)
+            {
+                @:基础习练者
+                }
+
+            if (Model.Ulevel == 1)
+            {
+                @:初级习练者
+                }
+            if (Model.Ulevel == 2)
+            {
+                @:中级习练者
+                }
+            if (Model.Ulevel == 3)
+            {
+                @:高级习练者
+                }
+
+
+        }
+    </p>
+
+
+</div>
+@using (Html.BeginForm("LevelAuthentication1", "YogaUserDetail", FormMethod.Post, new { id = "authform" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="lb_jbrz" style=" margin:0px; margin-left:32px">
+
+        @Html.HiddenFor(model => model.ID)
+        
+        <div class="editor-field">
+        </div>
+        <div class="editor-label">
+            1、 习练瑜伽的年限？ 
+        </div>
+        <div class="editor-field">
+            @Html.RadioButtonFor(m => m.StartYear, 1, new { @id = "StartYear1", @name = "StartYear", @class = "lb_ridao" })<span class="lb_level_span">A、0-1年</span><br />
+            @Html.RadioButtonFor(m => m.StartYear, 2, new { @id = "StartYear2", @name = "StartYear", @class = "lb_ridao" })<span class="lb_level_span">B、1-3年</span><br />
+            @Html.RadioButtonFor(m => m.StartYear, 3, new { @id = "StartYear3", @name = "StartYear", @class = "lb_ridao" })<span class="lb_level_span">C、3-5年</span><br />
+            @Html.RadioButtonFor(m => m.StartYear, 4, new { @id = "StartYear4", @name = "StartYear", @class = "lb_ridao" })<span class="lb_level_span">D、5年以上</span>
+        </div>
+
+        <div class="editor-label">
+            2、练习瑜伽的频率 
+        </div>
+        <div class="editor-field">
+            @Html.RadioButtonFor(m => m.IsUserWeeknumber, 1, new { @id = "IsUserWeeknumber1", @name = "IsUserWeeknumber", @class = "lb_ridao" })<span class="lb_level_span">A、每周2-3次瑜伽课程习练。</span><br />
+            @Html.RadioButtonFor(m => m.IsUserWeeknumber, 2, new { @id = "IsUserWeeknumber2", @name = "IsUserWeeknumber", @class = "lb_ridao" })<span class="lb_level_span">B、每周4-5次瑜伽课程习练。</span><br />
+            @Html.RadioButtonFor(m => m.IsUserWeeknumber, 3, new { @id = "IsUserWeeknumber3", @name = "IsUserWeeknumber", @class = "lb_ridao" })<span class="lb_level_span">C、每周有规律的瑜伽课程或自我习练。</span><br />
+            @Html.RadioButtonFor(m => m.IsUserWeeknumber, 4, new { @id = "IsUserWeeknumber4", @name = "IsUserWeeknumber", @class = "lb_ridao" })<span class="lb_level_span">D、每日有规律的自我习练。</span>
+        </div>
+
+        <div class="editor-label">
+            3、习练瑜伽的内容 
+        </div>
+        <div class="editor-field">
+            @Html.RadioButtonFor(m => m.sContent, 1, new { @id = "sContent1", @name = "sContent", @class = "lb_ridao" })<span class="lb_level_span">A、有瑜伽导师带领的瑜伽体式习练。</span><br />
+            @Html.RadioButtonFor(m => m.sContent, 2, new { @id = "sContent2", @name = "sContent", @class = "lb_ridao" })<span class="lb_level_span"> B、有导师带领瑜伽体式习练+瑜伽呼吸法。 </span>
+            <br />
+            @Html.RadioButtonFor(m => m.sContent, 3, new { @id = "sContent3", @name = "sContent", @class = "lb_ridao" })<span class="lb_level_span"> C、有导师带领体式习练+瑜伽呼吸控制法，并熟练掌握常用体式要领，基本的呼吸控制法、清洁法要领。</span><br />
+            @Html.RadioButtonFor(m => m.sContent, 4, new { @id = "sContent4", @name = "sContent", @class = "lb_ridao" })<span class="lb_level_span">D、自我习练瑜伽体式+瑜伽呼吸控制法+清洁法+冥想。</span>
+
+        </div>
+
+        <div class="editor-label">
+            4、瑜伽理论知识 
+        </div>
+        <div class="editor-field">
+            @Html.RadioButtonFor(m => m.knowledge, 1, new { @id = "knowledge1", @name = "knowledge", @class = "lb_ridao" })<span class="lb_level_span">A、了解瑜伽基础知识、瑜伽呼吸知识要领。</span><br />
+            @Html.RadioButtonFor(m => m.knowledge, 2, new { @id = "knowledge2", @name = "knowledge", @class = "lb_ridao" })<span class="lb_level_span">B、学习瑜伽知识，掌握瑜伽呼吸法知识要领、清洁法要领。</span><br />
+            @Html.RadioButtonFor(m => m.knowledge, 3, new { @id = "knowledge3", @name = "knowledge", @class = "lb_ridao" })<span class="lb_level_span"> C、系统的学习瑜伽知识理论，掌握瑜伽呼吸控制法知识要领、清洁法要领、对冥想有一定的了解。</span><br />
+            @Html.RadioButtonFor(m => m.knowledge, 4, new { @id = "knowledge4", @name = "knowledge", @class = "lb_ridao" })<span class="lb_level_span">D、深入了解瑜伽哲学，阅读瑜伽经典、掌握瑜伽呼吸控制法知识要领、清洁法要领、对冥想有深入研究。</span>
+
+        </div>
+        <div class="lb_save" style="width:600px;">
+
+            <input type="button" id="btn_submit" value="提交" />
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () { 
+            $("#btn_submit").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/YogaUserDetail/LevelAuthentication1",
+                    data: $("#authform").serialize(),
+                    success: function (result) {
+                        result=parseInt(result);
+                        if (result >= 1) {
+                            var level = "";
+                            if (result == 1) {
+                                level = "初级";
+                            }
+                            else if (result == 2) { 
+                                level = "中级";
+                            }
+                            else if (result == 3) {
+                                level = "高级";
+                            }
+                            else {
+                                layer.alert("认证失败，", { icon: 6 });
+                            }
+                            layer.alert("恭喜您已达到" + level + "习练者级别！", {title:"认证成功"});
+                        }
+                        else if (result == 0) {
+                            layer.alert("自评分数不足以升级，升级失败", { icon: 6 });
+                        }
+                        else {
+                            layer.alert("级别异常，无法升级", { icon: 6 });
+                        }
+                    },
+                    error: function (result) {
+                        layer.alert("认证失败", { icon: 6 });
+                    }
+                });
+
+            }); 
+        });
+    </script>
+}

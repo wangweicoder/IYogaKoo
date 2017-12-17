@@ -1,0 +1,191 @@
+﻿@model IYogaKoo.ViewModel.ViewYogisModels
+
+@{
+    ViewBag.Title = "LevelAuthentication";
+    Layout = "~/Views/Shared/_LayoutSetUp.cshtml";
+}
+
+<h2>级别认证</h2>
+
+@using (Html.BeginForm("LevelAuthentication","YogisModels",FormMethod.Post, new { id = "authform" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+        @Html.HiddenFor(model => model.YID)
+       
+        <div>
+            <a href="/YogisModels/Audit">升级导师</a>（如进行导师级别晋升认证，请完成下列自评）
+        </div><br />
+        <div>
+
+        </div>
+        <div class="editor-label"  id="lb_casuhs">
+            @Html.LabelFor(model => model.YogisLevel)：
+            @{
+    if (Model.YogisLevel == null || Model.YogisLevel == 0)
+    {
+        @:未设置
+    }
+    else
+    {
+        if (Model.YogisLevel == 1)
+        {
+            @:初级
+        }
+        if (Model.YogisLevel == 2)
+        {
+            @:中级
+        }
+        if (Model.YogisLevel == 3)
+        {
+            @:高级
+        }
+        if (Model.YogisLevel == 4)
+        {
+            @:大师
+        }
+    }
+
+            }
+        </div>
+        <br/>
+        <br />
+        <div class="editor-label">
+            级别晋升自评
+            </div>
+            <div class="editor-field">
+
+            </div>
+            <div class="editor-label">
+                1、 习练瑜伽的年限？
+            </div>
+            <div class="editor-field">
+                <input type="radio" name="yearNums" value="1" class="lb_ridao" /><span class="lb_level_span">A、1-3年</span><br /><br />
+                <input type="radio" name="yearNums" value="2" class="lb_ridao" /><span class="lb_level_span">B、3-5年</span><br /><br />
+                <input type="radio" name="yearNums" value="3" class="lb_ridao" /><span class="lb_level_span">C、5-10年</span><br /><br />
+                <input type="radio" name="yearNums" value="4" class="lb_ridao" /><span class="lb_level_span">D、10年以上</span>
+            </div>
+
+            <div class="editor-label">
+                2、参加瑜伽教学资格的培训？
+            </div>
+            <div class="editor-field">
+                <input type="radio" name="yogaPinl" value="1" class="lb_ridao" /><span class="lb_level_span">A、正规学院200小时导师认证培训</span><br /><br />
+                <input type="radio" name="yogaPinl" value="2" class="lb_ridao" /><span class="lb_level_span">B、正规学院中级导师认证培训</span><br /><br />
+                <input type="radio" name="yogaPinl" value="3" class="lb_ridao" /><span class="lb_level_span">C、正规学院高级导师认证培训</span><br /><br />
+                <input type="radio" name="yogaPinl" value="4" class="lb_ridao" /><span class="lb_level_span">D、参加不同流派多级认证培训</span>
+            </div>
+            <div class="editor-label">
+                3、教授的年限
+            </div>
+            <div class="editor-field">
+                <input type="radio" name="JiaoNums" value="1" class="lb_ridao" /><span class="lb_level_span">A、0-1年</span><br /><br />
+                <input type="radio" name="JiaoNums" value="2" class="lb_ridao" /><span class="lb_level_span">B、1-3年</span><br /><br />
+                <input type="radio" name="JiaoNums" value="3" class="lb_ridao" /><span class="lb_level_span">C、3-5年</span><br /><br />
+                <input type="radio" name="JiaoNums" value="4" class="lb_ridao" /><span class="lb_level_span">D、5年以上</span>
+            </div>
+            <div class="editor-label">
+                4、自我习练瑜伽的频率
+            </div>
+            <div class="editor-field">
+                <input type="radio" name="yogaUserPl" value="1" class="lb_ridao" /><span class="lb_level_span">A、有规律自我习练</span><br /><br />
+                <input type="radio" name="yogaUserPl" value="2" class="lb_ridao" /><span class="lb_level_span">B、每周至少3天瑜伽课程习练 </span> <br /><br />
+                <input type="radio" name="yogaUserPl" value="3" class="lb_ridao" /><span class="lb_level_span">C、每周至少进行5天自我习练</span><br /><br />
+                <input type="radio" name="yogaUserPl" value="4" class="lb_ridao" /><span class="lb_level_span">D、持续不间断的坚持每日自我习练</span>
+
+            </div>
+            <div class="editor-label">
+                5、习练瑜伽的内容
+            </div>
+            <div class="editor-field">
+                <input type="radio" name="yogaContent" value="1" class="lb_ridao" /><span class="lb_level_span">A、教授基础瑜伽体式、基本呼吸方法及练习要领</span><br /><br />
+                <input type="radio" name="yogaContent" value="2" class="lb_ridao" /><span class="lb_level_span">B、教授常用的瑜伽体式习练+基本的瑜伽呼吸控制法，冥想课程、基础的清洁法要领</span> <br /><br />
+                <input type="radio" name="yogaContent" value="3" class="lb_ridao" /><span class="lb_level_span">C、教授常用的瑜伽中级体式习练+常用的瑜伽呼吸控制法，冥想课程、基础的清洁法要领</span><br /><br />
+                <input type="radio" name="yogaContent" value="4" class="lb_ridao" /><span class="lb_level_span">D、教授瑜伽高级体式+常用的瑜伽呼吸控制法+清洁法+冥想课程等瑜伽相关的所有课程和内容；并可以独立开设专题工作坊课程</span>
+
+            </div>
+
+            <div class="editor-label">
+                6、瑜伽理论知识
+            </div>
+            <div class="editor-field" style="float:none">
+                <input type="radio" name="yogaknowledge" value="1" class="lb_ridao" /><span class="lb_level_span">A、了解瑜伽基础知识、瑜伽呼吸知识要领。</span><br /><br />
+                <input type="radio" name="yogaknowledge" value="2" class="lb_ridao" /><span class="lb_level_span">B、学习瑜伽知识，掌握瑜伽呼吸法知识要领、清洁法要领。</span><br /><br />
+                <input type="radio" name="yogaknowledge" value="3" class="lb_ridao" /><span class="lb_level_span">C、系统的学习瑜伽知识理论，掌握瑜伽呼吸控制法知识要领、清洁法要领、对冥想有一定的了解。</span><br /><br />
+                <input type="radio" name="yogaknowledge" value="4" class="lb_ridao" /><span class="lb_level_span">D、深入了解瑜伽哲学，阅读瑜伽经典、掌握瑜伽呼吸控制法知识要领、清洁法要领、对冥想有深入研究。</span>
+
+            </div>
+            <div class="lb_save" style="float:none; width:600px">
+                <input type="button" id="btn_submit" value="提交" />
+            </div>
+</fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(function () { 
+            $("#btn_submit").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: "/YogisModels/LevelAuthentication",
+                    data: $("#authform").serialize(),
+                    success: function (result) {
+                        if (result >= 1)
+                        {
+                            var level = "";
+                            if (result == 1) {
+                                level = "初级";
+                            }
+                            else if (result == 2) {
+                                level = "中级";
+                            }
+                            else if (result == 3) {
+                                level = "高级";
+                            }
+                            else {
+                                layer.alert("升级失败，", { icon: 6 });
+                            }
+                            UpgradeEvent(level);
+                        }
+                        else if (result == 0) {
+                            layer.alert("自评分数不足以升级，升级失败", { icon: 6 });
+                        }
+                        else {
+                            layer.alert("级别异常，无法升级", { icon: 6 });
+                        }
+                        
+                    },
+                    error: function (result) {
+                        layer.alert("提交失败",{icon:6});
+                    }
+                });
+
+            });
+           // UpgradeEvent("大师");
+        });
+        function UpgradeEvent(dslevel)
+        {
+            layer.confirm("您好！根据您的自评选项，综合评测，你现已达到" + dslevel + "导师级别。请您选择是否上传资质证明，进一步完成级别的认证。", {
+                btn: ["提交", "完成"],title:"提示",icon:3
+            }, function () {
+                //资质认证界面               
+                location.href = "/YogisModels/AuditEdit";
+            }, function () {
+                //完成
+                UpgradeEvent2();
+            });
+        }
+        function UpgradeEvent2() {
+            layer.confirm("如果不进行一下步提交上传资料，直接完成您的级别状态将不会晋升，是否继续？", {
+                btn: ["继续提交", "完成"], title: "提示", icon: 3
+            }, function () {
+                //资质认证界面
+                location.href = "/YogisModels/AuditEdit";
+            });
+        }
+    </script>
+}

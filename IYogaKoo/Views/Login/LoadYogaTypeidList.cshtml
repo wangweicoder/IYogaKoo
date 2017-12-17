@@ -1,0 +1,91 @@
+﻿@*@model IEnumerable<IYogaKoo.ViewModel.ViewYogaDicItem>*@
+@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogaDicItem>
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>流派列表</title>
+    <script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+@*    <link href="@Url.Content("~/Content/artDialog4.1.1/_doc/demo.css")" rel="stylesheet" />*@
+    <link href="@Url.Content("~/Content/Front/css/tanchuceng.css")" rel="stylesheet" />
+    <script src="@Url.Content("~/Content/artDialog4.1.1/jquery.artDialog.js?skin=blue")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/artDialog4.1.1/artDialog.iframeTools.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        function setValue(ID, ItemName) {
+
+        art.dialog.data('ID', ID);
+        art.dialog.data('ItemName', ItemName);
+        art.dialog.close();
+
+    }
+    //多选
+    function setValueAll() {
+        var strvalue = "";
+        var strName = "";
+        $("input[name='AllCheck']:checked").each(function () {
+            
+            strvalue += this.value + ",";
+            strName += this.alt + ",";
+        });
+        art.dialog.data('ID', strvalue);
+        art.dialog.data('ItemName', strName);
+        art.dialog.close();
+    }
+    </script>
+
+    <script src="~/Content/baiduAdd.js"></script>
+</head>
+<body>
+
+    <div class="centerUl">
+<ul >
+    @{
+        var index = 1;
+        if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+        {
+            var p = int.Parse(Request.QueryString["page"]) - 1;
+            if (p > 0)
+            {
+                index = p * 10 + 1;
+            }
+        }
+    }
+    @foreach (var item in Model) {
+    <li>
+      
+            <input type="checkbox" name="AllCheck" value="@item.ID" alt="@item.ItemName" />
+        
+            @Html.DisplayFor(modelItem => item.ItemName)
+        
+    </li>
+}
+
+</ul>
+        </div>
+    <div class="lb_page">
+@*@Html.AjaxPager(Model, new PagerOptions { PageIndexParameterName = "page" }, new AjaxOptions { UpdateTargetId = "right_con" })*@
+        @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    PrevPageText = "上一页",
+    NextPageText = "下一页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a  >{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+}, new MvcAjaxOptions { UpdateTargetId = "Content", HttpMethod = "Post", })
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    <a onclick="setValueAll();" style=" cursor:pointer;"  id="lb_queren" >&nbsp;</a>
+
+</body>
+</html>

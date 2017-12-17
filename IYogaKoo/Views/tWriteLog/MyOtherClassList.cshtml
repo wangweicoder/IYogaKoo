@@ -1,0 +1,66 @@
+﻿@model List<IYogaKoo.ViewModel.ViewClass>
+@{
+    Layout = null;
+}
+<div class="wrapper2">
+    <div class="lb_myindex_mjianjie wrapper2" id="divmyphoto" style="width:950px;">
+        <div id="con1_12">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="product_list2">
+                        @if (item.EndTime <= DateTime.Now && item.ReportCount > 0)
+                        {
+                            <a href="/class/ViewReport?classid=@item.Id" id="@item.Id">
+                                <img src="@(item.Banner == null ? "" : item.Banner)" />
+                            </a>
+                        }
+                        else
+                        {  <a href="/class/viewactivity?id=@item.Id" id="@item.Id">
+                            <img src="@(item.Banner == null ? "" : item.Banner)" />
+                        </a>
+
+                        }
+
+                       
+                        <div class="lb_hd_hide">
+                            @if (item.IfEdit) { 
+                            <a title="编辑" onclick="classDelEdit(1,'@item.Id')">
+                                <img alt="编辑" src="~/Content/Front/images/ClassEdit.png" />
+                            </a>}
+                                @if(item.IfDel)
+                                { 
+                            <a title="删除" onclick="classDelEdit(0,'@item.Id')">
+                                <img alt="删除" src="~/Content/Front/images/Classdel.png" />
+                            </a>}
+                            @if (item.IfReback)
+                            {
+                                <a title="撤销" onclick="classDelEdit(2,'@item.Id')">
+                                    <img width="18" height="14" alt="撤销" src="~/Content/Front/images/chexiao.png" />
+                                </a>}
+                        </div>
+                        <p><a title="@(item.Name)">@(item.Name)</a></p>
+                        @*<p>@(item.Start)</p>
+                            <p>北京-北京市-西城区</p>*@
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+
+
+<script language="javascript">
+    $(document).ready(function () {
+        var $container = $('#con1_12');
+        $container.imagesLoaded(function () {
+            $container.masonry({
+                itemSelector: '.product_list2',
+                columnWidth: 5 //每两列之间的间隙为5像素
+            });
+        });
+    });
+
+</script>

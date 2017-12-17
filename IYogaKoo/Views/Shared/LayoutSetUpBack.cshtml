@@ -1,0 +1,99 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta property="qc:admins" content="37466671526117713776375" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽酷， 世界瑜伽人之家。</title>
+    <link rel="shortcut icon" href="/Content/Front/images/2.ico.png" />
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script src="~/Content/ueditor/ueditor.config.js"></script>
+    <script src="~/Content/ueditor/ueditor.all.js"></script>
+    <script src="~/Content/My97DatePicker4.7/WdatePicker.js"></script>
+
+    <script src="~/Content/jquery/ExistisUpdate.js"></script>
+
+    <link type="text/css" href="/Content/Front/css/indexnew.css?v=1" rel="stylesheet" />
+    <link type="text/css" href="/Content/Front/css/indexnew.css" rel="stylesheet" />
+    <script type="text/javascript" src="~/Content/Front/js/indexnew.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+    <script src="~/Content/jquery/base64.js"></script>
+    <script src="~/Content/jquery/ReturnUrl.js"></script>
+    @RenderSection("styles", false)
+    @using IYogaKoo.ViewModel.Commons.Enums;
+    <script src="~/Content/baiduAdd.js"></script>
+</head>
+<body>
+    <div class="lb_index">
+        @Html.Partial("_OtherTopInfo") 
+        <div class="lb_index_scarh_top">
+
+
+
+        </div>
+        @* <div class="lb_myindex" style="background: url(/Content/Front/images/my.png) no-repeat; background-size: 100%">
+                <div class="lb_myindex_div">
+                    <div class="lb_myindex_div_left">
+                        <div class="lb_myindex_div_left_top">
+
+                            <img src="/Files/avatar/original/130873020452036491.jpg">
+                        </div>
+                        <div class="lb_name_div">
+                            <ul>
+                                <li>
+                                    <p>2</p>
+                                    <a>关注</a>
+                                </li>
+                                <li style="border:0px">
+                                    <p>
+                                        0
+                                    </p>
+                                    <a>粉丝</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                        <div class="lb_myindex_div_left_center">
+
+                            <p>
+                                <b>
+                                    冰冰刘
+                                </b>
+
+                                <img src="/Content/Front/images/women.png">
+                            </p>
+                            <p>
+                                级别：<b>
+                                        基本习练者
+                                </b>
+                                <br>
+
+                            </p>
+                            <p>
+                                流派：<b></b>
+                                <input type="hidden" id="hhid" value="100250">
+                            </p>
+                            <p style="">
+                                位置：
+                                <br>
+                                <strong>签名：</strong>
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>*@
+
+
+        @RenderBody()
+
+    </div>
+    @RenderSection("scripts", false)
+</body>
+</html>

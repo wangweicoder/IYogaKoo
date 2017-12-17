@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "WXNotify";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="lb_School_index">
+    <div class="lb_School_index_top">
+        <div class="lb_School_index_top_index">
+            <b>您所在位置：</b><span>支付</span>
+            <ul>
+                @*<li><a href="" class="on">达人</a></li>
+                    <li><a href="">活动</a></li>*@
+            </ul>
+        </div>
+    </div>
+    <div class="lb_hd_index">
+        <div class="lb_hb_faqi">
+            <div class="lb_hd_faqi_left">
+                <div class="lb_hd_faqi_left_top">
+                    @if (ViewBag.Result.Code == 0)
+                    {
+                        <h1>微信支付</h1>
+                    }
+                </div>
+                <div class="lb_hd_faqi_left_bottom">
+                    <div>
+                        @if (ViewBag.Result.Code == 0)
+                        {
+                            <img src="@ViewBag.URL" />
+                        }
+                        else
+                        {
+                            @(new HtmlString(ViewBag.Result.Message))
+                        }
+                    </div>
+                </div>
+                <div>
+                    <input id="ok" type="button" style="margin-top:0px;" class="lb_hd_faqi_left_button" value="完成支付" />
+                </div>
+            </div>
+
+            <div class="lb_hd_faqi_right">
+                <div class="lb_hd_faqi_right_top">
+                    <b>请确保您的活动符合法律规定：</b>
+                    <p>按照相关法律规定，营业性演出活动需取得国家行政部门审批，请确保你的活动已经获得相关资质及许可。未获上述批准的活动将被依法删除，且由此造成的后果须由活动举办方自行承担。</p>
+                    <b>注意事项：</b>
+                    <a href="">什么是合适的同城活动？</a>
+                    <a href="">何才能让你的活动更吸引人？</a>
+                    <a href="">什么是合适的同城活动？</a>
+                    <a href="">何才能让你的活动更吸引人？</a>
+                    <a href="">什么是合适的同城活动？</a>
+                    <a href="">何才能让你的活动更吸引人？</a>
+                    <a href="">什么是合适的同城活动？</a>
+                    <a href="">何才能让你的活动更吸引人？</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script src="~/Content/Front/js/activity.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        $("#ok").click(function(){
+            $.post('/class/IsPay?id=' + @ViewBag.OrderId, "", function (data) {
+
+                    if (data.Code == 0) {
+                        layer.confirm('支付成功', {
+                            btn: ['确定'] //按钮
+                        }, function () {
+                            time: 0;
+                            window.location.href = "/class/viewactivity?id=" + @ViewBag.ClassId;
+                        });
+                    }
+                    else if (data.Code == 1) {
+                        alert("对不起,您没有成功完成支付.请重新再试一次!");
+                    }
+                    else {
+
+                    }
+                }, "JSON")
+            })
+        });
+
+    </script>
+}

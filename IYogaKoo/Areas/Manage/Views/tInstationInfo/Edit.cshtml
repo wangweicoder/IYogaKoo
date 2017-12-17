@@ -1,0 +1,212 @@
+﻿@model IYogaKoo.ViewModel.ViewtInstationInfo
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+    
+}
+
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">修改站内信</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <fieldset>
+                    <div style="height:auto; overflow:hidden">
+                        <ul id="mType">
+                            <li id="all">全部会员</li>
+                            <li id="user">习练者</li>
+                            <li id="models">导师</li>
+                        </ul>
+                        <br />
+                        <input type="hidden" id="hidselectType" name="hidselectType" />
+                        <ul id="userlist"></ul>
+                        <ul id="modelslist"></ul>
+                    </div>
+
+                    　
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.sContent)
+                    </div>
+                    <div class="editor-field">
+                        @Html.TextAreaFor(model => model.sContent)
+                        @Html.ValidationMessageFor(model => model.sContent)
+                    </div>
+                     　
+                    <p>
+                        <input type="button" class="button" id="idsubmit" value="修改" />　
+                        <input type="hidden" id="hiduserInfo" name="hiduserInfo" />
+                        <input type="hidden" id="hidsContent" name="hidsContent" value="@Model.sContent" />
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        @Html.ActionLink("返回", "Index")
+                    </p>
+                </fieldset>
+            }
+             
+        </div>
+    </div>
+</div>
+<style type="text/css">
+    #mType {
+        width: 750px;
+    }
+
+        #mType li {
+            float: left;
+            width: 120px;
+            background-color: #20cf13;
+            color: white;
+            font-size: 13px;
+            text-align: center;
+            line-height: 25px;
+            cursor: pointer;
+        }
+
+    .memeber {
+        width: 700px;
+    }
+
+        .memeber li {
+            float: left;
+            width: 120px;
+            background-color: #808080;
+            color: white;
+            font-size: 13px;
+            margin-right: 5px;
+            line-height: 25px;
+            margin-bottom: 5px;
+            text-align: center;
+            cursor: pointer;
+        }
+
+    .user_li {
+        background-color: #20cf13;
+    }
+</style>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script type="text/javascript">
+    $(function () {
+        var strUserType = '';
+        $.ajax({
+            url: "/Manage/tInstationInfo/Detailslistuser",
+            type: "get",
+            data: { sContent: '@Model.sContent' },
+                dataType: "json",
+                success: function (Data) {
+                   
+                    strUserType = Data.code;
+                    
+                    if (strUserType.length ==4) {
+                        $("#all").css("background", "#808080");
+                    } else if (strUserType.length == 2) {
+                         
+                        if (strUserType[0] == 0) {
+                            $("#hidselectType").val("0");// 习练者第一次加载必须为空
+
+                            $("#all").css("background", "#20cf13");
+                            $("#user").css("background", "#808080");
+                            $("#models").css("background", "#20cf13");
+                            $("#userlist").show();
+                            $("#modelslist").hide();
+
+                            $("#userlist").html("");
+                            var strValue = "";
+                            $.each(Data.listinfo, function (i, field) {
+                                strValue += field.UId + ",";
+                                if (field.NickName.length > 8) {
+                                    NickName = field.NickName.substring(0, 8);
+                                } else {
+                                    NickName = field.NickName;
+                                }
+                                $("#userlist").append("<li value='' style='background-color:#808080' id='" + field.UId + "'>" + NickName + "</li>");
+
+                            });
+                            $("#hiduserInfo").val(strValue);
+                            $("#userlist").addClass("memeber");
+                        } else {
+                            $("#hidselectType").val("1");//导师第一次加载必须为空
+
+                            $("#all").css("background", "#20cf13");
+                            $("#models").css("background", "#808080");
+                            $("#user").css("background", "#20cf13");
+
+                            $("#userlist").hide();
+                            $("#modelslist").show();
+
+                            $("#modelslist").html("");
+                            var strValue = "";
+                            $.each(Data.listinfo, function (i, field) {
+                                strValue += field.UId + ",";
+                                if (field.NickName.length > 8) {
+                                    NickName = field.NickName.substring(0, 8);
+                                } else {
+                                    NickName = field.NickName;
+                                }
+                                $("#modelslist").append("<li value='' style='background-color:#808080' id='" + field.UId + "'>" + NickName + "</li>");
+
+                            });
+                            $("#hiduserInfo").val(strValue);
+                            $("#modelslist").addClass("memeber");
+                        }
+                    }
+                    //
+                
+
+            }, error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            },
+                complete: function (XMLHttpRequest, textStatus) {
+                this; // 调用本次AJAX请求时传递的options参数
+            }
+            });
+    })
+</script>
+
+<script type="text/javascript">
+      
+    //保存
+    $('#idsubmit').click(function () {
+         
+        var data = $("form").serialize();
+
+        $.ajax({
+            url: '/Manage/tInstationInfo/Edit?t=' + Math.random(),
+            type: 'POST',
+            data: data,
+            success: function (data) {
+
+                if (data.code == 0) {
+                    alert("修改成功！");
+                    location.href = "/Manage/tInstationInfo/Index";
+                } else {
+                    alert("内部错误！"); 
+                }
+
+            }, error: function () {
+                alert("修改失败！");
+
+            }
+        });
+        return false;
+    });
+</script>
+
+}

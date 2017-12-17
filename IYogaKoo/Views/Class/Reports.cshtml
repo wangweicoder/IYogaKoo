@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "活动报道";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <style type="text/css">
+        .lb_lb_hd_index_show_img2_bott p {
+            clear: both;
+        }
+        #noSearchResult {
+            text-align: center;
+            padding: 14px;
+            margin-bottom: 28px;
+            color: red;
+        }
+    </style>
+}
+<div class="lb_School_index">
+    <div class="lb_School_index_top">
+        <div class="lb_School_index_top_index">
+            <!-- <b>您所在位置：</b><span>机构</span> -->
+            <ul>
+                <li><a href="" class="on">达人</a></li>
+                <li><a href="">活动</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="lb_hd_index">
+        <div class="leftLoop1">
+
+            <div class="bd1">
+                <div class="tempWrap" style="overflow:hidden; position:relative; width:1200px">
+                    <ul class="picList1" style="width: 18000px; position: relative; overflow: hidden; padding: 0px; margin: 0px; left: -6000px;">
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                        <li style="float: left; width: 1200px;">
+                            <div class="pic"><a><img src="/content/front/images/hd_1.png"></a></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="hd">
+                <a class="next"></a><a class="next1"></a>
+                <ul><li class="on"></li><li class=""></li><li class=""></li><li class=""></li><li class=""></li></ul>
+                <a class="prev"></a><a class="prev1"></a>
+            </div>
+        </div>
+        <script type="text/javascript">jQuery(".leftLoop1").slide({ mainCell: ".bd1 ul", effect: "leftLoop", prevCell: ".prev,.prev1", nextCell: ".next,.next1", vis: 1, scroll: 1, autoPlay: true });</script>
+    </div>
+
+    <div class="lb_lb_hd_index_paihang">
+        <a href="javascript:;" class="on">按热门排行</a>
+        <a href="javascript:;">按地点排行</a>
+        <a href="javascript:;">按主题排行</a>
+        <a href="javascript:;">按时间排行</a>
+    </div>
+    <div class="lb_lb_hd_index_paihang2" id="search-box">
+        <ul>
+            <li id="search-0">
+                <a href="javascript:;" v="">参加人数最多</a>
+                <a href="javascript:;" v="">网友分享最多</a>
+            </li>
+            <li id="search-1">
+                <a href="javascript:;" v="590" class="on">北京</a>
+                <a href="javascript:;" v="">上海</a>
+                <a href="javascript:;" v="">广州 </a>
+                <a href="javascript:;" v="">深圳</a>
+            </li>
+            <li id="search-2">
+                <a href="javascript:;" v="115">哈他瑜伽</a>
+                <a href="javascript:;" v="116">高温瑜伽</a>
+                <a href="javascript:;" v="117">力量瑜伽</a>
+            </li>
+            <li id="search-3">
+                <a href="javascript:;" v="@DateTime.Now,@DateTime.Now.AddDays(7)">近一周 </a>
+                <a href="javascript:;" v="@DateTime.Now,@DateTime.Now.AddMonths(3)" >近3个月</a>
+                <a href="javascript:;" v="@DateTime.Now,@DateTime.Now.AddMonths(6)">近半年 </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="lb_lb_hd_index_show_img" id="class-list">
+    </div>
+    <div id="pageBox"></div>
+</div>
+@section scripts{
+    <script src="~/Scripts/laypage/laypage.js"></script>
+    <script src="~/Content/Front/js/activity.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            LoadReport(1, $('#search-box ul li .on').parent().attr('id').split('-')[1], $('#search-box ul li .on').attr('v'));
+            $('#search-box ul li a').click(function () {
+                $('#search-box ul li a.on').removeClass('on');
+                $(this).addClass('on');
+                var args = $(this).attr('v');
+                var code = $(this).parent().attr('id').split('-')[1];
+                LoadReport(1, code, args);
+            });
+        });
+    </script>
+}

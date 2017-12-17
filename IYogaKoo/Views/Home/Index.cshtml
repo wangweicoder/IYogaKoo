@@ -1,0 +1,1139 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = null;
+    Commons.Helper.method method = new Commons.Helper.method();
+}
+@using IYogaKoo.ViewModel.Commons.Enums;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta property="qc:admins" content="37466671526117713776727" />
+    <meta property="wb:webmaster" content="ab4cf999c5c9dc27" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽酷， 世界瑜伽人之家。</title>
+    <link rel="shortcut icon" href="/Content/Front/images/2.ico.png" />
+    <link type="text/css" href="/Content/Front/css/indexnew.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/indexnew.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+    <script src="~/Content/jquery/ExistisUpdate.js"></script>
+
+    <script src="~/Content/baiduAdd.js"></script>
+</head>
+
+<body>
+    <div class="lb_index">
+        <div class="lb_index_top">
+            <div class="lb_index_top_left">
+                <a href="/home/Index">
+                    <img src="/Content/Front/images/logo02.png" style="border: 0px" />
+                </a>
+            </div>
+            <div class="lb_index_top_right">
+                <div class="lb_index_top_right_ul" style="float: left">
+                    <ul>
+                        @{
+                            if (ViewBag.user.Uid != 0)
+                            {
+                                int uid = ViewBag.user.Uid;
+                                if (ViewBag.user.UserType == (int)UserType.瑜伽会员)
+                                {
+                                    string strTitle = ViewBag.user.NickName == null ? "" : ViewBag.user.NickName;
+                                    if (strTitle.Length > 4)
+                                    {
+                                        strTitle = strTitle.Substring(0, 4) + "...";
+                                    }
+                                    <li>
+                                        <a href="/tWriteLog/logIndex?page=1" class="lb_ron">@(strTitle)</a>
+                                    </li>
+    @*  <li>
+                                          <a title="站内信" href="">
+                                        @{if (ViewBag.level != null)
+        {
+            var YogiLevel = ViewBag.level;
+            if (YogiLevel == 0)
+            {
+                @:基础习练者
+                                }
+            if (YogiLevel == 1)
+            {
+                @:初级习练者
+                                  }
+            if (YogiLevel == 2)
+            {
+                @:中级习练者
+                                 }
+            if (YogiLevel == 3)
+            {
+                @:高级习练者
+                                }
+        }
+        }
+
+                                </li>*@
+                                    <li>
+                                        <a id="sjds" target="_blank" href="/Home/ApplyTeachAgreement">
+                                            <img src="~/Content/Front/images/updateteach.png" style="float:left; margin-top:30px" />
+                                        </a>
+                                    </li>
+                            <li>
+                                <a href="" title="站内信">
+                                <img src="~/Content/Front/images/zhanneixin.png" />
+                                 </a>
+                                    @{
+                                    if (ViewBag.AllCount != 0)
+                                    {
+                                        <b>@(ViewBag.AllCount)</b>
+                                    }
+                                    } 
+                                <div class="lb_li_idnex_hide lb_li_idnex_hide2">
+                                    <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                    <ul>
+                                        <li><a href="/tInstationInfo/Index?iType=0">系统消息</a><span>@(ViewBag.tinstatcount)</span></li>
+                                        <li><a href="/tInstationInfo/FollowIndex?iType=1">关注</a><span>@(ViewBag.follcount)</span></li>
+                                        <li><a href="/tInstationInfo/ZanIndex?iType=2">赞</a><span>@(ViewBag.zancount)</span></li>
+                                        <li><a href="/tInstationInfo/MessageIndex?iType=3">评论</a><span>@(ViewBag.msgcount)</span></li>
+                                    </ul>
+                                </div>
+                            </li>
+                                    <li class="lb_li_index">
+                                        <a class="se">
+                                          
+                                            @*<img src="~/Content/Front/images/shezhi.png" alt="s" />*@
+                                        </a>
+                                        <div class="lb_li_idnex_hide">
+                                            <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                            <ul>
+                                                <li><a href="/YogaUserDetail/PersonalSetUp?iType=1">个人信息</a></li>
+                                                <li><a href="/YogaUserDetail/PersonalSetUp?iType=2">安全设置</a></li>
+                                                <li><a href="/YogaUserDetail/PersonalSetUp?iType=3">级别认证</a></li>
+                                                <li><a href="/YogaUserDetail/PersonalSetUp?iType=4">隐私设置</a></li>
+                                                <li><a href="/tQuestion/PersonalHelpCenters">帮助中心</a></li>
+                                                <li style="border-top: 1px solid #65c3a5"><a id="exit" href="/home/Exitlogin">退出</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+                                else
+                                {
+                                    string strTitle = ViewBag.user.NickName == null ? "" : ViewBag.user.NickName;
+                                    if (strTitle.Length > 4)
+                                    {
+                                        strTitle = strTitle.Substring(0, 4) + "...";
+                                    }
+                                    <li>
+
+                                        <a href="/tWriteLog/logIndex?page=1" class="lb_ron">@(strTitle)</a> 
+
+                                    </li>
+                                   @* <li>
+    <a title="站内信" href="">
+        @{if (ViewBag.level != null)
+        {
+            var TeacherLevel = ViewBag.level;
+            IEnumerable<SelectListItem> selectlist = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.初级老师.ToList();
+            foreach (var item in selectlist)
+            {
+                if (TeacherLevel.ToString() == item.Value)
+                {
+                    @item.Text
+                }
+            }
+        }
+        }
+                                            
+                                        </a>
+                                       
+                                    </li>*@
+                            <li>
+                                <a href=""  title="站内信">
+                                    <img src="~/Content/Front/images/zhanneixin.png" />
+                                </a>
+                                @{
+                                    if (ViewBag.AllCount != 0)
+                                    {
+                                        <b>@(ViewBag.AllCount)</b>
+                                    }
+                                } 
+                                <div class="lb_li_idnex_hide lb_li_idnex_hide2">
+                                    <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                    <ul>
+                                        <li><a href="/tInstationInfo/Index?iType=0">系统消息</a><span>@(ViewBag.tinstatcount)</span></li>
+                                        <li><a href="/tInstationInfo/FollowIndex?iType=1">关注</a><span>@(ViewBag.follcount)</span></li>
+                                        <li><a href="/tInstationInfo/ZanIndex?iType=2">赞</a><span>@(ViewBag.zancount)</span></li>
+                                        <li><a href="/tInstationInfo/MessageIndex?iType=3">评论</a><span>@(ViewBag.msgcount)</span></li>
+                                    </ul>
+                                </div>
+                            </li>
+                                    <li class="lb_li_index">
+                                        @*<a>
+                                            <img src="~/Content/Front/images/shezhi.png" alt="s" />
+                                        </a>*@
+                                        <a class="se">
+                                            
+                                        </a>
+                                        <div class="lb_li_idnex_hide">
+                                            <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                            <ul>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=1">个人信息</a></li>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=2">课程设置</a></li>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=3">安全设置</a></li>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=4">级别认证</a></li>
+                                                <li><a href="/YogisModels/PersonalSetUp?iType=5">隐私设置</a></li>
+                                                <li><a href="/tQuestion/PersonalHelpCenters">帮助中心</a></li>
+                                                <li style="border-top: 1px solid #ccc"><a id="exit" href="/home/Exitlogin">退出</a></li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                }
+
+                                <li>
+                                    <input type="hidden" id="hiduid" value="@uid" />
+                                </li>
+                            }
+                            else
+                            {
+                                <li><a href="/Login/Register" class="zh" onclick="getreg();">注册</a>·<a href="/Login/Login" class="login">登录</a></li>
+
+                            }
+                        }
+
+                    </ul>
+                </div>
+                @* <div class="lb_index_top_right_div">
+                        <p class="e">中文</p>
+                        <p class="p">English</p>
+                    </div>*@
+            </div>
+        </div>
+        <div class="lb_index_scarh_top">
+            <div class="lb_index_scarh_top_img">
+                <img src="/Content/Front/images/iyoga.png" />
+                <img src="/Content/Front/images/xuanyan.png" />
+            </div>
+            <div class="lb_index_scarh_scarh">
+                <div class="lb_index_scarh_scarh_input">
+                    <input type="text" placeholder="找活动,找导师,找同修,找资料" id="txtsearchLayOut" />
+                </div>
+                <div class="lb_index_scarh_scarh_div">
+                    <input type="button" id="btsearchLayOut" />
+                </div>
+            </div>
+            <div class="lb_index_scarh_zhao">
+                <ul></ul>
+            </div>
+            <div class="lb_index_scarh_classss">
+                <ul>
+                    <li class="li1">
+                        <a href="/YogaUserDetail" style="width: 100%; height: 100%; display: block;"></a>
+                    </li>
+                    <li class="li2">
+                        <a href="/YogisModels" style="width: 100%; height: 100%; display: block;"></a>
+                    </li>
+                    <li class="li3">
+                        <a href="/Mechanism" style="width: 100%; height: 100%; display: block;"></a>
+                    </li>
+                    <li class="li4">
+                        <a href="/Class/Index" style="width: 100%; height: 100%; display: block;"></a>
+                    </li>
+                    <li class="li5">
+                        <a href="/learn/Index" style="width: 100%; height: 100%; display: block;"></a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="lb_index_lbt">
+            <div class="leftLoop">
+
+                <div class="bd">
+                    <ul class="picList">
+                        @if (ViewBag.listBanner != null)
+                        {
+                            foreach (var it in ViewBag.listBanner)
+                            {
+                                <li>
+                                    <div class="pic">
+                                        <a href="@it.sUrl">
+                                            <img src="@it.spic" />
+                                        </a>
+                                    </div>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li>
+                                <div class="pic">
+                                    <a>
+                                        <img src="/Content/Front/images/shangxian.jpg" />
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic">
+                                    <a>
+                                        <img src="/Content/Front/images/huodong.jpg" />
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic">
+                                    <a>
+                                        <img src="/Content/Front/images/daoshi.jpg" />
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic">
+                                    <a>
+                                        <img src="/Content/Front/images/huiguan.jpg" />
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="pic">
+                                    <a>
+                                        <img src="/Content/Front/images/lb_1.jpg" />
+                                    </a>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="hd">
+                    <a class="next"></a><a class="next1"></a>
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <a class="prev"></a><a class="prev1"></a>
+                </div>
+            </div>
+            <script type="text/javascript">jQuery(".leftLoop").slide({ mainCell: ".bd ul", effect: "leftLoop", prevCell: ".prev,.prev1", nextCell: ".next,.next1", vis: 1, scroll: 1, autoPlay: false, interTime: 10000 });</script>
+
+        </div>
+         
+        <!-- 瑜伽导师 习练者展示部分 -->
+
+        <div class="lb_index_yujia_idnex">
+            <div class="lb_index_yujia_idnex_left">
+                <div class="lb_index_yujia_idnex_l_top">
+                    <p style=" cursor:pointer;" onclick="Javascript: location.href ='/YogaUserDetail'">瑜伽习练者</p>
+                    <a href="/class/addactivity">习练者发起活动</a>
+                </div>
+                <div class="leftLoopa" style="width: 578px">
+                    <div class="hd">
+                        <div class="lb_index_yujia_idnex_l_bot">
+                            <div class="lb_index_yujia_idnex_l_bot_right">
+                                <!-- 	<a class="top"></a>
+                                <a class="bottom"></a> -->
+                                <a class="next"></a>
+                                <a class="prev" style="margin-right: 30px"></a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="bd">
+                        <ul class="infoList">
+                            @{
+                                var listm = ViewBag.list3Group;
+                                int shang = listm.Count / 8;
+                                for (int j = 0; j < shang; j++)
+                                {
+                                    <li>
+                                        <div class="lb_old_img">
+                                            @for (int i = j * 8; i < (j + 1) * 8; i++)
+                                            {
+                                                <div class="lb_old_img_div">
+                                                    <a href="/YogaUserDetail/Details/@listm[i].VyList.Uid">
+                                                        @{
+                                                 
+                                                string str5 = "/Content/Front/images/defaultImg.png";
+                                                if (listm[i].VDetailsList != null)
+                                                {
+                                                    str5 = method.DisplayImg(listm[i].VDetailsList.DisplayImg); 
+                                                }
+                                                <img src="@str5" />
+                                                        }
+                                                    </a>
+                                                    <div class="lb_old_img_div_hide">
+                                                        <div class="lb_index_yujia_div_div_name">
+                                                            <p>@listm[i].VyList.NickName</p>
+                                                        </div>
+                                                        <div class="lb_index_yujia_div_div_right">
+                                                            <a href="javascript:;">
+                                                                <img src="/Content/Front/images/xl_zan.png" />
+                                                            </a>
+                                                            <span>@listm[i].FollowCount</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        </div>
+                                    </li>
+                                }
+                                if (listm.Count % 8 < 8 && listm.Count % 8 > 0)
+                                {
+                                    <li>
+                                        <div class="lb_old_img">
+                                            @{
+                                    int beinum = listm.Count / 8;
+                                    for (int i = 0; i < listm.Count % 8; i++)
+                                    {
+                                        var lmindex = beinum * 8 + i;
+                                        <div class="lb_old_img_div">
+                                            <a href="/YogaUserDetail/Details/@listm[lmindex].VyList.Uid">
+                                                @{ 
+                                        string str5 = "/Content/Front/images/defaultImg.png";
+                                        if (listm[lmindex].VDetailsList != null)
+                                        {
+                                           str5= method.DisplayImg(listm[lmindex].VDetailsList.DisplayImg); 
+                                        }
+                                        <img src="@str5" />
+                                                }
+                                            </a>
+                                            <div class="lb_index_yujia_div_img_div">
+                                                <div class="lb_index_yujia_div_div_name">
+                                                    <p>@listm[lmindex].VyList.NickName</p>
+                                                </div>
+                                                <div class="lb_index_yujia_div_div_right">
+                                                    <a href="javascript:;">
+                                                        <img src="/Content/Front/images/xl_zan.png" />
+                                                    </a>
+                                                    <span>@listm[lmindex].FollowCount</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    }
+                                            }
+                                        </div>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+                <script type="text/javascript">jQuery(".leftLoopa").slide({ mainCell: ".bd ul", effect: "leftLoop", autoPlay: true, vis: 2, scroll: 1, trigger: "click", autoPlay: false });</script>
+
+                <div class="lb_index_yujia_xlz">
+                    <div class="lb_index_yujia_xlz_top">
+                        <p>瑜伽达人</p>
+                        @* <a href="javascript:;">更多...</a>*@
+                    </div>
+                    <div class="lb_index_yujia_xlz_img">
+                        @{
+                            int index = 0;
+                        }
+                        @{
+                            index++;
+                            foreach (var item in ViewBag.listGroup)
+                            {
+                                string str0 = null;
+                                if (item != null)
+                                {
+                                    var prsrc = "";
+                                    if (item.imgurl == "")
+                                    {
+                                        prsrc = "/Content/Front/images/defaultImg.png";
+                                    }
+                                    else
+                                    {
+                                        prsrc = item.imgurl;
+                                    }
+                                    str0 = prsrc;
+                                }
+
+                                if (index != 5 || index != 11 || index != 17)
+                                {
+                                    <div class="lb_index_yujia_xlz_img_img">
+                                        <a href="@item.userurl@item.uid">
+                                            <img src="@str0" />
+                                        </a>
+                                        <div class="lb_index_yujia_xlz_img2_div">
+                                            <p>@item.nickname</p>
+                                            <p>
+                                                <a>
+                                                    <img src="/Content/Front/images/xl_dzan.png" />
+                                                </a>
+                                                <span>@item.FollowCount</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="lb_index_yujia_xlz_img_img2">
+                                        <a href="@item.userurl@item.uid">
+                                            <img src="@str0" />
+                                        </a>
+                                        <div class="lb_index_yujia_xlz_img2_div2">
+                                            <p>@item.nickName</p>
+                                            <p>
+                                                <a>
+                                                    <img src="/Content/Front/images/xl_dzan.png" />
+                                                </a>
+                                                <span>@item.FollowCount</span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                }
+                            }
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="lb_index_yujia_idnex_right">
+                <div class="lb_index_yujia_index_right_top">
+                    <p style=" cursor:pointer;" onclick="Javascript: location.href = '/YogisModels'">瑜伽导师</p>
+                    <a href="/class/addactivity">导师发起活动</a>
+                </div>
+                <div class="leftLoops">
+
+                    <div class="lb_index_yujia_idnex_l_bot1">
+                        <div class="hd">
+                            <a class="next top"></a>
+                            <a class="prev bottom"></a>
+                        </div>
+                    </div>
+                    <div class="bd">
+                        <ul>
+                            @{
+                                var list = ViewBag.list2Group;
+                                int lc = 0;
+                                for (int i = 0; i < list.Count / 10; i++)
+                                {
+                                    <li>
+                                        <div class="lbb_addd_dingwei" style="width: 590px">
+                                            <div class="lb_index_yujia_index_right_img">
+                                                <div class="lb_index_yujia_index_right_img_img">
+                                                    @{
+                                    string str0 = "/Content/Front/images/defaultImg.png"; 
+                                    if (list[i * 10].VmList != null)
+                                    {
+                                        str0 = method.DisplayImg(list[i * 10].VmList.DisplayImg); 
+                                    } 
+                                                    }
+                                                    @if (list[i * 10].VmList.YogisLevel == 4)
+                                                    {
+                                                        <a href="/YogaGuru/Details/@list[i * 10].VmList.UID">
+                                                            <img src="@str0" />
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="/YogisModels/Details/@list[i * 10].VmList.UID">
+                                                            <img src="@str0" />
+                                                        </a>
+                                                    }
+                                                    <div class="lb_index_yujia_index_img2_div">
+                                                        <div class="lb_index_yujia_index_img2_div_left">
+                                                            @if (list[i * 10].VmList.YogisLevel == 4)
+                                                            {
+                                                                <p>@list[i * 10].VmList.RealName</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p>@list[i * 10].VyList.NickName</p>
+                                                            }
+                                                        </div>
+                                                        <div class="lb_index_yujia_index_img2_div_right">
+                                                            <a href="javascript:;">
+                                                                <img src="/Content/Front/images/ds_zan.png" />
+                                                            </a>
+                                                            <span>
+                                                                &nbsp;&nbsp;@list[i * 10].FollowCount
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="lb_index_yujia_index_right_img">
+                                                @for (int j = i * 10 + 1; j < (i * 10) + 5; j++)
+                                                {
+                                                    var str1 = "/Content/Front/images/defaultImg.png"; 
+                                                    if (list[j].VmList != null)
+                                                    {
+                                                        str1 = method.DisplayImg(list[j].VmList.DisplayImg); 
+                                                    }
+                                                    <div class="lb_old_img_div llss">
+                                                        @if (list[j].VmList.YogisLevel != 4)
+                                                        {
+                                                            <a href="/YogisModels/Details/@list[j].VmList.UID">
+                                                                <img src="@str1" />
+                                                            </a>}
+                                                        else
+                                                        {
+                                                            <a href="/YogaGuru/Details/@list[j].VmList.UID">
+                                                                <img src="@str1" />
+                                                            </a>
+                                                        }
+                                                        <div class="lb_old_img_div_hide">
+                                                            <div class="lb_index_yujia_div_div_name">
+                                                                <p>@list[j].VyList.NickName</p>
+                                                            </div>
+                                                            <div class="lb_index_yujia_div_div_right">
+                                                                <a href="javascript:;">
+                                                                    <img src="/Content/Front/images/xl_zan.png" />
+                                                                </a>
+                                                                <span>@list[j].FollowCount</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                            <div class="lb_index_yujia_index_right_img">
+                                                @for (int j = i * 10 + 5; j < i * 10 + 9; j++)
+                                                {
+                                                    var str1 = "/Content/Front/images/defaultImg.png";
+                                                    
+                                                    if (list[j].VmList != null)
+                                                    { 
+                                                        str1=    method.DisplayImg(list[j].VmList.DisplayImg);  
+                                                    }
+                                                    <div class="lb_old_img_div llss">
+                                                        @if (list[j].VmList.YogisLevel != 4)
+                                                        {
+                                                            <a href="/YogisModels/Details/@list[j].VmList.UID">
+                                                                <img src="@str1" />
+                                                            </a>}
+                                                        else
+                                                        {
+                                                            <a href="/YogaGuru/Details/@list[j].VmList.UID">
+                                                                <img src="@str1" />
+                                                            </a>
+                                                        }
+                                                        <div class="lb_old_img_div_hide">
+                                                            <div class="lb_index_yujia_div_div_name">
+                                                                <p>@list[j].VyList.NickName</p>
+                                                            </div>
+                                                            <div class="lb_index_yujia_div_div_right">
+                                                                <a href="javascript:;">
+                                                                    <img src="/Content/Front/images/xl_zan.png" />
+                                                                </a>
+                                                                <span>@list[j].FollowCount</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+                                            <div class="lb_index_yujia_index_right_img">
+                                                <div class="lb_index_yujia_index_right_img_img">
+                                                    @{
+                                                        var str3 = "/Content/Front/images/defaultImg.png"; 
+                                                        if (list[i * 10 + 9].VmList != null)
+                                                        {
+                                                           str3= method.DisplayImg(list[i * 10 + 9].VmList.DisplayImg);   
+                                                        } 
+                                                    }
+                                                    @if (list[i * 10 + 9].VmList.YogisLevel == 4)
+                                                    {
+                                                        <a href="/YogaGuru/Details/@list[i * 10].VmList.UID">
+                                                            <img src="@str3" />
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="/YogisModels/Details/@list[i * 10].VmList.UID">
+                                                            <img src="@str3" />
+                                                        </a>
+                                                    }
+                                                    <div class="lb_index_yujia_index_img2_div">
+                                                        <div class="lb_index_yujia_index_img2_div_left">
+                                                            <p>@list[i * 10 + 9].VyList.NickName</p>
+                                                        </div>
+                                                        <div class="lb_index_yujia_index_img2_div_right">
+                                                            <a href="javascript:;">
+                                                                <img src="/Content/Front/images/ds_zan.png" />
+                                                            </a>
+                                                            <span>
+                                                                @list[i * 10 + 9].FollowCount
+                                                            </span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </li>
+                                }
+                                if (list.Count % 10 < 10 && list.Count % 10 > 0)//余数
+                                {
+                                    int beinum = list.Count / 10;
+                                    <li>
+                                        <div class="lbb_addd_dingwei">
+
+                                            @for (int i = 0; i < 1; i++)
+                                            {
+                                                var lmindex = beinum * 10 + i;
+                                                <div class="lb_index_yujia_index_right_img">
+                                                    <div class="lb_index_yujia_index_right_img_img">
+                                                        @{
+                                                var strelse = "/Content/Front/images/defaultImg.png";
+                                               
+                                                if (list[lmindex].VmList != null)
+                                                {
+                                                  strelse=  method.DisplayImg(list[lmindex].VmList.DisplayImg);    
+                                                }
+                                                        }
+                                                        @if (list[lmindex].VmList.YogisLevel == 4)
+                                                        {
+                                                            <a href="/YogaGuru/Details/@list[lmindex].VmList.UID">
+                                                                <img src="@strelse" />
+                                                            </a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a href="/YogisModels/Details/@list[lmindex].VmList.UID">
+                                                                <img src="@strelse" />
+                                                            </a>
+                                                        }
+
+                                                        <div class="lb_index_yujia_index_img2_div">
+                                                            <div class="lb_index_yujia_index_img2_div_left">
+                                                                @if (list[i * 10].VmList.YogisLevel == 4)
+                                                                {
+                                                                    <p>@list[lmindex].VmList.RealName</p>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <p>@list[lmindex].VyList.NickName</p>
+                                                                }
+                                                            </div>
+                                                            <div class="lb_index_yujia_index_img2_div_right">
+                                                                <a href="javascript:;">
+                                                                    <img src="/Content/Front/images/xl_zan.png" />
+                                                                </a>
+                                                                <span>&nbsp;&nbsp;&nbsp;@list[lmindex].FollowCount </span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="lb_index_yujia_index_right_img">
+                                                    @if (list.Count % 10 >= 5)
+                                                    {
+                                                        for (int j = lmindex + 1; j < lmindex + 5; j++)
+                                                        {
+                                                            var str1 = "/Content/Front/images/defaultImg.png"; 
+                                                            if (list[j].VmList != null)
+                                                            {
+                                                                str1 = method.DisplayImg(list[j].VmList.DisplayImg);  
+                                                            }
+                                                            <div class="lb_old_img_div llss">
+                                                                @if (list[j].VmList.YogisLevel != 4)
+                                                                {
+                                                                    <a href="/YogisModels/Details/@list[j].VmList.UID">
+                                                                        <img src="@str1" />
+                                                                    </a>}
+                                                                else
+                                                                {
+                                                                    <a href="/YogaGuru/Details/@list[j].VmList.UID">
+                                                                        <img src="@str1" />
+                                                                    </a>
+                                                                }
+                                                                <div class="lb_old_img_div_hide">
+                                                                    <div class="lb_index_yujia_div_div_name">
+                                                                        @if (list[j].VmList.YogisLevel == 4)
+                                                                        {
+                                                                            <p>@list[j].VmList.RealName</p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <p>@list[j].VyList.NickName</p>
+                                                                        }
+                                                                    </div>
+                                                                    <div class="lb_index_yujia_div_div_right">
+                                                                        <a href="javascript:;">
+                                                                            <img src="/Content/Front/images/xl_zan.png" />
+                                                                        </a>
+                                                                        <span>@list[j].FollowCount</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        for (int j = lmindex + 1; j < list.Count % 10; j++)
+                                                        {
+                                                            var str1 = "/Content/Front/images/defaultImg.png";
+                                                           
+                                                            if (list[j].VmList != null)
+                                                            {
+                                                                str1 = method.DisplayImg(list[j].VmList.DisplayImg);
+                                                            }
+                                                            <div class="lb_old_img_div llss">
+                                                                @if (list[j].VmList.YogisLevel != 4)
+                                                                {
+                                                                    <a href="/YogisModels/Details/@list[j].VmList.UID">
+                                                                        <img src="@str1" />
+                                                                    </a>}
+                                                                else
+                                                                {
+                                                                    <a href="/YogaGuru/Details/@list[j].VmList.UID">
+                                                                        <img src="@str1" />
+                                                                    </a>
+                                                                }
+                                                                <div class="lb_old_img_div_hide">
+                                                                    <div class="lb_index_yujia_div_div_name">
+                                                                        @if (list[j].VmList.YogisLevel == 4)
+                                                                        {
+                                                                            <p>@list[j].VmList.RealName</p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <p>@list[j].VyList.NickName</p>
+                                                                        }
+                                                                    </div>
+                                                                    <div class="lb_index_yujia_div_div_right">
+                                                                        <a href="javascript:;">
+                                                                            <img src="/Content/Front/images/xl_zan.png" />
+                                                                        </a>
+                                                                        <span>@list[j].FollowCount</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+
+                                                </div>
+                                                <div class="lb_index_yujia_index_right_img">
+                                                    @if (list.Count % 10 >= 8)
+                                                    {
+                                                        for (int j = lmindex + 5; j < lmindex + 8; j++)
+                                                        {
+                                                            var str1 = "/Content/Front/images/defaultImg.png";
+                                                       
+                                                            if (list[j] != null)
+                                                            {
+                                                                if (list[j].VmList != null)
+                                                                {
+                                                                    str1 = method.DisplayImg(list[j].VmList.DisplayImg);
+                                                                }
+                                                            }
+                                                            <div class="lb_old_img_div llss">
+                                                                @if (list[j].VmList.YogisLevel != 4)
+                                                                {
+                                                                    <a href="/YogisModels/Details/@list[j].VmList.UID">
+                                                                        <img src="@str1" />
+                                                                    </a>}
+                                                                else
+                                                                {
+                                                                    <a href="/YogaGuru/Details/@list[j].VmList.UID">
+                                                                        <img src="@str1" />
+                                                                    </a>
+                                                                }
+                                                                <div class="lb_old_img_div_hide">
+                                                                    <div class="lb_index_yujia_div_div_name">
+                                                                        @if (list[j].VmList.YogisLevel == 4)
+                                                                        {
+                                                                            <p>@list[j].VmList.RealName</p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <p>@list[j].VyList.NickName</p>
+                                                                        }
+                                                                    </div>
+                                                                    <div class="lb_index_yujia_div_div_right">
+                                                                        <a href="javascript:;">
+                                                                            <img src="/Content/Front/images/xl_zan.png" />
+                                                                        </a>
+                                                                        <span>@list[j].FollowCount</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        for (int j = lmindex + 5; j < list.Count % 10; j++)
+                                                        {
+                                                            var str1 = "/Content/Front/images/defaultImg.png";
+                                                           
+                                                            if (list[j].VmList != null)
+                                                            {
+                                                               str1= method.DisplayImg(list[j].VmList.DisplayImg); 
+                                                            }
+                                                            <div class="lb_old_img_div llss">
+                                                                @if (list[j].VmList.YogisLevel != 4)
+                                                                {
+                                                                    <a href="/YogisModels/Details/@list[j].VmList.UID">
+                                                                        <img src="@str1" />
+                                                                    </a>}
+                                                                else
+                                                                {
+                                                                    <a href="/YogaGuru/Details/@list[j].VmList.UID">
+                                                                        <img src="@str1" />
+                                                                    </a>
+                                                                }
+                                                                <div class="lb_old_img_div_hide">
+                                                                    <div class="lb_index_yujia_div_div_name">
+                                                                        @if (list[j].VmList.YogisLevel == 4)
+                                                                        {
+                                                                            <p>@list[j].VmList.RealName</p>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <p>@list[j].VyList.NickName</p>
+                                                                        }
+                                                                    </div>
+                                                                    <div class="lb_index_yujia_div_div_right">
+                                                                        <a href="javascript:;">
+                                                                            <img src="/Content/Front/images/xl_zan.png" />
+                                                                        </a>
+                                                                        <span>@list[j].FollowCount</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+
+                                                    }
+
+                                                </div>
+                                            }
+                                        </div>
+                                    </li>
+                                }
+
+                            }
+
+                        </ul>
+                    </div>
+
+                    <script type="text/javascript">jQuery(".leftLoops").slide({ mainCell: ".bd ul", effect: "leftLoop", prevCell: ".prev,.prev1", nextCell: ".next,.next1", vis: 1, scroll: 1, autoPlay: false });</script>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="lb_index_hdyg">
+                <div class="lb_index_hdyg_top">
+                    <div class="lb_index_hdyg_top_left">
+                        <a href="/class/ActivityReport?ClassStatus=2">
+                            <p>   活动预告</p>
+                        </a>
+                    </div>
+                    <div class="lb_index_hdyg_top_right">
+                        <input type="button" value="发起活动" onclick="window.location.href = '/class/addactivity'" />
+                    </div>
+                </div>
+                <div class="lb_index_hdyg_center">
+                    <ul>
+                        @{
+                            string a = "a";
+                            int number = 1;
+                            string classStr = "";
+
+                            foreach (var item in ViewBag.dList)
+                            {
+                                classStr = a + number.ToString();
+                                <li><a href="javascript:;" class=@classStr>@item.ItemName</a></li>
+                                number++;
+                            }
+                        }
+                    </ul>
+                </div>
+
+                @* 按照活动类型，分类取出最新的一个活动
+                    <div class="lb_index_hdyg_botimg">
+                        @{
+                            int advanceNum = 1;
+                            foreach (var item in ViewBag.dList)
+                            {
+                                var classesModel = (ViewBag.ClassesAdvance as List<IYogaKoo.ViewModel.ViewClass>).FirstOrDefault(p => p.TopicIds == item.ID.ToString());
+                               if(classesModel!=null)
+                               {
+                                if (advanceNum == 1)
+                                {
+                                    <div class="lb_index_hdyg_botimg_top" style="display: block">
+                                        <div class="index_banner">
+                                            <a href="/class/viewactivity?id=@classesModel.Id">
+                                                <img src=@classesModel.Banner
+                                                     alt=@classesModel.Name />
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="lb_index_hdyg_botimg_top">
+                                        <div class="index_banner">
+                                            <a href="/class/viewactivity?id=@classesModel.Id">
+                                                <img src=@classesModel.Banner
+                                                     alt=@classesModel.Name />
+                                            </a>
+                                        </div>
+                                    </div>
+                                }
+                                advanceNum++;
+                            }
+                            }
+                        }
+                    </div>*@
+
+                <div class="lb_index_hdyg_botimg">
+
+                    <div class="lb_index_hdyg_botimg_top" style="display:block">
+                        <div class="lb_index_hdyg_botimg_top_maxdiv">
+                            @if (ViewBag.MainBanner != null)
+                            {
+                                <a href="@ViewBag.MainBanner.sUrl"><img src="@ViewBag.MainBanner.spic" /></a>
+                                @*<div class="lb_index_hdyg_botimg_top_maxdiv_font">
+                                        <p>主推</p>
+                                    </div>*@
+                            }
+                        </div>
+                        <div class="lb_index_hdyg_botimg_top_mindiv">
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top">
+                                <a href="@ViewBag.WorkBanner[0].sUrl"><img src="@ViewBag.WorkBanner[0].spic" /></a>
+                                @*<div class="lb_index_hdyg_botimg_top_mindiv_top_div">
+                                        <p>财富中心宽庭瑜伽活动1</p>
+                                    </div>*@
+                            </div>
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top" style="margin-top:5px">
+                                <a href="@ViewBag.WorkBanner[1].sUrl"><img src="@ViewBag.WorkBanner[1].spic" /></a>
+                                @*<div class="lb_index_hdyg_botimg_top_mindiv_top_div">
+                                        <p>财富中心宽庭瑜伽活动2</p>
+                                    </div>*@
+
+                            </div>
+                        </div>
+                        <div class="lb_index_hdyg_botimg_top_mindiv">
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top">
+                                <a href="@ViewBag.WorkBanner[2].sUrl"><img src="@ViewBag.WorkBanner[2].spic" /></a>
+                                @*<div class="lb_index_hdyg_botimg_top_mindiv_top_div">
+                                        <p>财富中心宽庭瑜伽活动3</p>
+                                    </div>*@
+                            </div>
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top" style="margin-top:5px">
+                                <a href="@ViewBag.WorkBanner[3].sUrl"><img src="@ViewBag.WorkBanner[3].spic" /></a>
+                                @*<div class="lb_index_hdyg_botimg_top_mindiv_top_div">
+                                        <p>财富中心宽庭瑜伽活动4</p>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lb_index_hdyg_botimg_top">
+                        <div class="lb_index_hdyg_botimg_top_maxdiv">
+                            <a href="@ViewBag.MainBanner.sUrl"><img src="@ViewBag.MainBanner.spic" /></a>
+                        </div>
+                        <div class="lb_index_hdyg_botimg_top_mindiv">
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top">
+                                <a href="@ViewBag.SubjectBanner[0].sUrl"><img src="@ViewBag.SubjectBanner[0].spic" /></a>
+                            </div>
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top" style="margin-top:5px">
+                                <a href="@ViewBag.SubjectBanner[1].sUrl"><img src="@ViewBag.SubjectBanner[1].spic" /></a>
+                            </div>
+                        </div>
+                        <div class="lb_index_hdyg_botimg_top_mindiv">
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top">
+                                <a href="@ViewBag.SubjectBanner[2].sUrl"><img src="@ViewBag.SubjectBanner[2].spic" /></a>
+                            </div>
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top" style="margin-top:5px">
+                                <a href="@ViewBag.SubjectBanner[3].sUrl"><img src="@ViewBag.SubjectBanner[3].spic" /></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lb_index_hdyg_botimg_top">
+                        <div class="lb_index_hdyg_botimg_top_maxdiv">
+                            <a href="@ViewBag.MainBanner.sUrl"><img src="@ViewBag.MainBanner.spic" /></a>
+                        </div>
+                        <div class="lb_index_hdyg_botimg_top_mindiv">
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top">
+                                <a href="@ViewBag.TrainedBanner[0].sUrl"><img src="@ViewBag.TrainedBanner[0].spic" /></a>
+                            </div>
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top" style="margin-top:5px">
+                                <a href="@ViewBag.TrainedBanner[1].sUrl"><img src="@ViewBag.TrainedBanner[1].spic" /></a>
+                            </div>
+                        </div>
+                        <div class="lb_index_hdyg_botimg_top_mindiv">
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top">
+                                <a href="@ViewBag.TrainedBanner[2].sUrl"><img src="@ViewBag.TrainedBanner[2].spic" /></a>
+                            </div>
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top" style="margin-top:5px">
+                                <a href="@ViewBag.TrainedBanner[3].sUrl"><img src="@ViewBag.TrainedBanner[3].spic" /></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lb_index_hdyg_botimg_top">
+                        <div class="lb_index_hdyg_botimg_top_maxdiv">
+                            <a href="@ViewBag.MainBanner.sUrl"><img src="@ViewBag.MainBanner.spic" /></a>
+                        </div>
+                        <div class="lb_index_hdyg_botimg_top_mindiv">
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top">
+
+                                <a href="@ViewBag.ThemeBanner[0].sUrl"><img src="@ViewBag.ThemeBanner[0].spic" /></a>
+                            </div>
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top" style="margin-top:5px">
+
+                                <a href="@ViewBag.ThemeBanner[1].sUrl"><img src="@ViewBag.ThemeBanner[1].spic" /></a>
+                            </div>
+                        </div>
+                        <div class="lb_index_hdyg_botimg_top_mindiv">
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top">
+
+                                <a href="@ViewBag.ThemeBanner[2].sUrl"><img src="@ViewBag.ThemeBanner[2].spic" /></a>
+                            </div>
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top" style="margin-top:5px">
+                                <a href="@ViewBag.ThemeBanner[3].sUrl"><img src="@ViewBag.ThemeBanner[3].spic" /></a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            @if (ViewBag.CompletedClass != null)
+            {
+                <div class="lb_index_hdhg">
+                    <div class="lb_index_hdhg_left">
+                        <a href="/class/ActivityReport?ClassStatus=3">
+                            <p>活动报道</p>
+                        </a>
+                    </div>
+                    <div class="lb_index_hdhg_right">
+                        @*<a href="/class/ActivityReport?ClassStatus=3">更多...</a>*@<a href="/class/ActivityReport?ClassStatus=3"></a>
+                    </div>
+                </div>
+                <div class="lb_index_hdhg_img">
+                    @for (int i = 0; i < ViewBag.CompletedClass.Count; i++)
+                    {
+                        <div class="lb_index_hdyg_botimg_top_mindiv">
+                            <div class="lb_index_hdyg_botimg_top_mindiv_top">
+                                <a href="/class/ActivityReportDetailsPage?id=@ViewBag.CompletedClass[i].Id&&classReportId=-99" target="_blank">
+                                    <img src="@ViewBag.CompletedClass[i].Banner" />
+                                </a>
+                                <div class="lb_index_hdyg_botimg_top_mindiv_top_div">
+                                    <p>@ViewBag.CompletedClass[i].Name</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    
+</body>
+</html>

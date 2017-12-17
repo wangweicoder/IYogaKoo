@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8F359CD2-A1BA-4A1F-9E28-5AD8B4C5BAB4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IYogaKoo.Dao</RootNamespace>
+    <AssemblyName>IYogaKoo.Dao</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>dll\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CenterStareRepository.cs" />
+    <Compile Include="ClassDetailRepository.cs" />
+    <Compile Include="ClassFileRepository.cs" />
+    <Compile Include="ClassReportRepository.cs" />
+    <Compile Include="ClassRepository.cs" />
+    <Compile Include="ClassTeacherRepository.cs" />
+    <Compile Include="Interfaces\IClassDetailRepository.cs" />
+    <Compile Include="Interfaces\ItKeyWordRepository.cs" />
+    <Compile Include="Interfaces\ICenterStareRepository.cs" />
+    <Compile Include="Interfaces\IClassFileRepository.cs" />
+    <Compile Include="Interfaces\IClassReportRepository.cs" />
+    <Compile Include="Interfaces\ILevelOrderRepository.cs" />
+    <Compile Include="Interfaces\IOrderRepository.cs" />
+    <Compile Include="Interfaces\ItQuestionRepository.cs" />
+    <Compile Include="Interfaces\ItSignRepository.cs" />
+    <Compile Include="Interfaces\ItLearingRepository.cs" />
+    <Compile Include="Interfaces\ItInstationInfoRepository.cs" />
+    <Compile Include="Interfaces\ItWriteLogRepository.cs" />
+    <Compile Include="Interfaces\ItZanModelsRepository.cs" />
+    <Compile Include="Interfaces\ItUserLoginInfoRepository.cs" />
+    <Compile Include="LevelOrderRepository.cs" />
+    <Compile Include="OrderRepository.cs" />
+    <Compile Include="tInstationInfoRepository.cs" />
+    <Compile Include="tUserLoginInfoRepository.cs" />
+    <Compile Include="tQuestionRepository.cs" />
+    <Compile Include="tSignRepository.cs" />
+    <Compile Include="tLearingRepository.cs" />
+    <Compile Include="tWriteLogRepository.cs" />
+    <Compile Include="Interfaces\IInterestRepository.cs" />
+    <Compile Include="InterestRepository.cs" />
+    <Compile Include="Interfaces\IClassRepository.cs" />
+    <Compile Include="Interfaces\IClassTeacherRepository.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IYogaMenusRepository.cs" />
+    <Compile Include="Interfaces\IYogaPictureRepository.cs" />
+    <Compile Include="Interfaces\IYogaUserDetailRepository.cs" />
+    <Compile Include="Interfaces\IEvaluatesRepository.cs" />
+    <Compile Include="Interfaces\IYogaDicItemRepository.cs" />
+    <Compile Include="Interfaces\IFollowRepository.cs" />
+    <Compile Include="Interfaces\IYogaArticleRepository.cs" />
+    <Compile Include="Interfaces\IYogaArtClassRepository.cs" />
+    <Compile Include="Interfaces\ICentersRepository.cs" />
+    <Compile Include="Interfaces\IYogiProfileRepository.cs" />
+    <Compile Include="Interfaces\ItMessageRepository.cs" />
+    <Compile Include="Interfaces\ItBannerRepository.cs" />
+    <Compile Include="Interfaces\IYogisModelsRepository.cs" />
+    <Compile Include="Interfaces\IYogaUserRepository.cs" />
+    <Compile Include="Repository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLHelper.cs" />
+    <Compile Include="tZanModelsRepository.cs" />
+    <Compile Include="YogaMenusRepository.cs" />
+    <Compile Include="tKeyWordRepository.cs" />
+    <Compile Include="YogaPictureRepository.cs" />
+    <Compile Include="YogaUserDetailRepository.cs" />
+    <Compile Include="EvaluatesRepository.cs" />
+    <Compile Include="YogaDicItemRepository.cs" />
+    <Compile Include="FollowRepository.cs" />
+    <Compile Include="YogaArticleRepository.cs" />
+    <Compile Include="YogaArtClassRepository.cs" />
+    <Compile Include="CentersRepository.cs" />
+    <Compile Include="YogiProfileRepository.cs" />
+    <Compile Include="tMessageRepository.cs" />
+    <Compile Include="tBannerRepository.cs" />
+    <Compile Include="YogisModelsRepository.cs" />
+    <Compile Include="YogaUserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dll\EntityFramework.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IYogaKoo.Entity\IYogaKoo.Entity.csproj">
+      <Project>{cb0d1b93-c5fc-4734-866e-b0326c80bbc9}</Project>
+      <Name>IYogaKoo.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IYogaKoo.ViewModel\IYogaKoo.ViewModel.csproj">
+      <Project>{1ce6e4bd-4d2b-4e41-bdbd-58a273ca1aab}</Project>
+      <Name>IYogaKoo.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

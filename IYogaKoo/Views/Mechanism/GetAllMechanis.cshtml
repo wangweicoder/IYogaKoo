@@ -1,0 +1,102 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewEvaluatesGroup>
+@{
+    Layout = null;
+}
+
+<div style="background-color:white">
+
+    @if (ViewBag.EvalInfo != null)
+    {
+
+        <div class="lb_School_qbpl_div" style="">
+            @{var i = 0;}
+
+            @foreach (var item in Model)
+            {
+
+                <div class="lb_School_qbpl_div_d">
+                    <div class="lb_School_qbpl_div_d_top">
+                        <div class="lb_School_qbpl_div_d_left">
+                            <a href="@item.Url" target="_blank"><img src="@item.DisplayImg" /></a>
+                        </div>
+                        <div class="lb_School_qbpl_div_d_right">
+                            <p><a href="@item.Url" target="_blank">@item.FromUser</a>@item.entity.CreateDate<b>@(Model.StartItemIndex + i++) F</b></p>
+                            <p class="p">@item.entity.EContent</p>
+                            <div id="stsmall">
+                                @{
+                if (item.entity.Pic != null)
+                {
+                    string[] arrpic = item.entity.Pic.ToString().Split(';');
+                    for (int p = 0; p < arrpic.Length; p++)
+                    {
+                        if (!String.IsNullOrEmpty(arrpic[p]))
+                        {
+                            <a href="@arrpic[p]" middlesrc="@arrpic[p].Replace("/2/", "/2/Middle/")" target="_blank" class="preview"><img src="@arrpic[p].Replace("/2/", "/2/Small/")" style="border:0px;" width="50" height="50" /></a>
+                        }
+                    }
+                }
+                                }
+                            </div>
+
+                            @if (item.msgList.Count != 0)
+                            {
+                                foreach (var it in item.msgList)
+                                {
+
+                                    <div class="lb_School_qbpl_div_d_right" style=" width:95%;">
+                                        @it.FromUser 回复：&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <div style="border:1px solid #ccc; height:50px; line-height:25px; ">
+                                            @it.entity.EContent
+                                            &nbsp;&nbsp;<br /><span style="font-size:11px">@it.entity.CreateDate</span>
+                                        </div><br /><br />
+                                    </div><br /><br />
+                                }
+                            }
+                            <div class="lb_School_qbpl_div_d_right_hide" id="lb_School_qbpl_div_d_right_hide@(item.entity.Evaluateid)">
+
+                                <textarea id="FabiaoContent@(item.entity.Evaluateid)" name="FabiaoContent"></textarea>
+                                <input type="button" value="发表" onclick="btnFaBiao('@item.entity.ToUid','@item.entity.Evaluateid')" />
+                                <input type="button" value="取消" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lb_School_qbpl_div_d_bottom">
+                        <div class="lb_School_qbpl_div_d_bottom_d
+                                     " id="lb_School_qbpl_div_d_bottom_d@(item.entity.Evaluateid)">
+                            <a href="javascript:" eid="@item.entity.Evaluateid">回复</a><h1>|</h1>
+                            <a id="zan@(item.entity.Evaluateid)" href="javascript:iZan('@item.entity.Evaluateid');">赞同</a>
+
+                            <span>(</span><span id="zancount@(item.entity.Evaluateid)">@item.entity.iZan</span><span>)</span>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+</div>
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv" })
+</div>
+<script language="javascript">
+    $(function () {
+        imagePreview();
+        $('.lb_School_qbpl_div_d_bottom_d a').click(function () {
+          eventshow(this);
+        });
+        $('.lb_School_qbpl_div_d_right_hide input').click(function () {
+            eventhide(this);
+        });
+    });
+
+
+</script>

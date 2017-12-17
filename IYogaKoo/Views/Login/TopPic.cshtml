@@ -1,0 +1,104 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaUserDetail
+
+@{
+    ViewBag.Title = "TopPic";
+    Layout = "~/Views/Shared/_LayoutSetUp.cshtml";
+}
+ 
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+       
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.UID)
+       
+        <div>
+            <div class="lb_index_scarh_class1_top_div">
+                
+                @{
+
+                    <h1>—@Model.RealName_cn—</h1> 
+                    
+                    <img id="idpImgold" width="40" height="40" src="@(Model.DisplayImg == null ? "/Content/Front/images/defaultImg.png" : Model.DisplayImg)" />
+    <input id="DisplayImg" name="DisplayImg" type="hidden" value="@(Model.DisplayImg == null ? "/Content/Front/images/defaultImg.png" : Model.DisplayImg)" />
+                    <div style="width:130px; margin:0px auto">
+                        <input id="file_upload" type="file" value="上传图片" />
+                    </div>
+
+                }
+                 
+                @Html.ValidationMessageFor(model => model.DisplayImg, "", new { @class = "text-danger" })
+
+            </div>
+          
+        </div> 
+        <div class="" style="width:130px; margin:0px auto">
+            <input type="button" id="btnpwd" value="确定修改" class="lb_xg" />
+        </div>
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+<script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+
+<link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+<script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+     
+<script type="text/javascript">
+
+    $(function () {
+        $('#file_upload').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+            'uploader': '@Url.Content("~/Controllers/ashxFile/TopImg.ashx")',
+            'buttonText': '浏览',
+            'height': '30',
+            'width': '120',
+            'fileTypeDesc': '.jpg,.gif,.png',
+            'fileTypeExts': '*.jpg;*.gif;*.png;',
+            'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+            'sizeLimit': 1024 * 1024 * 4, //4M  
+            'multi': false,//设置为true时可以同时上传多个文件。
+            //'onComplete': Complete
+            'onUploadSuccess': function (file, data, response) {
+
+                $("#DisplayImg").val("/" + data);
+                $("#idpImgold").attr("src", "/" + data);
+
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+            }
+        });
+    })
+   $('#btnpwd').click(function () {
+        
+            $.ajax({
+                url: '/Login/TopPic?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    DisplayImg: $("#DisplayImg").val() 
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+
+                        location.href = "/Login/TopPic";
+                         
+                    } else {
+                        layer.msg("头像上传失败！");
+                    }
+
+                }, error: function () {
+                    layer.msg("头像上传失败");
+                }
+            });
+            return false;
+     });
+
+</script>  
+
+}

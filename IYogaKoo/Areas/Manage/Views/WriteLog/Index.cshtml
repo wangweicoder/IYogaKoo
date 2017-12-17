@@ -1,0 +1,185 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtWriteLog>
+
+@{
+    Layout = null;
+}
+  
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">我的日志</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <table>
+                <tr>
+                    <th>
+                        会员编号
+                    </th>
+                    <th>
+                        姓名
+                    </th>
+                    <th>
+                        标题
+                    </th>
+                    <th>
+                        内容
+                    </th>
+                    <th>
+                        是否显示
+                    </th>
+                    <th>
+                        创建时间
+                    </th>
+                    <th></th>
+                </tr>
+
+                @{
+                    var index = 1;
+                    if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+                    {
+                        var p = int.Parse(Request.QueryString["page"]) - 1;
+                        if (p > 0)
+                        {
+                            index = p * 10 + 1;
+                        }
+                    }
+                }
+                @foreach (var item in ViewBag.listGroup)
+                {
+                <tr>
+                    <td>
+                        @item.entity.Uid
+                    </td>
+                    <td>
+                        @item.UserName
+                    </td>
+                    <td>
+                        @item.entity.sTitle
+                    </td>
+                    <td>
+                        @{
+                            var con = item.entity.sContent;
+                            var con2 = item.entity.sContent;
+                            if (con.Length > 30)
+                            {
+                                con = con.Substring(0, 30) + "......";
+                            } 
+                        }
+                        <a href="#" title="@Html.Raw(con2)">@con</a>
+                    </td>
+                    <td>
+                        @(item.entity.ifShow == false ? "否" : "是")
+                    </td>
+                    <td>
+                        @item.entity.CreateDate
+                    </td>
+                    <td style="position:relative; display:block" id="td">
+                        <a href="#" title="推送到社区">推送 </a>|
+                        @Html.ActionLink("修改", "Edit", new { id = item.entity.ID })|
+                        @Html.ActionLink("详情", "Details", new { id = item.entity.ID })|
+                        <a href="Javascript:DaoShiDel('@item.entity.ID')">删除</a>
+                        <div class="lb_back_tuisong">
+                            <div>
+                                <p><a href="Javascript:AddtLearing('@item.entity.ID',2159)">瑜伽常识 </a></p>
+                                <p><a href="Javascript:AddtLearing('@item.entity.ID',2160)">习练交流 </a></p>
+                                <p><a href="Javascript:AddtLearing('@item.entity.ID',2161)">导师交流 </a></p>
+                                <p><a href="Javascript:AddtLearing('@item.entity.ID',2162)">体式详解分享 </a> </p>
+                                <p><a href="Javascript:AddtLearing('@item.entity.ID',2163)">瑜伽英语学习  </a></p>
+                                <p><a href="Javascript:AddtLearing('@item.entity.ID',2164)">综合提问  </a></p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>
+
+<script type="text/javascript">
+
+    function DaoShiDel(id) {
+        if (confirm("是否删除!")) {
+            window.location = "/WriteLog/Delete/" + id;// 来打开新窗口
+        }
+    }
+    function AddtLearing(id,iType)
+    {
+        $.ajax({
+            url: '/WriteLog/AddtLearing?id=' + id+'&iType='+iType,
+            type: 'post',
+            datatype: 'json',
+            success: function (data) {
+                if (data.code == 0) {
+                    alert('添加成功！');
+                } else if (data.code == 2) {
+                    alert("已经存在该文章！");
+                } else {
+                    alert('添加失败！');
+                }
+            }
+        });
+    }
+    $(document).ready(function () {
+        $('table td a').hover(function () {
+            var na = $(this).attr('title');
+            if (na == '推送到社区') {
+                $(this).siblings('.lb_back_tuisong').show().parent().parent().siblings().children('td').children('.lb_back_tuisong').hide();
+            }
+         
+        })
+        $('table td a').mouseout(function () {
+            var na = $(this).attr('title');
+            if (na == '推送到社区') {
+                $(this).siblings('.lb_back_tuisong').hide();
+            }
+        })
+
+        $('.lb_back_tuisong').mouseover(function () {
+            $(this).show();
+        }).mouseout(function () {
+            $(this).hide();
+        });
+      
+    })
+</script>
+<style>
+    .lb_back_tuisong {
+        display:none;  margin-right:12px; width:100px;
+        position:absolute;z-index:111;top:0px; left:-85px; 
+    }
+        .lb_back_tuisong div {
+        background:#e5e5e5; width:90px; padding:1px 0px;
+        }
+     .lb_back_tuisong p {
+         text-align:center; margin:10px 0px; padding:0px   
+     }
+      .lb_back_tuisong p a{
+         color:#000  
+     }
+</style>

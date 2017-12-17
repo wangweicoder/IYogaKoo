@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "添加导师";
+    Layout = null;
+    Commons.Helper.method method = new Commons.Helper.method(); 
+}
+<div class="leftLoopnewssss">
+    <div class="hd">
+        <span>相似老师</span>
+        @*<a class="next"></a>
+            <a class="prev"></a>*@
+    </div>
+    <div class="bd">
+        <ul class="leftLoopnewssss">
+            <li>
+                @{
+                    if (ViewBag.Modelslist != null)
+                    {
+                        List<IYogaKoo.ViewModel.ViewYogisModels> Modelslist = ViewBag.Modelslist;
+
+                        foreach (var item in Modelslist)
+                        {
+                            if (item.YogisLevel == 4)
+                            {
+                                <div class="lb_addnew_xsls_div">
+                                    <div class="lb_addnew_xsls_div_left">
+                                        <a href="/YogaGuru/Details/@item.UID">
+                                            <img src="@method.DisplayImg(item.DisplayImg)" />
+                                        </a>
+                                    </div>
+                                    <div class="lb_addnew_xsls_div_right">
+                                        <p>
+                                            @if (!string.IsNullOrEmpty(method.GetCenterName(item.CenterID)))
+                                            {
+                                                <a href="/YogaGuru/Details/@item.UID" class="a">@item.RealName</a><a> [ @method.GetCenterName(item.CenterID) ]</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/YogaGuru/Details/@item.UID" class="a">@item.RealName</a>
+                                            }
+                                        </p>
+                                        <p class="p">@item.Street</p>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="lb_addnew_xsls_div">
+                                    <div class="lb_addnew_xsls_div_left">
+                                        <a href="/YogisModels/Details/@item.UID">
+                                            <img src="@method.DisplayImg(item.DisplayImg)" />
+                                        </a>
+                                    </div>
+                                    <div class="lb_addnew_xsls_div_right">
+                                        <p>
+                                            @if (!string.IsNullOrEmpty(method.GetCenterName(item.CenterID)))
+                                            {
+                                                <a href="/YogisModels/Details/@item.UID" class="a">@item.RealName</a><a> [ @method.GetCenterName(item.CenterID) ]</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="/YogisModels/Details/@item.UID" class="a">@item.RealName</a>
+                                            }
+
+                                        </p>
+                                        <p class="p">@item.Street</p>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+
+                }
+
+            </li>
+        </ul>
+    </div>
+</div>
+<script type="text/javascript">jQuery(".leftLoopnewssss").slide({ mainCell: ".bd ul", effect: "leftLoop", prevCell: ".prev,.prev1", nextCell: ".next,.next1", vis: 1, scroll: 1, autoPlay: false });</script>
+
+

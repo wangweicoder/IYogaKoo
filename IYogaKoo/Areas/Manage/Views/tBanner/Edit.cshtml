@@ -1,0 +1,103 @@
+﻿@model IYogaKoo.ViewModel.ViewtBanner
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">编辑Banner图</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+
+                <fieldset>
+
+                    @Html.HiddenFor(model => model.ID)
+                    
+                    <div>
+                        <p>@Html.LabelFor(model => model.iType) </p>
+                        @Html.RadioButtonFor(model => model.iType, 0)首页Banner
+                        @Html.RadioButtonFor(model => model.iType, 2)首页活动预告Banner
+                        @Html.RadioButtonFor(model => model.iType, 1)活动报道Banner
+                    </div>
+                    <div class="editor-label">
+                        图片
+                    </div>
+                    <div class="editor-field">
+                        <img id="Imgspic" src="@Model.spic" style='width:300px;height:150px;' />
+                        <input id="spic" name="spic" type="hidden" value="@Model.spic" />
+
+                        <span>只能传一张，大小不超过2M，格式为jpg或png</span>
+                        <div>
+                            <input id="file_spic" type="file" value="上传并预览" />
+                        </div>
+                    </div>
+                    <p>
+                        @Html.LabelFor(model => model.sUrl)
+                        <input type="text" id="sUrl" name="sUrl" value="@Model.sUrl" />
+                    </p>
+
+                    <p>
+                        <input type="submit" class="button" value="保存" />
+                    </p>
+                </fieldset>
+            }
+        </div>
+    </div>
+</div>
+    <div>
+        @Html.ActionLink("返回", "Index")
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+
+        <link href=@Url.Content("~/Content/uploadify/uploadify.css") rel="stylesheet" />
+        <script src=@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.min.js")></script>
+
+
+        <script type="text/javascript">
+            $(function () {
+                $("#iType").val(@Model.iType);
+                $('#file_spic').uploadify({
+                    'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                    'uploader': '@Url.Content("~/Areas/Manage/Controllers/backashxFile/banner.ashx")',
+                    'buttonText': '上传并预览',
+                    'height': '30',
+                    'width': '120',
+                    'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+                    'sizeLimit': 1024 * 1024 * 4, //4M
+                    'multi': false,//设置为true时可以同时上传多个文件。
+
+                    'onUploadSuccess': function (file, data, response) {
+                        //先删除文件夹中的图片
+
+                        //
+                        $("#spic").val("/" + data);
+                        $("#Imgspic").attr("src", "/" + data);
+
+                    },
+                    'onUploadError': function (file, errorCode, errorMsg, errorString) {
+
+                        alert('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+                    }
+                });
+            });
+        </script>
+    }
+
+

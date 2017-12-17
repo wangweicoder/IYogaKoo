@@ -1,0 +1,88 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model PagedList<IYogaKoo.ViewModel.ViewtQuestion>
+@{
+    ViewBag.Title = "UserQuestionIndexList";
+}
+<div class="content-box-content">
+    <div class="tab-content default-tab" id="tab1">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>
+                        类别
+                    </th>
+                    <th>
+                        问题
+                    </th>
+                    <th>
+                        答案
+                    </th>
+                    <th>
+                        回答
+                    </th>
+                    <th>
+                        查看
+                    </th>
+                </tr>
+            </thead>
+            @{
+                var list = (ViewBag.Diclist as List<IYogaKoo.ViewModel.ViewYogaDicItem>);
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @list.FirstOrDefault(p => p.ID == item.TitleID).ItemName
+                        </td>
+                        <td>
+                            @item.QuestionContent
+                        </td>
+                        <td>
+                            @if (item.ReplyContent != null)
+                            {
+                                @(item.ReplyContent.Length >= 20 ? item.ReplyContent.Substring(0, 20) + "..." : item.ReplyContent)
+                            }
+                            else
+                            {
+                                @item.ReplyContent
+                            }
+                        </td>
+                        @if (item.State == 1)
+                        {
+                            <td>
+                                <a href="/Manage/tQuestion/Reply?id=@item.ID">回答</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <a>已回答</a>
+                            </td>
+                        }
+                        <td>
+                            <a href="/Manage/tQuestion/Reply?id=@item.ID">查看</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+
+
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>

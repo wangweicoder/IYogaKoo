@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Search>
+  <SearchType>
+    <T id="1" name="习练者">
+      <Item>1</Item>     
+      <Item>3</Item>
+      <Item>4</Item>
+    </T>
+    <T id="2" name="导师">
+      <Item>1</Item>      
+      <Item>3</Item>
+      <Item>4</Item>
+    </T>
+    <T id="3" name="机构">
+      <Item>4</Item>
+    </T>
+    <T id="4" name="文章">
+      <Item>5</Item>
+    </T>
+    <T id="5" name="日志">
+      <Item>5</Item>
+    </T>
+    <T id="6" name="活动">
+      <Item>6</Item>
+    </T>
+  </SearchType>
+  <SearchClass>
+    <C id="1" name="性别" hidname="hidGender" type="text">
+      <Item value="2"  selected="on">全部</Item>
+      <Item value="1">男性</Item>
+      <Item value="0">女性</Item>
+    </C>
+    <C id="2" name="区域" hidname="hidzone" type="dropdownlist">
+      <Item value="0" selected="on">全部</Item>
+      <Item value="1">国家</Item>
+      <Item value="2">省</Item>
+     <Item value="3">市</Item>
+    <Item value="4">区域</Item>
+    </C>
+    <C id="3" name="级别" hidname="hidlevel" type="text">
+      <Item value="0" selected="on">全部</Item>
+      <Item value="1">基础</Item>
+      <Item value="2">初级</Item>
+    <Item value="3">中级</Item>
+    <Item value="4">高级</Item>
+    <Item value="5">大师</Item>
+    </C>
+    <C id="4" name="流派" hidname="hidmovement" type="text">
+      <Item value="0" selected="on">全部</Item>
+      <Item value="115">哈他</Item>
+      <Item value="118">艾扬格</Item>
+      <Item value="119">阿斯汤加</Item>
+      <Item value="101">流瑜伽</Item>
+      <Item value="120">阴瑜伽</Item>
+    </C> 
+    <C id="5" name="发布时间" hidname="hidcreatedate" type="text">
+      <Item value="0" selected="on">全部</Item>
+      <Item value="1d">一天</Item>
+      <Item value="2d">两天</Item>
+      <Item value="3d">三天</Item>
+      <Item value="1w">一周</Item>
+      <Item value="1m">一个月</Item>
+      <Item value="3m">三个月</Item>
+      <Item value="6m">六个月</Item>
+      <Item value="1y">一年</Item>
+      <Item value="3y">三年</Item>
+    </C>
+    <C id="6" name="活动主题" hidname="hidtopicid" type="text">
+      <Item value="0" selected="on" >全部</Item>
+      <Item value="115" >主题活动</Item>
+      <Item value="116" >培训</Item>
+      <Item value="117" >工作坊</Item>
+      <Item value="2172" >课程</Item>      
+    </C>
+  </SearchClass>
+</Search>

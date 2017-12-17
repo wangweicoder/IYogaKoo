@@ -1,0 +1,189 @@
+﻿@{
+    
+    Layout = null; 
+}
+<ul class="picListnew">
+    @{
+        var listm = ViewBag.Members;
+        int shang = listm.Count / 4;
+        for (int j = 0; j < shang; j++)
+        {
+            <li>
+
+                @for (int i = j * 4; i < (j + 1) * 4; i++)
+                {
+                    var strYogisLevel = "";
+                    int iYogisLevel = listm[i].VmList.YogisLevel;
+                    switch (iYogisLevel)
+                    {
+                        case 1:
+                            strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.初级老师.ToString();
+                            break;
+                        case 2:
+                            strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.中级老师.ToString();
+                            break;
+                        case 3:
+                            strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.高级老师.ToString();
+                            break;
+                        case 4:
+                            strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.大师.ToString();
+                            break;
+                        case 5:
+                            strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.资深导师.ToString();
+                            break;
+                        case 6:
+                            strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.知名导师.ToString();
+                            break;
+                    }
+                    if (iYogisLevel == 4)
+                    {
+                <div class="lb_addnew_div_add">
+                    <div class="lb_addnew_div_add_left">
+                        <a href="/YogaGuru/Details/@listm[i].VmList.UID"><img src="@listm[i].VmList.DisplayImg" /></a>
+                        <b>@listm[i].CountryName</b>
+                    </div>
+                    <div class="lb_addnew_div_add_right">
+                        <a href="/YogaGuru/Details/@listm[i].VmList.UID">@listm[i].VmList.RealName</a>
+                        <p>@strYogisLevel</p>
+                        @{
+                        var strValue = "+关注";
+                        if (listm[i].iFollow)
+                        {
+                            strValue = "已关注";
+
+                                <input type="button" class="followFrom" value="@strValue" onclick="flowuid('@listm[i].VmList.UID','@strValue')" id="@listm[i].VmList.UID" />
+                        }
+                        else
+                        {
+                                <input type="button" value="@strValue" onclick="flowuid('@listm[i].VmList.UID','@strValue')" id="@listm[i].VmList.UID" />
+                        }
+                        }
+
+                    </div>
+                </div>
+                    }
+                    else
+                    {
+                <div class="lb_addnew_div_add">
+                    <div class="lb_addnew_div_add_left">
+                        <a href="/YogisModels/Details/@listm[i].VmList.UID"><img src="@listm[i].VmList.DisplayImg" /></a>
+                        <b>@listm[i].CountryName</b>
+                    </div>
+                    <div class="lb_addnew_div_add_right">
+                        <a href="/YogisModels/Details/@listm[i].VmList.UID">@listm[i].VmList.RealName</a>
+                        <p>@strYogisLevel</p>
+                        @{
+                        var strValue = "+关注";
+                        if (listm[i].iFollow)
+                        {
+                            strValue = "已关注";
+
+                                <input type="button" class="followFrom" onclick="flowuid('@listm[i].VmList.UID','@strValue')" value="@strValue" id="@listm[i].VmList.UID" />
+                        }
+                        else
+                        {
+                                <input type="button" value="@strValue" onclick="flowuid('@listm[i].VmList.UID','@strValue')" id="@listm[i].VmList.UID" />
+                        }
+                        }
+
+                    </div>
+                </div>
+                    }
+
+                }
+
+            </li>
+        }
+        if (listm.Count % 4 < 4 && listm.Count % 4 > 0)
+        {
+            <li>
+                @{
+            int beinum = listm.Count / 4;
+            for (int i = 0; i < listm.Count % 4; i++)
+            {
+                var lmindex = beinum * 4 + i;
+                var strYogisLevel = "";
+                int iYogisLevel = listm[lmindex].VmList.YogisLevel;
+                switch (iYogisLevel)
+                {
+                    case 1:
+                        strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.初级老师.ToString();
+                        break;
+                    case 2:
+                        strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.中级老师.ToString();
+                        break;
+                    case 3:
+                        strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.高级老师.ToString();
+                        break;
+                    case 4:
+                        strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.大师.ToString();
+                        break;
+                    case 5:
+                        strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.资深导师.ToString();
+                        break;
+                    case 6:
+                        strYogisLevel = IYogaKoo.ViewModel.Commons.Enums.TeacherLevel.知名导师.ToString();
+                        break;
+                }
+                if (iYogisLevel == 4)
+                {
+                <div class="lb_addnew_div_add">
+                    <div class="lb_addnew_div_add_left">
+                        <a href="/YogaGuru/Details/@listm[lmindex].VmList.UID"><img src="@listm[lmindex].VmList.DisplayImg" /></a>
+                        <b>@listm[i].CountryName</b>
+                    </div>
+                    <div class="lb_addnew_div_add_right">
+                        <a href="/YogaGuru/Details/@listm[lmindex].VmList.UID">@listm[lmindex].VmList.RealName</a>
+                        <p>@strYogisLevel</p>
+                        @{
+                    var strValue = "+关注";
+                    if (listm[lmindex].iFollow)
+                    {
+                        strValue = "已关注";
+                            <input type="button" class="followFrom" onclick="flowuid('@listm[lmindex].VmList.UID','@strValue')" value="@strValue" id="@listm[lmindex].VmList.UID" />
+                    }
+                    else
+                    {
+                            <input type="button" value="@strValue" onclick="flowuid('@listm[lmindex].VmList.UID','@strValue')" id="@listm[lmindex].VmList.UID" />
+                    }
+                        }
+
+                    </div>
+                </div>
+                }
+                else
+                {
+                <div class="lb_addnew_div_add">
+                    <div class="lb_addnew_div_add_left">
+                        <a href="/YogisModels/Details/@listm[lmindex].VmList.UID"><img src="@listm[lmindex].VmList.DisplayImg" /></a>
+                        <b>@listm[i].CountryName</b>
+                    </div>
+                    <div class="lb_addnew_div_add_right">
+                        <a href="/YogisModels/Details/@listm[lmindex].VmList.UID">@listm[lmindex].VmList.RealName</a>
+                        <p>@strYogisLevel</p>
+                        @{
+                    var strValue = "+关注";
+                    if (listm[lmindex].iFollow)
+                    {
+                        strValue = "已关注";
+                            <input type="button" class="followFrom" onclick="flowuid('@listm[lmindex].VmList.UID','@strValue')" value="@strValue" id="@listm[lmindex].VmList.UID" />
+                    }
+                    else
+                    {
+                            <input type="button" value="@strValue" onclick="flowuid('@listm[lmindex].VmList.UID','@strValue')" id="@listm[lmindex].VmList.UID" />
+                    }
+                        }
+
+                    </div>
+                </div>
+
+                }
+
+
+            }
+                }
+
+            </li>
+        }
+    }
+</ul>

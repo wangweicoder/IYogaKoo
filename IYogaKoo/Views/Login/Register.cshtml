@@ -1,0 +1,327 @@
+﻿@{
+    ViewBag.Title = "注册";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="lb_login_idnex_top">
+    <div class="lb_login_idnex_top_index">
+        <b>您所在位置：</b><span>注册</span>
+    </div>
+</div>
+<div class="lb_login_idnex_bottom">
+    <div class="lb_login_idnex_bottom_top">
+        <p>欢迎走进<a>爱瑜伽·酷</a>这个大家庭</p>
+    </div>
+    <div class="lb_login_idnex_bottom_ul">
+        <ul>
+            <li class="li">手机注册</li>
+            <li>邮箱注册</li>
+        </ul>
+    </div>
+
+    <div class="lb_login_idnex_bottom_index">
+        <div class="lb_login_idnex_bottom_index_left">
+            <form id="preg_form" action="/Login/PhoneReg" method="post">
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        @*<input type="text" value="用户" />*@
+                        <div class="input_field lb_input_field">
+                            <input type="text" class="input_textbox required NickName" id="NickName" name="NickName"
+                                   data-right="" maxlength="50" placeholder="呢称" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        @*<input type="text" value="密码" />*@
+                        <div class="input_field lb_input_field">
+                            <input type="password" class="input_textbox required" maxlength="16" minlength="6"
+                                   id="Pwd" name="Pwd" placeholder="密码" data-right="" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        @*<input type="text" value="确认密码" />*@
+                        <div class="input_field lb_input_field">
+                            <input type="password" id="erpwd" name="erpwd" class="txtRePWD" data-right="" placeholder="确认密码" />
+                        </div>
+                    </dd>
+                </dl>
+                 <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                            <div class="input_field lb_input_field">
+                                 <input type="text" id="Uphone" name="Uphone" class="input_textbox required Uphone"
+                               data-right="" placeholder="手机号码" />
+                            </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+
+                        <input type="text" id="phone_eCAPTCHA"   class="input_textbox  "
+                               data-right="" style="width:152px;" placeholder="图形验证码" />
+                    </dd>
+                    <dd style="margin-left:20px;  vertical-align:middle ">
+                        <img class="imgCheck"  style="margin-top:9px;" id="phone_img4" src="/Shared/check" alt="看不清，请点击我！" onclick="this.src=this.src+'?'" />
+                         
+                    </dd>
+                </dl>
+
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <input type="button" id="button" value="获取手机验证码"  style="width:145px;"  class="yzm" onclick="checkUserName()" />
+                        <a id="a" onclick="angerEx();">没收到验证码？</a>
+                    </dd>
+                </dl><dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        @*<input type="text" value="验证码" />*@
+                        <div class="input_field lb_input_field">
+                            <input type="text" id="CAPTCHA" class="input_textbox required CAPTCHA" name="CAPTCHA" placeholder="手机验证码" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <input type="checkbox" class="isagr checkbox" />
+
+                        <a href="/Home/ApplyTeachAgreement?id=@ViewBag.ID" target="_blank">@ViewBag.ArticleTitle</a>
+
+                    </dd>
+                </dl>
+                <dl style="margin-top:0px">
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <input type="submit" id="ljzc" value="立即注册" class="button" />
+                    </dd>
+                </dl>
+                <dl><dt>&nbsp;</dt><dd>已有帐号,请<a href="/login/login/">立即登录>></a></dd></dl>
+            </form>
+        </div>
+
+
+        <div class="lb_login_idnex_bottom_index_left" style="display:none">
+            <form id="reg_form" action="/Login/EmailReg" method="post">
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        @*<input type="text" value="用户" />*@
+                        <div class="input_field lb_input_field">
+                            <input type="text" class="input_textbox required NickName" id="NickName" name="NickName"
+                                   data-right="" maxlength="50" placeholder="呢称" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <div class="input_field lb_input_field">
+                            <input type="text" class="input_textbox required email"
+                                   id="UEmail" name="UEmail" placeholder="邮箱" data-right="" />
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        @*<input type="text" value="密码" />*@
+                        <div class="input_field lb_input_field">
+                            <input type="password" class="input_textbox required" maxlength="16" minlength="6"
+                                   id="password" name="password" placeholder="密码" data-right="" /><br />
+                            <p></p>
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        @*<input type="text" value="确认密码" />*@
+                        <div class="input_field lb_input_field">
+                            <input type="password" id="rpassword" name="rpassword"
+                                   class="txtRePWD" data-right="" placeholder="确认密码" /><br />
+                            <p></p>
+
+                        </div>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+
+                        <input type="text" id="eCAPTCHA" name="eCAPTCHA" class="input_textbox required eCAPTCHA"
+                               data-right="" placeholder="验证码" />
+                    </dd>
+                    <dd>
+                        <img class="imgCheck" id="img4" src="/Shared/check" alt="看不清，请点击我！" onclick="this.src=this.src+'?'" />
+                        <a href="javascript:;" id="kbq_hyz">看不清，换一张</a>
+                    </dd>
+                </dl>
+                <dl>
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <input type="checkbox" class="isagr1 checkbox" />
+                        <a href="/Home/ApplyTeachAgreement?id=@ViewBag.ID" target="_blank">@ViewBag.ArticleTitle</a>
+                    </dd>
+                </dl>
+                <dl style="margin-top:0px">
+                    <dt>&nbsp;</dt>
+                    <dd>
+                        <input type="submit" id="ljzc1" value="立即注册" class="button" />
+                    </dd>
+                </dl>
+                <dl><dt>&nbsp;</dt><dd>已有帐号,请<a href="/login/login/">立即登录>></a></dd></dl>
+            </form>
+        </div>
+
+        <div class="lb_login_idnex_bottom_index_right">
+            <p>使用第三方帐号直接登录</p>
+            <ul>
+                @{
+                    int i = 0;
+                }
+                @foreach (string loginType in Commons.Helper.Login.GetOuathTypes())
+                { 
+                    @Html.ActionLink(" ", "../login/GoPartner", new { name = Commons.Helper.Login.GetLoginType(loginType) }, new { @class = "li" + Convert.ToInt32(i + 1) + "" })
+                    i++;
+                } 
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Content/Front/js/index.js"></script>
+  @*  <script src="~/Scripts/jquery.validate-vsdoc.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/validate_team.js"></script>
+    <script src="~/Scripts/jquery.form.js" type="text/javascript"></script>    
+    <script src="~/Scripts/layer/layer.js"></script>*@
+    <script src="~/Scripts/PhoneValidate.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        jQuery.validator.addMethod("Uphone", function (value, element) {
+            var tel = /^[1][34578]\d{9}$/;
+            return tel.test(value) || this.optional(element);
+        }, "请输入正确手机号");        
+        $("#preg_form").validate({
+            rules: {
+                Uphone: {
+                    remote: {
+                        url: "../Login/Phone",
+                        beforeSend: function (xhr) {
+                            $("#preg_form #Uphone").parent().children(".error_field").children("label").html("正在检查是否可用…");
+                            $("#preg_form #Uphone").parent().children(".error_field").addClass("intput_wait");
+                        }
+                    }
+                },
+                NickName: {
+                    remote: {
+                        url: "../Login/nickname",
+                        beforeSend: function (xhr) {
+                            $("#preg_form #NickName").parent().children(".error_field").children("label").html("正在检查是否可用…");
+                            $("#preg_form #NickName").parent().children(".error_field").addClass("intput_wait");
+                        }
+                    }
+                },
+                CAPTCHA: {
+                    remote: {
+                        url: "../Login/RegCAPTCHA",
+                        beforeSend: function (xhr) {
+                            $("#preg_form #CAPTCHA").parent().children(".error_field").children("label").html("正在检查是否正确");
+                            $("#preg_form #CAPTCHA").parent().children(".error_field").addClass("intput_wait");
+                        }
+                    }
+
+                },
+                erpwd: {
+                    required: true,
+                    minlength: 6,
+                    equalTo: '#Pwd'
+                },
+            },
+            messages: {
+                Uphone: {
+                    required: "请输入手机号，我们会向您发送验证码。",
+                    phone: "手机号有误，请再次输入。",
+                    remote: jQuery.format("很遗憾，手机已被注册。")
+                },
+                Pwd: {
+                    required: "请输入6-16位字母或数字。",
+                    maxlength: "请输入6-16位字母或数字。",
+                    minlength: "请输入6-16位字母或数字。"
+                },
+                erpwd: {
+                    required: "请再次输入密码。",
+                    maxlength: "请输入6-16位字母或数字。",
+                    minlength: "请输入6-16位字母或数字。",
+                    equalTo: "输入的密码和确认密码要一致。"
+                },
+                NickName: {
+                    required: "请输入昵称。",
+                    maxlength: "请输入 3 - 16 个字母或汉字字符。",
+                    minlength: "请输入 3 - 16 个字母或汉字字符。",
+                    remote: jQuery.format("您的昵称已被占用。")
+                },
+                CAPTCHA: {
+                    required: "请输入短信验证码。",
+                    maxlength: "请输入短信验证码。",
+                    minlength: "请输入短信验证码。",
+                    remote: jQuery.format("验证码输入错误。")
+                }
+            },
+            errorPlacement: function (error, element) {
+                $(element).before("<div class='error_field'></div>");
+                error.appendTo(element.prev(".error_field"));
+                $(element).parent().children(".error_field").removeClass("intput_right").removeClass("intput_wait").addClass("intput_error");
+            },
+            success: function (label) {
+                label.parent().addClass("intput_right");
+                label.text($(label).parent().next().attr("data-right"))
+            },
+            highlight: function (element, errorClass, validClass) {
+                $(element).parent().children(".error_field").removeClass("intput_right").removeClass("intput_wait").addClass("intput_error");
+            }
+        });
+        ///是否选择协议邮箱
+        $(".isagr").change(function () {
+            var checked = $(".isagr").is(":checked");
+            if (checked == false) {
+                
+            }
+            else {
+                document.getElementById("ljzc").disabled = false;//可用
+            }
+        });
+        $("#ljzc").click(function () {
+            
+            var checked = $(".isagr").is(":checked");
+           
+            if (checked == false) {
+                //document.getElementById("ljzc").disabled = true;//不可用
+                layer.alert("请填写信息,同意协议后再提交！");
+                return false;
+            }
+        });
+    });
+    $("#ljzc1").click(function () {
+      
+        var checked = $(".isagr1").is(":checked");
+        
+        if (checked == false) {
+            //document.getElementById("ljzc1").disabled = true;//不可用
+            layer.alert("请填写信息,同意协议后再提交！");
+            return false;
+        }
+    });
+    </script>
+}

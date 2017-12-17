@@ -1,0 +1,48 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model PagedList<IYogaKoo.ViewModel.ViewtQuestion>
+@{
+    ViewBag.Title = "UserQuestionIndex";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+    <div id="list">
+        <div class="content-box" id="">
+            <div class="content-box-header">
+
+                <h3 style="cursor:pointer">FAQ列表</h3>
+
+                <div class="clear"></div>
+
+            </div>
+            <div id="mydiv">          
+                      @Html.Partial("UserQuestionIndexList", Model)
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function Del(id) {
+            if (confirm("是否删除!")) {
+                Loading();
+                $.ajax({
+                    url: "/Manage/tQuestion/Delete",
+                    type: "post",
+                    dataType: "json",
+                    data: { id: id },
+                    success: function (data) {
+                        Loaded();
+                        if (data.code === 0) {
+                            //刷新
+                            window.location.reload();
+                        }
+                        else {
+                            alert("删除失败！");
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+}

@@ -1,0 +1,1543 @@
+﻿@using Webdiyer.WebControls.Mvc
+@using IYogaKoo.ViewModel
+@model IYogaKoo.ViewModel.ViewYogisModels
+@{
+        ViewBag.Title = "导师设置专页";
+
+    Layout = null;
+    //用户ID
+    var id = ViewBag.user.Uid;
+
+    var CentValue = ViewBag.CentValue;
+    var YogaTypeidValue = ViewBag.YogaTypeid;
+    var TeachYogisValue = ViewBag.TeachYogisValue;
+    //链接传值
+    var iType = ViewBag.iType;
+    var info = "";
+    if (iType == "1")
+    {
+        if (ViewBag.info == "editInfo")
+        {
+            info = "1";//从审核页面到个人信息页面：保存成功返回审核页面
+        }
+    }
+    Commons.Helper.method method = new Commons.Helper.method();
+}
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta property="qc:admins" content="37466671526117713776375" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽酷，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽酷，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽酷， 世界瑜伽人之家。</title>
+    <link rel="shortcut icon" href="/Content/Front/images/2.ico.png" />
+    <link type="text/css" href="/Content/Front/css/indexnew.css?v=1" rel="stylesheet" />
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+    <link href="~/Content/Main.css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/artDialog4.1.1/_doc/demo.css")" rel="stylesheet" />
+
+    <script src="~/Scripts/jquery-1.11.3.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script src="~/Content/ueditor/ueditor.config.js"></script>
+    <script src="~/Content/ueditor/ueditor.all.js"></script>
+    <script src="~/Content/My97DatePicker4.7/WdatePicker.js"></script>
+    <script src="~/Content/jquery/ExistisUpdate.js"></script>
+    <script type="text/javascript" src="~/Content/Front/js/indexnew.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+    <script src="~/Content/jquery/ReturnUrl.js"></script>
+    <script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")"></script>
+    <script src="~/Content/cutpic.js"></script>
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+    <script src="@Url.Content("~/Content/artDialog4.1.1/jquery.artDialog.js?skin=blue")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/artDialog4.1.1/artDialog.iframeTools.js")" type="text/javascript"></script>
+    <style>
+        /*隐藏进度条*/
+        #fileQueue {
+            display: none;
+        }
+    </style>
+    <script type="text/javascript">
+        //链接判断显示div
+        $(function () {
+            $("#IdType").val('@Model.IdType');
+            var webiType = $("#webiType").val();
+            $('.lb_left_lbb_left2 li').eq(webiType).addClass('li').siblings().removeClass('li');
+            $('.lb_add_index_div').eq(webiType).fadeIn().siblings().fadeOut();
+        })
+
+    </script>
+
+    <!-- /*上传头像*/-->
+    <script type="text/javascript">
+        window.location.href = "#lb_mao";
+        var imageWidth = 300;
+        var imageHeiht = 300;
+        //首次加载
+        $(function () {
+            var imgWidth = 300;
+            var imgHeight = 300;
+            var imgPath = '';
+            DisplayImg();
+            ShowImg2();
+            function DisplayImg() {
+                var result = '';
+                var strDisplayImg = '@Model.DisplayImg';
+
+                if (strDisplayImg.indexOf(';') != -1) {
+                    result = strDisplayImg;// strDisplayImg.split(';');
+
+                    $("#maxVal").val(300);
+                    $("#btnSave").show();
+                }
+                if (result == '')
+                    return strDisplayImg;
+                else return result;
+            }
+            function ShowImg2() {
+
+                var path = DisplayImg();
+
+                if (path.indexOf(';') != -1) {
+                    imgPath = path.split('$')[0];
+                    imgWidth = path.split('$')[1];
+                    imgHeight = path.split('$')[2];
+
+                    $("#hidImageUrl").val(path.split('$')[0]);             //上传路径存入隐藏域
+
+                } else {
+                    imgPath = path;
+                }
+
+                var ic = new ImgCropper("bgDiv", "dragDiv", imgPath, imgWidth, imgHeight, { Right: "rRight", Left: "rLeft", Up: "rUp", Down: "rDown", RightDown: "rRightDown", LeftDown: "rLeftDown", RightUp: "rRightUp", LeftUp: "rLeftUp" });
+
+            }
+        });
+
+        $(function () {
+            $('#uploadify').uploadify({
+                'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                'uploader': '@Url.Content("~/Controllers/ashxFile/yogakooUserImg.ashx")',
+                'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+                //'folder': '/Temp',
+                'buttonText': '浏览图片',
+                'queueID': 'fileQueue',
+                'auto': true,
+                'multi': false,
+                'method': 'get',
+                'fileExt': '*.jpg;*.png',
+                'fileDesc': '请选择jpg , png文件...',
+                'scriptData': null,
+                'sizeLimit': 1024 * 1024 * 4,
+                'post_params': {
+                    "Uid": '@ViewBag.user.Uid',
+                    "UserType": '@ViewBag.user.UserType'
+                },
+                // 'onComplete': function (event, queueID, fileObj, response, data) {
+                'onUploadSuccess': function (file, data, response) {
+
+                    if (data.indexOf('original') != -1) {
+
+                        $("#bgDiv img").remove();                      //移除截图区里image标签
+                        $("#btnSave").show();                          //保存按钮显示
+                        var result = data.split('$');              //得返回参数
+
+                        var maxVal = 0;
+                        if (result[1] > result[2]) {
+                            if (result[2] > 300) {
+                                maxVal = 300;
+                            } else {
+                                maxVal = result[2];
+                            }
+                        }
+                        else {
+                            if (result[1] > 300) {
+                                maxVal = 300;
+                            } else {
+                                maxVal = result[1];
+                            }
+                        }
+                        $("#maxVal").val(maxVal);                     //设置截图区大小
+
+                        $("#hidImageUrl").val(result[0]);             //上传路径存入隐藏域
+
+                        ShowImg(result[0], result[1], result[2]);       //在截图区显示
+
+                        $("#uploadify").uploadifySettings('scriptData', { 'LastImgUrl': $('#hidImageUrl').val() });          //更新参数
+
+                    }
+                    else {
+                        layer.msg(data);
+                    }
+                }
+            });
+            //保存头像
+            $("#btnSave").click(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Content("~/Controllers/ashxFile/CutAvatarHandler.ashx")',
+                    data: {
+                        imgUrl: $('#hidImageUrl').val(),
+                        pointX: $("#x").val(),
+                        pointY: $("#y").val(),
+                        maxVal: $("#maxVal").val(),
+                        iType: 1,//导师
+                        Uid: '@ViewBag.user.Uid'
+                    },
+                    success: function (msg) {
+
+                        if (msg.indexOf('original') != -1) {
+                            $("#imgCut").attr("src", msg);
+                            $(".lb_myindex_div_left_top").find('img').eq(0).attr("src", msg);
+                        }
+                        else {
+                            layer.msg("error");
+                        }
+                    },
+                    error: function (xhr, msg, e) {
+                        layer.msg("error");
+                        layer.msg("error");
+                    }
+                });
+            });
+            //
+
+        });
+
+        function ShowImg(imagePath, imgWidth, imgHeight) {
+            var imgPath = imagePath != "" ? imagePath : "/Content/Front/images/defaultImg.png";
+
+            var ic = new ImgCropper("bgDiv", "dragDiv", imgPath, imgWidth, imgHeight, { Right: "rRight", Left: "rLeft", Up: "rUp", Down: "rDown", RightDown: "rRightDown", LeftDown: "rLeftDown", RightUp: "rRightUp", LeftUp: "rLeftUp" });
+        }
+
+        //{ Right: "rRight", Left: "rLeft", Up: "rUp", Down: "rDown", RightDown: "rRightDown", LeftDown: "rLeftDown", RightUp: "rRightUp", LeftUp: "rLeftUp"}
+    </script>
+    <!-- end上传头像-->
+    <!-- /*个人信息修改*/-->
+
+    <script type="text/javascript">
+        $(function () {
+
+            //封面图片
+            $('#btnCover').uploadify({
+                'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                'uploader': '@Url.Content("~/Controllers/ashxFile/CoverImg.ashx")',
+                'buttonText': '浏览',
+                'height': '30',
+                'width': '120',
+                'fileTypeDesc': '.jpg,.gif,.png',
+                'fileTypeExts': '*.jpg;*.gif;*.png;',
+                'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+                'sizeLimit': 1024 * 1024 * 4, //4M
+                'multi': false,//设置为true时可以同时上传多个文件。
+                'onUploadSuccess': function (file, data, response) {
+                    if (data.indexOf('文件太大！请上传小于4M的图片！') != -1) {
+                        layer.msg(data);
+                    }
+                    else {
+                        $("#CoverImg").val("/" + data);
+                        $("#idpCoverImg").attr("src", "/" + data);
+                    }
+                },
+                'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                    layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+                }
+            });
+
+        });
+
+    </script>
+    <script src="~/Content/YogisModels/topimgupload.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+            $("#ddliRate").val(@Model.iRate);
+            UE.getEditor('editor'); //内容编辑器
+
+            $(".page").hide();
+
+            $("#StartTeachYear").bind("focus click", function () {
+                WdatePicker();
+            });
+            $("#btnCenterID").click(function () {
+
+                art.dialog.open('/Login/LoadCenterList', {
+                    title: '选择会馆',
+                    lock: true,
+                    width: 600,
+                    hight: 400,
+                    close: function () {
+                        var CenterId = art.dialog.data('CenterId', CenterId);
+                        var CenterName = art.dialog.data('CenterName', CenterName);
+
+                        if (CenterId !== undefined) {
+                            document.getElementById('hCenterID').value = CenterId;
+                        }
+                        if (CenterName !== undefined) {
+                            document.getElementById('CenterID').value = CenterName;//显示名称
+                        }
+                    }
+                });
+            });
+
+            $("#btnYogaTypeid").click(function () {
+
+                art.dialog.open('/Login/LoadYogaTypeidList', {
+                    title: '选择流派',
+                    lock: true,
+                    width: 600,
+                    hight: 400,
+                    close: function () {
+                        var ID = art.dialog.data('ID', ID);
+                        var ItemName = art.dialog.data('ItemName', ItemName);
+
+                        if (ID !== undefined) {
+                            document.getElementById('hYogaTypeid').value = ID;
+                        }
+                        if (ItemName !== undefined) {
+                            document.getElementById('YogaTypeid').value = ItemName;//显示名称
+                        }
+                    }
+                });
+            });
+
+            $("#btnTeachYogis").click(function () {
+
+                art.dialog.open('/Login/GetTeachYogisList', {
+                    title: '选择导师',
+                    lock: true,
+                    width: 600,
+                    hight: 400,
+                    close: function () {
+                        var ID = art.dialog.data('YID', ID);
+                        var TeacherName = art.dialog.data('RealName', TeacherName);
+
+                        if (ID !== undefined) {
+                            document.getElementById('hTeachYogis').value = ID;
+                        }
+                        if (TeacherName !== undefined) {
+                            document.getElementById('TeachYogis').value = TeacherName;//显示名称
+                        }
+                    }
+                });
+            });
+        });
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        //-------------------------------------------------------------------
+
+        $(function () {
+            $("#CenterID").val('@CentValue');
+            $("#hCenterID").val('@Model.CenterID');
+
+            $("#YogaTypeid").val('@YogaTypeidValue');
+            $("#hYogaTypeid").val($("#hidYogaTypeid").val());
+
+            $("#TeachYogis").val('@TeachYogisValue');
+            $("#hTeachYogis").val($("#hidTeachYogis").val());
+
+            //国籍
+            var strNationality = $("#hNationality").val();
+
+            $("#Nationality").val(strNationality);
+
+            $.ajax({
+                url: '/Login/GetNationalityInfo?t=' + Math.random(),
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+
+                        if (data[i].ID == $("#hNationality").val()) {
+                            $("#ddlNationality").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlNationality").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+            //国家
+            var strCountryID = $("#hCountryID").val();
+            $("#CountryID").val(strCountryID);
+
+            //if (strCountryID != "0") {
+            $.ajax({
+                url: '/Login/GetCountryInfo?t=' + Math.random(),
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (data[i].ID == $("#hCountryID").val()) {
+                            $("#ddlCountryID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                        } else {
+                            $("#ddlCountryID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                        }
+                    };
+                }
+            });
+            // }
+            //省
+
+            if ($("#hProvinceID").val() != "0") {
+
+                $.ajax({
+                    url: '/Login/GetAreaInfo?id=' + strCountryID,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].ID == $("#hProvinceID").val()) {
+                                $("#ddlProvinceID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                            } else {
+                                $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                            }
+                        };
+                    }
+                });
+            }
+            var strProvinceID = $("#hProvinceID").val();
+            if (strProvinceID != "0") {
+                $.ajax({
+                    url: '/Login/GetAreaInfo?id=' + strProvinceID,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].ID == $("#hCityID").val()) {
+                                $("#ddlCityID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                            } else {
+                                $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                            }
+                        };
+                    }
+                });
+            }
+            var strCityID = $("#hCityID").val();
+            if (strCityID != "0") {
+                $.ajax({
+                    url: '/Login/GetAreaInfo?id=' + strCityID,
+                    type: 'post',
+                    datatype: 'json',
+                    success: function (data) {
+                        for (var i = 0; i < data.length; i++) {
+                            if (data[i].ID == $("#hDistrictID").val()) {
+                                $("#ddlDistrictID").append("<option value='" + data[i].ID + "' selected='selected' >" + data[i].ItemName + "</option>");
+                            } else {
+                                $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                            }
+                        };
+                    }
+                });
+            }
+
+        });
+    </script>
+    <link href="~/Content/front/css/activity.css" rel="stylesheet" />
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+    <script src="~/Content/Front/js/activity.js"></script>
+    <script src="~/Scripts/laydate/laydate.js"></script>
+    <!--添加课程-->
+    <script type="text/javascript">
+        //记录点击的添加按钮的名字
+        var clickButtonIdType = "onlyOneClickButton";
+        $(function () {
+            classStartOption.elem = "#classDetailStartTime";
+            classStartOption.istime = true;
+            classStartOption.format = "YYYY-MM-DD hh:mm";
+            classStartOption.min = '1900-01-01 00:00:00';
+            laydate(classStartOption);
+
+            //添加按钮
+            $("#classDetailSubmit").click(function () {
+                clickButtonIdType = "onlyOneClickButton";
+                AddClassDetail();
+            })
+            //继续添加按钮
+            $("#classDetailKeepSubmit").click(function () {
+                clickButtonIdType = "classDetailKeepSubmit";
+                AddClassDetail();
+            })
+
+
+            $("#centerOK").click(function () {
+                $('#centerDiv').fadeOut();
+                $('#txtAddCenter').val("");
+            });
+            $("#addCenterButton").click(function () {
+                $('#centerDiv').fadeOut();
+            });
+            $('#txtAddCenter').focus(function () {
+                $('#txtAddCenter').val("");
+                $('#txtAddCenter').css({ "font-style": "normal", "color": "Black" });
+            })
+            $('#txtAddCenter').blur(function () {
+                if ($('#txtAddCenter').val() == "") {
+                    $('#txtAddCenter').val("输入会馆进行查找");
+                    $('#txtAddCenter').css({ "color": "#B4B4B4" });
+                    $('#centerDiv').fadeOut();
+                }
+            })
+            $("#add-Center").click(function () {
+                layer.prompt({ title: '机构名称', formType: 0 }, function (text) {
+                    Loading();
+                    $.ajax({
+                        url: '/class/CreateCenter?t=' + Math.random(),
+                        type: 'post',
+                        datatype: 'json',
+                        data: {
+                            CenterName: text
+                        },
+                        success: function (data) {
+                            Loaded();
+                            var html = '<li class="Center" id="CenterID_' + data.CenterId + '" CenterID=' + data.CenterId + '><div class="Center-info"><div class="name"><img src="' + "" + '"/> ' + data.CenterName + ' </div></div><div class="Center-close">&nbsp;</div></li>';
+                            $('.centers').append(html);
+                            layer.colse();
+                        }
+                    });
+                });
+
+            })
+        })
+
+        //添加课程
+        function AddClassDetail() {
+
+            var classDetailStartTime = $("#classDetailStartTime").val();
+            if (classDetailStartTime == "") {
+                layer.msg("还没有选择课程时间哦~", { icon: 6, time: 1000 });
+                return false;
+            }
+            var classDetailDuration = $("#classDetailDuration").val();
+            if (classDetailDuration == "") {
+                layer.msg("还没有设置课程时长哦~", { icon: 6, time: 1000 });
+                return false;
+            }
+            var classDetailName = $("#classDetailName").val();
+            if (classDetailName.length > 15) {
+                layer.msg("课程名称最多15个字哦~", { icon: 6, time: 1000 });
+                return false;
+            }
+            var classDetailLevel = $("#classDetailLevel").val();
+
+            var centers = $('.centers .Center').attr('id')
+            if (centers == undefined) {
+                layer.msg("还没选择会馆哦~", { icon: 6, time: 1000 });
+                return false;
+            }
+            $('#classDetailCenterID').val(centers.split('_')[1]);
+
+            var classDetailAddress = $("#classDetailAddress").val();
+            if (classDetailAddress == "") {
+                layer.msg("还没有填写详细地址哦~", { icon: 6, time: 1000 });
+                return false;
+            }
+            var classDetailPrice = $("#classDetailPrice").val();
+
+            $.ajax({
+                url: '/ClassDetail/AddClassDetail',
+                type: 'post',
+                data: {
+                    classDetailStartTime: classDetailStartTime,
+                    classDetailDuration: classDetailDuration,
+                    classDetailName: classDetailName,
+                    classDetailLevel: classDetailLevel,
+                    classDetailCenterID: $('#classDetailCenterID').val(),
+                    classDetailAddress: classDetailAddress,
+                    classDetailPrice: classDetailPrice
+                },
+                datatype: 'json',
+                success: function (data) {
+                    if (data.code == 1) {
+                        layer.msg("添加失败", { icon: 5, time: 1000 });
+                    }
+                    else {
+                        if (clickButtonIdType == "onlyOneClickButton") {
+                            location.href = "";///tLearing/ExamineSearch
+                            alert("页面跳转");
+                        }
+                        else {
+                            layer.msg("添加成功~", { icon: 6, time: 1000 });
+                            $("#classDetailStartTime").val("");
+                        }
+                    }
+                },
+                error: function (XMLHttpRequest) {
+                    alert(XMLHttpRequest.status);
+                }
+
+            });
+
+        }
+
+
+        function Loading() {
+            layer.msg('加载中', { icon: 16, time: 10000 });
+        }
+        function Loaded() {
+            layer.closeAll('dialog');
+        }
+        //查找机构
+        function RealLoadClassCenter() {
+            var name = $('#txtAddCenter').val(); if (name == null || name == "") {
+                $('#centerDiv').fadeOut();
+            }
+            else {
+                $('#centerDiv').fadeIn();
+            }
+            RealSearchList({
+                url: '/class/GetCenter', data: { text: name, page: 1, size: 10 }, row: function (dataItem) {
+                    var html = '<tr title="' + (dataItem.CenterId == null ? '' : dataItem.CenterId) + '">';
+                    html += '<td>' + dataItem.CenterId + '</td>';
+                    html += '<td><img class="small-avatar" src="' + dataItem.CenterPortraint + '"/></td>';
+                    html += '<td><div style="width:420px;overflow:hidden;" title="' + dataItem.CenterName + '">' + dataItem.CenterName.substring(0, 24) + (dataItem.CenterName.length > 24 ? '...' : '') + '</div></td>';
+                    html += '<td><a class="center-add">添加</a></td>';
+                    html += '</tr>';
+                    return html;
+                }, msg: '木有找到机构', container: '#CenterIDTable', contentContainer: '#CenterIDTable tbody'
+            });
+
+            function RealSearchList(fromPage) {
+                $('#noSearchResult').remove();
+                pageData = fromPage;
+                Loading();
+                $.post(pageData.url, pageData.data, function (result) {
+                    Loaded();
+                    if (result.Code == 0 && result.Objects.length > 0) {
+                        $(pageData.contentContainer).html('');
+                        var trs = "";
+                        for (var i = 0; i < result.Objects.length; i++) {
+                            trs += pageData.row(result.Objects[i]);
+                        }
+                        $(pageData.contentContainer).html(trs);
+                        $(pageData.container).show();
+                        if (pageData.enablePage == undefined) {
+                            //InitPage(result);//分页
+                        }
+                        $('#pageBox').show();
+
+                        $('#centerOK').css('display', 'block');
+                        $('#addCenterButton').css('display', 'none');
+                    }
+                    else {
+                        $(pageData.contentContainer).html('');
+                        //NoSearchResult(pageData.msg);
+                        if ($('#noSearchResult').length == 0) {
+                            var html = '<div style="width:100px" class="alert alert-warning" role="alert" id="noSearchResult">' + pageData.msg + '</div>';
+                            $(pageData.contentContainer).html(html);//.hide().after(html);
+                            $('#pageBox').hide();
+                            $('#addCenterButton').css('display', 'block');
+                            $('#centerOK').css('display', 'none');
+                        }
+                    }
+                }, 'json');
+            }
+            //选择搜索到的机构
+            $('body').off('click', '#centerDiv .center-add');
+            $('body').on('click', '#centerDiv .center-add', function () {
+                var tds = $(this).parent().parent().children('td');
+                if ($('.centers .Center[CenterID=' + $(tds[0]).text() + ']').length == 0) {
+                    /*只能选择一个*/
+                    var centers = $('.centers .Center').attr('id')
+                    if (centers != undefined) {
+                        layer.msg("只能选择一个会馆哦~", { icon: 6, time: 1000 });
+                        return false;
+                    }
+                    /*结束*/
+                    var html = '<li class="Center" id="CenterID_' + $(tds[0]).text() + '" CenterID=' + $(tds[0]).text() + '><div class="Center-info"><div class="name"><img src="' + $(tds[1]).text() + '"/> ' + $(tds[2]).text() + ' </div></div><div class="Center-close">&nbsp;</div></li>';
+                    $('.centers').append(html);
+                }
+                else {
+                    ShowError('已添加过这个机构了');
+                }
+            });
+        }
+    </script>
+
+    <!--我的课程-->
+    <script type="text/javascript">
+
+        function Loading() {
+            layer.msg('加载中', { icon: 16, time: 10000 });
+        }
+        function Loaded() {
+            layer.closeAll('dialog');
+        }
+        //获取本月有多少周
+        function getMonthWeek(a, b, c) {
+            var date = new Date(a, parseInt(b) - 1, c), w = date.getDay(), d = date.getDate();
+            return Math.ceil((d + 7 - w) / 7);
+        };
+
+        $(function () {
+            //年下拉框事件
+            $("#classDetailSelectYear").change(function () {
+                $("#classDetailSelectMonth").val(0);
+                $("#classDetailSelectWeek option").remove();
+            });
+            //月下拉框事件
+            $("#classDetailSelectMonth").change(function () {
+                var selectYear = $("#classDetailSelectYear").val();
+                var selectMonth = $("#classDetailSelectMonth").val();
+                if (selectMonth != 0) {
+                    var last = new Date(selectYear, selectMonth, 0);//获取当前月最后一天时间
+                    var y = last.getFullYear();
+                    var m = last.getMonth() + 1;
+                    var d = last.getDate();
+                    var weekOption = "";
+                    var weekNum = getMonthWeek(y, m, d);
+                    for (var i = 1; i <= weekNum; i++) {
+                        weekOption += "<option value=" + i + ">" + i + "</option>";
+                    }
+                    $("#classDetailSelectWeek option").remove();
+                    $("#classDetailSelectWeek").append(weekOption);
+                }
+                else
+                {
+                    $("#classDetailSelectWeek option").remove();
+                }
+            });
+
+            //课程添加列表默认隐藏
+            $('#addClassDetailDiv').fadeOut();
+
+            //点击我的课程显示课程列表隐藏添加列表
+            $('#myClassDetail').click(function () {
+                $('#addClassDetailDiv').fadeOut();
+                $('#listClassDetailDiv').fadeIn();
+            })
+
+            //点击添加课程隐藏课程列表显示添加课程列表
+            $('#btnAddClassDetail').click(function () {
+                $('#listClassDetailDiv').fadeOut();
+                $('#addClassDetailDiv').fadeIn();
+            })
+            
+            $('#btnSearchClassDetail').click(function () {
+                Loading();
+                $.ajax({
+                    url: '/YogisModels/PersonalSetUp?page=-99',
+                    type: 'post',
+                    //data: {
+                    //    classDetailStartTime: classDetailStartTime,
+                    //    classDetailDuration: classDetailDuration,
+                    //    classDetailName: classDetailName,
+                    //    classDetailLevel: classDetailLevel,
+                    //    classDetailCenterID: $('#classDetailCenterID').val(),
+                    //    classDetailAddress: classDetailAddress,
+                    //    classDetailPrice: classDetailPrice
+                    //},
+                    datatype: 'json',
+                    success: function (data) {
+                        //if (data.code == 1) {
+                        //    layer.msg("添加失败", { icon: 5, time: 1000 });
+                        //}
+                        //else {
+                        //    if (clickButtonIdType == "onlyOneClickButton") {
+                        //        location.href = "";///tLearing/ExamineSearch
+                        //        alert("页面跳转");
+                        //    }
+                        //    else {
+                        //        layer.msg("添加成功~", { icon: 6, time: 1000 });
+                        //        $("#classDetailStartTime").val("");
+                        //    }
+                        //}
+                        //alert(data);
+                        $("#mydiv").html(data);
+                        Loaded();
+                    },
+                    error: function (XMLHttpRequest) {
+                        alert(XMLHttpRequest.status);
+                    }
+
+                });
+            });
+
+        })
+    </script>
+
+    <!-- end/*个人信息修改*/-->
+    @using IYogaKoo.ViewModel.Commons.Enums;
+    <script src="~/Content/baiduAdd.js"></script>
+</head>
+<body>
+    <input type="hidden" id="webiType" name="webiType" value="@iType" />
+    <div class="lb_index">
+        @Html.Partial("_OtherTopInfo")
+        <div class="lb_index_scarh_top">
+            @{
+                <div class="lb_School_index_top">
+                    <div class="lb_School_index_top_index">
+                        <b>您所在位置：</b><span>瑜伽导师个人主页</span>
+                    </div>
+                </div>
+
+                var CoverImg = "/Content/Front/images/my.png";
+                if (!string.IsNullOrEmpty(Model.CoverImg))
+                {
+                    CoverImg = Model.CoverImg.Split(',')[0];
+                }
+
+                <div class="lb_myindex" style="background: url(@CoverImg) no-repeat center center;">
+                    <div class="lb_myindex_div">
+                        <div class="lb_myindex_div_left">
+                            <div class="lb_myindex_div_left_top">
+                                @{
+                                    string drscr = method.DisplayImg(Model.DisplayImg);　
+                                }
+                                <img src="@drscr" />
+                                <ul>
+                                    <li id="lb_mao">
+                                        @ViewBag.NickName
+                                        @{
+                                            string rscr = null;
+                                            if (Model.Gender == 0)
+                                            {
+                                                rscr = "/Content/Front/images/women.png";
+                                            }
+                                            else if (Model.Gender == 1)
+                                            {
+                                                rscr = "/Content/Front/images/men.png";
+                                            }
+                                            else
+                                            {
+                                                rscr = "";
+                                            }
+                                        }
+                                        <img src="@rscr" />
+                                    </li>
+                                    <li>
+                                        <input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lb_index_gulu" style="width:1200px; margin:0px auto">
+                    <div class="lb_add_div_new">
+                        <div class="lb_myindex_div_left_center lb_myindex_div_left_center_gu">
+                            <ul style="margin-left:180px;">
+                                <li>
+                                    @{
+                                        if (Model.YogisLevel == 1)
+                                        {
+                                            //  @:初级
+                                    <img src="~/Content/Front/images/cjds.png" />
+                                        }
+                                        if (Model.YogisLevel == 2)
+                                        {
+                                            //@:中级
+                                    <img src="~/Content/Front/images/zjds.png" />
+                                        }
+                                        if (Model.YogisLevel == 3)
+                                        {
+                                            //  @:高级
+                                    <img src="~/Content/Front/images/gjds.png" />
+                                        }
+                                        if (Model.YogisLevel == 4)
+                                        {
+                                    @:大师
+                                        }
+                                    }
+                                </li>
+                                <li> @ViewBag.YogaTypeid</li>
+                                <li class="lb_address">
+                                    @ViewBag.AddRessName
+                                </li>
+                            </ul>
+                            <br /><br />
+                            <p>&nbsp;@Model.GudWords</p>
+                        </div>
+                        <div class="lb_myindex_div_left_center_lu">
+                            <div class="lb_name_div" style="width:auto">
+                                <ul>
+                                    <li>
+                                        <p>@ViewBag.iCount</p>
+                                        <a href="/YogaUser/FollowList">关注</a>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            @{
+                                                string fcount = null;
+                                                if (ViewBag.FCount == null)
+                                                {
+                                                    fcount = "0";
+                                                }
+                                                else
+                                                {
+                                                    fcount = ViewBag.FCount.ToString();
+                                                }
+                                            }
+                                            @fcount
+                                        </p>
+                                        <a href="/YogaUser/FollowList">粉丝</a>
+                                    </li>
+                                    <li style="border:0px none;">
+                                        <p>
+                                            @{
+                                                var tzancount = "";
+                                                if (ViewBag.tzancount == null)
+                                                {
+                                                    tzancount = "0";
+                                                }
+                                                else
+                                                {
+                                                    tzancount = ViewBag.tzancount.ToString();
+                                                }
+                                            }
+                                            @tzancount
+                                        </p>
+                                        <a>人气</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            }
+            <div class="lb_qq">
+
+                <div class="lb_left_lbb_left2">
+
+                    <ul>
+
+                        <li>
+                            <a href="javascript:">我的头像</a>
+                        </li>
+                        <li>
+                            <a href="javascript:">个人信息</a>
+                        </li>
+                        <li>
+                            <a href="javascript:" id="myClassDetail">我的课程</a>
+                        </li>
+                        <li>
+                            <a href="javascript:">安全设置</a>
+                        </li>
+
+                        <li><a href="javascript:">级别认证</a></li>
+                        <li><a href="javascript:">隐私设置</a></li>
+
+
+                        <li style="border:0px"><a href="javascript:;">帮助中心</a></li>
+                    </ul>
+                </div>
+                <div class="lb_index_rightt">
+                    @* 我的头像 *@
+                    <div class="lb_add_index_div" style="display:none;">
+                        <fieldset style=" width:877px">
+
+                            @Html.HiddenFor(model => model.YID)
+                            @Html.HiddenFor(model => model.UID)
+
+                            <div class="fl avatarbg">
+                                <div class="avatarboxbar">
+                                    <div id="bgDiv">
+                                        <div id="dragDiv">
+                                            <div id="rRightDown" style="right: 0; bottom: 0;">
+                                            </div>
+                                            <div id="rLeftDown" style="left: 0; bottom: 0;">
+                                            </div>
+                                            <div id="rRightUp" style="right: 0; top: 0;">
+                                            </div>
+                                            <div id="rLeftUp" style="left: 0; top: 0;">
+                                            </div>
+                                            <div id="rRight" style="right: 0; top: 50%;">
+                                            </div>
+                                            <div id="rLeft" style="left: 0; top: 50%;">
+                                            </div>
+                                            <div id="rUp" style="top: 0; left: 50%;">
+                                            </div>
+                                            <div id="rDown" style="bottom: 0; left: 50%;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="avatarthumb">
+                                @{
+                                    var strDisplayImg = Model.DisplayImg;
+                                    var str2 = "";
+                                    if (strDisplayImg.IndexOf(';') != -1)
+                                    {
+                                        var str = strDisplayImg.Split(';');
+                                        if (str.Length > 1)
+                                        {
+                                            if (!string.IsNullOrEmpty(str[1]))
+                                            {
+                                                str2 = str[1];
+                                            }
+                                            else
+                                            {
+                                                str2 = str[0];
+                                            }
+                                        }
+                                        else
+                                        {
+                                            str2 = str[0];
+                                        }
+                                    }
+                                }
+                                <img id="imgCut" width="300" height="300" src="@str2" />
+                                <span class="RealNameClass">@Model.RealName</span>
+                            </div>
+
+                            <br />
+                            <div class="uploadimg">
+                                <div class="upload">
+                                    <div class="uploadswf">
+                                        <input type="file" name="uploadify" id="uploadify" />
+                                    </div>
+                                    <br />
+                                    <p id="fileQueue">
+                                    </p>
+                                </div>
+                            </div>
+                            <input id="btnSave" type="button" value="保存" class="lb_xg" style="display: none;" />
+                            <input id="x" type="hidden" value="0" />
+                            <input id="y" type="hidden" value="0" />
+                            <input id="hidImageUrl" type="hidden" value="" />
+                            <input id="maxVal" type="hidden" value="100" />
+                        </fieldset>
+                    </div>
+
+                    @* 个人信息 *@
+                    <div class="lb_add_index_div">
+                        <form id="form1" method="post" action="javascript:void(0);">
+                            <h2 style="margin-left:60px">个人信息</h2>
+                            <div class="form-horizontal" style=" text-align:center;">
+
+                                @Html.HiddenFor(model => model.YID)
+                                @Html.HiddenFor(model => model.UID)
+                                @Html.HiddenFor(model => model.DisplayImg)
+                                @Html.HiddenFor(model => model.YogisLevel)
+                                @Html.HiddenFor(model => model.YogiStatus)
+                                <input type="hidden" id="hNationality" value="@Model.Nationality" />
+                                <input type="hidden" id="hCountryID" value="@Model.CountryID" />
+                                <input type="hidden" id="hProvinceID" value="@Model.ProvinceID" />
+                                <input type="hidden" id="hCityID" value="@Model.CityID" />
+                                <input type="hidden" id="hDistrictID" value="@Model.DistrictID" />
+                                <input type="hidden" id="hidCenterID" value="@Model.CenterID" />
+                                <input type="hidden" id="hidYogaTypeid" value="@Model.YogaTypeid" />
+                                <input type="hidden" id="hidTeachYogis" value="@Model.TeachYogis" />
+
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="lb_login_idnex" style="width:900px;">
+
+                                    <div class="lb_teacher_index lbb" style="width:1200px; margin:0px auto; background:#fff; margin-bottom:15px">
+
+                                        <div class="lb_index_rightt" style="border:0px;">
+                                            <div class="lb_index_rightt_div">
+                                                <!-- 修改基本信息的页面   开始 -->
+                                                <div class="lb_index_rightt_div_jibenxx" style="float:left">
+                                                    <dl>
+                                                        <dt>@Html.LabelFor(model => model.RealName)：</dt>
+                                                        <dd>
+                                                            @Html.EditorFor(model => model.RealName)
+                                                            @Html.ValidationMessageFor(model => model.RealName)
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>昵称：</dt>
+                                                        <dd>
+                                                            <input type="text" id="nickName" name="nickName" value="@ViewBag.NickName" />
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>@Html.LabelFor(model => model.Gender)：</dt>
+                                                        <dd>
+                                                            @Html.RadioButtonFor(model => model.Gender, 1)<span class="span">男</span>
+                                                            @Html.RadioButtonFor(model => model.Gender, 0)<span class="span">女</span>
+                                                            @Html.ValidationMessageFor(model => model.Gender)
+                                                        </dd>
+
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>@Html.LabelFor(model => model.Nationality)：</dt>
+                                                        <dd>
+                                                            <select id="ddlNationality" name="ddlNationality">
+                                                                <option value="0">请选择国籍</option>
+                                                            </select>
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>目前居住地：</dt>
+                                                        <dd>
+                                                            <select id="ddlCountryID" name="ddlCountryID">
+                                                                <option value="-1">请选择国家</option>
+                                                            </select><br /><br />
+                                                            <select id="ddlProvinceID" name="ddlProvinceID">
+                                                                <option value="0">请选择省份</option>
+                                                            </select>
+                                                            <select id="ddlCityID" name="ddlCityID" style="">
+                                                                <option value="0">请选择城市</option>
+                                                            </select>
+                                                            <select id="ddlDistrictID" name="ddlDistrictID" style="">
+                                                                <option value="0">请选择城区</option>
+                                                            </select><br /><br />
+
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>@Html.LabelFor(model => model.Street)：</dt>
+                                                        <dd>
+                                                            @Html.EditorFor(model => model.Street)
+                                                            @Html.ValidationMessageFor(model => model.Street)
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>@Html.LabelFor(model => model.GudWords)：</dt>
+                                                        <dd>
+                                                            @Html.TextBoxFor(model => model.GudWords, new { style = "width:96%;" })
+                                                            @Html.ValidationMessageFor(model => model.GudWords)
+                                                        </dd>
+                                                    </dl>
+
+                                                    <dl>
+                                                        <dt>@Html.LabelFor(model => model.YogisDepict)：</dt>
+                                                        <dd>
+                                                            @Html.TextAreaFor(model => model.YogisDepict, new { id = "editor", style = "height:200px; width:650px;margin-left:15px" })
+                                                            @Html.ValidationMessageFor(model => model.YogisDepict)
+                                                            <input type="hidden" id="hYogisDepict" name="hYogisDepict" value="" />
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>@Html.LabelFor(model => model.StartTeachYear)：</dt>
+                                                        <dd>
+                                                            @Html.TextBox("StartTeachYear", string.Format("{0:yyyy-MM-dd}", Model.StartTeachYear))
+                                                            @Html.ValidationMessageFor(model => model.StartTeachYear)
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>习练瑜伽场馆：</dt>
+                                                        <dd>
+
+                                                            @Html.EditorFor(model => model.CenterID)
+                                                            <input type="button" id="btnCenterID" value="请选择" class="lb_sc" />
+                                                            <input type="hidden" id="hCenterID" name="hCenterID" value="" />
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>习练瑜伽的流派：</dt>
+                                                        <dd>
+
+                                                            @Html.EditorFor(model => model.YogaTypeid)
+                                                            <input type="button" id="btnYogaTypeid" value="请选择" class="lb_sc" />
+                                                            <input type="hidden" id="hYogaTypeid" name="hYogaTypeid" value="" />
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>师从导师：</dt>
+                                                        <dd>
+                                                            @Html.EditorFor(model => model.TeachYogis)
+                                                            <input type="button" id="btnTeachYogis" value="请选择" class="lb_sc" />
+                                                            <input type="hidden" id="hTeachYogis" name="hTeachYogis" value="" />
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>@Html.LabelFor(model => model.EachClassCost)：</dt>
+                                                        <dd>
+                                                            @Html.EditorFor(model => model.EachClassCost)
+                                                            @Html.ValidationMessageFor(model => model.EachClassCost)
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>每周习练瑜伽的频率：</dt>
+                                                        <dd>
+                                                            <select id="ddliRate" name="ddliRate">
+
+                                                                <option value="1">1次</option>
+
+                                                                <option value="2">2次</option>
+
+                                                                <option value="3">3次</option>
+
+                                                                <option value="4">4次</option>
+
+                                                                <option value="5">5次</option>
+
+                                                                <option value="6">6次</option>
+
+                                                                <option value="7">7次</option>
+                                                            </select>
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>封面图：</dt>
+                                                        <dd>
+                                                            @{
+                                                                var strImg = "/Content/Front/images/my.png";
+                                                                if (!string.IsNullOrEmpty(Model.CoverImg))
+                                                                {
+                                                                    strImg = Model.CoverImg.Split(',')[0];
+                                                                }
+
+                                                            }
+                                                            <img id="idpCoverImg" src="@strImg" width="200" height="100" />
+                                                            <a>建议图片尺寸为1920*360</a>
+                                                            <input id="CoverImg" name="CoverImg" type="hidden" value="@strImg" />
+                                                            <div style="position:relative">
+                                                                <input id="btnCover" type="file" value="上传图片" style=" float:left" />
+                                                                <a href="Javascript:delCoverImg('@Model.UID')" style="position:absolute;z-index:111;top:7px; left:110px; display:block; width:120px;height:30px; text-align:center; line-height:30px; background:#65c3a5;color:#fff; font-size:16px;">删除封面</a>
+                                                            </div>
+
+                                                        </dd>
+                                                    </dl>
+                                                    <dl>
+                                                        <dt>&nbsp;</dt>
+                                                        <dd>
+                                                            <input type="button" id="butnSave" value="确定" class="lb_sc" />
+                                                            <input type="hidden" value="@info" id="hidinfo" />
+                                                        </dd>
+                                                    </dl>
+                                                </div>
+                                                <!-- 修改基本信息的页面   结束-->
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    @* 我的课程 *@
+                    <div class="lb_add_index_div">
+                        <div class="lb_mykecheng" id="addClassDetailDiv">
+                            <div class="lb_mykecheng_div">
+                                <p>课程添加</p>
+                            </div>
+                            <div class="lb_mykecheng_content">
+                                <dl>
+                                    <dt><b>课程开始时间：</b></dt>
+                                    <dd>
+                                        <input id="classDetailStartTime" type="text" class="input" />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><b>时长：</b></dt>
+                                    <dd>
+                                        <input id="classDetailDuration" type="text" class="input" />
+                                        <span>分钟</span>
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><b>课程名称：</b></dt>
+                                    <dd>
+                                        <input id="classDetailName" type="text" />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><b>课程级别：</b></dt>
+                                    <dd>
+                                        <select id="classDetailLevel" class="input">
+                                            <option value="1">初级</option>
+                                            <option value="2">中级</option>
+                                            <option value="3">高级</option>
+                                        </select>
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><b>会馆：</b></dt>
+                                    @*<dd>
+                                            <input type="text" />
+                                        </dd>*@
+                                    <dd id="lb_add_lb">
+                                        <input type="text" value="输入场地进行查找" style=" color: #B4B4B4;border-bottom:0px" id="txtAddCenter" class="lb_hd_faqi_left_title"
+                                               onkeyup="RealLoadClassCenter()" />
+                                        <ul class="centers" style="width:500px;"></ul>
+                                        <input id="classDetailCenterID" name="classDetailCenterID" type="hidden" value="" />
+                                        <div class="lb_add_hi" id="centerDiv">
+                                            <table class="CenterID" id="CenterIDTable" cellspacing="0">
+                                                <thead>
+                                                    <tr>
+                                                        <td>编号</td>
+                                                        <td style="width:60px;">图片</td>
+                                                        <td style="width:417px;">名称</td>
+                                                        <td id="centerOK" style="min-width:60px; ">
+                                                            <p>完成</p>
+                                                        </td>
+                                                        <td id="addCenterButton" style="min-width:60px; display:none;">
+                                                            <a id='add-Center'>新增机构</a>
+                                                        </td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id=""></tbody>
+                                            </table>
+                                        </div>
+
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><b>详细地址：</b></dt>
+                                    <dd>
+                                        <input id="classDetailAddress" type="text" />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><b>价格：</b></dt>
+                                    <dd>
+                                        <input id="classDetailPrice" type="text" />
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt>&nbsp;</dt>
+                                    <dd>
+                                        <input type="button" value="提交" class="lb_addhuiguan" id="classDetailSubmit" />
+                                        <input type="button" value="继续添加" class="lb_addhuiguan" id="classDetailKeepSubmit" />
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div class="lb_kecheng_index" id="listClassDetailDiv">
+
+                            <div class="lb_kecheng_index_top">
+                                <p>添加课程</p>
+                                <img src="~/Content/Front/images/mykc.png" />
+                            </div>
+                            <div class="lb_kecheng_index_time">
+                                <select id="classDetailSelectYear">
+
+                                    <option value=0>请选择</option>
+                                    @{
+                                        for (int i = 2015; i <= DateTime.Now.AddYears(10).Year; i++)
+                                        {
+                                            <option value=@i>@i</option>
+                                        }
+                                    }
+                                </select>
+                                <span>年</span>
+                                <select id="classDetailSelectMonth">
+                                    <option value=0>请选择</option>
+                                    @{
+                                        for (int i = 1; i <= 12; i++)
+                                        {
+                                            <option value=@i>@i</option>
+                                        }
+                                    }
+                                </select>
+                                <span>月</span>
+                                <select id="classDetailSelectWeek"></select>
+                                <span>周</span>
+                                <input type="button" value="搜索" id="btnSearchClassDetail" />
+                                <input type="button" value="添加" id="btnAddClassDetail" />
+                                <input type="button" value="删除" class="lb_button_delete" />
+                            </div>
+                            <div class="lb_kecheng_table" id="mydiv">
+                                @Html.Partial("MyClassDetailList", (ViewBag.ClassDetailList as PagedList<ViewClassDetail>))
+                            </div>
+                        </div>
+                    </div>
+
+                    @* 安全设置 *@
+                    <div class="lb_add_index_div">
+                        <h2 style="margin-left:60px">设置密码</h2>
+                        <div class="lb_index_rightt_div_jibenxx1" style="display:block;">
+                            <dl>
+                                <dt>原密码：</dt>
+                                <dd>
+                                    <input type="password" value="" name="OldPwd" id="OldPwd" />
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>新密码：</dt>
+                                <dd>
+                                    <input type="password" value="" name="NewPwd" id="NewPwd" />
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>确认新密码：</dt>
+                                <dd>
+                                    <input type="password" value="" name="NewPwd2" id="NewPwd2" />
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>&nbsp;</dt>
+                                <dd>
+                                    <input type="button" id="btnpwd" value="修改" class="lb_xg" />
+                                </dd>
+                            </dl>
+                        </div>
+
+                        <h2 style="margin-left:25px">设置证件信息</h2>
+                        <div class="lb_index_rightt_div_jibenxx1">
+                            <dl>
+                                <dt>真实姓名：</dt>
+                                <dd>
+                                    <label id="RealName" name="RealName">
+                                        @{
+                                            if (!string.IsNullOrEmpty(Model.RealName))
+                                            {
+                                        @Model.RealName
+                                            }
+                                            else
+                                            {
+                                        @:未设置
+                                                }
+                                        }
+                                    </label>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>证件类型：</dt>
+                                <dd>
+                                    <select name="IdType" id="IdType">
+                                        <option value="0">--请选择--</option>
+                                        <option value="身份证">身份证</option>
+                                        <option value="护照">护照</option>
+                                    </select>
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>证件号码：</dt>
+                                <dd>
+                                    <input type="text" value="@Model.IdCardNum" name="IdCardNum" id="IdCardNum" />
+                                </dd>
+                            </dl>
+                            <dl>
+                                <dt>&nbsp;</dt>
+                                <dd>
+                                    <input type="button" id="btnIdType" value="修改" class="lb_xg" />
+                                </dd>
+                            </dl>
+                        </div>
+
+                    </div>
+
+                    @* 级别认证 *@
+                    <div class="lb_add_index_div">
+                        <h2>
+                            级别认证<a href="/YogisModels/Audit" style="margin-left:20px;">升级导师</a>
+                            <a>（如进行导师级别晋升认证，请完成下列自评）</a>
+                        </h2>
+                        <form id="authform">
+                            <fieldset>
+
+                                @Html.HiddenFor(model => model.YID)
+                                <div class="editor-label" id="lb_casuhs">
+                                    @Html.LabelFor(model => model.YogisLevel)
+                                    <label>
+                                        :
+                                        @{
+                                            if (Model.YogisLevel == null || Model.YogisLevel == 0)
+                                            {
+                                        @:未设置
+    }
+                                            else
+                                            {
+                                                if (Model.YogisLevel == 1)
+                                                {
+                                        @:初级
+        }
+                                                if (Model.YogisLevel == 2)
+                                                {
+                                        @:中级
+        }
+                                                if (Model.YogisLevel == 3)
+                                                {
+                                        @:高级
+        }
+                                                if (Model.YogisLevel == 4)
+                                                {
+                                        @:大师
+        }
+                                            }
+
+                                        }
+                                    </label>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                                <div class="editor-label">
+                                    级别晋升自评
+                                </div>
+                                <div class="editor-field">
+
+                                </div>
+                                <div class="editor-label">
+                                    1、 习练瑜伽的年限？
+                                </div>
+                                <div class="editor-field">
+                                    <input type="radio" name="yearNums" value="1" class="lb_ridao" /><span class="lb_level_span">A、1-3年</span><br /><br />
+                                    <input type="radio" name="yearNums" value="2" class="lb_ridao" /><span class="lb_level_span">B、3-5年</span><br /><br />
+                                    <input type="radio" name="yearNums" value="3" class="lb_ridao" /><span class="lb_level_span">C、5-10年</span><br /><br />
+                                    <input type="radio" name="yearNums" value="4" class="lb_ridao" /><span class="lb_level_span">D、10年以上</span>
+                                </div>
+
+                                <div class="editor-label">
+                                    2、参加瑜伽教学资格的培训？
+                                </div>
+                                <div class="editor-field">
+                                    <input type="radio" name="yogaPinl" value="1" class="lb_ridao" /><span class="lb_level_span">A、正规学院200小时导师认证培训</span><br /><br />
+                                    <input type="radio" name="yogaPinl" value="2" class="lb_ridao" /><span class="lb_level_span">B、正规学院中级导师认证培训</span><br /><br />
+                                    <input type="radio" name="yogaPinl" value="3" class="lb_ridao" /><span class="lb_level_span">C、正规学院高级导师认证培训</span><br /><br />
+                                    <input type="radio" name="yogaPinl" value="4" class="lb_ridao" /><span class="lb_level_span">D、参加不同流派多级认证培训</span>
+                                </div>
+                                <div class="editor-label">
+                                    3、教授的年限
+                                </div>
+                                <div class="editor-field">
+                                    <input type="radio" name="JiaoNums" value="1" class="lb_ridao" /><span class="lb_level_span">A、0-1年</span><br /><br />
+                                    <input type="radio" name="JiaoNums" value="2" class="lb_ridao" /><span class="lb_level_span">B、1-3年</span><br /><br />
+                                    <input type="radio" name="JiaoNums" value="3" class="lb_ridao" /><span class="lb_level_span">C、3-5年</span><br /><br />
+                                    <input type="radio" name="JiaoNums" value="4" class="lb_ridao" /><span class="lb_level_span">D、5年以上</span>
+                                </div>
+                                <div class="editor-label">
+                                    4、自我习练瑜伽的频率
+                                </div>
+                                <div class="editor-field">
+                                    <input type="radio" name="yogaUserPl" value="1" class="lb_ridao" /><span class="lb_level_span">A、有规律自我习练</span><br /><br />
+                                    <input type="radio" name="yogaUserPl" value="2" class="lb_ridao" /><span class="lb_level_span">B、每周至少3天瑜伽课程习练 </span> <br /><br />
+                                    <input type="radio" name="yogaUserPl" value="3" class="lb_ridao" /><span class="lb_level_span">C、每周至少进行5天自我习练</span><br /><br />
+                                    <input type="radio" name="yogaUserPl" value="4" class="lb_ridao" /><span class="lb_level_span">D、持续不间断的坚持每日自我习练</span>
+
+                                </div>
+                                <div class="editor-label">
+                                    5、习练瑜伽的内容
+                                </div>
+                                <div class="editor-field">
+                                    <input type="radio" name="yogaContent" value="1" class="lb_ridao" /><span class="lb_level_span">A、教授基础瑜伽体式、基本呼吸方法及练习要领</span><br /><br />
+                                    <input type="radio" name="yogaContent" value="2" class="lb_ridao" /><span class="lb_level_span">B、教授常用的瑜伽体式习练+基本的瑜伽呼吸控制法，冥想课程、基础的清洁法要领</span> <br /><br />
+                                    <input type="radio" name="yogaContent" value="3" class="lb_ridao" /><span class="lb_level_span">C、教授常用的瑜伽中级体式习练+常用的瑜伽呼吸控制法，冥想课程、基础的清洁法要领</span><br /><br />
+                                    <input type="radio" name="yogaContent" value="4" class="lb_ridao" /><span class="lb_level_span">D、教授瑜伽高级体式+常用的瑜伽呼吸控制法+清洁法+冥想课程等瑜伽相关的所有课程和内容；并可以独立开设专题工作坊课程</span>
+
+                                </div>
+
+                                <div class="editor-label">
+                                    6、瑜伽理论知识
+                                </div>
+                                <div class="editor-field" style="float:none">
+                                    <input type="radio" name="yogaknowledge" value="1" class="lb_ridao" /><span class="lb_level_span">A、了解瑜伽基础知识、瑜伽呼吸知识要领。</span><br /><br />
+                                    <input type="radio" name="yogaknowledge" value="2" class="lb_ridao" /><span class="lb_level_span">B、学习瑜伽知识，掌握瑜伽呼吸法知识要领、清洁法要领。</span><br /><br />
+                                    <input type="radio" name="yogaknowledge" value="3" class="lb_ridao" /><span class="lb_level_span">C、系统的学习瑜伽知识理论，掌握瑜伽呼吸控制法知识要领、清洁法要领、对冥想有一定的了解。</span><br /><br />
+                                    <input type="radio" name="yogaknowledge" value="4" class="lb_ridao" /><span class="lb_level_span">D、深入了解瑜伽哲学，阅读瑜伽经典、掌握瑜伽呼吸控制法知识要领、清洁法要领、对冥想有深入研究。</span>
+
+                                </div>
+                                <div class="lb_save" style="float:none; width:600px">
+                                    <input type="button" id="btn_submit" value="提交" />
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div class="lb_add_index_div"></div>
+                    <div class="lb_add_index_div"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,130 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogaUserDetail>
+@{
+    ViewBag.Title = "习练者列表"; 
+}
+<div class="content-box" id="">
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">习练者列表</h3>
+
+        <div class="clear"></div>
+
+    </div>
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <table>
+                <tr>
+
+                    <th>
+                        编号
+                    </th>
+                    <th>
+                        昵称
+                    </th>
+                    <th>
+                        姓名
+                    </th> 
+                    <th>
+                        性别
+                    </th>
+                    <th>
+                        级别
+                    </th>
+                    <th>
+                        流派
+                    </th>
+                    <th>
+                       所属地区
+                    </th> 
+                    <th>删除状态</th>
+                    <th></th>
+                </tr>
+
+                @{
+                    var index = 1;
+                    if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+                    {
+                        var p = int.Parse(Request.QueryString["page"]) - 1;
+                        if (p > 0)
+                        {
+                            index = p * 10 + 1;
+                        }
+                    }
+                }
+                @foreach (var item in ViewBag.listusers)
+                {
+
+                    <tr>
+
+                        <td>
+                            @item.VDetailsList.UID
+                        </td>
+                        <td>
+                            @(item.VyList==null ? "" : item.VyList.NickName)
+                        </td>
+                        <td>
+                            @item.VDetailsList.RealName_cn @item.VDetailsList.RealName_en
+                        </td>
+                        <td>
+                            @(item.VDetailsList.Gender == 1 ? "男" : "女")
+                        </td> 
+                        <td>
+                            @if (item.VDetailsList.Ulevel == 0)
+                            {
+                                @:基础习练者
+                            }
+                            @if (item.VDetailsList.Ulevel == 1)
+                            {
+                                @:初级习练者
+                            }
+                            @if (item.VDetailsList.Ulevel == 2)
+                            {
+                                @:中级习练者
+                            }
+                            @if (item.VDetailsList.Ulevel == 3)
+                            {
+                                @:高级习练者
+                            }
+                        </td>
+                        <td>
+                            @item.usertype
+                        </td>
+                        <td>
+                           @item.AddRessName
+                        </td>   
+                        <td>
+                            @(item.VDetailsList.delState == 1 ? "是" : "否")
+                        </td>
+                        
+            <td>
+                @*@Html.ActionLink("编辑", "UserDetailsEdit", new { id = item.VDetailsList.ID }) |*@
+                @Html.ActionLink("详情", "UserDetails", new { id = item.VDetailsList.ID }) |
+                <a href="Javascript:DaoShiDel('@item.VDetailsList.ID')">删除</a>
+
+            </td>
+        </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+@*@Html.AjaxPager(Model, new PagerOptions { PageIndexParameterName = "page" }, new AjaxOptions { UpdateTargetId = "right_con" })*@
+
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>

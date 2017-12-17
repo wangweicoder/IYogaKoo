@@ -1,0 +1,96 @@
+﻿@model IYogaKoo.ViewModel.ViewtWriteLog
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+ 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <div class="content-box" id="">
+
+        <div class="content-box-header">
+
+            <h3 style="cursor:pointer">【修改日志】</h3>
+
+            <div class="clear"></div>
+
+        </div>
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+                <fieldset>
+                  
+                    @Html.HiddenFor(model => model.ID)
+
+                    <div class="editor-label">
+                        @Html.LabelFor(model => model.Uid)
+                    
+                       @Html.TextBoxFor(model => model.Uid, new { style = "margin-left:15px" })
+                    @Html.ValidationMessageFor(model => model.Uid)
+                    </div>
+
+                    <div class="editor-label">
+                        <br />
+                        @Html.LabelFor(model => model.sTitle)
+                    
+                       @Html.TextBoxFor(model => model.sTitle, new { style = "width:99.7%;margin-left:15px;" })
+                       @Html.ValidationMessageFor(model => model.sTitle)
+                    </div>
+
+                    <div class="editor-label">
+                        <br />
+                        @Html.LabelFor(model => model.sContent)
+                    
+                        @Html.TextAreaFor(model => model.sContent, new { id = "sContent", style = " width:100%;margin-left:15px" })
+
+                        @Html.ValidationMessageFor(model => model.sContent)
+                    </div>
+
+                    <div class="editor-label">
+                        <br />
+                        @Html.LabelFor(model => model.ifShow)
+                     
+                        @Html.CheckBoxFor(model => model.ifShow.Value)
+                        @Html.ValidationMessageFor(model => model.ifShow)
+                    </div>
+                     <p>
+                        <input type="submit" value="修改" class="button" />
+                    </p>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("返回列表", "IndexSearch")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+ 
+    <script src=@Url.Content("~/Content/ueditor/ueditor.config.js")></script>
+    <script src=@Url.Content("~/Content/ueditor/ueditor.all.js")></script>
+
+    <link href=@Url.Content("~/Content/uploadify/uploadify.css") rel="stylesheet" />
+    <script src=@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.min.js")></script>
+
+    <script type="text/javascript">
+       
+
+        $(function () {
+
+            var op = {
+               // initialContent: '默认值。。。。。',　　//初始化编辑器的内容
+                minFrameHeight: 1024 　　　　　　　　　//设置默认高度
+            };
+            var editor = new baidu.editor.ui.Editor(op);
+            editor.render('sContent');
+
+            UE.getEditor('sContent'); //内容编辑器
+        });
+    </script>
+}

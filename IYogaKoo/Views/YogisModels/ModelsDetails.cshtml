@@ -1,0 +1,520 @@
+﻿@using IYogaKoo.ViewModel.Commons.Enums;
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="description" content="iyogakoo 爱瑜伽库，是汇聚世界的瑜伽爱好者，瑜伽行者的地方。 让我们用爱来接受自己，接受宇宙带给我们的能量。瑜伽是没有国界的。" />
+    <meta name="keywords" content="iyogakoo,爱瑜伽库，瑜伽，瑜伽习练者，瑜伽导师，瑜伽行者，瑜伽，Guru, yoga teacher" />
+    <title>Iyogakoo 爱瑜伽库， 世界瑜伽人之家。</title>
+    <link rel="shortcut icon" href="/Content/Front/images/2.ico.png" />
+    <link type="text/css" href="/Content/Front/css/indexnew.css" rel="stylesheet" />
+    <script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/indexnew.js"></script>
+    <script type="text/javascript" src="/Content/Front/js/jquery.SuperSlide.js"></script>
+    <script type="text/javascript" src="~/Content/Front/js/jquery.qqFace.js"></script>
+    <script type="text/javascript" src="~/Content/jquery/ExistisUpdate.js"></script>
+    <style>
+        .lb_index_top_right_ul li a {
+            line-height: 80px;
+            color: #336765;
+            font-size: 16px;
+            padding: 0px 5px;
+        }
+
+        .lb_li_idnex_hide li a {
+            line-height: 30px;
+        }
+
+        .lb_index_top_right {
+            width: 265px;
+            height: 40px;
+            float: right;
+        }
+
+        .lb_myindex_wz_hd_left_ul {
+            height: 100px;
+            position: relative;
+        }
+
+            .lb_myindex_wz_hd_left_ul a {
+                position: absolute;
+                z-index: 1111;
+                bottom: 5px;
+                right: 0px;
+                cursor: pointer;
+            }
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.lb_myindex_wz_hd_left_ul a').click(function () {
+                var h = $('.lb_myindex_wz_hd_left_ul').height();
+                if (h == 100) {
+                    $('.lb_myindex_wz_hd_left_ul').css('height', 'auto')
+                    $(this).html(" ");
+                    $(this).html("<img src='/Content/Front/images/iconfont-icon2.png' />");
+                }
+                if (h != 100) {
+                    $('.lb_myindex_wz_hd_left_ul').css('min-height', '100px')
+                    $(this).html("<img src='/Content/Front/images/iconfont-icon.png' />");
+                }
+
+            })
+        })
+    </script>
+    <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+    <style type="text/css">
+        #preview {
+            position: absolute;
+            border: 0px;
+            background: #333;
+            padding: 5px;
+            display: none;
+            color: #fff;
+        }
+    </style>
+
+    <link href="@Url.Content("~/Content/uploadify/uploadify.css")" rel="stylesheet" />
+    <script type="text/javascript" src="@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+    <script type="text/javascript">
+
+        $(function () {
+
+            //点击查看相册
+            //判断是否登录
+            var l = "false";
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                l = "true";
+            }
+
+            $("#divmyphoto a").QQPhoto({
+                url: "/Controllers/ashxFile/GetMyselfImg.ashx?id=" + @ViewBag.id + "&imgid=",                 //获取相册列表数据的URL地址 需要返回 JSON 格式，请参考文件 data.json 格式来输出
+                commentURL: '@Url.Content("~/Controllers/ashxFile/ImgComment.ashx")',            //提交评论 Ajax 发送到 服务器端的地址   返回 JSON 格式，请参考文件 comment.json 格式来输出
+                fix: 5,                           //表示相册列表左右间距的距离                 默认 5
+                minTextLen: 3,                    //发送评论时 表单验证，最少不能少于的字符    默认三个字符
+                maxTextLen: 140,                  //发送评论时 表单验证，最多不能少于的字符    默认140个字符
+                fadeIn: false,                     //图片默认是否开启淡入效果，默认为 false
+                lazyload: '@Url.Content("~/Content/Front/css/QQPhoto/images/lazyload.gif")',   //默认lazyload的图片，默认为1px.gif 透明图片
+                loadding: '@Url.Content("~/Content/Front/css/QQPhoto/images/loading.gif")',    //loading.gif 的文件路径
+                islogin: l
+            });
+
+
+            //显示上传图片控件
+            $("#upordowndiv a").click(function () {
+                $("#tab1").toggle();
+            });
+            $('#emotion').qqFace({
+                id: 'facebox', //表情盒子的ID
+                assign: 'sContent2', //给那个控件赋值
+                path: 'face/'	//表情存放的路径
+            });
+
+            $('#idrec').qqFace({
+                id: 'facebox', //表情盒子的ID
+                assign: 'sContent', //给那个控件赋值
+                path: 'face/'	//表情存放的路径
+            });
+            
+        });
+        //查看结果
+        function replace_em(str) {
+            str = str.replace(/\</g, '&lt;');
+            str = str.replace(/\>/g, '&gt;');
+            str = str.replace(/\n/g, '<br/>');
+            str = str.replace(/\[em_([0-9]*)\]/g, ' <img src="../../Content/Front/js/face/$1.gif" border="0" />');
+            return str;
+        }
+        $(function () {
+            //字符长度判断
+            var counter = $("#sContent2").val().length; //获取文本域的字符串长度
+            $(".lb_School_textarea_div_right #amsg").text(500 - counter);
+
+            $("#sContent2").keyup(function () {
+                var text = $(this).val();
+                var counter = text.length;
+                if (counter > 500) {
+                    $(this).val($(this).val().substr(0, 500));
+                }
+                counter = $(this).val().length;
+                $(".lb_School_textarea_div_right #amsg").text(500 - counter);    //每次减去字符长度
+            });
+            //推荐 //的字符长度判断
+            var counter = $("#sContent").val().length; //获取文本域的字符串长度
+            $(".lb_School_textarea_div_right #arec").text(500 - counter);
+
+            $("#sContent").keyup(function () {
+                var text = $(this).val();
+                var counter = text.length;
+                if (counter > 500) {
+                    $(this).val($(this).val().substr(0, 500));
+                }
+                counter = $(this).val().length;
+                $(".lb_School_textarea_div_right #arec").text(500 - counter);    //每次减去字符长度
+            });
+            //晒图放大效果
+            imagePreview();
+        });
+    </script>
+    
+     
+     
+    
+</head>
+<body>
+    <form>
+        <div class="lb_index">
+            <div class="lb_index_top">
+                <div class="lb_index_top_left">
+                    <a href="/home/Index">
+                        <img src="/Content/Front/images/logo00.png" />
+                    </a>
+                </div>
+                <div style="width:685px;height:70px;margin:1px; margin-top:11px; float:left" class="lb_index_scarh_class">
+                  		<ul style="margin:0px">
+                        	<li class="li1">
+                            	<a href="javascript:;"></a>
+                             </li>
+                            <li class="li2">
+							<a href="javascript:;"></a>
+							</li>
+                            <li class="li3">
+                            	<a href="javascript:;"></a>
+                            </li>
+                            <li class="li4" style="width:170px">
+                            	<a href="javascript:;"></a>
+                            </li>
+                        </ul>
+                  </div>
+                <div class="lb_index_top_right">
+                    <div class="lb_index_top_right_ul">
+                        <ul>
+                            @{
+                                if (ViewBag.user.Uid != 0)
+                                {
+                                    int uid = ViewBag.user.Uid;
+                                    if (ViewBag.user.UserType == (int)UserType.瑜伽会员)
+                                    {
+                                        <li>
+                                            <a href="/YogaUserDetail/UserDetailEdit/@uid" class="lb_ron">@(ViewBag.user.NickName == null ? "" : ViewBag.user.NickName)</a>
+                                        </li>
+                                        <li><a id="sjds" onclick="Javascript: window.open('/Home/ApplyTeachAgreement');" href="/Home/ApplyTeachAgreement">升级导师</a></li>
+                                        <li class="lb_li_index">
+                                            <a>
+                                                <img src="~/Content/Front/images/shezhi.png" alt="s" />
+                                            </a>
+                                            <div class="lb_li_idnex_hide">
+                                                <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                                <ul>
+                                                    <li><a href="/Login/UserDetailEdit">个人信息</a></li>
+                                                    <li><a href="/Login/UpdatePwd">安全设置</a></li>
+                                                    <li><a href="/YogaUserDetail/LevelAuthentication">级别认证</a></li>
+                                                    <li><a href="/YogaUserDetail/PrivacySettings">隐私设置</a></li>
+                                                    @*<li><a>帮助中心</a></li>*@
+                                                    <li style="border-top:1px solid #65c3a5"><a id="exit" href="/home/Exitlogin">退出</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <a href="/YogisModels/Edit/@uid" class="lb_ron">@(ViewBag.user.NickName == null ? "" : ViewBag.user.NickName)</a>
+                                        </li>
+                                        <li>
+                                            <a>
+                                                @{if (ViewBag.level != null)
+                                                {
+                                                    var YogisLevel = ViewBag.level;
+                                                    if (YogisLevel == 0)
+                                                    {
+                                                        @:未定级
+                                                                    }
+                                                    if (YogisLevel == 1)
+                                                    {
+                                                        @:初级
+                                                                      }
+                                                    if (YogisLevel == 2)
+                                                    {
+                                                        @:中级
+                                                                     }
+                                                    if (YogisLevel == 3)
+                                                    {
+                                                        @:高级
+                                                                    }
+                                                    if (YogisLevel == 4)
+                                                    {
+                                                        @:大师
+                                                                    }
+                                                }
+                                                }
+                                            </a>
+                                        </li>
+                                        <li class="lb_li_index">
+                                            <a>
+                                                <img src="~/Content/Front/images/shezhi.png" alt="s" />
+                                            </a>
+                                            <div class="lb_li_idnex_hide">
+                                                <img src="~/Content/Front/images/shehi1.png" alt="" />
+                                                <ul>
+                                                    <li><a href="/Login/Edit">个人信息</a></li>
+                                                    <li><a href="/Login/UpdatePwd">安全设置</a></li>
+                                                    <li><a href="/YogisModels/LevelAuthentication">级别认证</a></li>
+                                                    <li><a href="#">隐私设置</a></li>
+                                                    <li><a href="#">帮助中心</a></li>
+                                                    <li style="border-top:1px solid #ccc"><a id="exit" href="/home/Exitlogin">退出</a></li>
+                                                </ul>
+                                            </div>
+                                        </li>
+
+
+                                    }
+
+                                    <li><input type="hidden" id="hiduid" value="@uid" /></li>
+                                }
+                                else
+                                {
+                                    <li>
+                                        <a href="/Login/Register" class="zh" onclick="getreg();">注册</a>·
+                                        <a href="/Login/Login" class="login">登录</a>·
+                                    </li>
+                                }
+                            }
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lb_School_index" style="background: #fff">
+                <div class="lb_School_index_top">
+                    <div class="lb_School_index_top_index">
+                        <b>您所在位置：</b><span>瑜伽导师个人主页</span>
+                    </div>
+                </div>
+                @{
+                    IYogaKoo.Controllers.YogisModelsController yo = new IYogaKoo.Controllers.YogisModelsController();
+
+                    var obj = yo.ModelsDetails(ViewBag.user.Uid);
+
+                    var strImg = "/Content/Front/images/my.png";
+                    if (!string.IsNullOrEmpty(obj.Model.CoverImg))
+                    {
+                        strImg = obj.Model.CoverImg.Split(',')[0];
+                    }
+
+                }
+                <div class="lb_myindex" style="background: url(@strImg) no-repeat; background-size:100% 100%">
+                    <div class="lb_myindex_div">
+                        <div class="lb_myindex_div_left">
+                            <div class="lb_myindex_div_left_top">
+                                @{
+
+                                    string drscr = null;
+
+                                    if (!string.IsNullOrEmpty(obj.Model.DisplayImg))
+                                    {
+                                        drscr = obj.Model.DisplayImg;
+
+                                        if (drscr.IndexOf(';') != -1)
+                                        {
+                                            var str = drscr.Split(';');
+                                            if (str.Length > 1)
+                                            {
+                                                if (!string.IsNullOrEmpty(str[1]))
+                                                {
+                                                    drscr = str[1];
+                                                }
+                                                else
+                                                {
+                                                    drscr = str[0];
+                                                }
+                                            }
+                                            else
+                                            {
+                                                drscr = str[0];
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        drscr = "/Content/Front/images/defaultImg.png";
+                                    }
+                                }
+                                <img src="@drscr" />
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div class="lb_index_gulu" style="width:1150px; margin:0px auto">
+                    <div class="lb_myindex_div_left_center lb_myindex_div_left_center_gu">
+                        <ul>
+                            <li>
+                                @obj.ViewBag.NickName
+
+                                @{
+                                    string rscr = null;
+                                    if (obj.Model.Gender == 0)
+                                    {
+                                        rscr = "/Content/Front/images/women.png";
+                                    }
+                                    else
+                                    {
+                                        rscr = "/Content/Front/images/men.png";
+                                    }
+                                }
+                                <img src="@rscr" />
+                                @if (ViewBag.isfollow == false && ViewBag.user.Uid != ViewBag.strUid)
+                                {
+                                    <a id="flowuid" onclick="flowuid('@ViewBag.strUid')">
+                                        +关注
+                                    </a>
+                                }
+                                else if (ViewBag.isfollow == true)
+                                {
+                                    <a id="flowuid" onclick="flowuid('@ViewBag.strUid')">
+                                        @*<input type="button" value="已关注" class="input2" />*@
+                                        已关注
+                                    </a>
+                                }
+                                <input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+                            </li>
+
+                            <li>
+                                级别：
+                                @{
+                                    if (obj.Model.YogisLevel == 1)
+                                    {
+                                        @:初级
+                                        }
+                                    if (obj.Model.YogisLevel == 2)
+                                    {
+                                        @:中级
+                                         }
+                                    if (obj.Model.YogisLevel == 3)
+                                    {
+                                        @:高级
+                                        }
+                                    if (obj.Model.YogisLevel == 4)
+                                    {
+                                        @:大师
+                                        }
+                                }
+                            </li>
+                            <li>
+                                流派：@obj.ViewBag.YogaTypeid
+                            </li>
+                            <li>
+                                位置：  @obj.ViewBag.AddRessName  @obj.Model.GudWords
+                            </li>
+                        </ul>
+                    </div>
+                    
+                </div>
+
+
+                <div class="lb_gr_index">
+                    <div class="lb_gr_index_top">
+                        <ul>
+                            <li><a class="on" href="/tWriteLog/logIndex">我的日志</a></li>
+                            <li><a class="" href="/YogaPic/WebIndex?">我的相册</a></li>
+                            <li><a>我的活动</a></li>
+                            <li><a>我的瑜伽圈</a></li>
+                        </ul>
+                    </div>
+                    <div class="lb_gr_idnex_center">
+                        <div class="lb_gr_idnex_center_rizhi" style="display: block;">
+                            <div class="lb_gr_idnex_center_rizhi_left" style="width:1200px">
+                                <div class="lb_gr_idnex_center_rizhi_left_l">
+                                    <div class="lb_gr_idnex_center_rizhi_left_l_t">
+                                        <ul>
+                                            <li>
+                                                <b>@obj.ViewBag.iCount</b>
+                                                <p>关注</p>
+                                            </li>
+                                            <li>
+                                                <b>
+                                                    @{
+                                                    string fcount = null;
+                                                    if (obj.ViewBag.FCount == null)
+                                                    {
+                                                        fcount = "0";
+                                                    }
+                                                    else
+                                                    {
+                                                        fcount = obj.ViewBag.FCount.ToString();
+                                                    }
+                                                }
+                                                @fcount
+                                            </b>
+                                            <p>粉丝</p>
+                                        </li>
+                                        <li style="border:0px">
+                                            <b>@obj.ViewBag.tzancount</b>
+                                            <p>人气</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="lb_gr_idnex_center_rizhi_left_l_b">
+                                    <ul>
+                                        <li class="on"><a href="/YogisModels/Edit/@ViewBag.user.Uid">个人信息</a></li>
+                                        @*<li class="on">级别信息</li>*@
+                                        <li>
+                                            信息管理
+                                            <ul>
+                                                <li>我的留言</li>
+                                                <li>我的评论</li>
+                                                <li>我的点评</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="lb_gr_idnex_center_rizhi_left_r" style="width:1050px; float:left">
+                                  @RenderBody()
+                            @RenderSection("scripts", false)
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="lb_gr_idnex_center_rizhi" style="display: none;">
+                        <div class="lb_gr_xc_left">
+                            <ul>
+                                <li class="on"><a class="a1">习练图片<span>123</span></a></li>
+                                <li class=""><a class="a2">日志图片<span>123</span></a></li>
+                                <li class=""><a class="a3">人气图片<span>123</span></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                    <div class="lb_gr_idnex_center_rizhi" style="display: none;">
+                        <div class="lb_gr_xc_left">
+                            <ul>
+                                <li class="on"><a class="a1">我发起的活动<span>123</span></a></li>
+                                <li class=""><a class="a2">我参加的活动<span>123</span></a></li>
+                                <li class=""><a class="a3">感兴趣的活动<span>123</span></a></li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+            
+         
+        </div>
+ 
+</form>
+</body>
+</html>

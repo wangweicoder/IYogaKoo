@@ -1,0 +1,104 @@
+﻿@using Webdiyer.WebControls.Mvc
+@using IYogaKoo.ViewModel
+@model    Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewSearchGroup>
+
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="lb_index">
+    <div class="lb_School_index" style="">
+        <div class="lb_School_index_top">
+            <div class="lb_School_index_top_index">
+                <b>您所在位置：</b><span>精确搜索页</span>
+            </div>
+        </div>
+    </div>
+</div>
+ 
+<div id="anchorTag">
+    @if (!String.IsNullOrEmpty(ViewBag.NoMessage))
+    {
+        <div style="height:400px;"><span>@ViewBag.NoMessage </span></div>
+    }
+    else
+    {
+        using (Html.BeginForm("Index", "Home", FormMethod.Post, new { id = "searchForm" }))
+        {
+        <div class="lb_lb_School_zhuti">
+            <b>搜索分类：</b>
+            <ul>
+                @{
+            string[] tempAll = ViewBag.SearchType.Split('|');
+            string[] temptpe = null;
+        <li tid="0" class="on">全部</li>
+            for (int i = 0; i < tempAll.Length; i++)
+            {
+                if (!String.IsNullOrEmpty(tempAll[i]))
+                {
+                    temptpe = tempAll[i].Split(',');
+                <li tid="@temptpe[0]">@temptpe[1]</li>
+                }
+            }
+                }
+            </ul>
+            <input type="hidden" id="hid_strwhere" name="hid_strwhere" value="@ViewBag.strWhere" />
+            <input type="hidden" id="hid_pagerorcondition" name="hid_pagerorcondition" />
+            <input type="hidden" id="hid_searchtype" name="hid_searchtype" />
+           
+        </div>
+        <div class="lb_search_index">
+            <div class="lb_search_index_top">
+                <p>爱瑜伽•酷为您找到与 “<a>@ViewBag.strWhere</a>”相关结果约 <a id="ac"></a> 条</p>
+            </div>
+        </div>
+            <div id="loadingDiv" style="display:none"><h3>正在加载数据，请稍候...</h3></div>
+        <div class="container" style="background-color:white">
+           
+            <div id="Content">
+              
+                @Html.Partial("_ArticleList", Model)
+            </div>
+        </div>
+        }
+    }
+</div>
+@section styles{
+    <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" /> 
+} 
+@section scripts {
+
+    <script src=@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")></script>
+
+    <script type="text/javascript">
+        $(function () {
+          
+            //分类
+            $(".lb_lb_School_zhuti ul li").click(function () {
+               
+                $("#hid_pagerorcondition").val("condition");
+                var typeid = $(this).attr("tid");
+                $("#hid_searchtype").val(typeid);
+                $(this).addClass("on").siblings().removeClass("on");                
+                $("#searchForm").submit();
+            });
+
+        });
+
+        function sethidevalue(obj,hid)
+        {
+            $(obj).addClass("on").siblings().removeClass("on");
+            var tid = $(obj).attr("tid");  
+            $("#" + hid).val(tid);
+            $("#searchForm").submit();
+        }
+
+        function pagelocation()
+        {
+            $("#Content").fadeIn("slow");
+            $("html,body").stop(true); $("html,body").animate({ scrollTop: $("#anchorTag").offset().top }, 100);
+        }
+    </script>
+    @{Html.RegisterMvcPagerScriptResource();}
+} 

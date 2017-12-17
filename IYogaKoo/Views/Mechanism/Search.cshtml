@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+<div class="lb_search_index_top">
+    <p>您好！您目前在 @ViewBag.Title 搜索关键字“<a>@ViewBag.urlContent</a>”，共找到<a id="ac">@ViewBag.Count</a>条内容</p>
+</div>
+<div class="container">
+    <input type="hidden" id="hidiType" name="hidiType" value="@ViewBag.iType" /> 
+    <input type="hidden" id="hidType" name="hidType" value="@ViewBag.type" /> 
+    <div id="Content">
+        @if (ViewBag.listGroup != null)
+        {
+            foreach (var entity in ViewBag.listGroup)
+            {
+        <div class="lb_School_index_info_right_hg_dsjj_b2">
+            <div class="lb_School_index_info_right_hg_dsjj_b_left2"> 
+                    @{
+                var hreftemp = "";
+                if (ViewBag.iType == "2")
+                {
+                    hreftemp = "/Mechanism/SchoolDetails/" + entity.CenterId;
+                }
+                else
+                {
+                    hreftemp = "/Mechanism/Details/" + entity.CenterId;
+                }
+                var prsrc = @entity.CenterPortraint == null ? "/Content/Front/images/defaultimg/centerlogo.png" : @entity.CenterPortraint;
+                    }
+                <a href="@hreftemp" target="_blank">
+                    <img src="@prsrc" />
+                </a>
+                <div class="lb_School_index_info_hg_hide2">
+                    <div class="lb_School_index_info_hg_hide_le2">
+                        <p>@entity.CenterName</p>
+                    </div>                    
+                </div>
+            </div>
+            <div class="lb_School_index_info_right_hg_dsjj_b_right2">
+                @Html.Raw(entity.CenterProfile)
+            </div>
+        </div>
+            }
+            }
+    </div>
+</div>

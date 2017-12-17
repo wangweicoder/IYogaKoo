@@ -1,0 +1,95 @@
+﻿@model IYogaKoo.ViewModel.ViewtWriteLog
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_LayoutSetUp.cshtml";
+}
+
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")"></script>
+<div class="lb_rizi">
+    <h2>修改日志</h2>
+</div>
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="editor-label">
+            操作人：
+        </div>
+        <div class="editor-field">
+            @ViewBag.Name
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sTitle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.sTitle)
+            @Html.ValidationMessageFor(model => model.sTitle)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sContent)
+        </div>
+        <div class="editor-field">
+            @Html.TextAreaFor(model => model.sContent, new { id = "editor", style = "height:200px; width:645px;margin-left:15px" })
+            @Html.ValidationMessageFor(model => model.sContent)
+            <input type="hidden" id="hsContent" name="hsContent" value="" />
+        </div>
+
+        @*<div class="editor-label">
+            @Html.LabelFor(model => model.ifShow)
+        </div>
+        <div class="editor-field">
+            <input type="checkbox" id="ifShow" name="ifShow" checked="" /> 
+        </div>*@
+         <div class="editor-label">&nbsp;</div>
+         <div class="editor-field">
+            <input type="submit" value="确认" id="idsubmit" />
+          <div class="lb_return">
+          @Html.ActionLink("返回", "Index")
+            </div>
+           </div>
+    </fieldset>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+<script src="@Url.Content("~/Content/ueditor/ueditor.config.js")"></script>
+<script src="@Url.Content("~/Content/ueditor/ueditor.all.js" )"></script>
+<script type="text/javascript">
+    $(function () {
+        UE.getEditor('editor'); //内容编辑器
+    });
+    $('#idsubmit').click(function () {
+
+        var data = $("form").serialize();
+
+        $.ajax({
+            url: '/tWriteLog/Edit?t=' + Math.random(),
+            type: 'POST',
+            data: data,
+            success: function (data) {
+
+                if (data.code == 0) {
+                    window.location = '/tWriteLog/Index';
+                } else {
+                    layer.msg("修改失败！");
+                }
+
+            }, error: function () {
+                layer.msg("修改失败！");
+
+            }
+        });
+        return false;
+    });
+</script>
+}

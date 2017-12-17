@@ -1,0 +1,201 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewLogsMessages>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/ModelsDetails2.cshtml";
+}
+<link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+<style type="text/css">
+    #messagetopdiv {
+        height: 46px;
+        border: 1px solid #e7eded;
+    }
+
+        #messagetopdiv div {
+            float: left;
+            width: 50%;
+            height: 44px;
+            line-height: 44px;
+            text-align: center;
+            font-weight: 300;   
+            position:relative;         
+        }
+            #messagetopdiv div span {
+                position:absolute;
+                display: block;
+                background: url('../../Content/Front/images/xiaojiao.png') no-repeat;
+                width: 19px;
+                height: 11px;
+                bottom:-3px;
+                right:250px;
+            }
+    .messagemiddlediv {
+        height: auto;
+        border: 1px solid #e7eded;
+        margin: 8px 0;
+        padding: 5px;
+        overflow: hidden;
+        color: #585858;
+        position: relative;
+    }
+
+    .logdiv {
+        float: left;
+        width: 100%;
+        margin: 15px 0px;
+        padding: 0 12px;
+    }
+
+    .messagemiddlediv .middleimg {
+        width: 120px;
+        float: left;
+    }
+
+    .titleline p {
+        font-size: 14px;
+        line-height: 35px;
+    }
+
+        .titleline p.content {
+            font-size: 13px;
+            line-height: 25px;
+            padding: 0 8px 0 3px;
+        }
+
+    .divmessage {
+        float: left;
+        width: 100%;
+        margin: 5px 0;
+        padding: 0 12px;
+        display: none;
+    }
+
+        .divmessage div.div_content {
+            margin-left: 60px;
+            width: 510px;
+            display: none;
+        }
+
+    .div_content textarea {
+       width:500px; height:60px;
+        margin-top: 5px;
+        border: 1px solid #D4EFE6;
+        background: #EDFCF7;
+    }
+
+    .div_content input {
+        width: 70px;
+        height: 25px;
+        background: #65C3A5;
+        color: #fff;
+        font-size: 14px;
+        float: right;
+        border: 0px;
+        margin-right: 20px;
+        margin-top: 10px;
+        margin-bottom: 15px;
+        cursor: pointer;
+    }
+
+    .divmessage2 {
+        float: left;
+        width: 100%;
+        margin: 7px 0 7px 55px;
+        display: none;
+    }
+
+    .messagemiddlediv .messageimg {
+        width: 60px;
+        float: left;
+    }
+
+    .messageline {
+        
+    }
+
+        .messageline p { 
+            font-size: 14px;
+            height:25px;
+            line-height: 25px;
+            display:block;
+        }
+          .messageline p a{float:left;}
+
+            .messageline p.time {
+                font-size: 12px;
+            }
+
+                .messageline p.time a {
+                    margin-left:30px;
+                    color: #65c3a5;
+                }
+
+    .mesvisible {
+        display: block;
+    }
+
+    .mesvisiblemore {
+        display: block;
+    }
+
+    .zkimg {
+        position: absolute;
+        bottom: 17px;
+        left: 330px;
+        z-index: 999;
+        cursor: pointer;
+    }
+
+    .messagemiddlediv .delmessage {
+        margin-left: 20px;
+        float: left;
+        display: block;
+        cursor: pointer;
+        display: none;
+    }
+</style>
+<div style="width:100%; padding-top:30px;">
+    <div id="messagetopdiv">
+        <div> <a href="/Message/MyMessage?iType=0">我收到的评论</a></div>
+        <div> <a href="/Message/MyMessage?iType=1">我发出的评论</a></div>
+    </div>
+    <div id="mydiv2">
+        @Html.Partial("PartialMsg", Model)
+    </div>
+
+</div>
+<input type="hidden" id="uid" value="@ViewBag.uid">
+<input type="hidden" id="delif" value="@ViewBag.delif">
+<input type="hidden" id="mydisplayimg" value="@ViewBag.DisplayImg">
+<input type="hidden" id="myurl" value="@ViewBag.url">
+<input type="hidden" id="myname" value="@ViewBag.currentname">
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //设置展开与显示
+        $("#lb_gr_idnex_center_rizhi_left_l_b_xlz ul li").click(function () {
+            $("#lb_gr_idnex_center_rizhi_left_l_b_xlz ul li ul").toggle();
+        });
+        //设置选中颜色
+        var itype=@ViewBag.iType;
+        $("#lb_gr_idnex_center_rizhi_left_l_b_xlz ul li ul li:eq("+itype+")").css("background-color","#f2f2f2");
+        //收到评论和发布的评论切换样式
+        var delif=@ViewBag.delif;
+        $("#messagetopdiv div:eq("+delif+")").append("<span></span>");
+
+    });
+
+
+    function zk(id)
+    {
+        var divid="#div_content"+id;
+        $(divid).toggle();
+        var textid="#div_text"+id;
+        $(textid).focus();
+    }
+
+
+</script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+@{Html.RegisterMvcPagerScriptResource();}

@@ -1,0 +1,228 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaPicture
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+<link href="~/Content/Back/BackPicCss.css" rel="stylesheet" />
+<fieldset>
+    <div class="content-box" id="">
+
+        <div class="content-box-header">
+
+            <h3 style="cursor:pointer">审核</h3>
+           
+            <div class="clear"></div>
+
+        </div>
+
+        <div class="content-box-content">
+            <div class="tab-content default-tab" id="tab1">
+                <input type="hidden" id="Uid" name="Uid" value="@ViewBag.picInfo.Uid" />
+                <div class=" display-label">
+                    用户名：
+
+                    @ViewBag.Name
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    相册： 
+
+                    @Html.DropDownList("FName", ViewData["FName"] as SelectList) 
+
+                    <a href="Javascript:SerchPicDetails()">查询审核结果</a>
+
+                    @if (ViewBag.picInfo != null)
+                    {
+                        if (ViewBag.picInfo.iAudio == 1)
+                        {
+                            @:审核通过
+                         }
+                        else if (ViewBag.picInfo.iAudio == 2)
+                        {
+                            @:审核不通过
+                         }
+                        else
+                        {
+                            @:审核中
+                         }
+                    }
+
+
+                </div>
+
+                <ul>
+                    @{
+                        List<IYogaKoo.ViewModel.ViewYogaPicture> list = ViewBag.list;
+                        if (list.Count != null)
+                        {
+                            var aNums="";
+                            var bNums = "";
+                            
+                            for (int i = 0; i < list.Count; i++)
+                            {
+                                aNums ="a"+ list[i].Pid;
+                                bNums ="b"+ list[i].Pid;
+                                <li> 
+                                    <input type="checkbox" name="chkDel" alt="删除" value="@list[i].Pid" />
+                                    <img src='@list[i].PictureOriginal' width="300" height="150" />
+                                    <a href="javascript:void(0);" onclick="delImg('@list[i].Pid','@list[i].PictureOriginal');">删除</a>
+                                    <span>描述：
+                                    <label id="@aNums"> @list[i].PictureContent</label>
+                                        <label style=" cursor:pointer; color:blue;" onclick="ShowContent(this,'@list[i].Pid')">编辑</label>
+                                    <input style=" display:none;" type="text" id="@list[i].Pid" value="@list[i].PictureContent" />
+                                    <label style=" cursor:pointer; display:none;color:blue;" id="@bNums" onclick="Javascript:PictureContentEdit('@list[i].Pid')">确定</label></span>
+                                     
+                                </li>
+
+                            }
+                        }
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="lb_shjg">
+            <p>
+                <a href="Javascript:AudioState('@ViewBag.picInfo.Uid','1')">审核通过</a>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <a href="Javascript:AudioState('@ViewBag.picInfo.Uid','2')">审核不通过</a>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <a onclick="setValueAll();" style=" cursor:pointer;" >删除</a>
+                <input type="hidden" id="btnDel" name="btnDel" value="" />
+            </p>
+        </div>
+
+        <input type="hidden" id="Uid" name="UId" value="@ViewBag.Uid" />
+    </div>
+</fieldset>
+
+<script type="text/javascript">
+    // 显示 隐藏
+    function ShowContent(t, pid) {
+        $(t).hide();
+        $("#a" + pid).hide();
+
+        $("#b" + pid).show();
+        $("#" + pid).show();
+    }
+    //修改描述
+
+    function PictureContentEdit(pid) {
+       
+        var PictureContent = $("#" + pid).val();
+        $.ajax({
+            url: '/YogaPicture/PictureContentEdit',
+            type: 'POST',
+            data: {
+                Pid:pid,
+                PictureContent: PictureContent
+            },
+            success: function (data) {
+
+                if (data.code == 0) {
+                    //alert("审核成功！");
+                    // location.href = "/YogaPicture/Details/" + $("#Uid").val() + "&CreateTime=" + @ViewBag.CreateTime;
+                    window.location = window.location.href;
+                } else {
+                    alert("修改失败！");
+                }
+
+            }, error: function () {
+                alert("修改失败！");
+            }
+        });
+    }
+    //多选
+    function setValueAll() {
+        var strvalue = ""; 
+        $("input[name='chkDel']:checked").each(function () {
+            // alert(this.value); alert(this.alt);
+            strvalue += this.value + ","; 
+        });
+        
+        $.ajax({
+            url: '/YogaPicture/Deleteids',
+            type: 'POST',
+            data: {
+                ids: strvalue
+            },
+            success: function (data) {
+                 
+                if (data.code == 0) {
+                    //alert("审核成功！");
+                    // location.href = "/YogaPicture/Details/" + $("#Uid").val() + "&CreateTime=" + @ViewBag.CreateTime;
+                    window.location = window.location.href;
+                } else {
+                    alert("删除失败！");
+                }
+
+            }, error: function () {
+                alert("删除失败！");
+            }
+        });
+    }
+
+    //删除图片
+    function delImg(Pid, PictureOriginal) {
+        if (confirm("确认删除该图片吗？")) {
+
+            $.ajax({
+                url: '/YogaPicture/Delete',
+                type: 'POST',
+                data: {
+                    id: Pid,
+                    PictureOriginal: PictureOriginal
+                },
+                success: function (data) {
+                 
+                    if (data.code == 0) {
+                        //alert("审核成功！");
+                        // location.href = "/YogaPicture/Details/" + $("#Uid").val();
+                        window.location = window.location.href;
+                    } else {
+                        alert("删除失败！");
+                    }
+
+                }, error: function () {
+                    alert("删除失败！");
+                }
+            });
+        }
+    }
+
+    
+    function SerchPicDetails() {
+       
+        if ($("#FName").val().trim() != '') {
+
+            window.location.href = '/YogaPicture/Details?id=' + $("#Uid").val() + "&FName=" + $("#FName").val()
+ 
+        } else {
+            alert('请选择要查询的相册');
+        }
+    }
+function AudioState(id, iAudio) {
+
+        if (confirm("确认审核?")) {
+            $.ajax({
+                url: '/YogaPicture/AudioState?t=' + Math.random(),
+                type: 'POST',
+                data: {
+                    Uid: id,
+                    iAudio: iAudio,
+                    FName: $("#FName").val(),
+                    CreateTime:'@ViewBag.CreateTime'
+                },
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        alert("审核成功！");
+                        location.href = "/Manage/YogaPicture/IndexSearch";
+                    } else {
+                        alert("审核失败！");
+                    }
+
+                }, error: function () {
+                    alert("审核失败！");
+                }
+            });
+        } 
+    }
+</script>

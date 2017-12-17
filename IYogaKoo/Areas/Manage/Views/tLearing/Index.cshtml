@@ -1,0 +1,164 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewtLearing>
+
+@{
+   // Layout = null;
+}
+
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">社区</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <table>
+                <tr> 
+                    <th>
+                        昵称
+                    </th>
+                    <th>
+                        标题
+                    </th>
+                    <th>
+                        类型
+                    </th>
+                    <th>
+                        阅读量
+                    </th>
+                    <th>
+                        推荐(赞)
+                    </th>
+                    <th>
+                        评论量
+                    </th>
+                    <th>
+                        创建时间
+                    </th>
+                    <th></th>
+                </tr>
+
+                @{
+                    var index = 1;
+                    if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+                    {
+                        var p = int.Parse(Request.QueryString["page"]) - 1;
+                        if (p > 0)
+                        {
+                            index = p * 10 + 1;
+                        }
+                    }
+                }
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.NickName
+                        </td>
+                        <td>
+                            @item.sTitle
+                        </td>
+                        <td>
+                            @item.TypeValue
+                        </td>
+                        <td> 
+                           @item.iReadNums
+                        </td>
+                        <td>
+                            @item.iZanNums
+                        </td>
+                        <td>
+                            @item.iWritelogNums
+                        </td>
+                        <td>
+                            @item.CreateDate
+                        </td>
+                        <td style="position:relative; display:block" id="td">
+                           
+                            @Html.ActionLink("修改", "Edit", new { id = item.ID, iType = 0 })|
+                            @Html.ActionLink("详情", "Details", new { id = item.ID,iType=0 })|
+                            <a href="Javascript:DaoShiDel('@item.ID')">删除</a>
+                            
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>
+
+<script type="text/javascript">
+
+    function DaoShiDel(id) {
+        if (confirm("是否删除!")) {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("Delete", "tLearing")',
+                datatype: 'json',
+                data: {
+                    id: id,
+                    iType: 0
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        alert('删除成功！');
+                        window.location.href = window.location.href;
+                    } else {
+                        alert('删除失败！');
+                    }
+                }
+            })
+        }
+    }
+ 
+</script>
+<style>
+    .lb_back_tuisong {
+        display: none;
+        margin-right: 12px;
+        width: 100px;
+        position: absolute;
+        z-index: 111;
+        top: 0px;
+        left: -85px;
+    }
+
+        .lb_back_tuisong div {
+            background: #e5e5e5;
+            width: 90px;
+            padding: 1px 0px;
+        }
+
+        .lb_back_tuisong p {
+            text-align: center;
+            margin: 10px 0px;
+            padding: 0px;
+        }
+
+            .lb_back_tuisong p a {
+                color: #000;
+            }
+</style>

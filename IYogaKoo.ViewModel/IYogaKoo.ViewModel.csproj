@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{1CE6E4BD-4D2B-4E41-BDBD-58A273CA1AAB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IYogaKoo.ViewModel</RootNamespace>
+    <AssemblyName>IYogaKoo.ViewModel</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commons.Enums\Enums.cs" />
+    <Compile Include="Commons.Enums\UserLoginEnum.cs" />
+    <Compile Include="Commons.Models\DistrictModel.cs" />
+    <Compile Include="Commons.Helper\DataTableHelper.cs" />
+    <Compile Include="PageResult.cs" />
+    <Compile Include="Result.cs" />
+    <Compile Include="ViewClassDetail.cs" />
+    <Compile Include="ViewGroup\tKeyWordGroup.cs" />
+    <Compile Include="ViewtKeyWord.cs" />
+    <Compile Include="ViewtInstationInfo.cs" />
+    <Compile Include="ViewtUserLoginInfo.cs" />
+    <Compile Include="ViewGroup\ViewLogsMessages.cs" />
+    <Compile Include="ViewGroup\WlogImg.cs" />
+    <Compile Include="ViewLevelOrder.cs" />
+    <Compile Include="ViewtQuestion.cs" />
+    <Compile Include="ViewtSign.cs" />
+    <Compile Include="ViewCenterStare.cs" />
+    <Compile Include="ViewGroup\PicListGroup.cs" />
+    <Compile Include="ViewGroup\ViewClassGroup.cs" />
+    <Compile Include="ViewGroup\ViewDoyenGroup.cs" />
+    <Compile Include="ViewGroup\ViewSearchGroup.cs" />
+    <Compile Include="ViewGroup\ViewCentersGroup.cs" />
+    <Compile Include="ViewGroup\ViewEvaluatesGroup.cs" />
+    <Compile Include="ViewGroup\ViewtWriteLogGroup.cs" />
+    <Compile Include="ViewtLearing.cs" />
+    <Compile Include="ViewtWriteLog.cs" />
+    <Compile Include="ViewCartItem.cs" />
+    <Compile Include="ViewCenters.cs" />
+    <Compile Include="ViewClass.cs" />
+    <Compile Include="ViewClassFile.cs" />
+    <Compile Include="ViewClassReport.cs" />
+    <Compile Include="ViewClassTeacher.cs" />
+    <Compile Include="ViewClassTopic.cs" />
+    <Compile Include="ViewEvaluates.cs" />
+    <Compile Include="ViewGroup\ViewtMessageGroup.cs" />
+    <Compile Include="ViewGroup\ViewYogaPictureGroup.cs" />
+    <Compile Include="ViewtBanner.cs" />
+    <Compile Include="ViewtMessage.cs" />
+    <Compile Include="ViewFollow.cs" />
+    <Compile Include="ViewGroup\ViewBackUserModelsGroup.cs" />
+    <Compile Include="ViewGroup\ViewArticleClass.cs" />
+    <Compile Include="ViewGroup\ViewModelsUserGroup.cs" />
+    <Compile Include="ViewGroup\ViewFollowUserDetail.cs" />
+    <Compile Include="ViewGroup\ViewUserDetailGroup.cs" />
+    <Compile Include="ViewGroup\ViewUserEvaluatesGroup.cs" />
+    <Compile Include="ViewGroup\ViewUserModelsGroup.cs" />
+    <Compile Include="ViewInterestedClass.cs" />
+    <Compile Include="ViewOrder.cs" />
+    <Compile Include="ViewSpace.cs" />
+    <Compile Include="ViewtZanModels.cs" />
+    <Compile Include="ViewYogaArtClass.cs" />
+    <Compile Include="ViewYogaArticle.cs" />
+    <Compile Include="ViewYogaDicItem.cs" />
+    <Compile Include="ViewYogaMenus.cs" />
+    <Compile Include="ViewYogaPicture.cs" />
+    <Compile Include="ViewYogaUser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewYogiProfile.cs" />
+    <Compile Include="ViewYogisModels.cs" />
+    <Compile Include="ViewYogaUserDetail.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IYogaKoo.Entity\IYogaKoo.Entity.csproj">
+      <Project>{cb0d1b93-c5fc-4734-866e-b0326c80bbc9}</Project>
+      <Name>IYogaKoo.Entity</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

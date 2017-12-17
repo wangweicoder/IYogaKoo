@@ -1,0 +1,77 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaArticle
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">文章详情</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <fieldset>
+
+                <p class="display-label">
+                    类别名称：
+
+                    @ViewBag.ClassName
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.ArticleTitle)：
+                
+                    @Html.DisplayFor(model => model.ArticleTitle)
+                </p>
+
+                <p class="display-label">
+                    @Html.DisplayNameFor(model => model.ArticleCon)：
+
+                    <div class="display-field">
+                        @Html.Raw(Model.ArticleCon)
+                    </div>
+                </p>
+        
+                <p>
+                    @Html.DisplayNameFor(model => model.Author)：
+        
+                    @Html.DisplayFor(model => model.Author)
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.Creator)：
+        
+                    @Html.DisplayFor(model => model.Creator)
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.CreateTime)：
+        
+                    @Html.DisplayFor(model => model.CreateTime)
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.IsDelete)：
+        
+                    @(Model.IsDelete== 1 ? "是" : "否")
+                </p>
+
+                <p>
+                    @Html.DisplayNameFor(model => model.PicPath)：
+        
+                    <img src="@Model.PicPath" />
+                </p>
+        </fieldset>
+    </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("修改", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("返回列表", "Index")
+</p>

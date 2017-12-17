@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="f9dde2c274714e4db272b574bf188e52" Name="Diagram1" ZoomLevel="81">
+        <EntityTypeShape EntityType="iyogakoodbModel.CartItem" Width="1.5" PointX="13" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.Class" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.ClassFile" Width="1.5" PointX="10.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.ClassReport" Width="1.5" PointX="8" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.ClassTeacher" Width="1.5" PointX="8" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.ClassTopic" Width="1.5" PointX="8" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.Follow" Width="1.5" PointX="3" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.InterestedClass" Width="1.5" PointX="8" PointY="11.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.Order" Width="1.5" PointX="8" PointY="14.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.Space" Width="1.5" PointX="14.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.YogaArtClass" Width="1.5" PointX="12.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.YogaArticle" Width="1.5" PointX="14.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.YogaDicItem" Width="1.5" PointX="15.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.YogaPicture" Width="1.5" PointX="3" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="iyogakoodbModel.YogiProfile" Width="1.5" PointX="16.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="iyogakoodbModel.FK_dbo_ClassReport_dbo_Class_ClassId" ManuallyRouted="false" />
+        <AssociationConnector Association="iyogakoodbModel.FK_dbo_ClassTeacher_dbo_Class_Class_Id" ManuallyRouted="false" />
+        <AssociationConnector Association="iyogakoodbModel.FK_dbo_ClassTopic_dbo_Class_ClassID" ManuallyRouted="false" />
+        <AssociationConnector Association="iyogakoodbModel.FK_dbo_InterestedClass_dbo_Class_ClassId" ManuallyRouted="false" />
+        <AssociationConnector Association="iyogakoodbModel.FK_dbo_Order_dbo_Class_ClassId" ManuallyRouted="false" />
+        <AssociationConnector Association="iyogakoodbModel.FK_dbo_ClassFile_dbo_ClassReport_ReportId" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="iyogakoodbModel.YogaMenus" Width="1.5" PointX="22.125" PointY="13.125" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tMessage" Width="1.5" PointX="18.375" PointY="18.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tBanner" Width="1.5" PointX="18.375" PointY="10.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tWriteLog" Width="1.5" PointX="17.375" PointY="4.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.CenterStare" Width="1.5" PointX="10.375" PointY="16.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.Centers" Width="1.5" PointX="6.73322070703526" PointY="31.741104856012903" />
+        <EntityTypeShape EntityType="iyogakoodbModel.Evaluates" Width="1.5" PointX="0.75" PointY="15.625" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tZanModels" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.YogisModels" Width="1.5" PointX="3" PointY="15" />
+        <EntityTypeShape EntityType="iyogakoodbModel.YogaUserDetail" Width="1.5" PointX="15.375" PointY="14.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.YogaUser" Width="1.5" PointX="0.75" PointY="8.375" />
+        <AssociationConnector Association="iyogakoodbModel.Fk_QuiltUidasFollow" />
+        <AssociationConnector Association="iyogakoodbModel.FK_UseruidasFollow" />
+        <AssociationConnector Association="iyogakoodbModel.FK_UID" />
+        <AssociationConnector Association="iyogakoodbModel.YogaUserClass" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tLearing" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tSign" Width="1.5" PointX="10.25" PointY="5.375" />
+        <EntityTypeShape EntityType="iyogakoodbModel.LevelOrder" Width="1.5" PointX="12.375" PointY="16.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tUserLoginInfo" Width="1.5" PointX="17.375" PointY="14.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tInstationInfo" Width="1.5" PointX="19.375" PointY="0.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tQuestion" Width="1.5" PointX="19.375" PointY="4.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.tKeyWord" Width="1.5" PointX="19.375" PointY="13.75" />
+        <EntityTypeShape EntityType="iyogakoodbModel.ClassDetail" Width="1.5" PointX="5.375" PointY="20.75" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

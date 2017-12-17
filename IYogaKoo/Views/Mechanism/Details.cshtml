@@ -1,0 +1,983 @@
+﻿@using Webdiyer.WebControls.Mvc
+@using IYogaKoo.ViewModel
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewEvaluatesGroup>
+
+@{
+    ViewBag.Title = "详细机构";
+    Layout = "~/Views/Shared/_CenterDetailLayout.cshtml";
+
+}
+<div class="lb_School_index" style="background:#fff">
+    <input type="hidden" id="hid_user" value="@ViewBag.user.Uid" />
+    <div class="lb_School_index_top">
+        <div class="lb_School_index_top_index">
+
+
+            @{ if (ViewBag.C.CenterType == "1")
+             {
+                <b>
+                    您所在位置：<a href="/">首页</a> >  <a href="/Mechanism/index/1">会馆 </a> >&nbsp;&nbsp;
+                </b><span>@ViewBag.C.CenterName</span>
+             }
+             else
+             {
+                <b>
+                    您所在位置： <a href="/">首页</a> >  <a href="/Mechanism/index/3">工作室 </a> >
+                </b><span>@ViewBag.C.CenterName</span>
+             }
+            }
+        </div>
+
+    </div>
+    <div class="lb_addnew_jigou">
+        <h3>@ViewBag.C.CenterName</h3>
+        <b>地址：@ViewBag.C.CenterAddress</b>
+    </div>
+    <div class="lb_School_index_info" style="margin-top:15px">
+        <div class="lb_School_index_info_left lb_School_index_info_left2" style="width:320px">
+            <div class="lb_School_index_info_left_top" style="width:320px;">
+                <div class="lb_addnew_div_input">
+                    <input type="button" value="" />
+                </div>
+                <div class="lb_School_index_info_left_top_div" style="display:block">
+                    <table>
+                        <tr>
+                            <td><b>价格：</b></td>
+                            <td><span>@ViewBag.price 元</span></td>
+                        </tr>
+                        <tr>
+                            <td><b>课程：</b></td>
+                            <td><div id="showkc"></div></td>
+                        </tr>
+                        <tr>
+                            <td><b>环境：</b></td>
+                            <td><div id="showhj"></div></td>
+                        </tr>
+                        <tr>
+                            <td><b>服务：</b></td>
+                            <td><div id="showfw"></div></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><p style="border:0px">来自 @ViewBag.Recommend 次推荐</p></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="lb_new_add_indexhide" style="display:none;">
+                    <div id="divtj" style="float:initial">
+                        <table>
+                            <tr>
+                                <td><span>价格：</span></td>
+                                <td><input type="text" id="txtprice" maxlength="5" value="0" onkeydown="onlyNum();" /></td>
+                                <td><b>您本次课程的费用</b></td>
+                            </tr>
+                            <tr>
+                                <td><span>课程：</span></td>
+                                <td>
+                                    <div id="demo-kc" style="float:left" class="target-demo"></div>
+                                    <div id="hint-kc" style="float:left; margin-left:10px;" class="hint"></div>
+                                    <input type="hidden" id="hid-hint-kc" />
+                                </td>
+                                <td><b>给课程安排打分</b></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span>
+                                        环境：
+                                    </span>
+                                </td>
+                                <td>
+                                    <div id="demo-hj" style="float:left" class="target-demo"></div>
+                                    <div id="hint-hj" style="float:left; margin-left:10px;" class="hint"></div>
+                                    <input type="hidden" id="hid-hint-hj" />
+                                </td>
+                                <td><b>给环境打分</b></td>
+                            </tr>
+                            <tr>
+                                <td><span>服务： </span></td>
+                                <td>
+                                    <div id="demo-fw" class="target-demo" style="float:left"></div>
+                                    <div id="hint-fw" class="hint" style="float:left; margin-left:10px;"></div>
+                                    <input type="hidden" id="hid-hint-fw" />
+                                </td>
+                                <td><b>给服务打分</b></td>
+                            </tr>
+                        </table>
+                        <input type="button" id="btnEval" class="button" onclick="SaveStare()" value="确定" />
+                    </div>
+                </div>
+            </div>
+            <div class="lb_addnewdiv_index">
+                <div class="leftLoopnew">
+                    <div class="hd">
+                        <span>会馆老师</span>
+                        <a class="next"></a>
+                        <a class="prev"></a>
+                    </div>
+                    <div class="bd" id="centerDiv">
+
+                        @Html.Partial("CenterTeacherList")
+
+                    </div>
+                </div>
+                <script type="text/javascript">jQuery(".leftLoopnew").slide({ mainCell:".bd ul",effect:"leftLoop",prevCell:".prev,.prev1",nextCell:".next,.next1",vis:1,scroll:1,autoPlay:false});</script>
+
+            </div>
+        </div>
+        <div class="lb_School_index_info_right lb_School_index_info_right2" style="border:0px">
+
+            <div class="lb_School_index_info_right_hg_img">
+                @{
+                    string bannerimg = string.Empty;
+                    if (String.IsNullOrEmpty(ViewBag.C.CenterBanner))
+                    {
+                        bannerimg = "/Content/Front/images/defaultimg/centerbanner.png";
+                    }
+                    else
+                    {
+                        bannerimg = ViewBag.C.CenterBanner;
+                    }
+                    <img src="@bannerimg" id="bannerimg" style="width:850px; height:355px" />
+                }
+            </div>
+            <div class="lb_School_index_info_right_hg_img_ximg">
+                @{ int picnum = 0;
+                 foreach (var picitem in ViewBag.Pic)
+                 {
+                     picnum++;
+                     if (picnum < 5)
+                     {
+                        <div class="lb_School_index_info_right_hg_img_ximg1">
+                            <img srcurl="@picitem.PictureOriginal" src="@(picitem.PictureOriginal == null ? "" : Url.Action("GetImg", new { url = picitem.PictureOriginal,width=202,height=190 }))" />
+                        </div>
+                     }
+                 }}
+            </div>
+            <div class="lb_School_index_info_right_hg_dsjj" id="tearchercontent" style="height:auto; overflow:hidden;">
+                <div class="lb_School_index_info_left_bot lb_School_index_info_left_bot2">
+                    <h6>会馆介绍</h6>
+                    <p>
+                        @Html.Raw(ViewBag.C.CenterProfile)
+                    </p>
+
+                </div>
+                @*<div class="lb_School_index_info_right_hg_dsjj_t">
+                        <p>导师简介</p>
+                        <span></span>
+                    </div>*@
+                @*@foreach (var item in ViewBag.Members)
+                    {
+                        <div class="lb_School_index_info_right_hg_dsjj_b">
+                            <div class="lb_School_index_info_right_hg_dsjj_b_left">
+                                <a href="/YogisModels/Details/@item.VmList.UID" target="_blank" class="membersimg"><img src="@item.VmList.DisplayImg" /></a>
+                                <div class="lb_School_index_info_hg_hide">
+                                    <div class="lb_School_index_info_hg_hide_le" style="width:138px;">
+                                        <p>@item.VmList.RealName</p>
+                                    </div>
+                                    <div class="lb_School_index_info_hg_hide_rig" style="width:65px;">
+                                        <a href=""><img src="/Content/Front/images/ds_zan.png" /></a>
+                                        <p>@item.FollowCount</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="lb_School_index_info_right_hg_dsjj_b_right">
+                                @Html.Raw(item.VmList.YogisDepict)
+                            </div>
+                        </div>
+                    }*@
+            </div>
+            @*<span id="moreteacher" style="float:right; margin-right:20px; cursor:pointer; color:#65c3a5">更多老师 >></span>*@
+            <div class="lb_School_index_info_right_hg_dsjj">
+                <div class="lb_School_index_info_right_hg_dsjj_t">
+                    <p>功能介绍</p>
+                    <span></span>
+                </div>
+                <div class="lb_School_index_info_right_hg_gnjs">
+                    @Html.Raw(ViewBag.C.CenterIntrodition)
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="lb_addnewdiv_huodong">
+        <div class="leftLoopnewsss">
+            <div class="hd">
+                <span>活动</span>
+                <a class="next" id="next"></a>
+                <a class="prev" id="prev"></a>
+            </div>
+            <div class="bd">
+                <ul class="leftLoopnewsss" id="ulleftLoopnewsss">
+                    @{
+                        var list = ViewBag.classlist as List<ViewClass>;
+                        foreach (var item in list)
+                        {
+                            if (item.EndTime > DateTime.Now || string.IsNullOrWhiteSpace(item.MessageDes))
+                            {
+                                <li>
+                                    <div class="lb_add_new_huodong">
+                                        <a href="/class/viewactivity?id=@item.Id">
+                                            <img src="@item.Banner" />
+                                        </a>
+                                        <div class="lb_add_new_huodong_hide">
+                                            <p>@item.Name</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                            else
+                            {
+                                <li>
+                                    <div class="lb_add_new_huodong">
+                                        <a href="/class/ActivityReportDetailsPage?id=@item.Id&&classReportId=-99">
+                                            <img src="@item.Banner" />
+                                        </a>
+                                        <div class="lb_add_new_huodong_hide">
+                                            <p>@item.Name</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+
+                        }
+
+                    }
+                </ul>
+            </div>
+        </div>
+        @*<script type="text/javascript">jQuery(".leftLoopnewsss").slide({ mainCell:".bd ul",effect:"leftLoop",prevCell:".prev,.prev1",nextCell:".next,.next1",vis:1,scroll:5,autoPlay:false});</script>*@
+
+    </div>
+    <div class="lb_School_dzdp" id="jrdpdiv">
+        <p>伽人点评</p>
+    </div>
+    <div class="lb_School_pinglun">
+        <div class="lb_School_pinglun_tab">
+            <ul id="uldp">
+                <li class="li" name="pl">评论（@ViewBag.evalcount）</li>
+                @*<li name="tj">推荐</li>*@
+            </ul>
+            <div id="contentle" style="float:right;font-size:14px; margin-top:15px; margin-right:50px; display:none; color:#666; margin-top:37px; "><p><a>0</a>/500</p></div>
+            <div id="logindiv" style="float:right; font-size:14px; margin-top:15px; margin-right:50px; display:none;">您还没有登录!  请<a href="/Login/Login?ReturnUrl=@ViewBag.url">登录</a>  或 <a href="/Login/Register">注册</a> </div>
+        </div>
+        <div id="divpl">
+            <div class="lb_School_textarea">
+                <textarea placeholder="在此处输入您的评论" rows="6" cols="130" id="sContent" name="sContent"></textarea>
+                <div class="lb_School_textarea_div" style="margin-top:10px; vertical-align:middle; ">
+                    <div style="float:left;">
+                        <input type="checkbox" id="chkrecomm" />
+                        <p style="height:52px; line-height:52px;   ">同时推荐此瑜伽会馆</p>
+                    </div>
+                    <div style="float:left;margin-left:20px; width:750px; margin-left:0 auto;">
+
+                        <input id="fileDiploma" name="fileDiploma" type="file" style="" value="" />
+                        <div id="divImgDiploma" style=" height:40px; min-height:40px;  margin-top:10px; float:left;  "></div>
+                        <div id="imgspan"></div>
+                        <input id="Diploma" name="Diploma" type="hidden" value="" />
+                        <input id="PictureContent" name="PictureContent" type="hidden" value="" />
+                        <input id="iNums" name="iNums" type="hidden" value="" />
+                        <input id="iNums2" name="iNums2" type="hidden" value="" />
+                    </div>
+                    <div class="lb_School_textarea_div_right" style="margin-top:10px;">
+
+                        <input type="button" id="btnEval" value="评论" />
+                        <input type="hidden" id="hidid" name="hidid" value="@ViewBag.centerid" />
+                    </div>
+                </div>
+
+                <div id="upordowndiv" style="float:left; display:none"><a href="javascript:void()">我要晒图</a></div>
+            </div>
+            <div class="lb_School_qbpl" style="float:left;">
+                <p>所有评论(@ViewBag.evalcount)</p>
+            </div>
+            <div id="mydiv" style="float:right">
+                @Html.Partial("GetAllMechanis", Model)
+            </div>
+        </div>
+
+        @*<div id="divtj" style="display:none; float:initial">
+                <table>
+                    <tr>
+                        <td><span>价格：</span></td>
+                        <td><input type="text" id="txtprice" maxlength="5" value="0" onkeydown="onlyNum();" /></td>
+                    </tr>
+                    <tr>
+                        <td><span>课程：</span></td>
+                        <td>
+                            <div id="demo-kc" style="float:left" class="target-demo"></div>
+                            <div id="hint-kc" style="float:left; margin-left:10px;" class="hint"></div>
+                            <input type="hidden" id="hid-hint-kc" />
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>
+                                环境：
+                            </span>
+                        </td>
+                        <td>
+                            <div id="demo-hj" style="float:left" class="target-demo"></div>
+                            <div id="hint-hj" style="float:left; margin-left:10px;" class="hint"></div>
+                            <input type="hidden" id="hid-hint-hj" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span>服务： </span></td>
+                        <td>
+                            <div id="demo-fw" class="target-demo" style="float:left"></div>
+                            <div id="hint-fw" class="hint" style="float:left; margin-left:10px;"></div>
+                            <input type="hidden" id="hid-hint-fw" />
+                        </td>
+                    </tr>
+                </table>
+                <input type="button" id="btnEval" class="button" onclick="SaveStare()" value="确定" />
+            </div>*@
+    </div>
+
+</div>
+@section styles
+{
+
+    <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" />
+    <style type="text/css">
+        .followFrom {
+            background-color: #F90 !important;
+            color: #fff !important;
+        }
+
+        #preview {
+            position: absolute;
+            border: 1px solid #ccc;
+            background: #333;
+            padding: 5px;
+            display: none;
+            color: #fff;
+            border-radius: 8px;
+        }
+
+        .tie-more {
+            display: block;
+            width: 99%;
+            height: 35px;
+            line-height: 35px;
+            border: 1px solid #C9D5E2;
+            background-color: #EEF6FF;
+            text-align: center;
+            font-size: 14px;
+            margin-top: 20px;
+            color: #3C6496;
+        }
+        /*晒图*/
+        .imgsdiv {
+            position: relative;
+            border: 1px solid #ccc;
+            width: 40px;
+            height: 40px;
+            float: left;
+            margin-right: 8px;
+            margin-left: 8px;
+        }
+
+        #divImgDiploma a {
+            position: static;
+        }
+
+        .imgsdiv .a_delete {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            display: none;
+            width: 40px;
+            height: 40px;
+            filter: alpha(Opacity=80);
+            -moz-opacity: 0.5;
+            opacity: 0.5;
+            z-index: 100;
+            background-color: #000;
+        }
+
+        .a_delete a {
+            text-align: center;
+            text-decoration: none;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            display: block;
+            color: white;
+            font-size: 12px;
+        }
+
+        .imgsdiv:hover .a_delete {
+            display: block;
+        }
+
+        #imgspan {
+            color: #808080;
+            width: 40px;
+            height: 20px;
+            display: block;
+            margin: 0 auto;
+            float: left;
+            margin-top: 30px;
+            line-height: 20px;
+            font-size: 12px;
+        }
+
+        #divImgDiploma {
+            width: auto;
+            border: 0;
+        }
+    </style>
+}
+@section scripts
+ {
+    <link href=@Url.Content("~/Content/uploadify/uploadify.css") rel="stylesheet" />
+    <script src=@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.js")></script>
+    <script src=@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")></script>
+
+    <script src="~/Content/rate/jquery.raty.min.js"></script>
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script language="javascript">
+
+        function Loading() {
+            layer.msg('加载中', { icon: 16, time: 10000 });
+        }
+        function Loaded() {
+            layer.closeAll('dialog');
+        }
+
+        $(function () {
+            var page=1;
+            $("#next").click(function(){
+                page=page+1;
+                Loading();
+                $.ajax({
+                    url: '/Mechanism/GetClass?centerId=@ViewBag.C.CenterId&&page='+ page,
+                    type: 'get',
+                    success: function (msg) {
+                        Loaded();
+                        if(msg!="")
+                        {
+                            $("#ulleftLoopnewsss li").remove();
+                            $("#ulleftLoopnewsss").append(msg);
+                        }
+                        else
+                        {
+                            page=page-1;
+                            layer.msg("没有更多了", { icon: 6, time: 1000 });
+                        }
+                    },
+                    error: function(XMLHttpRequest) {
+                        alert(XMLHttpRequest.status);
+                    }
+                });
+            })
+            $("#prev").click(function(){
+                page=page-1;
+                if(page>=1)
+                {
+                    Loading();
+                    $.ajax({
+                        url: '/Mechanism/GetClass?centerId=@ViewBag.C.CenterId&&page='+ page,
+                        type: 'get',
+                        success: function (msg) {
+                            Loaded();
+                            if(msg!="")
+                            {
+                                $("#ulleftLoopnewsss li").remove();
+                                $("#ulleftLoopnewsss").append(msg);
+                            }
+                        },
+                        error: function(XMLHttpRequest) {
+                            alert(XMLHttpRequest.status);
+                        }
+                    });
+                }
+                else
+                {
+                    page=1;
+                    layer.msg("已经到顶了", { icon: 6, time: 1000 });
+                }
+            })
+
+
+
+            //查看更多老师
+            $("#moreteacher").click(function(){
+                var height= $("#tearchercontent").height();
+                if(height==470)
+                {
+                    $("#tearchercontent").height("auto");
+                }
+                else
+                {
+                    $("#tearchercontent").height("470");
+
+                    $('body,html').animate({ scrollTop: 727 },600);
+
+                }
+
+
+            });
+            //图片切换
+            $(".lb_School_index_info_right_hg_img_ximg1 img").click(function(){
+                var imgurl=$(this).attr("srcurl");
+                $("#bannerimg").attr("src","/Mechanism/GetImg?width=850&height=355&url="+imgurl);
+            }).css("cursor","pointer");
+
+            //登录判断
+            var user=$("#hid_user").val();
+            if(user=="0")
+            {
+                $("#logindiv").show();
+                $("#sContent,#btnEval").attr("disabled","disabled").attr("placeholder","登录以后才可以评论");
+                $("#upordowndiv").hide();
+                $('.lb_School_qbpl_div_d_bottom_d a').unbind("click").attr("href","javascript:void(0)");
+            }else
+            {
+                $("#contentle").show();
+            }
+
+            //显示上传图片控件
+            $("#upordowndiv").click(function()
+            {
+                // $("#tab1").toggle();
+            } );
+            //字符长度判断
+            var counter = $("#sContent").val().length; //获取文本域的字符串长度
+            $(".contentle a").text(counter);
+
+            $("#sContent").keyup(function() {
+                var text = $(this).val();
+                var counter = text.length;
+                if(counter>500)
+                {
+                    $(this).val($(this).val().substr(0,500));
+                }
+                counter= $(this).val().length;
+                $("#contentle a").text(counter);
+                //$("#contentle a").text(500 - counter);    //每次减去字符长度
+            });
+            //晒图放大效果
+            imagePreview();
+            //星级打分
+            $.fn.raty.defaults.path = '../../Content/rate/img';
+            $.fn.raty.defaults.starHalf= 'star-half-big.png',
+            $.fn.raty.defaults.starOff='star-off-big.png',
+            $.fn.raty.defaults.starOn= 'star-on-big.png',
+            xx("demo-kc", "hint-kc");
+            xx("demo-hj", "hint-hj");
+            xx("demo-fw", "hint-fw");
+
+            //li切换
+            $("#uldp li").click(function () {
+                $(this).addClass('li').siblings().removeClass('li');
+                var ac = $(this).attr("name");
+                if (ac == "pl") {
+                    $("#divpl").show();
+                    $("#divtj").hide();
+                    if($("#logindiv").is(":hidden"))
+                    {
+                        $("#contentle").show();
+                    }
+                }
+                else {
+                    $("#divtj").show();
+                    $("#divpl").hide();
+                    console.log($("#logindiv").is(":hidden"));
+                    if($("#logindiv").is(":hidden"))
+                    {
+                        $("#contentle").hide();
+                    }
+                }
+            });
+            //显示机构分值
+            $("#showkc").raty({ readOnly: true, score: @ViewBag.centerclass, width: 140,hints: ['1', '2', '3', '4', '5'] });
+            $("#showhj").raty({ readOnly: true, score:  @ViewBag.env, width: 140,hints: ['1', '2', '3', '4', '5'], });
+            $("#showfw").raty({ readOnly: true, score:  @ViewBag.service, width: 140,hints: ['1', '2', '3', '4', '5'], });
+
+            //上传图片
+            $('#fileDiploma').uploadify({
+                'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                'uploader': '@Url.Content("~/Areas/Manage/Controllers/backashxFile/PirtureThumbnail.ashx")',
+                'buttonText': '我要晒图',
+                'height': '25',
+                'width': '74',
+                'buttonImage':'/Content/Front/images/btnmessage.png',
+                'fileTypeDesc': '.jpg,.png',
+                'fileTypeExts': '*.jpg;*.png;',
+                'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+                'sizeLimit': 1024 * 1024 * 4, //4M
+                'multi': true,//设置为true时可以同时上传多个文件。
+                'uploadLimit':5,
+                'queueSizeLimit':5,
+                'onUploadSuccess': function (file, data, response) {
+                    if(data=="0")
+                    {
+                        layer.msg("上传失败，请重试！");
+                        return false;
+                    }
+                    else
+                    {
+                        var strdata = "/" + data + ";"
+                        if($("#iNums").val()=="")
+                        {
+                            $("#iNums").val(0);
+                        }
+                        $("#iNums").val(parseInt($("#iNums").val())+1);
+                        $("#iNums2").val($("#iNums2").val()+1);
+                        var strNums = $("#iNums").val();
+                        var strNums2= $("#iNums2").val();
+                        //路径
+                        document.getElementById('Diploma').value += strdata;
+                        var strA = "a" + strNums;
+
+                        var strValue = "<div class='imgsdiv' id='aa"+strNums2+"' ><img id='bb" + strNums2 + "' src='/" + data + "' style='width:40px;height:40px;margin:0px' />";
+
+                        //根据ID 删除img
+                        var strDelImg = '<div class="a_delete"><a href="javascript:void(0);" id="' + strA + '"  onclick="delImg(\''+strNums2+'\');">删除</a></div>';
+
+                        //图片描述
+                        var strPictureContent = " <span id='b" + strNums + "' style='display:none;'>描述：" + '<input name="picContent" type="text" /></span></div>';
+                        $("#imgspan").show();
+                        $("#imgspan").html(Number(strNums)+"/5");
+                        document.getElementById('divImgDiploma').innerHTML += strValue + "&nbsp;&nbsp;" + strDelImg + "&nbsp;&nbsp;" + strPictureContent ;
+                    }
+                },
+                'onUploadError': function (file, errorCode, errorMsg, errorString) {
+
+                    layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+                }
+            });
+        });
+        //删除图片
+        function delImg( divid) {
+            $("#aa"+divid).hide();
+            var strsrc = $("#bb"+divid).attr("src") + ";";
+            $("#iNums").val(parseInt($("#iNums").val())-1);
+            $("#imgspan").html(Number(parseInt($("#iNums").val()))+"/5");
+            var strRep = $("#Diploma").val().replace(strsrc, '');
+            document.getElementById('Diploma').value = strRep;
+            if($("#iNums").val()==0)
+            {
+                $("#imgspan").hide();
+            }
+
+            //更新uploadLimit
+            var uploadLimit=  $('#fileDiploma').uploadify('settings','uploadLimit');
+            $('#fileDiploma').uploadify('settings','uploadLimit', ++uploadLimit);
+        }
+        function xx(demo, hint) {
+            $('#' + demo).raty({
+                number: 5,//多少个星星设置
+                targetType: 'number',//类型选择，number是数字值，hint，是设置的数组值
+                path: '../../Content/rate/img',
+                cancelOff: 'cancel-off-big.png',
+                cancelOn: 'cancel-on-big.png',
+                hints: ['1', '2', '3', '4', '5'],
+                size: 24,
+                target: '#' + hint,
+                cancel: false,
+                targetKeep: true,
+                targetText: '',
+                precision: false,//是否包含小数
+                click: function (score, evt) {
+                    $("#hid-" + hint).val(score);
+                }
+            });
+        }
+
+        //只能是数字
+        function onlyNum() {
+            if (!((event.keyCode >= 48 && event.keyCode <= 57) || (event.keyCode >= 96 && event.keyCode <= 105)))
+                event.returnValue = false;
+        }
+
+        //添加评论
+        $("#btnEval").click(function () {
+            var re = 0;
+            var ischeck = $("#chkrecomm").is(":checked");
+            if (ischeck) {
+                re = 1;
+            }
+            var content = $("#sContent").val();
+            var send = false;
+            if ( $.trim(content).length>0 && $.trim(content).length < 500) {
+                $.ajax({
+                    url: "/Evaluates/AddEvalInfo",
+                    type: "post",
+                    data: {
+                        sContent: content,
+                        hidid: $("#hidid").val(),
+                        ToUid: 0,//习练者
+                        recomm: re,
+                        Diploma:$("#Diploma").val()
+                    },
+                    success: function (data) {
+                        if (parseInt(data.code) == 0) {
+                            //uppic();
+                            location.href = '/Mechanism/Details/' + $("#hidid").val();
+                        } if (parseInt(data.code) === 2) {
+
+                            layer.alert("该信息已经存在！");
+                        }
+                        else {
+                            // alert("评论失败！");
+                        }
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+            else {
+                layer.alert("请正确评论！");
+                $("#sContent").focus();
+            }
+        });
+
+        //上传图片
+        function uppic(){
+            var strpicvalue = "";
+            $("#PictureContent").val(strpicvalue);
+            var data = $("form").serialize();
+            $.ajax({
+                url: '/Mechanism/picCreate?t=' + Math.random(),
+                type: 'POST',
+                data: data,
+                success: function (data) {
+                    if (data.code == 0) {
+                        //location.href = "/Member/DaoShiIndex";
+                        location.href = '/Mechanism/Details/' + $("#hidid").val();
+                    } else {
+                        layer.msg("添加失败！");
+                    }
+                }, error: function () {
+                    layer.msg("添加失败！");
+                }
+            });
+            return false;
+
+        }
+        //赞特效
+        function zanplus(options) {
+            options = $.extend({
+                str: "+1",
+                startSize: "14px",
+                endSize: "40px",
+                interval: 500,
+                color: "red",
+                style: "",
+                callback: function() {}
+            }, options);
+            $("body").append("<span class='tips_box' style='"+ options.style +"'>"+ options.str +"</span>");
+            var box = $(".tips_box");
+            var self = $("#zan"+options.id);
+            var top = self.offset().top;
+            var left = self.offset().left + self.width() / 2 - box.width() / 2;
+            box.css({
+                "position": "absolute",
+                "top": top,
+                "left": left,
+                "font-size": options.startSize,
+                //"font-weight": "bold",
+                "color": options.color
+            });
+            box.animate({
+                "top": top - self.height() / 2,
+                "opacity": 0,
+                "font-size": options.endSize
+            }, options.interval, function() {
+                box.remove();
+                options.callback();
+            });
+        }
+        //赞
+        function iZan(eid) {
+            $.ajax({
+                url: "/Evaluates/iZan",
+                type: "post",
+                dataType: "json",
+                data: { id: eid },
+                success: function (data) {
+                    if (data.code === 0) {
+                        zanplus({id:eid,style: 'font-weight:bold;', endSize: "60px",  interval:800 });
+                        var count=$("#zancount"+eid).text();
+                        $("#zancount"+eid).text((parseInt(count)+1));
+                    }
+                    else {
+                        layer.msg("赞同失败！");
+                    }
+                },
+                async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+            });
+        }
+
+        //打分
+        function SaveStare() {
+            $.ajax({
+                url: "/Evaluates/SaveStare",
+                type: "post",
+                dataType: "json",
+                data: {
+                    price: $("#txtprice").val(),
+                    centerclass: $("#hid-hint-kc").val(),
+                    service: $("#hid-hint-fw").val(),
+                    env: $("#hid-hint-hj").val(),
+                    mid:$("#hidid").val(),
+                },
+                success: function (data) {
+                    if (data.code === 0) {
+                        //刷新
+                        window.location.reload();
+                    }
+                    else {
+                        layer.msg("不能重复推荐！");
+                    }
+                },
+                async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+            });
+        }
+
+        //回复发表
+        function btnFaBiao(FromUid, id) {
+            var content=$("#FabiaoContent"+id).val();
+            if($.trim(content).length>0){
+                $.ajax({
+                    url: "/Evaluates/AddFaBiaoInfo",
+                    type: "post",
+                    data: {
+                        Uid: FromUid,
+                        sContent: $("#FabiaoContent"+id).val(),
+                        parentID: id,
+                    },
+                    success: function (data) {
+                        if (data.code == 0) {
+                            window.location.reload();
+                        } else if (data.code === 2) {
+                            layer.alert("该信息已经存在！");
+                        }
+                        else {
+                            layer.alert("评论失败！");
+                        }
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }else
+            {
+                layer.alert("请正确评论！");
+                $("#FabiaoContent"+id).focus();
+
+            }
+        }
+
+
+        this.imagePreview = function(){
+            /* CONFIG */
+
+            xOffset = 10;
+            yOffset = 30;
+
+            // these 2 variable determine popup's distance from the cursor
+            // you might want to adjust to get the right result
+
+            /* END CONFIG */
+            $("a.preview").hover(function(e){
+                var middleimg=$(this).attr("middlesrc");
+                this.t = this.title;
+                this.title = "";
+                var c = (this.t != "") ? "<br/>" + this.t : "";
+                $("body").append("<p id='preview'><img src='"+ middleimg +"' alt='' />"+ c +"</p>");
+                $("#preview")
+                    .css("top",(e.pageY - xOffset) + "px")
+                    .css("left",(e.pageX + yOffset) + "px")
+                    .fadeIn("fast");
+            },
+            function(){
+                this.title = this.t;
+                $("#preview").remove();
+            });
+            $("a.preview").mousemove(function(e){
+                $("#preview")
+                    .css("top",(e.pageY - xOffset) + "px")
+                    .css("left",(e.pageX + yOffset) + "px");
+            });
+        };
+
+    </script>
+
+
+    <script language="javascript">
+        $(document).ready(function () {
+
+            Members($("#hidid").val())
+        });
+        function Members(id)
+        {
+            $.ajax({
+                url: "/Mechanism/strHtmlInfo",
+                type: "get",
+                dataType: "text",
+                data: {
+                    id:id
+                },
+                success: function (relust) {
+
+                    alert(relust);
+                    $("#centerDiv").html(relust);
+                }
+            });
+        }
+        //加关注
+        function flowuid(obj,inputValue) {
+            if('@ViewBag.user'!=null)
+            {
+                $.ajax({
+                    url: "/Follow/SetFollow",
+                    type: "get",
+                    dataType: "text",
+                    data: {
+                        quertid: obj,
+                        isf:inputValue,
+                        UserType: '@ViewBag.user.UserType'
+                    },
+                    success: function (relust, status) {
+                        if (status == "success") {
+                            if (relust == "1") {
+
+                                layer.msg("关注成功！", { time: 2000 });
+
+                                window.location.href=window.location.href;
+                            }
+                            else if (relust == "0") {
+
+                                layer.msg("取消成功！", { time: 2000 });
+
+                                window.location.href=window.location.href;
+
+                            }
+                            else if (relust == "3") {
+
+                                layer.msg("亲自己不需要关注自己的！", { time: 1600 });
+                            }
+
+
+                        } else {
+
+                            layer.msg("关注失败！", { time: 1600 });
+                        }
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+
+            }else{
+
+                layer.confirm('登录后才可以加关注？', {
+                    btn: ['登录', '不登录'] //按钮
+                }, function () {
+                    window.location = "/Login/Login?ReturnUrl=" + '/Mechanism/Details/' + $("#hidid").val();// 新窗口
+                });
+            }
+
+        };
+    </script>
+    @{Html.RegisterMvcPagerScriptResource();}
+}

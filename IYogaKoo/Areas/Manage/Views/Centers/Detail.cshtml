@@ -1,0 +1,95 @@
+﻿@model IYogaKoo.ViewModel.ViewCenters
+
+@{
+    ViewBag.Title = "会馆详细";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">会馆详细信息</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1"> 
+
+            <p>
+                @Html.DisplayNameFor(model => model.CenterId)：@Html.DisplayFor(model => model.CenterId)
+            </p>
+            <p>
+                @Html.DisplayNameFor(model => model.CenterName)：@Html.DisplayFor(model => model.CenterName)
+            </p>
+            <p>
+                @Html.DisplayNameFor(model => model.CenterPortraint)：<img id="ImgDisplayImg" src="@Model.CenterPortraint" style='width:198px;height:150px;' />
+            </p>
+            <p>
+                @Html.DisplayNameFor(model => model.CenterBanner)：<img id="ImgDisplayImg" src="@Model.CenterBanner" style='width:300px;height:150px;' />
+            </p>
+
+            <p>
+                @Html.DisplayNameFor(model => model.CountryID)：@ViewBag.country
+            </p>
+            <p>
+                地区：@ViewBag.addr
+            </p>
+            @if (Model.CenterType != "2") {     
+            <p>
+                @Html.DisplayNameFor(model => model.OpenTime)：@Convert.ToDateTime(Model.OpenTime).ToString("HH:mm")
+            </p>
+
+            <p>
+                @Html.DisplayNameFor(model => model.CloseTime)：@Convert.ToDateTime(Model.CloseTime).ToString("HH:mm")
+            </p>
+            }
+            <p>
+                @Html.DisplayNameFor(model => model.CenterAddress)：@Html.DisplayFor(model => model.CenterAddress)
+            </p>
+
+            <p>
+                @Html.DisplayNameFor(model => model.CenterProfile):
+
+                @Html.TextAreaFor(model => model.CenterProfile, new { id = "editor", style = "height:200px; width:650px;margin-left:15px" })
+            </p>
+
+            <p>
+                @Html.DisplayNameFor(model => model.CenterIntrodition):
+
+                @Html.TextAreaFor(model => model.CenterIntrodition, new { id = "editorintrodition", style = "height:200px; width:650px;margin-left:15px" })
+            </p>
+
+            <p>
+                @Html.DisplayNameFor(model => model.CreateDate)：@Html.DisplayFor(model => model.CreateDate)
+            </p>
+
+            <p>
+                @Html.DisplayNameFor(model => model.UpgradeDate)：@Html.DisplayFor(model => model.UpgradeDate)
+            </p>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("编辑", "Edit", new { id = Model.CenterId }) |
+    @Html.ActionLink("返回", "Index", new { centertype = Model.CenterType })
+</p>
+@section styles
+{
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+}
+@section Scripts{
+    <script src=@Url.Content("~/Content/ueditor/ueditor.config.js")></script>
+    <script src=@Url.Content("~/Content/ueditor/ueditor.all.js")></script>
+    <script type="text/javascript">
+
+        $(function () {
+            //富文本
+            UE.getEditor('editor'); //内容编辑器
+            UE.getEditor('editorintrodition'); //内容编辑器-功能介绍
+        });
+    </script>
+}

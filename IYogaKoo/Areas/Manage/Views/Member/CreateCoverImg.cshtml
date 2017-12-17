@@ -1,0 +1,94 @@
+﻿@model IYogaKoo.ViewModel.ViewYogisModels
+
+@{
+    ViewBag.Title = "TopPic";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+
+        @Html.HiddenFor(model => model.YID)
+        @Html.HiddenFor(model => model.UID)
+
+        @Html.LabelFor(model => model.CoverImg)
+
+        <img id="ImgCoverImg" src="@Model.CoverImg" style='width:300px;height:150px;' />
+        <input id="CoverImg" name="CoverImg" type="hidden" value="@Model.CoverImg" />
+
+        <span>只能传一张，大小不超过4M，格式为jpg或png</span>
+        <div>
+            <input id="fileCoverImg" name="fileCoverImg" type="file" value="上传并预览" />
+        </div>
+         
+        <input id="btnSave" name="btnSave" type="button" value="保存" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script> 
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script> 
+    <style>
+        /*隐藏进度条*/
+        #fileQueue {
+            display: none;
+        }
+    </style>
+<script type="text/javascript">
+    $(function () {
+
+        $('#fileCoverImg').uploadify({
+                    'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+                    'uploader': '@Url.Content("~/Controllers/ashxFile/CoverImg.ashx")',
+                    'buttonText': '上传并预览',
+                    'height': '30',
+                    'width': '120',
+                    'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+                    'sizeLimit': 1024 * 1024 * 4, //4M
+                    'multi': false,//设置为true时可以同时上传多个文件。
+
+                    'onUploadSuccess': function (file, data, response) {
+
+                        $("#CoverImg").val("/" + data);
+                        $("#ImgCoverImg").attr("src", "/" + data);
+
+                    },
+                    'onUploadError': function (file, errorCode, errorMsg, errorString) {
+
+                        alert('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+                    }
+                });
+
+
+    });
+
+</script>
+
+    <script type="text/javascript">
+    
+
+        $("#btnSave").click(function () {
+            var data = $("form").serialize();
+            $.ajax({
+                type: "POST",
+                url: '/Manage/Member/CreateCoverImg?t=' + Math.random(),
+                data: data,
+                    success: function (msg) {
+                        window.location = '/Manage/Member/DaoShiIndexSearch';
+                    },
+                    error: function (xhr, msg, e) {
+                        alert("添加封面失败！");
+                    }
+                });
+            });
+       
+
+        </script>
+}

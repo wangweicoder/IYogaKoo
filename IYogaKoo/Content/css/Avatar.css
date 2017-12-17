@@ -1,0 +1,32 @@
+﻿.avatar {
+    border: 1px solid #ccc;
+}
+
+    .avatar .avatar_select, .avatar .avatar_view {
+        height: 400px;
+        width: 469px;
+    }
+
+    .avatar .avatar_view {
+        float: right;
+        width: 468px;
+        border-left: 1px solid #d2dbea;
+    }
+
+    .avatar .current {
+        height: 50px;
+        background-color: #d2dbea;
+    }
+
+#imageProgress {
+    height: 2px;
+}
+
+    #imageProgress div {
+        height: 2px;
+        background-color: green;
+        width: 0px;
+    }
+.lbb_add_img img {
+    cursor:pointer;
+}

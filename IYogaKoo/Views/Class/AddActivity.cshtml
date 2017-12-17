@@ -1,0 +1,445 @@
+﻿@model IYogaKoo.ViewModel.ViewClass
+
+@{
+    ViewBag.Title = "发起活动";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section styles{
+    <link href="~/Content/front/css/activity.css" rel="stylesheet" />
+    <link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+}
+@section scripts{
+    <script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+    <script src="~/Scripts/laydate/laydate.js"></script>
+    <script src="~/Scripts/laypage/laypage.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Content/Front/js/activity.js"></script>
+    <script src="~/Scripts/layer/layer.js"></script>
+    <script src="~/Scripts/layer/extend/layer.ext.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            //地区选择
+            BindArea($('.select-area')[0], null);
+            classStartOption.elem = "#Start";
+            classStartOption.istime = true;
+            classStartOption.format = "YYYY-MM-DD hh:mm";
+            laydate(classStartOption);
+
+            classStartOption.elem = "#CloseTime";
+            classStartOption.istime = true;
+            classStartOption.format = "YYYY-MM-DD hh:mm";
+            classStartOption.min = '1900-01-01 00:00:00';
+            laydate(classStartOption);
+
+
+            $("#ok").click(function () {
+                $('#teacherDiv').fadeOut();
+                $('#txtAddYogaModels').val("");
+            });
+            $("#addTeacherButton").click(function () {
+                $('#teacherDiv').fadeOut();
+            });
+            $('#txtAddYogaModels').focus(function () {
+                $('#txtAddYogaModels').val("");
+                $('#txtAddYogaModels').css({ "font-style": "normal", "color": "Black" });
+            })
+            $('#txtAddYogaModels').blur(function () {
+                if ($('#txtAddYogaModels').val() == "") {
+                    $('#txtAddYogaModels').val("输入导师姓名进行查找");
+                    $('#txtAddYogaModels').css({ "color": "#B4B4B4" });
+                    $('#teacherDiv').fadeOut();
+                }
+            })
+
+            $("#centerOK").click(function () {
+                $('#centerDiv').fadeOut();
+                $('#txtAddCenter').val("");
+            });
+            $("#addCenterButton").click(function () {
+                $('#centerDiv').fadeOut();
+            });
+            $('#txtAddCenter').focus(function () {
+                $('#txtAddCenter').val("");
+                $('#txtAddCenter').css({ "font-style": "normal", "color": "Black" });
+            })
+            $('#txtAddCenter').blur(function () {
+                if ($('#txtAddCenter').val() == "") {
+                    $('#txtAddCenter').val("输入会馆进行查找");
+                    $('#txtAddCenter').css({ "color": "#B4B4B4" });
+                    $('#centerDiv').fadeOut();
+                }
+            })
+            $("#add-Center").click(function () {
+                layer.prompt({ title: '机构名称', formType: 0 }, function (text) {
+                    Loading();
+                    $.ajax({
+                        url: '/class/CreateCenter?t=' + Math.random(),
+                        type: 'post',
+                        datatype: 'json',
+                        data: {
+                            CenterName: text
+                        },
+                        success: function (data) {
+                            Loaded();
+                            var html = '<li class="Center" id="CenterID_' + data.CenterId + '" CenterID=' + data.CenterId + '><div class="Center-info"><div class="name"><img src="' + "" + '"/> ' + data.CenterName + ' </div></div><div class="Center-close">&nbsp;</div></li>';
+                            $('.centers').append(html);
+                            layer.colse();
+                        }
+                    });
+                });
+
+            })
+        });
+        //var ue = UE.getEditor('Content', { initialFrameWidth: 454 });
+        //查找导师
+        function RealLoadClassTeacher(page) {
+            var name = $('#txtAddYogaModels').val();
+            if (name == null || name == "") {
+                $('#teacherDiv').fadeOut();
+            } else {
+                $('#teacherDiv').fadeIn();
+            }
+            RealSearchList({
+                url: '/class/getyogis', data: { text: name, page: page, size: 5 }, row: function (dataItem) {
+                    var html = '<tr title="' + (dataItem.Info == null ? '' : dataItem.Info) + '">';
+                    html += '<td>' + dataItem.TeacherId + '</td>';
+                    html += '<td><img class="small-avatar" src="' + dataItem.Avatar.split(';')[1] + '"/></td>';
+                    html += '<td><div style="width:120px;overflow:hidden;" title="' + dataItem.Name + '">' + dataItem.Name.substring(0, 12) + (dataItem.Name.length > 12 ? '...' : '') + '</div></td>';
+                    html += '<td>' + dataItem.Gender + '</td>';
+                    html += '<td>' + dataItem.Country + '</td>';
+                    html += '<td>' + dataItem.YogaSystem + '</td>';
+                    html += '<td><a class="op-add">添加</a></td>';
+                    html += '</tr>';
+                    return html;
+                }, msg: '木有找到导师', container: '#data-table', contentContainer: '#data-table tbody'
+            });
+
+            function RealSearchList(fromPage) {
+                $('#noSearchResult').remove();
+                pageData = fromPage;
+                Loading();
+                $.post(pageData.url, pageData.data, function (result) {
+                    Loaded();
+                    if (result.Code == 0 && result.Objects.length > 0) {
+                        $(pageData.contentContainer).html('');
+                        var trs = "";
+                        for (var i = 0; i < result.Objects.length; i++) {
+                            trs += pageData.row(result.Objects[i]);
+                        }
+                        $(pageData.contentContainer).html(trs);
+                        $(pageData.container).show();
+                        if (pageData.enablePage == undefined) {
+                            //InitPage(result);//分页
+                        }
+                        $('#pageBox').show();
+
+                        $('#ok').css('display', 'block');
+                        $('#addTeacherButton').css('display', 'none');
+                    }
+                    else {
+                        $(pageData.contentContainer).html('');
+                        //NoSearchResult(pageData.msg);
+                        if ($('#noSearchResult').length == 0) {
+                            var html = '<div style="width:100px" class="alert alert-warning" role="alert" id="noSearchResult">' + pageData.msg + '</div>';
+                            $(pageData.contentContainer).html(html);//.hide().after(html);
+                            $('#pageBox').hide();
+                            $('#addTeacherButton').css('display', 'block');
+                            $('#ok').css('display', 'none');
+                        }
+                    }
+                }, 'json');
+            }
+            $('body').off('click', '#teacherDiv .op-add');
+            //选择搜索到的导师
+            $('body').on('click', '#teacherDiv .op-add', function () {
+                var tds = $(this).parent().parent().children('td');
+                if ($('.teachers .teacher[teacherid=' + $(tds[0]).text() + ']').length == 0) {
+                    var classTeacher = {};
+                    classTeacher.TeacherId = $(tds[0]).text();
+                    classTeacher.Avatar = $(tds[1]).find('img').attr('src');
+                    classTeacher.Name = $(tds[2]).find('div').attr('title');
+                    classTeacher.Gender = $(tds[3]).text();
+                    classTeacher.Country = $(tds[4]).text();
+                    classTeacher.YogaSystem = $(tds[5]).text();
+                    classTeacher.Info = $(this).parent().parent().attr('title');
+                    PostData('/class/_PartialAddClassTeacherOfManager', classTeacher, function (result) {
+                        if (result && result.Id > 0) {
+                            classTeacher.Id = result.Id;
+                            HtmlClassTeacher(classTeacher)
+                            //$('.teachers').append(HtmlClassTeacher(classTeacher));
+                        }
+                        else
+                            ShowError(result.Message);
+                    });
+
+                }
+                else {
+                    ShowError('已添加过这个导师了');
+                }
+            });
+        }
+
+        //查找机构
+        function RealLoadClassCenter() {
+            var name = $('#txtAddCenter').val(); if (name == null || name == "") {
+                $('#centerDiv').fadeOut();
+            }
+            else {
+                $('#centerDiv').fadeIn();
+            }
+            RealSearchList({
+                url: '/class/GetCenter', data: { text: name, page: 1, size: 10 }, row: function (dataItem) {
+                    var html = '<tr title="' + (dataItem.CenterId == null ? '' : dataItem.CenterId) + '">';
+                    html += '<td>' + dataItem.CenterId + '</td>';
+                    html += '<td><img class="small-avatar" src="' + dataItem.CenterPortraint + '"/></td>';
+                    html += '<td><div style="width:420px;overflow:hidden;" title="' + dataItem.CenterName + '">' + dataItem.CenterName.substring(0, 24) + (dataItem.CenterName.length > 24 ? '...' : '') + '</div></td>';
+                    html += '<td><a class="center-add">添加</a></td>';
+                    html += '</tr>';
+                    return html;
+                }, msg: '木有找到机构', container: '#CenterIDTable', contentContainer: '#CenterIDTable tbody'
+            });
+
+            function RealSearchList(fromPage) {
+                $('#noSearchResult').remove();
+                pageData = fromPage;
+                Loading();
+                $.post(pageData.url, pageData.data, function (result) {
+                    Loaded();
+                    if (result.Code == 0 && result.Objects.length > 0) {
+                        $(pageData.contentContainer).html('');
+                        var trs = "";
+                        for (var i = 0; i < result.Objects.length; i++) {
+                            trs += pageData.row(result.Objects[i]);
+                        }
+                        $(pageData.contentContainer).html(trs);
+                        $(pageData.container).show();
+                        if (pageData.enablePage == undefined) {
+                            //InitPage(result);//分页
+                        }
+                        $('#pageBox').show();
+
+                        $('#centerOK').css('display', 'block');
+                        $('#addCenterButton').css('display', 'none');
+                    }
+                    else {
+                        $(pageData.contentContainer).html('');
+                        //NoSearchResult(pageData.msg);
+                        if ($('#noSearchResult').length == 0) {
+                            var html = '<div style="width:100px" class="alert alert-warning" role="alert" id="noSearchResult">' + pageData.msg + '</div>';
+                            $(pageData.contentContainer).html(html);//.hide().after(html);
+                            $('#pageBox').hide();
+                            $('#addCenterButton').css('display', 'block');
+                            $('#centerOK').css('display', 'none');
+                        }
+                    }
+                }, 'json');
+            }
+            //选择搜索到的机构
+            $('body').off('click', '#centerDiv .center-add');
+            $('body').on('click', '#centerDiv .center-add', function () {
+                var tds = $(this).parent().parent().children('td');
+                if ($('.centers .Center[CenterID=' + $(tds[0]).text() + ']').length == 0) {
+                    var html = '<li class="Center" id="CenterID_' + $(tds[0]).text() + '" CenterID=' + $(tds[0]).text() + '><div class="Center-info"><div class="name"><img src="' + $(tds[1]).text() + '"/> ' + $(tds[2]).text() + ' </div></div><div class="Center-close">&nbsp;</div></li>';
+                    $('.centers').append(html);
+                }
+                else {
+                    ShowError('已添加过这个机构了');
+                }
+            });
+        }
+
+
+    </script>
+}
+<div class="lb_School_index">
+    <div class="lb_School_index_top">
+        <div class="lb_School_index_top_index">
+            <b>您所在位置：</b><span>发起活动</span>
+            <ul>
+                @*<li><a href="" class="on">达人</a></li>
+                    <li><a href="">活动</a></li>*@
+            </ul>
+        </div>
+    </div>
+    <div class="lb_hd_index">
+        <div class="lb_hb_faqi">
+            <div class="lb_hd_faqi_left">
+                <div class="lb_hd_faqi_left_top">
+                    @*<h1>发起活动</h1>*@
+                    <p>
+                        三步走&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a class="on">1. 填写活动信息</a>&nbsp;>
+                        <a>2. 上传活动海报 </a>&nbsp;>
+                        <a>3. 提交活动</a>
+                    </p>
+                </div>
+                <div class="lb_hd_faqi_left_bottom">
+                    <form action="/Admin/AddActivity" id="add-activity" method="post">
+
+
+                        <dl>
+                            <dt>活动类型：</dt>
+                            <dd>
+                                <!-- <div class="lb_hd_faqi_left_bottom_se">
+                                        <input type="text" value="" class="input"/><a></a>
+                                </div> -->
+                                @Html.TagFor(m => m.TopicIds, ViewData["YogaTopic"] as IEnumerable<SelectListItem>)
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>活动标题：</dt>
+                            <dd>
+                                <input type="text" id="Name" name="Name" value="" />
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>活动时间：</dt>
+                            <dd>
+                                <input type="text" value="" name="Start" id="Start" class="lb_hd_faqi_left_time" placeholder="开始时间" />
+                                <input type="number" id="Duration" name="Duration" value="" class="lb_hd_faqi_left_time" placeholder="持续时间" />
+                                @Html.RadioButtonFor(model => model.DurationUnit, IYogaKoo.ViewModel.Commons.Enums.TimeUnit.小时.ToList())
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>截止时间：</dt>
+                            <dd>
+                                <input type="text" value="" name="CloseTime" id="CloseTime" class="lb_hd_faqi_left_time" placeholder="截止时间" />
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>活动地区：</dt>
+                            <dd>
+                                <select class="select-area"></select>
+                                <input type="hidden" name="AreaID" id="AreaID" />
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>详细地点：</dt>
+                            <dd>
+                                <input type="text" id="Address" name="Address" value="" class="lb_hd_faqi_left_title" />
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>活动概述：</dt>
+                            <dd class="textarea">
+                                <textarea id="Summary" name="Summary"></textarea>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>活动详情：</dt>
+                            <dd>
+                                <textarea id="Content" name="Content"></textarea>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>活动费用：</dt>
+                            <dd>
+                                <input type="radio" name="select-price" value="free" class="radio1"><span>免费</span><input type="radio" value="nofree" class="radio2" name="select-price"><span>收费</span>
+                                <input type="text" name="Price" id="Price" value="" class="lb_hd_faqi_left_title" />
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>报名人数：</dt>
+                            <dd>
+                                <input type="text" name="Max" id="Max" value="" class="lb_hd_faqi_left_title" />
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>活动标签：</dt>
+                            <dd>
+                                <input type="text" name="Tags" id="Tags" value="" class="lb_hd_faqi_left_title" />
+                            </dd>
+                        </dl>
+                        @*<dl>
+                                <dt>活动导师：</dt>
+                                <dd>
+                                    <input id='select-teacher' type="button" class="lb_hd_faqi_left_button" value="查找活动导师" style="margin:0;" />
+                                    <input id='add-teacher' type="button" class="lb_hd_faqi_left_button" value="添加活动导师" style="margin:0;" />
+                                    <ul class="teachers" style="width:100%;"></ul>
+                                    @Html.HiddenFor(c => c.TeacherIds)
+                                </dd>
+                            </dl>*@
+                        <dl>
+                            <dt>活动导师：</dt>
+                            <dd id="lb_add_lb">
+                                <input type="text" value="输入导师姓名进行查找" style=" color: #B4B4B4" id="txtAddYogaModels" class="lb_hd_faqi_left_title" style="border-bottom:0px" onkeyup="RealLoadClassTeacher(1)" />
+                                @*<input id='add-teacher' type="button" style="margin-top:0px;" class="lb_hd_faqi_left_button" value="新增活动导师" />*@
+                                <ul class="teachers" style="width:500px;"></ul>
+                                @Html.HiddenFor(c => c.TeacherIds)
+                                <div class="lb_add_hi" id="teacherDiv">
+                                    <table class="data-table" id="data-table" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <td>编号</td>
+                                                <td style="width:60px;">头像</td>
+                                                <td style="width:60px;">姓名</td>
+                                                <td>性别</td>
+                                                <td>国籍</td>
+                                                <td style="width:117px;">流派</td>
+                                                <td id="ok" style="min-width:60px; ">
+                                                    <p>完成</p>
+                                                </td>
+                                                <td id="addTeacherButton" style="min-width:60px; display:none;">
+                                                    <a id='add-teacher'>新增导师</a>
+                                                    @*<input id='add-teacher' type="button" style="margin-top:0px; background-color:#B4B3B3; padding:0px;"
+                                                        class="lb_hd_faqi_left_button" value="新增导师" />*@
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="aaa"></tbody>
+                                    </table>
+                                    <div id="pageBox"></div>
+                                </div>
+
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>活动机构：</dt>
+                            <dd id="lb_add_lb">
+                                <input type="text" value="输入场地进行查找" style=" color: #B4B4B4;border-bottom:0px" id="txtAddCenter" class="lb_hd_faqi_left_title"
+                                       onkeyup="RealLoadClassCenter()" />
+                                <ul class="centers" style="width:500px;"></ul>
+                                @Html.HiddenFor(c => c.CenterID)
+                                <div class="lb_add_hi" id="centerDiv">
+                                    <table class="CenterID" id="CenterIDTable" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <td>编号</td>
+                                                <td style="width:60px;">图片</td>
+                                                <td style="width:417px;">名称</td>
+                                                <td id="centerOK" style="min-width:60px; ">
+                                                    <p>完成</p>
+                                                </td>
+                                                <td id="addCenterButton" style="min-width:60px; display:none;">
+                                                    <a id='add-Center'>新增机构</a>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                        <tbody id=""></tbody>
+                                    </table>
+                                </div>
+
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>&nbsp; </dt>
+                            <dd>
+                                <input type="submit" value="下一步" class="lb_hd_faqi_left_button" id="mianfei" />
+                                @*<input type="button" value="预览" class="lb_hd_faqi_left_button" />*@
+                            </dd>
+                        </dl>
+                    </form>
+                </div>
+            </div>
+
+            <div class="lb_hd_faqi_right">
+                <div class="lb_hd_faqi_right_top">
+                    <b>请确保您的活动符合法律规定：</b>
+                    <p>按照相关法律规定，营业性演出活动需取得国家行政部门审批，请确保你的活动已经获得相关资质及许可。未获上述批准的活动将被依法删除，且由此造成的后果须由活动举办方自行承担。</p>
+                    <b>PS：</b>
+                    <p>请确保活动合法、合理，通过审核就能召集小伙伴们嗨起来啦！</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

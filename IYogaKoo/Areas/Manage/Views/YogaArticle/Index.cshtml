@@ -1,0 +1,149 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewYogaArticle>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+ 
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">文章列表</h3>
+        <p>
+            @Html.ActionLink("添加文章", "Create")
+        </p>
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+
+            <table>
+                <tr>
+                    <th>
+                        编号
+                    </th>
+                    <th>
+                        类别名称
+                    </th>
+                    <th>
+                        标题
+                    </th>
+
+                    <th>
+                        作者
+                    </th>
+                    <th>
+                        创建人
+                    </th>
+                    <th>
+                        创建时间
+                    </th>
+
+                    <th>
+                        图片
+                    </th>
+                    <th>
+                        是否删除
+                    </th>
+                    <th></th>
+                </tr>
+
+                @{
+    var index = 1;
+    if (!string.IsNullOrEmpty(Request.QueryString["page"]))
+    {
+        var p = int.Parse(Request.QueryString["page"]) - 1;
+        if (p > 0)
+        {
+            index = p * 10 + 1;
+        }
+    }
+                }
+                @foreach (var item in ViewBag.listGroup)
+{
+                <tr>
+                    <td>
+                        @item.artice.ID
+                    </td>
+                    <td>
+                        @item.artclass.ClassName
+                    </td>
+                    <td>
+                        @item.artice.ArticleTitle
+                    </td>
+
+                    <td>
+                        @item.artice.Author
+                    </td>
+                    <td>
+                        @item.artice.Creator
+                    </td>
+                    <td>
+                        @item.artice.CreateTime
+                    </td>
+
+                    <td>
+                        @{
+                            var strpic = "/Content/Front/images/defaultImg.png"; 
+                            if (!string.IsNullOrEmpty(item.artice.PicPath))
+                            {
+                                strpic = item.artice.PicPath;
+                            } 
+                        }
+                        <img src="@strpic" width="40" height="40" />
+                    </td>
+                    <td>
+                        @(item.artice.IsDelete==1?"是":"否")
+                    </td>
+                    <td>
+                        @Html.ActionLink("修改", "Edit", new { id = item.artice.ID }) |
+                        @Html.ActionLink("详情", "Details", new { id = item.artice.ID }) |
+                        <a href="Javascript:DaoShiDel('@item.artice.ID')">删除</a>
+                    </td>
+                </tr>
+}
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="text-center" style="" id="menepager">
+    @Ajax.Pager(Model, new PagerOptions
+{
+    PageIndexParameterName = "page",
+    ContainerTagName = "ul",
+    CssClass = "menepager",
+    PrevPageText = "上页",
+    NextPageText = "下页",
+    FirstPageText = "首页",
+    LastPageText = "尾页",
+    CurrentPagerItemTemplate = "<li class=\"active\"><a href=\"#\">{0}</a></li>",
+    DisabledPagerItemTemplate = "<li class=\"disabled\"><a>{0}</a></li>",
+    PagerItemTemplate = "<li>{0}</li>"
+
+}, new MvcAjaxOptions { UpdateTargetId = "mydiv", HttpMethod = "Post" })
+</div>
+
+<script type="text/javascript">
+
+    function DaoShiDel(id, parentid) {
+        if (confirm("是否删除!")) {
+            $.ajax({
+                url: "/YogaArtClass/Delete/" + id,
+                type: "post",
+                success: function (data) {
+                    if (data.code == 0) {
+                        window.location.reload();
+                    }
+                    else {
+                        alert("删除失败！");
+                    }
+                }
+            });
+        }
+    }
+</script>

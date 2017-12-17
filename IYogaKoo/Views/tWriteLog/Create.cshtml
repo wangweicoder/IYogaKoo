@@ -1,0 +1,166 @@
+﻿@model IYogaKoo.ViewModel.ViewtWriteLog
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/ModelsDetails2.cshtml";
+}
+
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")"></script>
+<div class="lb_rizi" style="width:760px; margin-left:36px">
+    <h2>添加日志</h2>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset id="lb_index_tuisong" style="width:760px; margin-left:36px;">
+
+        <div class="editor-label" style="overflow: hidden;">
+            操作人：
+        </div>
+        <div class="editor-field">
+            @ViewBag.Name
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sTitle)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.sTitle)
+            @Html.ValidationMessageFor(model => model.sTitle)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.sContent)
+        </div>
+        <div class="editor-field lb_textart">
+            @Html.TextAreaFor(model => model.sContent, new { id = "editor", style = "width:650px;margin-left:15px" })
+            @Html.ValidationMessageFor(model => model.sContent)
+            <input type="hidden" id="hsContent" name="hsContent" value="" />
+        </div>
+
+        <div class="editor-label">
+           <label>推送</label>
+        </div>  
+        <div class="editor-field">
+            <input type="checkbox" id="ifpush" name="ifpush" /> 
+            <select id="iType" name="iType" disabled="disabled">
+                <option value="">--请选择--</option>
+                @{
+    List<IYogaKoo.ViewModel.ViewYogaDicItem> list = ViewBag.Diclist;
+    foreach (var item in list)
+    {
+        <option value="@item.ID">@item.ItemName</option>
+
+    }
+                }
+            </select>
+            
+        </div>
+        <div class="editor-label">&nbsp;</div>
+        <div class="editor-field">
+            <p style="float: left">
+                <input type="button" value="保存" id="idsubmit" />
+            </p>
+            <div class="lb_return">
+                <p style="float: left">
+                    @Html.ActionLink("返回", "logIndex")
+
+                </p>
+            </div>
+        </div>
+    </fieldset>
+}
+
+
+ 
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="@Url.Content("~/Content/ueditor/ueditor.config.js")"></script>
+    <script src="@Url.Content("~/Content/ueditor/ueditor.all.js")"></script>
+    <script type="text/javascript">
+        $(function () {
+            $('#ifpush').click(function () {
+                if (this.checked) {
+                    $("#iType").removeAttr("disabled", "");
+                }
+                else {
+                    $("#iType").attr("disabled", "disabled");
+                }
+            })
+
+
+         //   $("#iTuiS").attr("checked", "");
+
+            $('#iTuiS').click(function () { 
+                if (this.checked) { 
+                    $("#iType").removeAttr("disabled", "");
+                }
+                else {
+                    $("#iType").attr("disabled", "disabled");
+                }
+            })
+            UE.getEditor('editor'); //内容编辑器
+            $('#idsubmit').click(function () {
+                if ($("#iTuiS").checked == true)
+                {
+                    if ($("#iType").val() == "")
+                    {
+                        layer.msg("请选择推送项！");
+                    }
+                }
+                var data = $("form").serialize();                
+                $.ajax({
+                    url: '/tWriteLog/Create?t=' + Math.random(),
+                    type: 'POST',
+                    data: data,
+                    success: function (data) {
+
+                        if (data.code == 0) {
+                            window.location = '/tWriteLog/logIndex';
+                            //refreshOpenerAndCloseMe();
+                        } else {
+                            layer.msg("添加失败！");
+                        }
+
+                    }, error: function () {
+                        layer.msg("添加失败！");
+
+                    }
+                });
+                return false;
+            });
+        });
+        // 关闭窗口.
+        function closeWin() {
+            // 可能存在frame页面,所以要引用top窗口.
+            var win = top.window;
+            try {
+                // 聚焦.
+                if (win.opener) win.opener.focus();
+                // 避免IE的关闭确认对话框.
+                win.opener = null;
+            } catch (ex) {
+                // 防止opener被关闭时代码异常。
+            } finally {
+                win.close();
+            }
+        }
+        // 刷新打开本窗口的opener窗口.
+        function refreshOpener() {
+            // 可能存在frame页面,所以要引用top窗口.
+            var win = top.window;
+            try {
+                // 刷新.
+                if (win.opener) win.opener.location.reload();
+            } catch (ex) {
+                // 防止opener被关闭时代码异常。
+            }
+        }// 刷新opener窗口后关闭自己。
+        function refreshOpenerAndCloseMe() {
+            refreshOpener();
+            closeWin();
+        }
+    </script>
+
+ 

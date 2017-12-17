@@ -1,0 +1,170 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.ViewFollowUserDetail>
+
+@{
+    ViewBag.Title = "关注列表";
+    Layout = "~/Views/Shared/_LayoutSetUpBack.cshtml";
+    //用户ID
+    var id = ViewBag.id;
+    var Gender = ViewBag.otherGender;
+    var YogisLevel = ViewBag.YogisLevel;//=4 大师
+}
+@section styles
+{
+    <style type="text/css">
+        .lihide {
+            display: none;
+        }
+    </style>
+
+}
+@section Scripts { 
+<script src="@Url.Content("~/Scripts/jquery-1.8.2.min.js")"></script>
+<script>
+    $(function () {
+        //选中我的相册标签
+        $(document).ready(function () {
+            $('.lb_gr_index_top li:eq(3)').children('a').addClass('on').parent().siblings().children('a').removeClass('on');
+
+        });
+        var dc = $("#dc").text();
+        var xc = $("#xc").text();
+        var fs = $("#fs").text();
+        var allc = parseInt(dc) + parseInt(xc);
+         $("#allc").text(allc);
+        $("#allgz").text(allc);  
+        $("#allfs").text(fs);
+        //切换
+        $(".lb_add_gz_left li a").click(function () {
+            var typeid = $(this).attr("tid");
+            var ofnum = $(this).children("b").html();
+            $("#allgz").text(ofnum);
+            if (typeid == 0) {
+                $("#backgz").text("习练者关注");
+            }
+            else if (typeid == 1) {
+                $("#backgz").text("导师关注");
+            }
+            else if (typeid == 2) {
+                $("#backgz").text("关注");
+                $(".gz").show(); $(".fs").hide();
+            }
+            else if (typeid == 4) {
+                $("#backgz").text("粉丝");
+                $(".gz").hide(); $(".fs").show();
+            }
+            else if (typeid == 5) {
+                $("#backgz").text("导师粉丝");
+            } else if (typeid == 6) {
+                $("#backgz").text("习练者粉丝");
+            }
+            if (typeid != "undefined") {
+                $.ajax({
+                    url: "/YogaUser/otherFollowList",
+                    type: "post",
+                    dataType: "text",
+                    data: {
+                        typeid: typeid,
+                        id: '@ViewBag.id'
+                    },
+                    success: function (data) {
+                        $("#mydiv").html(data);
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+            else { }
+        });
+
+    });
+    //取消关注
+    function Cancelf(quid, uid) {
+        layer.confirm("确认取消吗？", function (data) {
+            layer.close(data);
+            $.ajax({
+                url: "/YogaUser/Cancelf",
+                type: "post",
+                dataType: "json",
+                data: { quid: quid, uid: uid },
+                success: function (data) {
+                    if (data.code == 0) {
+                        //刷新
+                        window.location.reload();
+                    }
+                    else {
+                       layer.msg("取消失败！");
+                    }
+
+                },
+                async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+            });
+        });
+       
+    }
+    
+
+</script>
+
+}
+      <link type="text/css" href="/Content/Front/css/pagerstyles.css" rel="stylesheet" /> 
+ @{Html.RegisterMvcPagerScriptResource();}
+<form id="form1" method="post" action="javascript:void(0);">
+    <div class="lb_gr_index_top">
+    <ul>
+        @if(YogisLevel == 4)
+        {
+            <li><a href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">@(Gender)的文章</a></li>
+        }
+        else
+        {
+            <li><a href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">@(Gender)的日志</a></li>
+        } 
+        <li><a class="" href="/tWriteLog/OtherPics?id=@ViewBag.id">@(Gender)的相册</a></li>
+        <li><a href="/tWriteLog/OtherClass?uid=@ViewBag.id">@(Gender)的活动</a></li>
+        <li><a class="on" href="/YogaUser/otherFollowList/@ViewBag.id">@(Gender)的瑜伽圈</a></li>
+    </ul>
+</div>
+    <div class="form-horizontal" style="text-align: center;">   
+        <div class="lb_gz_index" style="width:1200px;">
+            <div class="lb_add_gz_left">
+                                            <ul> 
+                                                <li id="li11"><a class="a12 a" tid="2" id="li1">关注<b id="allc"> </b></a> </li>
+                                                <li style="background:#fff" class="gz lihide"><a tid="1" class="a2">导&nbsp;&nbsp;&nbsp;师 <b id="dc">@ViewBag.dcount</b></a></li>
+                                                <li style="background:#fff" class="gz lihide"><a tid="0" class="a3">习练者<b id="xc">@ViewBag.xcount</b></a></li>
+                                                <li><a class="a4" tid="4" id="li2">粉丝<b id="fs">@ViewBag.fscount</b></a></li>
+                                                <li style="background:#fff" class="fs lihide"><a tid="5" class="a2">导&nbsp;&nbsp;&nbsp;师 <b id="dc">@ViewBag.dcount2</b></a></li>
+                                                <li style="background:#fff" class="fs lihide"><a tid="6" class="a3">习练者<b id="xc">@ViewBag.xcount2</b></a></li>
+   </ul>
+                                        </div>
+            <div class="lb_gz_index_all">
+                <div class="lb_gz_index_all_top">
+                    @if (ViewBag.typeid == "4")
+                    { 
+                    <b>全部粉丝</b><span id="allfs"></span>
+                    }
+                    else
+                    {
+                     <b>全部关注</b><span id="allgz"></span>
+                    }
+                </div>
+               @* <div class="lb_gz_index_all_center">
+                    <div class="lb_gz_index_all_center_left">
+                        <a>批量管理</a>
+                    </div>
+                    <div class="lb_gz_index_all_center_right">
+                        <div class="lb_gz_index_all_center_right_input">
+                                <input type="text" value="" />
+                               <a></a>
+                        </div>
+                    </div>
+                </div>*@
+               <div id="mydiv"style="float:right">               
+                @Html.Partial("PartialotherFollow", Model)
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</form>

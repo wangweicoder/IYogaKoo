@@ -1,0 +1,422 @@
+﻿@model IYogaKoo.ViewModel.ViewYogisModels
+@using IYogaKoo.ViewModel.Commons.Enums
+@{
+    ViewBag.Title = "导师详情";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+    var LevelOrderid = ViewBag.LevelOrderid;//订单ID
+}
+
+<h2>导师详情</h2>
+
+<fieldset>
+    <span style="color:red; font-size:30px;"> 
+    
+    @{ 
+        if (ViewBag.levorder != null) 
+        {
+            if (ViewBag.levorder.OrderState == LevelOrderState.未通过.ToString())
+            {
+                @:审核未通过：原因(@ViewBag.levorder.Reason)  
+            }
+            else { 
+                @ViewBag.levorder.OrderState
+            }
+        }
+          
+    }
+    </span><br />
+
+    <p>
+        @Html.DisplayNameFor(model => model.DisplayImg)：
+
+        @{
+            var strDisplayImg = Model.DisplayImg;
+            var str2 = "";
+            if (!string.IsNullOrEmpty(strDisplayImg))
+            {
+                if (strDisplayImg.IndexOf(';') != -1)
+                {
+                    var str = strDisplayImg.Split(';');
+                    if (str.Length > 1)
+                    {
+                        if (!string.IsNullOrEmpty(str[1]))
+                        {
+                            str2 = str[1];
+                        }
+                        else
+                        {
+                            str2 = str[0];
+                        }
+                    }
+                    else
+                    {
+                        str2 = str[0];
+                    }
+                }
+            }
+        }
+        <img id="imgCut" width="90" height="90" src="@str2" />
+    </p>
+
+    <p>
+        昵称：
+     
+        @ViewBag.NickName
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.RealName)：
+     
+        @Html.DisplayFor(model => model.RealName)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.Gender)：
+   
+        @(Model.Gender ==1 ? "男":"女")
+    </p>
+     
+    <p>
+         @Html.DisplayNameFor(model => model.CenterID)：
+    
+        @ViewBag.CentValue
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.YogaTypeid)：
+   
+        @ViewBag.YogaTypeidValue
+    </p>
+
+    <p >
+         @Html.DisplayNameFor(model => model.TeachYogis)：
+    
+        @ViewBag.TeachYogisValue
+    </p>
+
+    <p >
+         @Html.DisplayNameFor(model => model.EachClassCost)：
+    
+        @Html.DisplayFor(model => model.EachClassCost)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.IdType)：
+    
+        @Html.DisplayFor(model => model.IdType)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.IdCardNum)：
+   
+        @Html.DisplayFor(model => model.IdCardNum)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.StartTeachYear)：
+   
+        @Html.DisplayFor(model => model.StartTeachYear)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.Nationality)：
+    
+        @ViewBag.Nationality
+    </p>
+
+    <p>
+        @Html.DisplayNameFor(model => model.CountryID)：
+   
+        @ViewBag.CountryID
+    </p>
+
+    <p>
+        地址：
+   
+        @ViewBag.Address 
+    </p>
+
+    <p >
+         @Html.DisplayNameFor(model => model.Street)：
+   
+        @Html.DisplayFor(model => model.Street)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.LocationID)：
+   
+        @Html.DisplayFor(model => model.LocationID)
+    </p> 
+
+    <p>
+         @Html.DisplayNameFor(model => model.YogisLevel)：
+    
+        @if(Model.YogisLevel==1)
+        {
+            @:初级
+        }
+        @if(Model.YogisLevel==2)
+        {
+        @:中级 
+        }
+        @if(Model.YogisLevel==3)
+        {
+        @: 高级 
+        }@if (Model.YogisLevel == 4)
+        {
+        @:大师
+        }
+    </p>
+
+    <p >
+         @Html.DisplayNameFor(model => model.YogiStatus)：
+   
+        @if (Model.YogiStatus == 0)
+        { 
+            @:申请中
+        }
+        @if (Model.YogiStatus == 1)
+        {
+            @:普通导师
+        } @if (Model.YogiStatus == 3)
+        {
+            @:合约导师
+        }
+        @if (Model.YogiStatus ==4)
+        {
+            @:撤销合约
+        }
+        @if (Model.YogiStatus == 5)
+        {
+            @:大师
+        }
+        @if (Model.YogiStatus == 9)
+        {
+            @:降级为普通习练者
+        }
+           
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.BecomeYogisTime)：
+   
+        @Html.DisplayFor(model => model.BecomeYogisTime)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.YogisScore)：
+   
+        @Html.DisplayFor(model => model.YogisScore)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.IsPayRecord)：
+   
+        @(Model.IsPayRecord == true ? "是" : "否")
+    </p>
+
+    <p >
+         @Html.DisplayNameFor(model => model.Profileid)：
+  
+        @Html.DisplayFor(model => model.Profileid)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.CreateDate)：
+  
+        @Html.DisplayFor(model => model.CreateDate)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.UpgradeDate)：
+
+        @Html.DisplayFor(model => model.UpgradeDate)
+    </p>
+
+    <p >
+        @Html.DisplayNameFor(model => model.IsAcceptAgreement)：
+  
+        @(Model.IsAcceptAgreement == true ? "是" : "否")
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.YogisDepict)：
+  
+        @Html.Raw(Model.YogisDepict)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.GudWords)：
+  
+        @Html.DisplayFor(model => model.GudWords)
+    </p>
+
+    <p >
+         @Html.DisplayNameFor(model => model.iRate)：
+    
+        @Html.DisplayFor(model => model.iRate)
+    </p>
+
+    <p>
+         @Html.DisplayNameFor(model => model.CoverImg)：
+        <img src="@Model.CoverImg" width="50%" height="50%" />
+       
+    </p>
+    <p class="display-label">
+        <br />  <span style="font-size:30px;">导师身份认证明细： </span> 
+   
+        @if (ViewBag.pro != null)
+        {
+            IYogaKoo.ViewModel.ViewYogiProfile pro=ViewBag.pro;
+           
+            @pro.IDType  <span>:</span>  @pro.IDNum<br />
+            @:手持身份证件的个人照片:<img src="@pro.IDPhoto"  /><br />
+            @:身份证件正面: <img src="@pro.IDScan" width="241" height="153" /> <br />
+            @:身份证件反正: <img src="@pro.IDScanF" width="241" height="153" /> <br />
+    @:教师资质证明文件:
+             for (int i = 0; i < @pro.Diploma.Split(';').Length - 1; i++)
+             {
+                <img src="@pro.Diploma.Split(';')[i]" />
+             }
+            <br />
+            @:创建时间:@pro.CreateDate
+        }
+       
+    </p>
+    
+    <p class="editor-label">
+        <span style="font-size:30px;"> 相册： </span> 
+   
+        @{
+
+            List<IYogaKoo.ViewModel.ViewYogaPicture> pic = ViewBag.Pic;
+            if (pic.Count() > 0)
+            {
+
+                var stri = "1";
+                var strNums = stri;
+                var picValue = "";
+                <div id="divImgDiploma">
+                    @for (var i = 0; i < pic.Count(); i++)
+                    {
+                        <img id="@strNums" src="@pic[i].PictureOriginal" style="width:300px;height:150px;" />
+
+                        var strA = "a" + strNums;
+                        //根据ID 删除img
+                        //<a href="javascript:void(0);" id="@strA" onclick="delImg(this,@strNums);">删除</a>
+
+                        @: 描述：<label>@pic[i].PictureContent</label>
+                         
+                        strNums = stri + stri;
+                        picValue += pic[i].PictureOriginal + ";";
+                    }
+                </div>
+                <input id="Diploma" name="Diploma" type="hidden" value="@picValue" />
+                <input id="PictureContent" name="PictureContent" type="hidden" value="" />
+                <input id="iNums" name="iNums" type="hidden" value="" />
+                <span>格式为jpg或png</span>
+            }
+            else
+            {
+                <div id="divImgDiploma"></div>
+                <input id="Diploma" name="Diploma" type="hidden" value="" />
+                <input id="PictureContent" name="PictureContent" type="hidden" value="" />
+                <input id="iNums" name="iNums" type="hidden" value="" />
+                 
+            }
+        }
+       
+    </p>
+
+</fieldset>
+
+<p>
+    @Html.ActionLink("编辑", "DaoShiEdit", new {   id=Model.UID   }) |
+    @Html.ActionLink("返回", "DaoShiIndexSearch")
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    @{
+        if(LevelOrderid != 0)
+        {
+            <a onclick="AuditYes()" href="Javascript:;">审核通过</a>
+
+            <a onclick="AuditNo()" href="Javascript:;">审核不通过</a>
+            <div id="divDisplay">
+                <input id="sMemo" name="sMemo" type="text" /><br />
+                <span style="color:red;"> * 请说明审核不通过原因 * </span><br />
+                <input id="btnOK" type="button" value="确认" /><br />
+            </div>
+        }
+    } 
+</p>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+ 
+<script type="text/javascript">
+    $(function () {
+
+        $("#divDisplay").hide();
+
+    });
+    //审核不通过
+    function AuditNo() {
+        $("#divDisplay").show();
+    }
+    //审核不通过确认
+    $('#btnOK').click(function () {
+
+        var data = $("#sMemo").val();
+        // alert(data);
+        if (data != '') {
+            $.ajax({
+                url: '/Member/AudioNO?LevelOrderid='+@LevelOrderid+'&uid=' +@Model.UID +'&sMemo=' + data + '&t=' + Math.random(),
+                type: 'POST',
+                data: data,
+                success: function (data) {
+
+                    if (data.code == 0) {
+                        alert("审核成功！");
+                        location.href = "/Manage/Member/UpgradeTeacherList";
+                    } else if (data.code == 2) {
+                        alert("审核失败：导师身份认证不能为空！");
+                    } else {
+                        alert("审核失败！");
+                    }
+
+                }, error: function () {
+                    alert("审核失败！");
+                }
+            });
+        } else {
+            alert("请说明审核不通过原因 ！");
+        }
+        return false;
+    });
+    //审核通过
+    function AuditYes() {
+
+        var data = "1";//1=普通导师;
+
+        $.ajax({
+            url: '/Member/AudioYes?LevelOrderid='+@LevelOrderid+'&uid=' +@Model.UID +'&t=' + Math.random(),
+            type: 'POST',
+            data: data,
+            success: function (data) {
+
+                if (data.code == 0) {
+                    alert("审核成功！");
+                    location.href = "/Manage/Member/UpgradeTeacherList";
+                } else if (data.code == 2) {
+                    alert("审核失败：导师身份认证不能为空！");
+                } else if (data.code == 1) {
+                    alert("审核失败！");
+                }
+
+            }, error: function () {
+                alert("审核失败！");
+            }
+        });
+        return false;
+    }
+</script>
+
+}

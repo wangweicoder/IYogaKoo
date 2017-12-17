@@ -1,0 +1,97 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model List<IYogaKoo.ViewModel.ViewtQuestion>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+    <div id="list">
+        <div class="content-box" id="">
+            <div class="content-box-header">
+
+                <h3 style="cursor:pointer">FAQ列表</h3>
+
+                <div class="clear"></div>
+
+            </div>
+            <div id="mydiv">
+                <div class="content-box-content">
+                    <div class="tab-content default-tab" id="tab1">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        类别
+                                    </th>
+                                    <th>
+                                        问题
+                                    </th>
+                                    <th>
+                                        答案
+                                    </th>
+                                    <th>
+                                        修改/查看
+                                    </th>
+                                    <th>
+                                        删除
+                                    </th>
+                                </tr>
+                            </thead>
+                            @{
+                                var list = (ViewBag.Diclist as List<IYogaKoo.ViewModel.ViewYogaDicItem>);
+                                foreach (var item in Model)
+                                {
+
+                                    <tr>
+                                        <td>
+                                            @list.FirstOrDefault(p => p.ID == item.TitleID).ItemName
+                                        </td>
+                                        <td>
+                                            @item.QuestionContent
+                                        </td>
+                                        <td>
+                                            @(item.ReplyContent.Length >= 20 ? item.ReplyContent.Substring(0, 20) + "..." : item.ReplyContent)
+                                        </td>
+                                        <td>
+                                            <a href="/Manage/tQuestion/Update?id=@item.ID">修改/查看</a>
+                                        </td>
+                                        <td>
+                                            <a href="Javascript:Del('@item.ID')">删除</a>
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        function Del(id) {
+            if (confirm("是否删除!")) {
+                Loading();
+                $.ajax({
+                    url: "/Manage/tQuestion/Delete",
+                    type: "post",
+                    dataType: "json",
+                    data: { id: id },
+                    success: function (data) {
+                        Loaded();
+                        if (data.code === 0) {
+                            //刷新
+                            window.location.reload();
+                        }
+                        else {
+                            alert("删除失败！");
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+}

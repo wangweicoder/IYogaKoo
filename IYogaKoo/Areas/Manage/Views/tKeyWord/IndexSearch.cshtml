@@ -1,0 +1,131 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model Webdiyer.WebControls.Mvc.PagedList<IYogaKoo.ViewModel.tKeyWordGroup>
+
+@{
+    ViewBag.Title = "关键字";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+    <table width="100%" cellpadding="3" cellspacing="1" id="searchTable" class="chaxun_table">
+        <tr>
+            <td>
+                查询：
+            </td>
+            <td>
+                关键字：
+                <select id="keyWord" name="keyWord"> 
+                </select>
+                <select id="NextkeyWord" name="NextkeyWord">
+                    <option value="">全部</option> 
+                </select>
+                时间：
+                <input type="text" name="FromTime" id="FromTime" />
+                <input type="text" name="ToTime" id="ToTime" />
+
+                <input type="button" value="搜索" id="searchBtn" onclick="searchBtn()" />
+                <input type="button" value="清空" id="btnClear" onclick="btnClear()" />
+            </td>
+
+        </tr>
+
+    </table>
+    <div id="list">
+        @Html.Partial("Index", Model)
+    </div>
+
+</div>
+<script type="text/javascript" src="/Content/Front/js/jquery-1.8.3.min.js"></script>
+<script src="~/Content/My97DatePicker4.7/WdatePicker.js"></script>
+<script type="text/javascript">
+    $(function () {
+
+        $("#FromTime").bind("focus click", function () {
+            //WdatePicker("yyyy-MM-dd");
+            WdatePicker({ startDate: '%y-%M-%d 00:00:00', dateFmt: 'yyyy-MM-dd HH:mm:00', alwaysUseStartDate: true })
+        });
+        $("#ToTime").bind("focus click", function () {
+            //WdatePicker("yyyy-MM-dd");
+            WdatePicker({ startDate: '%y-%M-%d 00:00:00', dateFmt: 'yyyy-MM-dd HH:mm:00', alwaysUseStartDate: true })
+        });
+    });
+    //----------清空
+    $("#btnClear").click(function () {
+        $("#keyWord").val("");
+        $("#FromTime").val("");
+        $("#ToTime").val("");
+        window.location = '/Manage/tKeyWord/IndexSearch';
+
+    });
+    //----------搜索
+    $("#searchBtn").click(function () {
+        if ($("#FromTime").val() >  $("#ToTime").val()) {
+            alert("时间范围有错，请重新选择")
+            return false;
+        } else {
+            $.ajax({
+                type: 'GET',
+                url: '@Url.Action("Index", "tKeyWord")',
+                data: {
+                    keyWord: $("#keyWord").val(),
+                    NextkeyWord: $("#NextkeyWord").val(),
+                    FromTime: $("#FromTime").val(),
+                    ToTime: $("#ToTime").val()
+                },
+                success: function (data) {
+                    $("#list").html(data);
+                }
+            })
+        }
+    });
+</script>
+ 
+<script type="text/javascript">
+    $(function () {
+
+        //关键字加载
+        $("#NextkeyWord").hide();
+        $.ajax({
+            url: '/Manage/tKeyWord/GetKeyWord?id=2645&t=' + Math.random(),
+            type: 'post',
+            datatype: 'json',
+            success: function (data) {
+
+                for (var i = 0; i < data.length; i++) {
+                     
+                    $("#keyWord").append("<option  value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                    
+                };
+            }
+        });
+
+
+    });
+    // 关键字点击
+    $('#keyWord').change(function () {
+
+        var strGuoJia = $(this).val();
+      
+        //加载子项
+        if (strGuoJia == "2648" || strGuoJia == "2649") {
+           
+            $("#NextkeyWord").show();
+            document.getElementById("NextkeyWord").innerHTML = "";
+            $.ajax({
+                url: '/Manage/tKeyWord/GetKeyWord?id=' + strGuoJia,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#NextkeyWord").append("<option value=''>全部</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#NextkeyWord").append("<option   value='" + data[i].SortId + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        } else {
+            $("#NextkeyWord").hide();
+        }
+    }); 
+</script>

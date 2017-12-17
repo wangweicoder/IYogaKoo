@@ -1,0 +1,146 @@
+﻿@using Webdiyer.WebControls.Mvc
+@model List<IYogaKoo.ViewModel.ViewYogaPicture>
+@{
+    ViewBag.Title = "SchoolDetails";
+    Layout = "~/Views/Shared/_CenterDetailLayout.cshtml";
+}
+<div class="lb_School_index">
+    <input type="hidden" id="hid_user" name="Uid" value="@ViewBag.user.Uid" />
+    <div class="lb_School_index_top">
+        <div class="lb_School_index_top_index">
+            <b>您所在位置：</b><span><a href="/Mechanism/index/2">学院 </a> > <a href="javascript:history.go(-1);">@ViewBag.C.CenterName</a></span>
+        </div>
+    </div>
+    <div class="lb_School_index_top_index_bottom">
+        @{
+            string bannerimg = string.Empty;
+            if (String.IsNullOrEmpty(ViewBag.C.CenterBanner))
+            {
+                bannerimg = "/Content/Front/images/defaultimg/centerbannerbig.png";
+            }
+            else
+            {
+                bannerimg = ViewBag.C.CenterBanner;
+            }
+            <img src="@bannerimg"   />
+        }
+      
+    </div>
+    <div class="lb_School_index_xsyx">
+        <p>@ViewBag.C.CenterName</p>
+        <input type="hidden" id="hhid" value="@ViewBag.user.Uid" />
+    </div>
+    <div id="divmyphoto">
+        <div id="con1_1">
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="product_list">
+                        <a href="#" id="@item.Pid">
+                            <img src="@(item.PictureOriginal == null ? "" : Url.Action("GetImg",new {url=item.PictureOriginal,width=200,height=300,mode="W"}))" />
+                        </a>
+                        <p>@(item.PictureContent)</p>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    </div>
+ 
+@section styles
+{
+    <style type="text/css">
+         /*瀑布流*/
+        .wrapper img {
+            border: none;
+        }
+
+        .wrapper {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+            .wrapper h3 {
+                color: #3366cc;
+                font-size: 16px;
+                height: 35px;
+                line-height: 1.9;
+                text-align: center;
+                border-bottom: 1px solid #E5E5E5;
+                margin: 0 0 10px 0;
+            }
+
+        #con1_1 {
+            position: relative;
+        }
+
+            #con1_1 .product_list {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                padding: 10px;
+                background: #eee;
+                margin: 5px;
+            }
+
+        .product_list img {
+            width: 200px;
+        }
+
+        .product_list p {
+            padding: 5px 0px;
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+            white-space: normal;
+            width: 200px;
+            word-break: break-all;
+        }
+      </style>
+   
+}
+@section scripts
+{
+ <script src="~/Content/Front/js/masonry/jquery.masonry.min.js"></script>
+<script src="~/Content/Front/js/QQPhoto/QQPhoto.min.js"></script>
+<link href="~/Content/Front/css/QQPhoto/style.css" rel="stylesheet" />
+    <script type="text/javascript">
+        $(function () {
+            var $container = $('#con1_1');
+            $container.imagesLoaded(function () {
+                $container.masonry({
+                    itemSelector: '.product_list',
+                    columnWidth: 5 //每两列之间的间隙为5像素
+                });
+            });
+
+            //点击查看相册
+            //判断是否登录
+            var l = "false";
+            var hhid = $("#hhid").val();
+            if (hhid != '' && hhid != 0) {
+                l = "true";
+            }
+
+            $("#divmyphoto a").QQPhoto({
+                url: "/Controllers/ashxFile/GetCenterImg.ashx?id=" + @ViewBag.id + "&imgid=",                 //获取相册列表数据的URL地址 需要返回 JSON 格式，请参考文件 data.json 格式来输出
+                commentURL: '@Url.Content("~/Controllers/ashxFile/ImgComment.ashx")',            //提交评论 Ajax 发送到 服务器端的地址   返回 JSON 格式，请参考文件 comment.json 格式来输出
+                fix: 5,                           //表示相册列表左右间距的距离                 默认 5
+                minTextLen: 3,                    //发送评论时 表单验证，最少不能少于的字符    默认三个字符
+                maxTextLen: 140,                  //发送评论时 表单验证，最多不能少于的字符    默认140个字符
+                fadeIn: false,                     //图片默认是否开启淡入效果，默认为 false
+                lazyload: '@Url.Content("~/Content/Front/css/QQPhoto/images/lazyload.gif")',   //默认lazyload的图片，默认为1px.gif 透明图片
+                loadding: '@Url.Content("~/Content/Front/css/QQPhoto/images/loading.gif")',    //loading.gif 的文件路径
+                islogin: l
+            });
+
+        
+        });
+      
+
+    </script>
+ 
+    }
+ 

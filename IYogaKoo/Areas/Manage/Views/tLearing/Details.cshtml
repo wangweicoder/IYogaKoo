@@ -1,0 +1,132 @@
+﻿@model IYogaKoo.ViewModel.ViewtLearing
+
+@{
+    ViewBag.Title = "详情";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">社区详情</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+
+        <div class="tab-content default-tab" id="tab1">
+
+            <fieldset id="lb_index_houtai">
+                
+                @Html.HiddenFor(model => model.Uid)
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.NickName)：
+                </div>
+                <div class="display-field">
+                  @ViewBag.Name
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.sPic)：
+                </div>
+                <div class="display-field">
+                    <img src="@Model.sPic" width="300" />
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.sTitle)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.sTitle)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.iReadNums)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.iReadNums) &nbsp;
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.iWritelogNums)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.iWritelogNums) &nbsp;
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.iZanNums)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.iZanNums)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.CreateDate)：
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.CreateDate)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.iType)：
+                </div>
+                <div class="display-field">
+                    @ViewBag.ItemName
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.sContent)：
+                </div>
+                <div class="display-field">
+                    @Html.Raw(Model.sContent)
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+</div>
+<p>
+    <a href="Javascript:ExamineMethod('@Model.ID')">审核</a> |
+    @Html.ActionLink("编辑", "Edit", new { id = Model.ID, iType = 0 }) |
+    @{
+        if (ViewBag.iType == 1)
+        {
+            @Html.ActionLink("返回", "ExamineSearch")
+        }
+        else
+        {
+            @Html.ActionLink("返回", "IndexSearch")
+        }
+    }
+
+</p>
+<script type="text/javascript">
+
+    function ExamineMethod(id) {
+        if (confirm("是否审核通过？")) {
+            $.ajax({
+                type: 'post',
+                url: '@Url.Action("ExamineMethod", "tLearing")',
+                datatype: 'json',
+                data: {
+                    id: id
+                },
+                success: function (data) {
+                    if (data.code == 0) {
+                        alert('审核通过！');
+                        window.location.href = "/tLearing/ExamineSearch";
+                    } else {
+                        alert('审核失败！');
+                    }
+                }
+            })
+        }
+    }
+
+
+</script>

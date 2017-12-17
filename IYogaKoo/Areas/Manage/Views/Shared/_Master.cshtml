@@ -1,0 +1,199 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title - IYogaKoo</title>
+    @RenderSection("styles", false)
+    <link rel="stylesheet" href="@Url.Content("/Content/Back/css/reset.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("/Content/Back/css/style.css")" type="text/css" media="screen" />
+    <link rel="stylesheet" href="@Url.Content("/Content/Back/css/invalid.css")" type="text/css" media="screen" />
+    @*<link href="/Content/My97DatePicker4.7/skin/WdatePicker.css" rel="stylesheet" type="text/css">*@
+    @*<link href="~/Content/Front/css/pagerstylesBack.css" rel="stylesheet" />*@
+    <script src="~/Scripts/jquery-1.8.2.min.js"></script>
+
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    @*<script src="~/Content/My97DatePicker4.7/WdatePicker.js"></script>*@
+    <script type="text/javascript" src="/Content/Back/scripts/simpla.jquery.configuration.js"></script> 
+    @*<script src="~/Scripts/layer/layer.js"></script>*@
+    @*<script src="~/Scripts/admin.js"></script>*@
+</head>
+<body>
+   <div id="body-wrapper">
+        <!-- Wrapper for the radial gradient background -->
+
+        <div id="sidebar">
+            <div id="sidebar-wrapper">
+                <!-- Sidebar with logo and menu -->
+
+                <h1 id="sidebar-title"><a href="#">Simpla Admin</a></h1>
+
+                <!-- Logo (221px wide) -->
+                <a href="#"><img id="logo" width="171px" height="55px" src="/content/back/images/iyogakooLOGO1.fw.png" alt="Simpla Admin logo"></a>
+
+                <!-- Sidebar Profile links -->
+                <div id="profile-links">
+                    你好,
+                    <a href="#" title="Edit your profile">管理员</a>有<a href="#messages" rel="modal" title="3 条信息">0条信息</a>
+                    <br>
+                    <br>
+                    <a href="#" title="查看网站">查看网站</a>&nbsp;&nbsp; |&nbsp;&nbsp;
+            @Html.ActionLink("退出", "LogOut", "BackLogin")
+                </div>
+
+                <ul id="main-nav">
+                    <!-- Accordion Menu -->
+
+                    <li>
+                        <a href="#" class="nav-top-item" style="padding-right: 15px;">
+                            用户管理
+                        </a>
+                        <ul style="display: block;">
+                            <li><a href="/Manage/Member/IndexSearch" target="content_right1" class="current">会员账户管理</a></li>
+                            <li><a href="/Manage/Member/UserDetailsSearch" target="content_right" class="current">瑜伽习练者列表</a></li>
+                            <li><a href="/Manage/Member/DaoShiIndexSearch">瑜伽导师列表</a></li>
+                            <li><a href="/Manage/Member/DaoShiCreate">添加瑜伽导师</a></li> <!-- Add class "current" to sub menu items also -->
+                            <li><a href="index.html" target="content_right">index</a></li>
+                            <li><a href="/Manage/Member/UpgradeTeacherList">升级导师列表</a></li>
+                            <li><a href="/Manage/Centers/Index?centertype=1" target="content_right">瑜伽会馆</a></li>
+                            <li><a href="/Manage/tMessage/Index">留言列表</a></li>
+                            <li><a href="/AddEvaluate/Index">点评列表</a></li>
+                        </ul>
+
+                    </li>
+
+                    <li>
+                        <a href="#" class="nav-top-item current " style="padding-right: 15px;">
+                            <!-- Add the class "current" to current menu item -->
+                            课程管理
+                        </a>
+                        <ul style="display: none;">
+                            <li><a class="current" href="/manage/class">课程订单管理</a></li>
+                            <li><a href="/manage/class">课程管理</a></li>
+                            <li><a href="/Admin/AddClass">添加课程</a></li>
+                            <li><a href="/manage/class/AddActivity">添加活动</a></li>
+                            <li><a href="/Admin/AddTraining">添加导师培训</a></li>
+                            <li><a href="/Admin/ClassStatistics">课程统计</a></li>
+                            <li><a href="/manage/class/order">订单管理</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-top-item" style="padding-right: 15px;">
+                            机构管理
+                        </a>
+                        <ul>
+                            <li><a href="/Manage/Centers/Index?centertype=1" class="current">会馆列表</a></li>
+                            <li><a href="/Manage/Centers/Index?centertype=2" class="current">学院列表</a></li>
+                            <li><a href="/Manage/Centers/Index?centertype=3" class="current">工作室列表</a></li>
+                            <li><a href="/Manage/Centers/IndexEval" class="current">审核点评</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-top-item" style="padding-right: 15px;">
+                            图库管理
+                        </a>
+                        <ul style="display: block;">
+                            <li><a href="/Manage/YogaPicture/IndexSearch" class="current">相册管理</a></li>
+                            <li><a href="/Manage/tBanner/Index">Banner图</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#" class="nav-top-item">
+                            文章管理
+                        </a>
+                        <ul>
+                            <li><a href="/YogaArticle/Index" class="current">文章列表</a></li>
+                            <li><a href="/YogaArticle/Create">添加文章</a></li>
+                            <li><a href="/YogaArtClass/Index">文章分类列表</a></li>
+                            <li><a href="/YogaArtClass/Create">添加文章分类</a></li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#" class="nav-top-item" style="padding-right: 15px;">
+                            日志管理
+                        </a>
+                        <ul>
+                            <li><a href="/WriteLog/IndexSearch" class="current">日志列表</a></li>
+                            <li><a href="/WriteLog/Create">添加日志</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-top-item" style="padding-right: 15px;">
+                            社区管理
+                        </a>
+                        <ul>
+                            <li><a href="/tLearing/IndexSearch" class="current">社区列表</a></li>
+                            <li><a href="/tLearing/Create">添加社区信息</a></li>
+                            <li><a href="/tLearing/ExamineSearch">推送审核管理</a></li> 
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="nav-top-item" style="padding-right: 15px;">
+                            设置
+                        </a>
+                        <ul>
+                            <li><a href="/Manage/tQuestion/Index" class="current">FAQ列表</a></li>
+                            <li><a href="/Manage/tQuestion/AddFAQ" class="current">添加FAQ</a></li>
+                            <li><a href="/Manage/tQuestion/UserQuestionIndex" class="current">用户问题列表</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/Backpage/DicSet" class="nav-top-item">
+                            字典管理
+                        </a>
+                        <ul>
+                            <li><a href="/Manage/DicSet/Index" class="current">字典列表</a></li>
+                            <li><a href="/Manage/DicSet/AddDic">添加字典</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/Backpage/DicSet" class="nav-top-item">
+                            站内信管理
+                        </a>
+                        <ul>
+                            <li><a href="/Manage/tInstationInfo/Index" class="current">站内信列表</a></li>
+                            <li><a href="/Manage/tInstationInfo/Create">添加站内信</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="/Backpage/DicSet" class="nav-top-item">
+                            关键字搜索管理
+                        </a>
+                        <ul>
+                            <li><a href="/Manage/tKeyWord/IndexSearch" class="current">关键字列表</a></li>
+                        </ul>
+                    </li>
+                </ul> <!-- End #main-nav -->
+            </div>
+        </div> <!-- End #sidebar -->
+
+        <div id="main-content">
+            <!--start body-->
+            @RenderBody()
+
+            <div class="wrapper-right-content">
+                <iframe id="content_right" style="width:100%" frameborder="0" scrolling="no" name="content_right1"></iframe>
+            </div>
+            <!--end body-->
+            <div class="clear"></div>
+
+            <div id="footer">
+                <small>
+                    © Copyright 2009 Simpla Admin | Powered by <a href="http://themeforest.net/item/simpla-admin-flexible-user-friendly-admin-skin/46073">Simpla Admin</a> | <a href="#">Top</a>
+                </small>
+            </div><!-- End #footer -->
+
+        </div> <!-- End #main-content -->
+
+    </div> 
+
+    @RenderSection("scripts", false)
+</body>
+</html>

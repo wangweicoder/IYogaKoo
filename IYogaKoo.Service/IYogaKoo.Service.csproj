@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A9C1ADB4-27F9-4421-BA40-FF15E57FE1AF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>IYogaKoo.Service</RootNamespace>
+    <AssemblyName>IYogaKoo.Service</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>Svn</SccProjectName>
+    <SccLocalPath>Svn</SccLocalPath>
+    <SccAuxPath>Svn</SccAuxPath>
+    <SccProvider>SubversionScc</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClassDetailServiceImpl.cs" />
+    <Compile Include="Interfaces\IClassDetailService.cs" />
+    <Compile Include="Interfaces\ItKeyWordService.cs" />
+    <Compile Include="tKeyWordServiceImpl.cs" />
+    <Compile Include="CenterStareServiceImpl.cs" />
+    <Compile Include="ClassFileServiceImpl.cs" />
+    <Compile Include="ClassReportServiceImpl.cs" />
+    <Compile Include="ClassServiceImpl.cs" />
+    <Compile Include="ClassTeacherServiceImpl.cs" />
+    <Compile Include="Extensions\IQueryableExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Interfaces\ICenterStareService.cs" />
+    <Compile Include="Interfaces\IClassFileService.cs" />
+    <Compile Include="Interfaces\IClassReportService.cs" />
+    <Compile Include="Interfaces\ILevelOrderService.cs" />
+    <Compile Include="Interfaces\IOrderService.cs" />
+    <Compile Include="Interfaces\ItInstationInfoService.cs" />
+    <Compile Include="Interfaces\ItUserLoginInfoService.cs" />
+    <Compile Include="Interfaces\ItQuestionService.cs" />
+    <Compile Include="Interfaces\ItSignService.cs" />
+    <Compile Include="Interfaces\ItLearingService.cs" />
+    <Compile Include="Interfaces\ItWriteLogService.cs" />
+    <Compile Include="Interfaces\ItZanModelsService.cs" />
+    <Compile Include="LevelOrderServiceImpl.cs" />
+    <Compile Include="OrderServiceImpl.cs" />
+    <Compile Include="tInstationInfoServiceImpl.cs" />
+    <Compile Include="tUserLoginInfoServiceImpl.cs" />
+    <Compile Include="tQuestionServiceImpl.cs" />
+    <Compile Include="tSignServiceImpl.cs" />
+    <Compile Include="ttLearingServiceImpl.cs" />
+    <Compile Include="tWriteLogServiceImpl.cs" />
+    <Compile Include="InterestServiceImpl.cs" />
+    <Compile Include="Interfaces\IClassService.cs" />
+    <Compile Include="Interfaces\IClassTeacherService.cs" />
+    <Compile Include="Interfaces\IInterestedService.cs" />
+    <Compile Include="Interfaces\IYogaMenusService.cs" />
+    <Compile Include="Interfaces\IYogaPictureService.cs" />
+    <Compile Include="Interfaces\IYogaUserDetailService.cs" />
+    <Compile Include="Interfaces\IEvaluatesService.cs" />
+    <Compile Include="Interfaces\IYogaDicItemService.cs" />
+    <Compile Include="Interfaces\IFollowService.cs" />
+    <Compile Include="Interfaces\IYogaArticleService.cs" />
+    <Compile Include="Interfaces\IYogaArtClassService.cs" />
+    <Compile Include="Interfaces\ICentersService.cs" />
+    <Compile Include="Interfaces\IYogiProfileService.cs" />
+    <Compile Include="Interfaces\ItMessageService.cs" />
+    <Compile Include="Interfaces\ItBannerService.cs" />
+    <Compile Include="Interfaces\IYogisModelsService.cs" />
+    <Compile Include="tZanModelsServiceImp.cs" />
+    <Compile Include="YogaMenusServiceImpl.cs" />
+    <Compile Include="YogaPictureServiceImpl.cs" />
+    <Compile Include="YogaUserDetailServiceImpl.cs" />
+    <Compile Include="YogaUserServiceImpl.cs" />
+    <Compile Include="Interfaces\IYogaUserService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="EvaluatesServiceImpl.cs" />
+    <Compile Include="YogaDicItemServiceImpl.cs" />
+    <Compile Include="FollowServiceImpl.cs" />
+    <Compile Include="YogaArticleServiceImpl.cs" />
+    <Compile Include="YogaArtClassServiceImpl.cs" />
+    <Compile Include="CentersServiceImpl.cs" />
+    <Compile Include="YogiProfileServiceImpl.cs" />
+    <Compile Include="tMessageServiceImpl.cs" />
+    <Compile Include="tBannerServiceImpl.cs" />
+    <Compile Include="YogisModelsServiceImpl.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IYogaKoo.Dao\IYogaKoo.Dao.csproj">
+      <Project>{8f359cd2-a1ba-4a1f-9e28-5ad8b4c5bab4}</Project>
+      <Name>IYogaKoo.Dao</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IYogaKoo.Entity\IYogaKoo.Entity.csproj">
+      <Project>{cb0d1b93-c5fc-4734-866e-b0326c80bbc9}</Project>
+      <Name>IYogaKoo.Entity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\IYogaKoo.ViewModel\IYogaKoo.ViewModel.csproj">
+      <Project>{1ce6e4bd-4d2b-4e41-bdbd-58a273ca1aab}</Project>
+      <Name>IYogaKoo.ViewModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,456 @@
+﻿@model List<IYogaKoo.ViewModel.PicListGroup>
+
+@{
+    ViewBag.Title = "我的相册";
+    Layout = "~/Views/Shared/_LayoutSetUpBack.cshtml";
+    //默认显示所有图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> piclistAll = ViewBag.piclistAll;
+    //日志图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> listwlogimg = new List<IYogaKoo.ViewModel.ViewYogaPicture>();
+    //习练笔记App图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> listwlogimgApp = new List<IYogaKoo.ViewModel.ViewYogaPicture>();
+    //活动图片
+    List<IYogaKoo.ViewModel.ViewYogaPicture> wlogimgclasslist = new List<IYogaKoo.ViewModel.ViewYogaPicture>();
+    if (piclistAll.Count() > 0)
+    {
+        listwlogimg = piclistAll.Where(X => X.PictureType == 3).ToList();
+        listwlogimgApp = piclistAll.Where(X => X.PictureType == 4).ToList();
+        wlogimgclasslist = piclistAll.Where(X => X.PictureType == 6).ToList();
+    }
+    //他人ID
+    var id = ViewBag.id ;
+    var Gender = ViewBag.otherGender;
+    var YogisLevel = ViewBag.YogisLevel;//=4 大师
+}
+
+@section styles
+{
+    <style type="text/css">
+    /*文件夹*/
+    #con1_2 {
+        position: relative;
+    }
+
+    .product_list2 {
+        width: 85px;
+        float: left;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        margin: 7px;
+        background: #eee;
+        /*margin: 5px;*/
+    }
+
+        .product_list2 img {
+            width: 85px;
+            height: 85px;
+        }
+
+    .lb_add_index_index_i {
+        overflow: hidden;
+    }
+
+    .lb_ckgd a {
+        font-size: 14px;
+        display: block;
+        text-align: center;
+        line-height: 35px;
+    }
+
+    .product_list2 p {
+        font-size: 12px;
+        line-height: 25px;
+    }
+
+    .lb_ckgd {
+        overflow: hidden;
+        border-top: 1px solid rgba(0, 0, 0, 0.5);
+        border-color: gray;
+    }
+
+    .bbackground {
+        /*background-color:#000000;*/
+        font-weight: 100;
+        padding: 2px 8px 2px 8px;
+        color: #ffffff;
+        font-size: 8px;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.5) none repeat scroll 0% 0%;
+        /*filter:alpha(opacity:30); opacity:0.3; -moz-opacity:0.3;-khtml-opacity: 0.3;*/
+        position: absolute;
+        z-index: 222222;
+        top: 71px;
+        left: 57px;
+    }
+      /*瀑布流*/
+         /*瀑布流*/
+        .wrapper img {
+            border: none;
+        }
+
+        .wrapper {
+            width: 1000px;
+            margin: 0 auto;
+        }
+
+            .wrapper h3 {
+                color: #3366cc;
+                font-size: 16px;
+                height: 35px;
+                line-height: 1.9;
+                text-align: center;
+                border-bottom: 1px solid #E5E5E5;
+                margin: 0 0 10px 0;
+            }
+
+         #con1_1,#con1_1bj ,#con1_1hd,#con1_1All {
+            position: relative;
+        }
+
+            #con1_1 .product_list, #con1_1bj .product_list, #con1_1hd .product_list , #con1_1All .product_list {
+                position: absolute;
+                left: 0px;
+                top: 0px;
+                padding: 10px;
+                background: #eee;
+                margin: 5px;
+            }
+
+        .product_list img {
+            width: 200px;
+        }
+
+        .product_list p {
+            padding: 5px 0px;
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+            white-space: normal;
+            width: 200px;
+            word-break: break-all;
+        }
+    /*返回顶部*/
+    /*returnTop*/
+    p#back-to-top {
+        position: fixed;
+        display: none;
+        bottom: 300px;
+        right: 150px;
+    }
+
+        p#back-to-top a {
+            text-align: center;
+            text-decoration: none;
+            color: #979797;
+            display: block;
+            width: 64px;
+            /*使用CSS3中的transition属性给跳转链接中的文字添加渐变效果 background:  url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png')  */
+            -moz-transition: color 1s;
+            -webkit-transition: color 1s;
+            -o-transition: color 1s;
+        }
+
+            p#back-to-top a:hover {
+                color: #65c3a5;
+            }
+
+            p#back-to-top a span {
+                background-image: url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png');
+                border-radius: 6px;
+                display: block;
+                height: 64px;
+                width: 58px;
+                margin-bottom: 5px;
+                margin: 0 auto;
+            }
+
+    #back-to-top a:hover span {
+        background-image: url('../../Content/Front/images/defaultimg/Actions-arrow-up-top-icon.png');
+    }
+</style>
+}
+<div class="lb_gr_index_top">
+    <ul>
+        @if (YogisLevel == 4)
+        {
+            <li><a href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">@(Gender)的文章</a></li>
+        }
+        else
+        {
+            <li><a href="/tWriteLog/OtherIndex/?uid=@ViewBag.id">@(Gender)的日志</a></li>
+        } 
+        <li><a class="on" href="/tWriteLog/OtherPics?id=@ViewBag.id">@(Gender)的相册</a></li>
+        <li><a href="/tWriteLog/OtherClass?uid=@ViewBag.id">@(Gender)的活动</a></li>
+        <li><a href="/YogaUser/otherFollowList/@ViewBag.id">@(Gender)的瑜伽圈</a></li>
+    </ul>
+</div>
+<input type="hidden" id="hhid" value="@ViewBag.user.Uid" />  
+<div class="lb_gr_idnex_center_rizhi" style=" height: auto;">
+    <div class="lb_gr_xc_left">
+        <ul>
+            <li ><a class="a1">日志图片<span>@listwlogimg.Count</span></a></li>
+            <li><a class="a2">习练图片<span>@listwlogimgApp.Count</span></a></li>
+            <li ><a class="a3">活动图片<span>@(wlogimgclasslist == null ? 0 : wlogimgclasslist.Count)</span></a></li>
+        </ul>
+        @{
+            <div class="lb_add_index_index_i">
+                @{
+
+                    if (Model != null)
+                    {
+                        if (Model.Count() > 0)
+                        {
+                            <div id="con1_2">
+
+                                @foreach (var item in Model)
+                                {
+                                    if (item.picnum != 0)
+                                    { 
+                                    <div class="product_list2">
+                                        <a href="/tWriteLog/OtherPicsDetails?id=@id&pirctureName=@item.pictitle" id="@item.uid  ">
+                                            <img src="@(item.picsrc == null ? "" : item.picsrc)" />
+                                            <b class="bbackground">@item.picnum</b>
+                                        </a>
+
+                                        <p>@(item.pictitle)</p>
+
+                                    </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="product_list2">
+                                            <a href="/tWriteLog/OtherPicsDetails?id=@id&pirctureName=@item.pictitle" id="@item.uid  ">
+                                                <img src="@(item.picsrc == null ? "" : item.picsrc)" />
+                                                
+                                            </a>
+
+                                            <p>@(item.pictitle)</p>
+
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        }
+                    }
+                }
+            </div>
+        }
+        <div class="lb_ckgd">
+            <a href="/tWriteLog/OtherPicsFileInfo/@id">查看更多 > </a>
+        </div> 
+    </div>
+    
+    @*日志图片*@
+    <div class="wrapper1" style="float:left;">
+        <div id="wlogImgwrapper" class="wrapper" style="width:1000px;">
+            @{
+
+                if (listwlogimg != null)
+                {
+                    if (listwlogimg.Count() > 0)
+                    {
+                        <div id="con1_1" style="margin-left:25px; margin-top:10px;">
+                            @foreach (var item in listwlogimg)
+                            {
+                                <div class="product_list" id="@item.Pid">
+                                   
+                                        <img src="@(item.PictureOriginal == null ? "" : item.PictureOriginal)" />
+                                    
+                                </div>
+
+                            }
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+    @*习练笔记App图片*@
+    <div class="wrapper1" style="float:left;display:none;">
+        <div id="AppwlogImgwrapper" class="wrapper" style="width:1000px;">
+            @{
+
+                if (listwlogimgApp != null)
+                {
+                    if (listwlogimgApp.Count() > 0)
+                    {
+                        <div id="con1_1bj">
+                            @foreach (var item in listwlogimgApp)
+                            {
+                                <div class="product_list" id="@item.Pid">
+
+                                    <img src="@(item.PictureOriginal == null ? "" : item.PictureOriginal)" />
+
+                                </div>
+
+                            }
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+    @*活动图片*@
+    <div class="wrapper1" style="float:left; display:none;">
+        <div id="ClasswlogImgwrapper" class="wrapper" style="width:1000px;">
+            @{
+
+                if (wlogimgclasslist != null)
+                {
+                    if (wlogimgclasslist.Count() > 0)
+                    {
+                        <div id="con1_1hd">
+                            @foreach (var item in wlogimgclasslist)
+                            {
+                                <div class="product_list" id="@item.Pid">
+
+                                    <img src="@(item.PictureOriginal == null ? "" : item.PictureOriginal)" />
+
+                                </div>
+
+                            }
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+    @*所有图片*@
+    <div class="wrapper1" style="float:right; display:none;">
+        <div id="picAll" class="wrapper" style="width:985px;">
+            @{
+
+                if (piclistAll != null)
+                {
+                    if (piclistAll.Count() > 0)
+                    {
+                        <div id="con1_1All">
+                            @foreach (var item in piclistAll)
+                            {
+                                <div class="product_list" id="@item.Pid">
+
+                                    <img src="@(item.PictureOriginal == null ? "" : item.PictureOriginal)" />
+
+                                </div>
+
+                            }
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+</div>
+
+ 
+<script src="~/Scripts/layer/extend/layer.ext.js"></script>
+
+<script src="~/Content/Front/js/QQPhoto/QQPhoto.min.js"></script>
+<link href="~/Content/Front/css/QQPhoto/style.css" rel="stylesheet" />
+<script type="text/javascript">
+
+    $(document).ready(function () {
+      
+        var imgtypeid=@ViewBag.imgtypeid;
+        if(imgtypeid!=-1)
+        {
+            $(".lb_gr_xc_left ul li:eq("+imgtypeid+")").addClass('on').siblings('li').removeClass('on');
+            $('.wrapper1').eq(imgtypeid).fadeIn().siblings('.wrapper1').fadeOut();
+        }else
+        {
+            $('.wrapper1').eq(3).fadeIn().siblings('.wrapper1').fadeOut();
+        }
+
+        //判断是否登录
+        var l = "false";
+        var hhid = $("#hhid").val();
+        if (hhid != '' && hhid != 0) {
+            l = "true";
+        }
+
+        $("#con1_1All .product_list,#con1_1hd .product_list,#con1_1bj .product_list,#con1_1 .product_list  ").QQPhoto({
+            url: "/Controllers/ashxFile/GetMyselfImg.ashx?part=0&PictureName=@ViewBag.pictitle&id=" +@ViewBag.id + "&imgid=",                 //获取相册列表数据的URL地址 需要返回 JSON 格式，请参考文件 data.json 格式来输出
+            commentURL: '@Url.Content("~/Controllers/ashxFile/ImgComment.ashx")',            //提交评论 Ajax 发送到 服务器端的地址   返回 JSON 格式，请参考文件 comment.json 格式来输出
+            fix: 5,                           //表示相册列表左右间距的距离                 默认 5
+            minTextLen: 3,                    //发送评论时 表单验证，最少不能少于的字符    默认三个字符
+            maxTextLen: 140,                  //发送评论时 表单验证，最多不能少于的字符    默认140个字符
+            fadeIn: false,                     //图片默认是否开启淡入效果，默认为 false
+            lazyload: '@Url.Content("~/Content/Front/css/QQPhoto/images/lazyload.gif")',   //默认lazyload的图片，默认为1px.gif 透明图片
+            loadding: '@Url.Content("~/Content/Front/css/QQPhoto/images/loading.gif")',    //loading.gif 的文件路径
+            islogin: l
+        });
+        $('#con1_1All').masonry({
+            itemSelector: '.product_list',
+            columnWidth: 10
+        });
+
+    });
+
+    ////相册层
+    ////调用示例
+    //layer.ready(function () { //为了layer.ext.js加载完毕再执行
+    //    layer.photos({
+    //        photos: '#wlogImgwrapper'
+    //    });
+    //    layer.photos({
+    //        photos: '#AppwlogImgwrapper'
+    //    });
+    //    layer.photos({
+    //        photos: '#wlogImgwrapper'
+    //    });
+    //});
+
+    function flowuid(obj) {
+        var hhid = $("#hhid").val();
+        if (hhid != '' && hhid != 0) {
+
+            if (obj == '' || obj == undefined || obj == null) {
+                if (confirm("你还没有添加详细信息，是否添加？")) {
+                    window.open("/Login/UserDetailEdit");
+                }
+            } else {
+
+                $.ajax({
+                    url: "/Follow/SetFollow",
+                    type: "get",
+                    dataType: "text",
+                    data: {
+                        quertid: obj,
+                        isf: $("#flowuid").html().trim(),
+                        UserType: $("#htype").val()
+                    },
+                    success: function (relust, status) {
+                        if (status == "success") {
+                            if (relust == "1") {
+                               layer.msg("关注成功！");
+                                $("#flowuid").html("已关注");
+                                var ofnum = $(".lb_name_div ul li").eq(1).children("p").text();
+                                $(".lb_name_div ul li").eq(1).children("p").text(parseInt(ofnum) + 1);
+                            }
+                            else if (relust == "0") {
+                                layer.msg("取消成功！");
+                                $("#flowuid").html("+关注");
+                                var ofnum = $(".lb_name_div ul li").eq(1).children("p").text();
+                                $(".lb_name_div ul li").eq(1).children("p").text(parseInt(ofnum) - 1);
+                            }
+                            else if (relust == "3") {
+                                layer.msg("亲自己不需要关注自己的！");
+                            }
+
+                        } else {
+                            layer.msg("关注失败！");
+                        }
+                    },
+                    async: true,//同步操作，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行
+                });
+            }
+        } else {
+            layer.confirm("登录后才可以加关注!", function (data) {
+                layer.close(data);
+                window.open("/Login/Login");// 来打开新窗口
+            });
+
+        }
+    };
+</script>

@@ -1,0 +1,253 @@
+﻿@model IYogaKoo.ViewModel.ViewYogisModels
+
+@{
+    ViewBag.Title = "添加导师";
+    Layout = null;
+
+}
+<script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+
+
+<link href=@Url.Content("~/Content/uploadify/uploadify.css") rel="stylesheet" />
+<script src=@Url.Content("~/Content/uploadify/jquery.uploadify-3.1.min.js")></script>
+
+
+
+
+@using (Html.BeginForm())
+{
+    <div class="lb_ds">
+        <h2 style=" float:left">添加导师</h2><p style="color:red; font-size:16px; float:left; margin-left:15px; line-height:30px">以下为必填项</p>
+    </div>
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    <input type="hidden" id="ddlCountryText" name="ddlCountryText" />
+    <fieldset id="lb_sjds_fiel">
+        <div class="editor-label">
+            @Html.LabelFor(model => model.RealName)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.RealName)
+            @*  <span class="spanred">*</span>*@
+            @Html.ValidationMessageFor(model => model.RealName)
+        </div>
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Gender)
+        </div>
+        <div class="editor-field">
+            @Html.RadioButtonFor(model => model.Gender, 1, new { Checked = "checked" })<span class="span">男</span>
+            @Html.RadioButtonFor(model => model.Gender, 0)<span class="span">女</span>
+            @* @Html.ValidationMessageFor(model => model.Gender) *@@*<b  class="lb_spans">*</b>*@
+        </div>
+
+        <div class="editor-label">
+            <label>所在区域：</label>
+        </div>
+        <div class="editor-field">
+            <select id="ddlCountryID" name="ddlCountryID">
+                <option value="0">请选择国家</option>
+            </select>@*<span class="spanred">*</span>*@
+            <select id="ddlProvinceID" name="ddlProvinceID">
+                <option value="0">请选择省份</option>
+            </select>@*<span class="spanred">*</span>*@
+            <select id="ddlCityID" name="ddlCityID" style="width: 100px;">
+                <option value="0">请选择城市</option>
+            </select>@*<span class="spanred">*</span>*@
+            <select id="ddlDistrictID" name="ddlDistrictID" style="width: 100px;">
+                <option value="0">请选择城区</option>
+            </select>@*<span class="spanred">*</span>*@
+        </div>
+
+        <div class="editor-field">
+
+            <div class="lb_qq_index">
+
+                <div class="lbn_qq_p">
+                    <p>
+                        <input type="button" class="button" value="保存" id="idsubmit" />
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </fieldset>
+}
+
+<script type="text/javascript">
+    // 国家事件
+    $('#ddlCountryID').click(function () {
+
+        var strGuoJia = $(this).val();
+        if (strGuoJia != "0") {
+            document.getElementById("ddlProvinceID").innerHTML = "";
+            //加载省
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strGuoJia,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlProvinceID").append("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlProvinceID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //省事件
+    $("#ddlProvinceID").click(function () {
+
+        var strSheng = $(this).val();
+        if (strSheng != "0") {
+            document.getElementById("ddlCityID").innerHTML = "";
+            //加载市
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strSheng,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlCityID").append("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlCityID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+    //城市事件
+    $("#ddlCityID").click(function () {
+
+        var strShi = $(this).val();
+        if (strShi != "0") {
+            document.getElementById("ddlDistrictID").innerHTML = "";
+            //加载城区
+            $.ajax({
+                url: '/Login/GetAreaInfo?id=' + strShi,
+                type: 'post',
+                datatype: 'json',
+                success: function (data) {
+                    $("#ddlDistrictID").append("<option value='0'>请选择</option>");
+                    for (var i = 0; i < data.length; i++) {
+
+                        $("#ddlDistrictID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+
+                    };
+                }
+            });
+        }
+    });
+</script>
+
+<script>
+    $(function () {
+        $("#Gender").val("1");
+        //国籍
+
+        $.ajax({
+            url: '/Login/GetNationalityInfo?t=' + Math.random(),
+            type: 'post',
+            datatype: 'json',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+
+                    if (data[i].ID == $("#hNationality").val()) {
+                        $("#ddlNationality").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                    } else {
+                        $("#ddlNationality").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                    }
+                };
+            }
+        });
+        //国家
+
+        $.ajax({
+            url: '/Login/GetCountryInfo?t=' + Math.random(),
+            type: 'post',
+            datatype: 'json',
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    if (data[i].ID == $("#hCountryID").val()) {
+                        $("#ddlCountryID").append("<option value='" + data[i].ID + "'  selected='selected' >" + data[i].ItemName + "</option>");
+                    } else {
+                        $("#ddlCountryID").append("<option value='" + data[i].ID + "'>" + data[i].ItemName + "</option>");
+                    }
+                };
+            }
+        });
+
+
+    });
+</script>
+
+<script>
+    $('#idsubmit').click(function () {
+        if ($("#RealName").val().length == 0) {
+            alert("请填写真实姓名");
+            return false;
+        }
+        if ($("#ddlCountryID").val() == "-1") {
+            alert("请选择国家");
+            return false;
+        }
+        if ($("#ddlProvinceID").val() == "0") {
+            alert("请选择省份");
+            return false;
+        }
+        if ($("#ddlCityID").val() == "0") {
+            alert("请选择城市");
+            return false;
+        }
+        if ($("#ddlDistrictID").val() == "0") {
+            alert("请选择城区");
+            return false;
+        }
+        //验证结束
+        var strpicvalue = "";
+        $('input[name="picContent"]').each(function () {
+            strpicvalue += $(this).val() + "|";
+
+        });
+
+        $("#ddlCountryText").val($("#ddlCountryID option:selected").text());
+        var data = $("form").serialize();
+
+        $.ajax({
+            url: '/YogisModels/Create?t=' + Math.random(),
+            type: 'POST',
+            data: data,
+            success: function (data) {
+
+                if (data.code == 0) {
+                    //location.href = "/Member/CreateDisplayImg?uid=" + data.Uid + "&&ClassTeacherId=" + data.ClassTeacherId;
+                    /**/
+                    ShowBox("/Member/CreateDisplayImg?uid=" + data.Uid + "&&ClassTeacherId=" + data.ClassTeacherId, "", null, '1000px', function () {
+                        //var setting = uploadifySetting;
+                        //setting.onUploadSuccess = function (file, data, response) {
+                        //    if (response) {
+                        //        $('#add-class-teacher #Avatar').val(data);
+                        //        $('#add-class-teacher #avatar-img').attr('src', data);
+                        //        $('#progress').html('100 %');
+                        //    }
+                        //};
+                        //setting.post_params = { 'category': '/class/teacher' };
+                        //$('#add-class-teacher #select-file').uploadify(uploadifySetting);
+                    });
+                    /**/
+                } else {
+                    alert("添加失败！");
+
+                }
+
+            }, error: function () {
+                alert("添加失败！");
+
+            }
+        });
+        return false;
+    });
+
+</script>

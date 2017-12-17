@@ -1,0 +1,417 @@
+﻿@model IYogaKoo.ViewModel.ViewYogiProfile
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    var info = ""; 
+    if (ViewBag.info == "editInfo")
+    {
+        info = "1";//从审核页面到个人信息页面：保存成功返回审核页面
+    }
+    
+}
+
+<div class="lb_add_dda" style="width:700px">
+<h2>导师资质证明</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset class="bbl_fieldset">
+        <legend></legend>
+    @Html.ValidationSummary(true)  
+      
+         @Html.HiddenFor(model => model.UID)
+        <input type="hidden" id="hidinfo" value="@info" />
+        <input type="hidden" id="hiduid" value="@ViewBag.user.Uid" />@*登录者id*@
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IDPhoto)
+              <input id="file_upload" type="file" value="上传并预览" class="lb_file2" />
+        </div>
+        <div class="editor-field">
+              <div style="float:left" class="lb_xedni">
+            </div>
+           @if (Model != null)
+           {
+               if (!string.IsNullOrEmpty(Model.IDPhoto))
+               {
+                   <div class="lb_id_img">
+                    <img id="ImgIDPhoto" src="@Model.IDPhoto" style='width:300px;height:150px;' />
+                    <input id="IDPhoto" name="IDPhoto" type="hidden" value="@Model.IDPhoto" />
+                   </div>
+               }
+               else
+               {
+                      <div class="lb_id_img">
+                        <img id="ImgIDPhoto" src="~/Content/Front/images/scsfz.png" style='width:300px;height:150px;' />
+                        <input id="IDPhoto" name="IDPhoto" type="hidden" value="" />
+                          </div>
+             
+               }
+           }
+           else
+           {
+                             <div class="lb_id_img">
+                            <img id="ImgIDPhoto" src="~/Content/Front/images/scsfz.png" style='width:300px;height:150px;' />
+                             <input id="IDPhoto" name="IDPhoto" type="hidden" value="" />
+                                 </div>
+           }
+            <span>只能传一张，大小不超过2M，格式为jpg或png</span><br /><br />
+                      
+            <br /> <br />
+          
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IDScan)
+             <input id="file_IDScan" type="file" value="上传并预览" />
+        </div>
+        <div class="editor-field">
+              <div style="float:left" class="lb_xedni">
+                 
+            </div>
+        @if (Model != null)
+        {
+                if (!string.IsNullOrEmpty(Model.IDScan))
+                { 
+                         <div class="lb_id_img">
+                    <img id="ImgIDScan" src="@Model.IDScan" style='width:300px;height:150px;' />
+                    <input id="IDScan" name="IDScan" type="hidden" value="@Model.IDScan" /></div>
+                }
+                else
+                {
+                                  <div class="lb_id_img">
+                    <img id="ImgIDScan" src="~/Content/Front/images/sfzz.png" style='width:300px;height:150px;' />
+                    <input id="IDScan" name="IDScan" type="hidden" value="" /></div>
+                }
+        }
+        else
+        {
+                   <div class="lb_id_img">
+                <img id="ImgIDScan" src="~/Content/Front/images/sfzz.png" style='width:300px;height:150px;' />
+                <input id="IDScan" name="IDScan" type="hidden" value="" />
+                       </div>
+        }
+           
+           
+            <span>上传一张，大小不超过2M，格式为jpg或png</span>
+             <br /> <br />
+           
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.IDScanF)
+             <input id="file_IDScanF" type="file" value="上传并预览" /> 
+        </div>
+        <div class="editor-field">
+              <div style="float:left" class="lb_xedni">
+              
+            </div>
+@if (Model != null)
+{
+    if (!string.IsNullOrEmpty(Model.IDScanF))
+    {
+         <div class="lb_id_img">
+                <img id="ImgIDScanF" src="@Model.IDScanF" style='width:300px;height:150px;' />
+                <input id="IDScanF" name="IDScanF" type="hidden" value="@Model.IDScanF" /></div>
+    }
+    else
+    {
+         <div class="lb_id_img">
+        <img id="ImgIDScanF" src="~/Content/Front/images/sfzf.png" style='width:300px;height:150px;' />
+        <input id="IDScanF" name="IDScanF" type="hidden" value="" /></div>
+    }
+}
+else
+{
+     <div class="lb_id_img">
+                <img id="ImgIDScanF" src="~/Content/Front/images/sfzf.png" style='width:300px;height:150px;' />
+                <input id="IDScanF" name="IDScanF" type="hidden" value="" /></div>
+}
+
+           
+            <span>上传一张，大小不超过2M，格式为jpg或png</span> <br /><br />            
+
+
+           
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Diploma)
+            <input id="file_Diploma" type="file" value="上传并预览" />
+        </div>
+        <div class="editor-field">
+              <div style="float:left" class="lb_xedni">
+                 
+            </div><br><br><br >
+@if (Model != null)
+{
+    if (!string.IsNullOrEmpty(Model.Diploma))
+    {
+        var stri = "1";
+        var strNums = stri;
+
+        string[] list = Model.Diploma.Split(';');
+                
+                <div id="divImgDiploma">
+                   @for (var i = 0; i < list.Length - 1; i++)
+                   {   
+                       var strA = "a" + strNums;
+                     <div class="lb_dinwei">  
+                        <img id="@strNums" src="@list[i]" style="width:300px;height:150px;" />
+  
+                        <a href="javascript:void(0);" id="@strA" onclick="delImg(this,@strNums);">删除</a>
+                      
+                      </div>
+                       strNums = stri + stri;
+                   }
+            </div>
+                            <input id="Diploma" name="Diploma" type="hidden" value="@Model.Diploma" />
+    }
+    else
+    {
+        <div id="divImgDiploma">
+
+        </div>
+        <input id="Diploma" name="Diploma" type="hidden" value="" />
+    }
+}
+else
+{
+                <div id="divImgDiploma"></div>
+                <input id="Diploma" name="Diploma" type="hidden" value="" />
+}
+            <br /><br />
+            
+            <input id="iNums" name="iNums" type="hidden" value="" />
+            <span>格式为jpg或png</span>
+            <br /><br />
+        </div>
+         <div class="editor-label">&nbsp;</div>
+      <div class="editor-field">
+          @if(info != "1")
+          {
+          <input type="button" value="上一步" id="idLast" class="lb_input" />
+          }
+          @* <a id="areturn" href="Javascript:window.history.go(-1)">返回</a>*@           
+          <input type="button" value="提交审核" id="subTeach" style="cursor:pointer" />
+          <input id='yl' type="button" class="lb_input" value="预览" />
+        </div>    
+    </fieldset>
+}
+    </div>
+  @section Scripts { 
+@*    @Scripts.Render("~/bundles/jqueryval")*@
+<script src=@Url.Content("~/Scripts/jquery-1.8.2.min.js")></script>
+<link href="~/Content/uploadify/uploadify.css" rel="stylesheet" />
+<script src="~/Content/uploadify/jquery.uploadify-3.1.min.js"></script>
+<script type="text/javascript">
+    //上一步
+    $("#idLast").click(function () {
+        window.location = "/Home/ApplyPerfect/" + $("#hiduid").val();
+    });
+    //end
+    $("#yl").click(function () {
+        layer.open({
+            type: 2,
+            area: ['800px', '530px'],
+            fix: false, //不固定
+            maxmin: true,
+            content: '/YogiProfile/Audit'
+        });
+    });
+    //提交
+    $("#subTeach").click(function () {
+
+        if ($("#IDPhoto").val().length == 0) {
+            layer.msg("请上传手持身份证照片");
+            return false;
+        }
+        if ($("#IDScan").val().length == 0) {
+            layer.msg("请上传身份证正面照片");
+            return false;
+        }
+        if ($("#IDScanF").val().length == 0) {
+            layer.msg("请上传身份证反面照片");
+            return false;
+        }
+        if ($("#Diploma").val().length == 0) {
+            layer.msg("请上传瑜伽导师资格证明文件扫描件");
+            return false;
+        }
+        //验证结束
+        var data = $("form").serialize();
+        var strinfo=$("#hidinfo").val();//判断是否是审核页面过来的数据
+        $.ajax({
+            url: '/YogiProfile/Create?t=' + Math.random(),
+            type: 'POST',
+            data: data,
+            success: function (data) {
+
+                if (data.code == 0) {
+                    //layer.msg("资料提交成功，请等待审核......");
+                    if (strinfo == "1")
+                    {
+                        layer.confirm('资料提交成功，是否返回到审核页面', {
+                            btn: ['是', '否'] //按钮
+                        }, function () {
+                            window.location = '/YogisModels/Audit';
+                        });
+
+                    } else {
+                        @*layer.confirm('资料提交成功，请等待审核......是否返回到个人设置页面', {
+                            btn: ['是', '否'] //按钮
+                        }, function () {
+                            if(@ViewBag.user.UserType=="1"){
+                                window.location = '/YogisModels/PersonalSetUp?iType=1';
+                            }else{
+                                window.location = '/YogaUserDetail/PersonalSetUp?iType=1';
+                            }
+                            //window.location = '/Login/UserDetailEdit/';
+                        });*@
+                        window.location = '/YogisModels/InstructorUpgrade';
+                    }
+                    teachprof();
+                    $("#yl").show();
+                    $('#sjds1').click(function () {
+                        window.open("/YogisModels/Audit");
+                    })
+
+                } else {
+                    layer.msg("申请失败！");
+                }
+
+            }, error: function () {
+                layer.msg("申请失败！");
+            }
+        });
+        return false;
+    });
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $("#yl").hide();
+        //
+        $('#file_upload').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+            'uploader': '@Url.Content("~/Controllers/ashxFile/TeachApplyImg.ashx")',
+            'buttonText': '上传并预览',
+            'height': '30',
+            'width': '120',
+            'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+            'sizeLimit': 1024 * 1024 * 4, //4M
+            'multi': false,//设置为true时可以同时上传多个文件。
+
+            'onUploadSuccess': function (file, data, response) {
+
+                $("#IDPhoto").val("/" + data);
+                $("#ImgIDPhoto").attr("src", "/" + data);
+
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+
+                layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+            }
+        });
+  //身份证正面
+        $('#file_IDScan').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+            'uploader': '@Url.Content("~/Controllers/ashxFile/TeachApplyImg.ashx")',
+            'buttonText': '上传并预览',
+            'height': '30',
+            'width': '120',
+            'fileTypeDesc': '.jpg,.gif,.png',
+            'fileTypeExts': '*.jpg;*.gif;*.png;',
+            'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+            'sizeLimit': 1024 * 1024 * 4, //4M
+            'multi': false,//设置为true时可以同时上传多个文件。
+            'onUploadSuccess': function (file, data, response) {
+
+                $("#IDScan").val("/" + data);
+                $("#ImgIDScan").attr("src", "/" + data);
+
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+            }
+        });
+
+        //身份证反面
+        $('#file_IDScanF').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+            'uploader': '@Url.Content("~/Controllers/ashxFile/TeachApplyImg.ashx")',
+            'buttonText': '上传并预览',
+            'height': '30',
+            'width': '120',
+            'fileTypeDesc': '.jpg,.gif,.png',
+            'fileTypeExts': '*.jpg;*.gif;*.png;',
+            'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+            'sizeLimit': 1024 * 1024 * 4, //4M
+            'multi': false,//设置为true时可以同时上传多个文件。
+            'onUploadSuccess': function (file, data, response) {
+
+                $("#IDScanF").val("/" + data);
+                $("#ImgIDScanF").attr("src", "/" + data);
+
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+            }
+        });
+
+        //瑜伽导师资格证明文件扫描件
+        $('#file_Diploma').uploadify({
+            'swf': '@Url.Content("~/Content/uploadify/uploadify-v3.1/uploadify.swf")',// 上传使用的 Flash
+            'uploader': '@Url.Content("~/Controllers/ashxFile/TeachApplyImg.ashx")',
+            'buttonText': '上传并预览',
+            'height': '30',
+            'width': '120',
+            'fileTypeDesc': '.jpg,.gif,.png',
+            'fileTypeExts': '*.jpg;*.gif;*.png;',
+            'cancelImg': '~/Content/uploadify/uploadify-v3.1/uploadify-cancel.png',//取消
+            'sizeLimit': 1024 * 1024 * 4, //4M
+            'multi': true,//设置为true时可以同时上传多个文件。
+
+            'onUploadSuccess': function (file, data, response) {
+
+                var strdata = "/" + data + ";"
+
+                document.getElementById('iNums').value += "1";
+                var strNums = $("#iNums").val();
+                document.getElementById('Diploma').value += strdata;
+
+                var strValue = "<img id='" + strNums + "' src='/" + data + "' style='width:300px;height:150px;' />";
+                var strA = "a" + strNums;
+                //根据ID 删除img
+                var strDelImg = '<a href="javascript:void(0);" id="' + strA + '" onclick="delImg(this,' + strNums + ');">删除</a>';
+
+                document.getElementById('divImgDiploma').innerHTML +="<div class='lb_jiaoshi_img'>"+ strValue + "&nbsp;&nbsp;" + strDelImg + "&nbsp;&nbsp;"+"</div>";
+
+            },
+            'onUploadError': function (file, errorCode, errorMsg, errorString) {
+                layer.msg('文件：' + file.name + ' 上传失败: ' + errorCode + errorString);
+            }
+        });
+
+    });
+    //删除图片
+    function delImg(aid,imgid) {
+
+        if (confirm("确认删除该图片吗？")) {
+
+            var strsrc = $("#" + imgid).attr("src") + ";";
+
+            var strRep = $("#Diploma").val().replace(strsrc, '');
+
+            document.getElementById('Diploma').value = strRep;
+
+            $("#" + imgid).remove();
+            $(aid).hide();
+        }
+    }
+</script>
+    }

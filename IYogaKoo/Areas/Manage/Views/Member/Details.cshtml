@@ -1,0 +1,175 @@
+﻿@model IYogaKoo.ViewModel.ViewYogaUser
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Manage/Views/Shared/_Master.cshtml";
+}
+
+<div class="content-box" id="">
+
+    <div class="content-box-header">
+
+        <h3 style="cursor:pointer">详情</h3>
+
+        <div class="clear"></div>
+
+    </div>
+
+    <div class="content-box-content">
+        <div class="tab-content default-tab" id="tab1">
+            <fieldset>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.UEmail)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.UEmail)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Uphone)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Uphone)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.Pwd)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.Pwd)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.NickName)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.NickName)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.RegDate)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.RegDate)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.UStatus)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.UStatus)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsAssessor)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.IsAssessor)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.IsWebworkers)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.IsWebworkers)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.LastDate)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.LastDate)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.LastIP)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.LastIP)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.LoginTimes)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.LoginTimes)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.UserType)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.UserType)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.LoginType)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.LoginType)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.SinaAuthCode)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.SinaAuthCode)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.SinaBack)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.SinaBack)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.QQAuthCode)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.QQAuthCode)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.QQBack)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.QQBack)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.WechatAuthCode)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.WechatAuthCode)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.WechatBack)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.WechatBack)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.ValCode)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.ValCode)
+                </div>
+
+                <div class="display-label">
+                    @Html.DisplayNameFor(model => model.ValExpire)
+                </div>
+                <div class="display-field">
+                    @Html.DisplayFor(model => model.ValExpire)
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("编辑", "Edit", new { id = Model.Uid }) |
+    @Html.ActionLink("返回", "IndexSearch")
+</p>
